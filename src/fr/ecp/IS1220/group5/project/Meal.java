@@ -5,4 +5,6 @@ public class Meal {
 	private Money price;
 	private MealCategory mealCategory;
 	private	MealType mealType;
+
+	private String love;
 }
