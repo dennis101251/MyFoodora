@@ -29,7 +29,7 @@ public class Restaurant extends User {
 			fileIn.close();
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			//New file
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -61,7 +61,7 @@ public class Restaurant extends User {
 			fileIn.close();
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			//New file
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -1,9 +1,12 @@
 package fr.ecp.IS1220.group5.project;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Item {
-	
+public class Item  implements Serializable {
+
+	private static final long serialVersionUID = 455302071054673253L;
+
 	private String name;
 	private Money price;
 	private ItemCategory itemCategory;
