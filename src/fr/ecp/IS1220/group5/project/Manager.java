@@ -35,6 +35,65 @@ public class Manager extends User implements Observer{
 		this.userlist.activateUser(user);
 	}
 
+	public Financial retrieveFinancial(){
+
+		Financial financial = null;
+
+		try {
+			FileInputStream fileIn = new FileInputStream("tmp/financial.ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+
+			financial = (Financial) in.readObject();
+
+			in.close();
+			fileIn.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return financial;
+	}
+
+	public void saveFinancial(Financial financial){
+		try {
+			FileOutputStream fileOut = new FileOutputStream("tmp/financial.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+			out.writeObject(financial);
+
+			out.close();
+			fileOut.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void changeServiceFee(double servicefee){
+		Financial financial = null;
+		financial = retrieveFinancial();
+		financial.service_fee = servicefee;
+		saveFinancial(financial);
+	}
+
+	public void changeMarkup_percentage(double markup_percentage){
+		Financial financial = null;
+		financial = retrieveFinancial();
+		financial.markup_percentage = markup_percentage;
+		saveFinancial(financial);
+	}
+
+	public void changeDelivery_cost(double delivery_cost){
+		Financial financial = null;
+		financial = retrieveFinancial();
+		financial.delivery_cost = delivery_cost;
+		saveFinancial(financial);
+	}
+
+
 
 
 
