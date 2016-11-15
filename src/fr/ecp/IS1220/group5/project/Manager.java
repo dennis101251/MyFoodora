@@ -19,15 +19,27 @@ public class Manager extends User implements Observer{
 		this.surname = surname;
 	}
 
-	public void addUsers
-	
+	public void addUser(User user){
+		this.userlist.addUser(user);
+	}
 
-	
+	public void removeUser(User user) throws UserNotFoundException{
+		this.userlist.removeUser(user);
+	}
+
+	public void disactivateUser(User user) throws UserNotFoundException{
+		this.userlist.disactivateUser(user);
+	}
+
+	public void activateUser(User user) throws UserNotFoundException{
+		this.userlist.activateUser(user);
+	}
+
 
 
 
 	@Override
 	public void update(Observable o, Object arg) {
-		this.users = (ArrayList<User>) arg;
+		this.userlist = (Userlist) arg;
 	}
 }
