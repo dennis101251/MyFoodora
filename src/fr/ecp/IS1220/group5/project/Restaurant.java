@@ -57,6 +57,7 @@ public class Restaurant extends User {
 
 			this.meals = (ArrayList<Meal>) in.readObject();
 
+
 			in.close();
 			fileIn.close();
 
