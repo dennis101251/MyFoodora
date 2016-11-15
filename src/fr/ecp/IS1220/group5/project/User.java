@@ -10,6 +10,7 @@ public abstract class User implements Serializable{
 	protected String username;
 	protected int id;
 	protected static int uniqueValue = 45132486;
+	protected boolean status = true;
 	
 	
 	public User(String name, String username) {

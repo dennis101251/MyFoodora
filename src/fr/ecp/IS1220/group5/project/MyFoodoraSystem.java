@@ -26,7 +26,7 @@ public class MyFoodoraSystem {
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			
 			orders = (ArrayList<Order>) in.readObject();
-			
+
 			in.close();
 			fileIn.close();
 			
@@ -78,4 +78,5 @@ public class MyFoodoraSystem {
 		delivery_cost = financial.delivery_cost;
 		
 	}
+
 }

@@ -15,6 +15,7 @@ public class Manager extends User {
 	public Manager(String name, String username, String surname) {
 		super(name, username);
 		this.surname = surname;
+		retrieveUsers();
 	}
 	
 	public void saveUsers(){
@@ -56,10 +57,24 @@ public class Manager extends User {
 	
 	public void addUser(User user){
 		users.add(user);
+		saveUsers();
 	}
 	
 	public void removeUser(User user) throws UserNotFoundException{
 		users.remove(user);
+		saveUsers();
 	}
+
+	public void activateUser(User user) {
+		user.status = true;
+		saveUsers();
+	}
+
+	public void disactivateUser(User user){
+		user.status = false;
+		saveUsers();
+	}
+
+
 
 }
