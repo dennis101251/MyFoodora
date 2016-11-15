@@ -6,75 +6,28 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Manager extends User {
+public class Manager extends User implements Observer{
 	
 	private String surname;
-	private ArrayList<User> users = new ArrayList<>();
+	private Userlist userlist;
 	
 	public Manager(String name, String username, String surname) {
 		super(name, username);
 		this.surname = surname;
-		retrieveUsers();
-	}
-	
-	public void saveUsers(){
-		try {
-			FileOutputStream fileOut = new FileOutputStream("tmp/users.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			
-			out.writeObject(users);
-			
-			out.close();
-			fileOut.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void retrieveUsers(){
-		
-		try {
-			FileInputStream fileIn = new FileInputStream("tmp/users.ser");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			
-			users = (ArrayList<User>) in.readObject();
-			
-			in.close();
-			fileIn.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public ArrayList<User> getUsers(){
-		return users;
-	}
-	
-	public void addUser(User user){
-		users.add(user);
-		saveUsers();
-	}
-	
-	public void removeUser(User user) throws UserNotFoundException{
-		users.remove(user);
-		saveUsers();
 	}
 
-	public void activateUser(User user) {
-		user.status = true;
-		saveUsers();
-	}
+	public void addUsers
+	
 
-	public void disactivateUser(User user){
-		user.status = false;
-		saveUsers();
-	}
+	
 
 
 
+	@Override
+	public void update(Observable o, Object arg) {
+		this.users = (ArrayList<User>) arg;
+	}
 }
