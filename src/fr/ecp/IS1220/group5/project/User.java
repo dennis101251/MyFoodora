@@ -8,15 +8,20 @@ public abstract class User implements Serializable{
 	
 	protected String name;
 	protected String username;
+	protected String password;
 	protected int id;
 	protected static int uniqueValue = 45132486;
 	protected boolean status = true;
-	
-	
-	public User(String name, String username) {
+
+	public User(String name, String username, String password) {
 		this.name = name;
 		this.username = username;
+		this.password = password;
 		this.id = uniqueValue;
 		uniqueValue++;
+	}
+
+	public void setId(int id){
+		this.id = id;
 	}
 }

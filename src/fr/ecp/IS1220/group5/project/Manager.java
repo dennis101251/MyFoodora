@@ -14,8 +14,8 @@ public class Manager extends User implements Observer{
 	private String surname;
 	private Userlist userlist;
 	
-	public Manager(String name, String username, String surname) {
-		super(name, username);
+	public Manager(String name, String username, String password, String surname) {
+		super(name, username, password);
 		this.surname = surname;
 	}
 

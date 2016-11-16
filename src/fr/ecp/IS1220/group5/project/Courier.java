@@ -9,8 +9,8 @@ public class Courier extends User {
 	private boolean isRegistered = false;
 	private boolean workingState = false;
 	
-	public Courier(String name, String username, String surname,  Coordinate position, String phoneNumber) {
-		super(name, username);
+	public Courier(String name, String username, String password, String surname,  Coordinate position, String phoneNumber) {
+		super(name, username, password);
 		this.surname = surname;
 		this.position = position;
 		this.phoneNumber = phoneNumber;

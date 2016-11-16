@@ -11,8 +11,8 @@ public class Restaurant extends User {
 	private double genericDiscountFactor = 0.05;
 	private double specialDiscountFactor = 0.1;
 
-	public Restaurant(String name, String username, Coordinate address) {
-		super(name, username);
+	public Restaurant(String name, String username, String password, Coordinate address) {
+		super(name, username, password);
 		this.address = address;
 		retrieveItems();
 		retrieveMeals();

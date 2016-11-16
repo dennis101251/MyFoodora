@@ -24,8 +24,8 @@ public class Customer extends User{
 	public void setContactType_Phone(){this.contactType = "phone";}
 
 
-	public Customer(String name, String username, String surname, Coordinate address, String email, String phoneNumber) {
-		super(name, username);
+	public Customer(String name, String username, String password, String surname, Coordinate address, String email, String phoneNumber) {
+		super(name, username, password);
 		this.surname = surname;
 		this.address = address;
 		this.email = email;

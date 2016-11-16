@@ -1,9 +1,8 @@
 package fr.ecp.IS1220.group5.project;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class MyFoodoraSystem {
 	
@@ -14,10 +13,98 @@ public class MyFoodoraSystem {
 	private double delivery_cost;
 	
 	
-	public MyFoodoraSystem() {
+	public MyFoodoraSystem() throws FileNotFoundException,IOException, BadFileException{
 //		retrieveUsers();
 //		retrieveOrders();
 //		retrieveFinancial();
+        BufferedReader fileInput = new BufferedReader(new FileReader("Users.csv"));
+        String line = fileInput.readLine(); //Read the first line which is not necessary
+
+        line = fileInput.readLine();
+
+        while (line != null){
+            StringTokenizer st = new StringTokenizer(line,",");
+            if (!st.hasMoreTokens()){
+                line = fileInput.readLine();
+                continue;
+            }
+
+            String name = st.nextToken();
+
+
+            if (!st.hasMoreTokens()) {
+                throw new BadFileException("Broken file 1");
+            }
+            int ID = Integer.parseInt(st.nextToken());
+
+
+            if (!st.hasMoreTokens()) {
+                throw new BadFileException("Broken file 2");
+            }
+            String username = st.nextToken();
+
+            if (!st.hasMoreElements()){
+                throw new BadFileException("Broken file 3");
+            }
+            String password = st.nextToken();
+
+            if (!st.hasMoreElements()){
+                throw new BadFileException("Broken file 4");
+            }
+            String userType = st.nextToken();
+
+            if (!st.hasMoreElements()){
+                throw new BadFileException("Broken file 5");
+            }
+            String surename = st.nextToken();
+
+            if (!st.hasMoreElements()){
+                throw new BadFileException("Broken file 6");
+            }
+            double X = Double.parseDouble(st.nextToken());
+
+            if (!st.hasMoreElements()){
+                throw new BadFileException("Broken file 7");
+            }
+            double Y = Double.parseDouble(st.nextToken());
+
+            Coordinate postion = new Coordinate(X,Y);
+
+            if (!st.hasMoreElements()){
+                throw new BadFileException("Broken file 8");
+            }
+            String phone = st.nextToken();
+
+            if (!st.hasMoreElements()){
+                throw new BadFileException("Broken file 9");
+            }
+            String email = st.nextToken();
+
+            //Read the whole line, put the user info into our workspace
+
+            if (userType.equals("Customer")){
+                Customer newCustomer = new Customer(name,username,password,surename,postion,email,phone);
+                newCustomer.setId(ID);
+            }
+            else if (userType.equals("Restaurant")){
+
+            }
+            else if (userType.equals("Manager")){
+
+            }
+            else if (userType.equals("Courier")){
+
+            }
+            else{
+                continue;
+            }
+
+
+
+
+
+        }
+
 		System.out.println("init successfully");
 	}
 
@@ -84,7 +171,7 @@ public class MyFoodoraSystem {
 		
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException{
 		MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
 
 	}
