@@ -32,13 +32,13 @@ public class Customer extends User{
 		this.phoneNumber = phoneNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "Customer{" +
-				"surname='" + surname + '\'' +
-				", address=" + address +
-				", email='" + email + '\'' +
-				", phoneNumber='" + phoneNumber + '\'' +
-				'}';
-	}
+//	@Override
+//	public String toString() {
+//		return "Customer{" +
+//				"surname='" + surname + '\'' +
+//				", address=" + address +
+//				", email='" + email + '\'' +
+//				", phoneNumber='" + phoneNumber + '\'' +
+//				'}';
+//	}
 }

@@ -123,9 +123,9 @@ public class Restaurant extends User {
 		meals.remove(meal);
 	}
 
-	@Override
-	public String toString() {
-		return "Restaurant [address=" + address + ", name=" + name + ", username=" + username + ", id=" + id + "]";
-	}	
+//	@Override
+//	public String toString() {
+//		return "Restaurant [address=" + address + ", name=" + name + ", username=" + username + ", id=" + id + "]";
+//	}
 	
 }

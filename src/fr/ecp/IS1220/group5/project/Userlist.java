@@ -11,10 +11,10 @@ public class Userlist extends Observable{
     private ArrayList<User> users =  new ArrayList<>();
 
 
-    public Userlist(ArrayList<User> users) {
-        this.users = users;
-//        retrieveUsers();
-    }
+//    public Userlist(ArrayList<User> users) {
+//        this.users = users;
+////        retrieveUsers();
+//    }
 
     public ArrayList<User> getUsers(){
         return users;
@@ -96,8 +96,11 @@ public class Userlist extends Observable{
 
     @Override
     public String toString() {
-        return "Userlist{" +
-                "users=" + users +
-                '}';
+        String str = new String();
+        for (User user: users
+             ) {
+            str += user.toString() + "\n";
+        }
+        return str;
     }
 }

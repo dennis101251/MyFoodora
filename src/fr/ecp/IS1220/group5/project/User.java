@@ -24,4 +24,14 @@ public abstract class User implements Serializable{
 	public void setId(int id){
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"name='" + name + '\'' +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", id=" + id +
+				'}';
+	}
 }

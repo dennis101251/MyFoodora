@@ -38,13 +38,18 @@ public class MyFoodoraSysytemTest {
                 str = br.readLine();
                 String username = str;
 
+                System.out.println("What's your password?");
+                str = br.readLine();
+                String password = str;
+
+
                 System.out.println("Which kind of user you want to register? (M)anager/(Cu)stomer/(Co)urier");
 
                 str = br.readLine();
 
                 if (str.equals("M")|str.equalsIgnoreCase("Manager")){
 
-                    Manager newManager = new Manager(firstName,username,lastName);
+                    Manager newManager = new Manager(firstName,username,password,lastName);
 
                     newManager.toString();
                     myFoodoraSystem.registerUser(newManager);
@@ -68,7 +73,7 @@ public class MyFoodoraSysytemTest {
                     str = br.readLine();
                     String phone = str;
 
-                    Customer newCustomer = new Customer(firstName,username,lastName,address,email,phone);
+                    Customer newCustomer = new Customer(firstName,username,password,lastName,address,email,phone);
 
                     System.out.println("Do you want to receive the special offer? Y/N"); //tag: did check out the format
                     str = br.readLine();
@@ -112,7 +117,7 @@ public class MyFoodoraSysytemTest {
                     str = br.readLine();
                     String phone = str;
 
-                    Courier newCourier = new Courier(firstName,username,lastName,address,phone);
+                    Courier newCourier = new Courier(firstName,username,password,lastName,address,phone);
 
                     System.out.println("What is your current duty status? (On)_duty/(Off)_duty");
                     str = br.readLine();

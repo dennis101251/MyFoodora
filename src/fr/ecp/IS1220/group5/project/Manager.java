@@ -93,12 +93,12 @@ public class Manager extends User implements Observer{
 		saveFinancial(financial);
 	}
 
-	@Override
-	public String toString() {
-		return "Manager{" +
-				"surname='" + surname + '\'' +
-				'}';
-	}
+//	@Override
+//	public String toString() {
+//		return "Manager{" +
+//				"surname='" + surname + '\'' +
+//				'}';
+//	}
 
 	@Override
 	public void update(Observable o, Object arg) {
