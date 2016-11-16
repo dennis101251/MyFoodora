@@ -34,4 +34,8 @@ public abstract class User implements Serializable{
 				", id=" + id +
 				'}';
 	}
+
+	public int getId() {
+		return id;
+	}
 }

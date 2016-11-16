@@ -13,7 +13,6 @@ public class Item  implements Serializable {
 	private ItemType itemType;
 	
 	
-	
 	public Item(String name, Money price, ItemCategory itemCategory, ItemType itemtype) {
 		this.itemCategory = itemCategory;
 		this.price = price;
@@ -29,7 +28,7 @@ public class Item  implements Serializable {
 		this.name = name;
 	}
 
-	public BigDecimal getPrice() {
+	public Money getPrice() {
 		return price;
 	}
 
@@ -55,11 +54,11 @@ public class Item  implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Item [name=" + name + ", price=" + price + ", itemCategory=" + itemCategory + ", itemType=" + itemType
-				+ "]";
+		return "Item{" +
+				"name='" + name + '\'' +
+				", price=" + price +
+				", itemCategory=" + itemCategory +
+				", itemType=" + itemType +
+				'}';
 	}
-	
-	
-	
-	
 }

@@ -7,7 +7,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class Money extends BigDecimal {
-	
+
 	public Money(char[] in) {
 		super(in);
 	}
@@ -72,11 +72,15 @@ public class Money extends BigDecimal {
 		super(in, offset, len, mc);
 	}
 
+	public Money add(Money augend) {
+		return new Money(super.add(augend).toString());
+	}
+
 	@Override
 	public String toString() {
 		return NumberFormat.getCurrencyInstance(Locale.FRANCE).format(this.doubleValue());
 	}
-	
-	
-	
+
+
+
 }
