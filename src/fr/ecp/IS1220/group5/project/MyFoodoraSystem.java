@@ -14,11 +14,12 @@ public class MyFoodoraSystem {
 	
 	
 	public MyFoodoraSystem() throws IOException{
-//		retrieveUsers();
-//		retrieveOrders();
-//		retrieveFinancial();
-        openFromFile("/Users/dennis101251/IdeaProjects/MyFoodora/bin/fr/ecp/IS1220/group5/project/Users.csv");
+
+//        Load all registered the users
+		retrieveUsers();
         System.out.println(users.toString());
+//        sends alerts to the customers that agreed to be notified of special offers
+
         System.out.println("init successfully");
 	}
 
@@ -28,7 +29,7 @@ public class MyFoodoraSystem {
 
 	public void retrieveOrders(){
 		try {
-			FileInputStream fileIn = new FileInputStream("tmp/orders.ser");
+			FileInputStream fileIn = new FileInputStream("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/orders.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			
 			orders = (ArrayList<Order>) in.readObject();
@@ -42,30 +43,17 @@ public class MyFoodoraSystem {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void retrieveUsers(){
-		try {
-			FileInputStream fileIn = new FileInputStream("tmp/users.ser");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			
-			users = (Userlist) in.readObject();
-			
-			in.close();
-			fileIn.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+        this.users.retrieveUsers();
+    }
 	
 	public void retrieveFinancial(){
 		
 		Financial financial = null;
 		
 		try {
-			FileInputStream fileIn = new FileInputStream("tmp/financial.ser");
+			FileInputStream fileIn = new FileInputStream("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/financial.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			
 			financial = (Financial) in.readObject();
@@ -199,7 +187,10 @@ public class MyFoodoraSystem {
     }
 
 	public static void main(String[] args) throws IOException{
-		MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+
+
+
 	}
 
 }
