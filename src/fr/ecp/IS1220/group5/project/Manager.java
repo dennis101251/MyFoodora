@@ -95,8 +95,6 @@ public class Manager extends User implements Observer{
 
 
 
-
-
 	@Override
 	public void update(Observable o, Object arg) {
 		this.userlist = (Userlist) arg;
