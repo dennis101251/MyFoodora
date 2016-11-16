@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class MyFoodoraSystem {
 	
-	private ArrayList<User> users;
+	private Userlist users;
 	private ArrayList<Order> orders;
 	private double service_fee;
 	private double markup_percentage;
@@ -15,11 +15,16 @@ public class MyFoodoraSystem {
 	
 	
 	public MyFoodoraSystem() {
-		retrieveUsers();
-		retrieveOrders();
-		retrieveFinancial();
+//		retrieveUsers();
+//		retrieveOrders();
+//		retrieveFinancial();
+		System.out.println("init successfully");
 	}
-	
+
+	public void registerUser(User user){
+		users.addUser(user);
+	}
+
 	public void retrieveOrders(){
 		try {
 			FileInputStream fileIn = new FileInputStream("tmp/orders.ser");
@@ -42,7 +47,7 @@ public class MyFoodoraSystem {
 			FileInputStream fileIn = new FileInputStream("tmp/users.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			
-			users = (ArrayList<User>) in.readObject();
+			users = (Userlist) in.readObject();
 			
 			in.close();
 			fileIn.close();

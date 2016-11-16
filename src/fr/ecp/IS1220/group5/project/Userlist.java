@@ -10,21 +10,26 @@ import java.util.Observable;
 public class Userlist extends Observable{
     private ArrayList<User> users =  new ArrayList<>();
 
+
+    public Userlist(ArrayList<User> users) {
+        this.users = users;
+//        retrieveUsers();
+    }
+
+    public ArrayList<User> getUsers(){
+        return users;
+    }
+
     public void saveAndNotify(){
         saveUsers();
         this.setChanged();
         notifyObservers();
     }
 
-
-    public Userlist(ArrayList<User> users) {
-        retrieveUsers();
-    }
-
-    public void setUserArrayList(ArrayList<User> users){
-        this.users = users;
-        saveAndNotify();
-    }
+//    public void setUserArrayList(ArrayList<User> users){
+//        this.users = users;
+//        saveAndNotify();
+//    }
 
     public void saveUsers(){
         try {
@@ -59,13 +64,9 @@ public class Userlist extends Observable{
         }
     }
 
-    public ArrayList<User> getUsers(){
-        return users;
-    }
-
     public void addUser(User user){
         users.add(user);
-        saveAndNotify();
+//        saveAndNotify();
     }
 
     public void removeUser(User user) throws UserNotFoundException{
@@ -93,4 +94,10 @@ public class Userlist extends Observable{
         saveAndNotify();
     }
 
+    @Override
+    public String toString() {
+        return "Userlist{" +
+                "users=" + users +
+                '}';
+    }
 }
