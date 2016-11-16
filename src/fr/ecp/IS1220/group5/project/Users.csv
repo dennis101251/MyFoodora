@@ -1,0 +1,5 @@
+Name,ID,Username,Password,Type,Surname,Address_X,Address_Y,Phone,Email,Status,WorkingState,
+Zexi,45132485,dennis101251,123456,Customer,DENG,2,5,6684121785,dengzexi2008@gmail.com,on,*,
+Mcdonald ,45132484,mcd,123456,Restaurant,*,30,2,*,*,on,*,
+Mike,45132483,mk,123456,Manager,Dam,*,*,*,*,on,*,
+LittleJ,45132482,lj,123456,Courier,Hahaha,12,44,1234567890,*,on,on,

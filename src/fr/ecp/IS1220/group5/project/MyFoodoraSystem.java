@@ -84,4 +84,9 @@ public class MyFoodoraSystem {
 		
 	}
 
+	public static void main(String[] args) {
+		MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+
+	}
+
 }
