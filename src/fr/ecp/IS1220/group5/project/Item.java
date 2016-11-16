@@ -28,7 +28,7 @@ public class Item  implements Serializable {
 		this.name = name;
 	}
 
-	public BigDecimal getPrice() {
+	public Money getPrice() {
 		return price;
 	}
 

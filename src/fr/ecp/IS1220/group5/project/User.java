@@ -19,6 +19,8 @@ public abstract class User implements Serializable{
 		this.id = uniqueValue;
 		uniqueValue++;
 	}
-	
-	
+
+	public int getId() {
+		return id;
+	}
 }

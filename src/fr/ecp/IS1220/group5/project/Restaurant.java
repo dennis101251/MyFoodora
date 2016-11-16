@@ -123,6 +123,11 @@ public class Restaurant extends User {
 		meals.remove(meal);
 	}
 
+	public Money applyGenericDiscountFactor(Money price){
+		return price;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Restaurant [address=" + address + ", name=" + name + ", username=" + username + ", id=" + id + "]";

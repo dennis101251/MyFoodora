@@ -1,6 +1,7 @@
 package fr.ecp.IS1220.group5.project;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Order implements Serializable{
@@ -19,16 +20,33 @@ public class Order implements Serializable{
 	}
 
 	private Money compute_total_price(){
-		return new Money(0);
+		Money price = new Money("0");
+
+		for (Item item : items){
+
+			price = price.add(item.getPrice());
+
+		}
+
+
+		for (Meal meal : meals){
+
+			price = price.add(meal.getPrice());
+
+		}
+
+		return price;
+
 	}
 
 	public void addItem(Item item){
 		this.items.add(item);
-
+		this.compute_total_price();
 	}
 
 	public void addMeal(Meal meal){
 		this.meals.add(meal);
+		this.compute_total_price();
 	}
 
 	public ArrayList<Item> getItems() {
