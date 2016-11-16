@@ -93,8 +93,7 @@ public class Manager extends User implements Observer{
 		saveFinancial(financial);
 	}
 
-
-
+	public void computingTotalIncome(){}
 
 
 	@Override
