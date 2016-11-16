@@ -13,7 +13,6 @@ public class Item  implements Serializable {
 	private ItemType itemType;
 	
 	
-	
 	public Item(String name, Money price, ItemCategory itemCategory, ItemType itemtype) {
 		this.itemCategory = itemCategory;
 		this.price = price;
