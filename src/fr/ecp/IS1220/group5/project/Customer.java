@@ -17,13 +17,17 @@ public class Customer extends User{
 		this.phoneNumber = phoneNumber;
 	}
 	
-	public void placeOrder(Restaurant restaurant, ArrayList<Item> items, ArrayList<Meal> meals){
+	public void placeOrder(Order order){
 
-		//TODO : compute total price
-		Money total_price = new Money(2);
-
-		this.pay(total_price, restaurant);
+		this.pay(order.getTotal_price(), order.getRestaurant());
+		this.saveOrder(order);
 	}
+
+	private void saveOrder(Order order){
+
+	}
+
+
 
 	private void pay(Money price, Restaurant restaurant){
 

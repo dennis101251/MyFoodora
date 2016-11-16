@@ -54,11 +54,11 @@ public class Item  implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Item [name=" + name + ", price=" + price + ", itemCategory=" + itemCategory + ", itemType=" + itemType
-				+ "]";
+		return "Item{" +
+				"name='" + name + '\'' +
+				", price=" + price +
+				", itemCategory=" + itemCategory +
+				", itemType=" + itemType +
+				'}';
 	}
-	
-	
-	
-	
 }
