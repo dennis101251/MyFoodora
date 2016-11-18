@@ -17,8 +17,8 @@ public abstract class User implements Serializable{
 
 	public User(String name, String username, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
 		this.name = name;
-		this.username = PasswordHash.createHash(username);
-		this.password = password;
+		this.username = username;
+		this.password = PasswordHash.createHash(password);
 		this.id = uniqueValue;
 		uniqueValue++;
 	}
