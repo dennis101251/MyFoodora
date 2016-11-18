@@ -12,15 +12,14 @@ public abstract class User implements Serializable{
 	protected String username;
 	protected String password;
 	protected int id;
-	protected static int uniqueValue = 45132486;
 	protected boolean status = true;
 
 	public User(String name, String username, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
 		this.name = name;
 		this.username = username;
 		this.password = PasswordHash.createHash(password);
-		this.id = uniqueValue;
-		uniqueValue++;
+		IDGenerator idGenerator = IDGenerator.getInstance();
+		this.id = idGenerator.getNextID();
 	}
 
 	public void setId(int id){
