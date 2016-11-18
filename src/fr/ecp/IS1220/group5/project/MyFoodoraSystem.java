@@ -186,11 +186,4 @@ public class MyFoodoraSystem {
         }
     }
 
-	public static void main(String[] args) throws IOException{
-        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
-
-
-
-	}
-
 }
