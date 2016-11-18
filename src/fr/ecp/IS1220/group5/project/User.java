@@ -1,6 +1,8 @@
 package fr.ecp.IS1220.group5.project;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public abstract class User implements Serializable{
 
@@ -10,15 +12,22 @@ public abstract class User implements Serializable{
 	protected String username;
 	protected String password;
 	protected int id;
-	protected static int uniqueValue = 45132486;
 	protected boolean status = true;
 
 	public User(String name, String username, String password) {
-		this.name = name;
-		this.username = username;
-		this.password = password;
-		this.id = uniqueValue;
-		uniqueValue++;
+
+		try {
+			this.name = name;
+			this.username = username;
+			this.password = PasswordHash.createHash(password);
+			IDGenerator idGenerator = IDGenerator.getInstance();
+			this.id = idGenerator.getNextID();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void setId(int id){
@@ -33,5 +42,9 @@ public abstract class User implements Serializable{
 				", password='" + password + '\'' +
 				", id=" + id +
 				'}';
+	}
+
+	public int getId() {
+		return id;
 	}
 }
