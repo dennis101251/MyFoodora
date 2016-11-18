@@ -14,13 +14,13 @@ public class Restaurant extends User {
 	public Restaurant(String name, String username, String password, Coordinate address) {
 		super(name, username, password);
 		this.address = address;
-		retrieveItems();
-		retrieveMeals();
+//		retrieveItems();
+//		retrieveMeals();
 	}
 
 	public void retrieveItems() {
 		try {
-			FileInputStream fileIn = new FileInputStream("tmp/" + this.id + "items.ser");
+			FileInputStream fileIn = new FileInputStream( SavingPath.string + "tmp/" + this.id + "items.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 
 			this.items = (ArrayList<Item>) in.readObject();
@@ -37,7 +37,7 @@ public class Restaurant extends User {
 
 	public void saveItems(){
 		try {
-			FileOutputStream fileOut = new FileOutputStream("tmp/" + this.id + "items.ser");
+			FileOutputStream fileOut = new FileOutputStream(  SavingPath.string + "tmp/" + this.id + "items.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
 			out.writeObject(this.items);
@@ -52,7 +52,7 @@ public class Restaurant extends User {
 
 	public void retrieveMeals() {
 		try {
-			FileInputStream fileIn = new FileInputStream("tmp/" + this.id + "meals.ser");
+			FileInputStream fileIn = new FileInputStream( SavingPath.string + "tmp/" + this.id + "meals.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 
 			this.meals = (ArrayList<Meal>) in.readObject();
@@ -70,7 +70,7 @@ public class Restaurant extends User {
 
 	public void saveMeals(){
 		try {
-			FileOutputStream fileOut = new FileOutputStream("tmp/" + this.id + "meals.ser");
+			FileOutputStream fileOut = new FileOutputStream( SavingPath.string + "tmp/" + this.id + "meals.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
 			out.writeObject(meals);

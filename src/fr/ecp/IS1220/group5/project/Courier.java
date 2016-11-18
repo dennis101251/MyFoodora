@@ -6,7 +6,7 @@ public class Courier extends User {
 	private Coordinate position;
 	private String phoneNumber;
 	private int deliveredOrdersCounter = 0;
-	private boolean isRegistered = false;
+//	private boolean isRegistered = false;
 	private boolean workingState = false;
 	
 	public Courier(String name, String username, String password, String surname,  Coordinate position, String phoneNumber) {
@@ -16,13 +16,13 @@ public class Courier extends User {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void	register(){
-		this.isRegistered = true;
-	}
-
-	public void unregister(){
-		this.isRegistered = false;
-	}
+//	public void	register(){
+//		this.isRegistered = true;
+//	}
+//
+//	public void unregister(){
+//		this.isRegistered = false;
+//	}
 
 	public void setState_OnDuty(){
 		this.workingState = true;
@@ -48,5 +48,14 @@ public class Courier extends User {
 //		not finish yet
 	}
 
-
+	@Override
+	public String toString() {
+		return "Courier{" +
+				"surname='" + surname + '\'' +
+				", position=" + position +
+				", phoneNumber='" + phoneNumber + '\'' +
+				", deliveredOrdersCounter=" + deliveredOrdersCounter +
+				", workingState=" + workingState +
+				'}';
+	}
 }

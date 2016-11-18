@@ -11,11 +11,6 @@ public class Userlist extends Observable{
     private ArrayList<User> users =  new ArrayList<>();
 
 
-//    public Userlist(ArrayList<User> users) {
-//        this.users = users;
-////        retrieveUsers();
-//    }
-
     public ArrayList<User> getUsers(){
         return users;
     }
@@ -26,14 +21,10 @@ public class Userlist extends Observable{
         notifyObservers();
     }
 
-//    public void setUserArrayList(ArrayList<User> users){
-//        this.users = users;
-//        saveAndNotify();
-//    }
 
     public void saveUsers(){
         try {
-            FileOutputStream fileOut = new FileOutputStream("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/users.ser");
+            FileOutputStream fileOut = new FileOutputStream( SavingPath.string + "users.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
             out.writeObject(users);
@@ -49,7 +40,7 @@ public class Userlist extends Observable{
     public void retrieveUsers(){
 
         try {
-            FileInputStream fileIn = new FileInputStream("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/users.ser");
+            FileInputStream fileIn = new FileInputStream( SavingPath.string + "users.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
 
             users = (ArrayList<User>) in.readObject();

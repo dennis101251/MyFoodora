@@ -11,7 +11,7 @@ public class Customer extends User{
 	private String email;
 	private String phoneNumber;
 	private boolean isNotified = false;
-	private String contactType;
+	private String contactType = "email" ;
 	private FidelityCard fidelityCard = new BasicFidelityCard();
 //
 //	public Customer(String name, String surname, String username) {
@@ -99,5 +99,20 @@ public class Customer extends User{
 
 	public void setFidelityCard(FidelityCard fidelityCard) {
 		this.fidelityCard = fidelityCard;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer{" +
+				" first name='" + name + '\'' +
+				", username='" + username + '\'' +
+				", surname='" + surname + '\'' +
+				", address=" + address +
+				", email='" + email + '\'' +
+				", phoneNumber='" + phoneNumber + '\'' +
+				", isNotified=" + isNotified +
+				", contactType='" + contactType + '\'' +
+//				", fidelityCard=" + fidelityCard +
+				'}';
 	}
 }
