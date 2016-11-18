@@ -20,7 +20,7 @@ public class UserlistTest {
 
         Userlist userlist = new Userlist();
 
-        String filename = "/Users/dennis101251/IdeaProjects/MyFoodora/bin/fr/ecp/IS1220/group5/project/Users.csv";
+        String filename = "/Users/dennis101251/IdeaProjects/MyFoodora/Users.csv";
 
         try {
             BufferedReader fileInput = new BufferedReader(new FileReader(filename));
