@@ -10,7 +10,7 @@ public class ItemTest {
 
 	@Test
 	public void test() {
-		Item mushroomSoup = new Item("Mushroom Soup", new Money(2.50), ItemCategory.Starter, ItemType.Vegetarian);
+		Item mushroomSoup = new Item("Mushroom Soup", new BigDecimal(2.50), ItemCategory.Starter, ItemType.Vegetarian);
 		System.out.println(mushroomSoup);
 	}
 

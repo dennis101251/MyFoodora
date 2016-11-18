@@ -11,7 +11,7 @@ public class Order implements Serializable{
 	private ArrayList<Item> items = new ArrayList<>();
 	private ArrayList<Meal> meals = new ArrayList<>();
 	private Restaurant restaurant;
-	private Money total_price = new Money(0);
+	private BigDecimal total_price = new BigDecimal("0");
 
 	public Order(Restaurant restaurant) {
 
@@ -19,8 +19,8 @@ public class Order implements Serializable{
 
 	}
 
-	private Money compute_total_price(){
-		Money price = new Money("0");
+	private BigDecimal compute_total_price(){
+		BigDecimal price = new BigDecimal("0");
 
 		for (Item item : items){
 
@@ -61,7 +61,7 @@ public class Order implements Serializable{
 		return restaurant;
 	}
 
-	public Money getTotal_price() {
+	public BigDecimal getTotal_price() {
 		return total_price;
 	}
 

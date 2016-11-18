@@ -8,12 +8,12 @@ public class Item  implements Serializable {
 	private static final long serialVersionUID = 455302071054673253L;
 
 	private String name;
-	private Money price;
+	private BigDecimal price;
 	private ItemCategory itemCategory;
 	private ItemType itemType;
 	
 	
-	public Item(String name, Money price, ItemCategory itemCategory, ItemType itemtype) {
+	public Item(String name, BigDecimal price, ItemCategory itemCategory, ItemType itemtype) {
 		this.itemCategory = itemCategory;
 		this.price = price;
 		this.name = name;
@@ -28,11 +28,11 @@ public class Item  implements Serializable {
 		this.name = name;
 	}
 
-	public Money getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Money price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

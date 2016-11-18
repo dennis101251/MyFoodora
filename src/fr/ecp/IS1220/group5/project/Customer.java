@@ -1,6 +1,7 @@
 package fr.ecp.IS1220.group5.project;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Customer extends User{
@@ -11,6 +12,7 @@ public class Customer extends User{
 	private String phoneNumber;
 	private boolean isNotified = false;
 	private String contactType;
+	private FidelityCard fidelityCard = new BasicFidelityCard();
 //
 //	public Customer(String name, String surname, String username) {
 //		super(name, username);
@@ -87,18 +89,15 @@ public class Customer extends User{
 	}
 
 
-	private void pay(Money price, Restaurant restaurant){
+	private void pay(BigDecimal price, Restaurant restaurant){
 
 	}
-	
 
-//	@Override
-//	public String toString() {
-//		return "Customer{" +
-//				"surname='" + surname + '\'' +
-//				", address=" + address +
-//				", email='" + email + '\'' +
-//				", phoneNumber='" + phoneNumber + '\'' +
-//				'}';
-//	}
+	public FidelityCard getFidelityCard() {
+		return fidelityCard;
+	}
+
+	public void setFidelityCard(FidelityCard fidelityCard) {
+		this.fidelityCard = fidelityCard;
+	}
 }

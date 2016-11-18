@@ -1,17 +1,18 @@
 package fr.ecp.IS1220.group5.project;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class Meal  implements Serializable {
 
 	private static final long serialVersionUID = 2530546545664573253L;
 
 	private String name;
-	private Money price;
+	private BigDecimal price;
 	private MealCategory mealCategory;
 	private	MealType mealType;
 
-	public Meal(String name, Money price, MealCategory mealCategory, MealType mealType) {
+	public Meal(String name, BigDecimal price, MealCategory mealCategory, MealType mealType) {
 		this.name = name;
 		this.price = price;
 		this.mealCategory = mealCategory;
@@ -26,11 +27,11 @@ public class Meal  implements Serializable {
 		this.name = name;
 	}
 
-	public Money getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Money price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
