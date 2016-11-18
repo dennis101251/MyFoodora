@@ -17,7 +17,7 @@ public class MyFoodoraSystem {
 //		retrieveUsers();
 //		retrieveOrders();
 //		retrieveFinancial();
-        openFromFile("/Users/dennis101251/IdeaProjects/MyFoodora/bin/fr/ecp/IS1220/group5/project/Users.csv");
+        openFromFile("Users.csv");
         System.out.println(users.toString());
         System.out.println("init successfully");
 	}
