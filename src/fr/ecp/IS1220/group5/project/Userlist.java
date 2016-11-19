@@ -57,6 +57,7 @@ public class Userlist extends Observable{
 
     public void addUser(User user){
         users.add(user);
+        saveUsers();
 //        saveAndNotify();
     }
 

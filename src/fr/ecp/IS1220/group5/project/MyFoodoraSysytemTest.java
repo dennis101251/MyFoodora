@@ -9,7 +9,8 @@ import java.util.StringTokenizer;
  * Created by dennis101251 on 2016/11/16.
  */
 public class MyFoodoraSysytemTest {
-//    I want to test the scenario in our system
+
+//    Test the scenario in our system
 
     public static void main(String[] args) throws IOException {
         MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
@@ -21,6 +22,8 @@ public class MyFoodoraSysytemTest {
         System.out.println("Welcome to Myfoodora System");
         System.out.println("_____________________________________________________________");
 
+        myFoodoraSystem.registerUser();
 
+        System.out.println("Test successfully!");
     }
 }

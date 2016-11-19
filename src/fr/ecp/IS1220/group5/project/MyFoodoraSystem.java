@@ -18,14 +18,111 @@ public class MyFoodoraSystem {
 //        Load all registered the users
 		retrieveUsers();
         System.out.println(users.toString());
-//        sends alerts to the customers that agreed to be notified of special offers
 
         System.out.println("init successfully");
 	}
 
-	public void registerUser(User user){
-		users.addUser(user);
-	}
+	public void registerUser() throws IOException {
+        //Use factory methods to produce a new User
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str;
+
+        do {
+            System.out.println("Which kind of USER you want to register? \n" +
+                    "Customer:      (1) \n" +
+                    "Manager:       (2) \n" +
+                    "Courier:       (3) \n" +
+                    "Restaurant:    (4) \n" +
+                    "Enter the number to continue, press (N) to return the main menu");
+
+            str = br.readLine();
+
+            //Switch to different userFactory
+            if (str.equals("1")){
+
+                //Customer
+                CustomerFactory customerFactory = new CustomerFactory();
+                User newCustomer = customerFactory.createUser();
+                if (newCustomer == null){
+                    //User cancel the registering process
+                    continue;
+                }
+                else{
+                    this.users.addUser(newCustomer);
+                    System.out.println("You have been registered successfully!");
+                    System.out.println("======================================");
+                    br.close();
+                    break;
+                }
+            }
+            else if (str.equals("2")){
+
+                //Manager
+                ManagerFactory managerFactory = new ManagerFactory();
+                User newManager = managerFactory.createUser();
+                if (newManager == null){
+                    //User cancel the registering process
+                    continue;
+                }
+                else{
+                    this.users.addUser(newManager);
+                    System.out.println("You have been registered successfully!");
+                    System.out.println("======================================");
+                    br.close();
+                    break;
+                }
+            }
+            else if (str.equals("3")){
+
+                //Courier
+                CourierFactory courierFactory = new CourierFactory();
+                User newCourier = courierFactory.createUser();
+                if (newCourier == null){
+                    //User cancel the registering process
+                    continue;
+                }
+                else{
+                    this.users.addUser(newCourier);
+                    System.out.println("You have been registered successfully!");
+                    System.out.println("======================================");
+                    br.close();
+                    break;
+                }
+            }
+            else if (str.equals("4")){
+
+                //Restaurant
+                RestaurantFactory restaurantFactory = new RestaurantFactory();
+                User newRestaurant = restaurantFactory.createUser();
+                if (newRestaurant == null){
+                    //User cancel the registering process
+                    continue;
+                }
+                else{
+                    this.users.addUser(newRestaurant);
+                    System.out.println("You have been registered successfully!");
+                    System.out.println("======================================");
+                    br.close();
+                    break;
+                }
+            }
+            else if (str.equalsIgnoreCase("N")){
+                //User cancel the registering process
+                System.out.println(" *** >> Cancel the process  *** ");
+                System.out.println("================================");
+                break;
+            }
+            else {
+                System.out.println(" *** >> Invalid typing *** ");
+                System.out.println("===========================");
+                continue;
+            }
+
+        }while (!str.equals("N"));
+
+
+    }
 
 	public void retrieveOrders(){
 		try {

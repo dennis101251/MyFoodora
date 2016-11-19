@@ -14,53 +14,59 @@ public class RestaurantFactory extends UserFactory {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str;
 
-        System.out.println("Hi, Customer: Press (Y) to continue, press (N) to return");
+        do {
+            System.out.println("Hi, restaurant: Press (Y) to continue, press (N) to return");
 
-        str = br.readLine();
+            str = br.readLine();
 
-        if (str.equals("Y")) {
-            do {
-                System.out.println("What's the restaurant's name?");
-                str = br.readLine();
-                String name = str;
+            if (str.equalsIgnoreCase("Y")) {
+                do {
+                    System.out.println("What's the restaurant's name?");
+                    str = br.readLine();
+                    String name = str;
 
-                System.out.println("What's your username?");
-                str = br.readLine();
-                String username = str;
+                    System.out.println("What's your username?");
+                    str = br.readLine();
+                    String username = str;
 
-                System.out.println("What's your password?");
-                str = br.readLine();
-                String password = str;
+                    System.out.println("What's your password?");
+                    str = br.readLine();
+                    String password = str;
 
-                System.out.println("What's your address? Format: x,y");
-                str = br.readLine();
+                    System.out.println("What's your address? Format: x,y");
+                    str = br.readLine();
 
-                StringTokenizer st = new StringTokenizer(str,",");
-                double X = Double.parseDouble(st.nextToken());
-                double Y = Double.parseDouble(st.nextToken());
-                Coordinate address = new Coordinate(X,Y);
+                    StringTokenizer st = new StringTokenizer(str,",");
+                    double X = Double.parseDouble(st.nextToken());
+                    double Y = Double.parseDouble(st.nextToken());
+                    Coordinate address = new Coordinate(X,Y);
 
-                Restaurant newRestaurant = new Restaurant(name,username,password,address);
+                    Restaurant newRestaurant = new Restaurant(name,username,password,address);
 
-                System.out.println(newRestaurant.toString());
+                    System.out.println(newRestaurant.toString());
 
-                System.out.println("Do you confirm your information? Y/N");
-                str = br.readLine();
-                //Type N to repeat, Y to break
+                    System.out.println("Do you confirm your information? Y/N");
+                    str = br.readLine();
+                    //Type N to repeat, Y to break
 
-                if (str.equalsIgnoreCase("Y")){
-                    br.close();
-                    return newRestaurant;
-                }
-                else if (str.equalsIgnoreCase("N")){
-                    continue;
-                }
-            }while (!str.equalsIgnoreCase("Y"));
-        }
-        else {
-            br.close();
-            return null;
-        }
+                    if (str.equalsIgnoreCase("Y")){
+                        br.close();
+                        return newRestaurant;
+                    }
+                    else if (str.equalsIgnoreCase("N")){
+                        continue;
+                    }
+                }while (!str.equalsIgnoreCase("Y"));
+            }
+            else if (str.equalsIgnoreCase("N")){
+                return null;
+            }
+            else {
+                System.out.println(" *** >> Invalid typing *** ");
+                System.out.println("===========================");
+                continue;
+            }
+        }while (!str.equalsIgnoreCase("Y"));
         br.close();
         return null;
     }

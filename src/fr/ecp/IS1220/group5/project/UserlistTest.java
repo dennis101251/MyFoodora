@@ -11,8 +11,8 @@ import java.util.StringTokenizer;
 public class UserlistTest {
 
     /**
-    * Zexi: In fact, I use this Test class to generate a serialization file to initialize the main system
-     *
+    * Use this Test class to generate a serialization file to initialize the main system
+    *
     * */
 
 
