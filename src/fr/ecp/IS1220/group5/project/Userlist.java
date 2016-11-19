@@ -10,6 +10,9 @@ import java.util.Observable;
 public class Userlist extends Observable{
     private ArrayList<User> users =  new ArrayList<>();
 
+    //Editing my own
+    public static String usersPath = "/Users/dennis101251/IdeaProjects/MyFoodora/tmp/users.ser";
+
 
     public ArrayList<User> getUsers(){
         return users;
@@ -24,7 +27,7 @@ public class Userlist extends Observable{
 
     public void saveUsers(){
         try {
-            FileOutputStream fileOut = new FileOutputStream("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/users.ser");
+            FileOutputStream fileOut = new FileOutputStream(usersPath);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
             out.writeObject(users);
@@ -39,26 +42,33 @@ public class Userlist extends Observable{
 
     public void retrieveUsers(){
 
-        try {
-            FileInputStream fileIn = new FileInputStream("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/users.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
+        File file = new File(usersPath);
 
-            users = (ArrayList<User>) in.readObject();
+        if (file.exists()){
+            try {
+                FileInputStream fileIn = new FileInputStream(usersPath);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
 
-            in.close();
-            fileIn.close();
+                users = (ArrayList<User>) in.readObject();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+                in.close();
+                fileIn.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("There is no User in myFoodora");
         }
     }
 
     public void addUser(User user){
         users.add(user);
-        saveUsers();
-//        saveAndNotify();
+//        saveUsers();
+        saveAndNotify();
     }
 
     public void removeUser(User user) throws UserNotFoundException{
