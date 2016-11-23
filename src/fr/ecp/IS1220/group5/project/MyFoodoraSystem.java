@@ -1,8 +1,9 @@
 package fr.ecp.IS1220.group5.project;
 
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class MyFoodoraSystem {
 	
@@ -188,4 +189,32 @@ public class MyFoodoraSystem {
             System.out.println(">> There is no Financial in system");
         }
 	}
+
+	public void loginUser(String userName, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
+
+        boolean isFound = false;
+        User myUser = null;
+        for (User user: users.getUsers()
+             ) {
+            if (user.getUsername().equals(userName)){
+                myUser = user;
+                isFound = true;
+                break;
+            }
+        }
+
+        if (isFound){
+            if (PasswordHash.validatePassword(password,myUser.getPassword())){
+                System.out.println("You have entered myFoodora!");
+            }
+            else {
+                System.out.println("Invalid password");
+            }
+        }
+        else {
+            System.out.println("User: " + userName + " is not found in system");
+        }
+
+    }
+
 }

@@ -34,6 +34,10 @@ public abstract class User implements Serializable{
 		this.id = id;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" +
@@ -46,5 +50,9 @@ public abstract class User implements Serializable{
 
 	public int getId() {
 		return id;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 }
