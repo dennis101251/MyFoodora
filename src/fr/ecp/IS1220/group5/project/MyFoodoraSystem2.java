@@ -128,28 +128,21 @@ public class MyFoodoraSystem2 {
 
     }
 
-    public void registerCustomer() throws IOException {
-        //Customer
-        CustomerFactory customerFactory = new CustomerFactory();
-        User newCustomer = customerFactory.createUser();
-        if (newCustomer == null){
-            //User cancel the registering process
-        }
-        else{
-            this.users.addUser(newCustomer);
-            System.out.println("You have been registered successfully!");
-            System.out.println("======================================");
-        }
+    public void registerCustomer(String firstName, String lastName, String username, Coordinate address, String password)  {
+        User newCustomer = new Customer(firstName, lastName, username, address, password);
+        this.users.addUser(newCustomer);
+        System.out.println("You have been registered successfully!");
+        System.out.println("======================================");
     }
 
     public void retrieveOrders(){
 
         //Verify whether the Order file exists
 
-        File file = new File("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/orders.ser");
+        File file = new File("/tmp/orders.ser");
         if (file.exists()){
             try {
-                FileInputStream fileIn = new FileInputStream("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/orders.ser");
+                FileInputStream fileIn = new FileInputStream("tmp/orders.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
 
                 orders = (ArrayList<Order>) in.readObject();
@@ -260,12 +253,46 @@ public class MyFoodoraSystem2 {
                         e.printStackTrace();
                     }
                     break;
+                case "createMeal":
+                    break;
+                case "addDish2Meal":
+                    break;
+                case "showMeal":
+                    break;
+                case "saveMeal":
+                    break;
+                case "setMealPrice":
+                    break;
+                case "setSpecialOffer":
+                    break;
+                case "removeFromSpecialOffer":
+                    break;
+                case "addDish":
+                    break;
+                case "addMeal2Order":
+                    break;
+                case "endOrder":
+                    break;
+                case "registerClient":
+                    break;
+                case "registerCourrier":
+                    break;
+                case "onDuty":
+                    break;
+                case "offDuty":
+                    break;
+                case "addContactInfo":
+                    break;
+                case "associateCard":
+                    break;
+                case "associateAgreement":
+                    break;
+                case "registerRestaurant":
+                    break;
+                case "notifySpecialOffer":
+                    break;
                 case "registerCustomer":
-                    try {
-                        registerCustomer();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    registerCustomer(commands[1], commands[2], commands[3], String2Coordinate(commands[4]), commands[5]);
                     break;
                 case "help":
                     System.out.println("List of available commands:");
@@ -276,5 +303,10 @@ public class MyFoodoraSystem2 {
             }
 
         }
+    }
+
+    private Coordinate String2Coordinate(String address) {
+        String[] coordinates = address.split(":");
+        return new Coordinate(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));
     }
 }

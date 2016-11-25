@@ -36,7 +36,13 @@ public class Customer extends User{
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 	}
-	
+
+	public Customer(String firstName, String lastName, String username, Coordinate address, String password){
+		super(firstName, username, password);
+		this.surname = lastName;
+		this.address = address;
+	}
+
 	public void placeOrder(Order order){
 
 		this.pay(order.getTotal_price(), order.getRestaurant());
