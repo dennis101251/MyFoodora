@@ -14,11 +14,14 @@ public class Meal  implements Serializable {
 	private	MealType mealType;
 	private ArrayList<Item> items = new ArrayList<>();
 
-	public Meal(String name, BigDecimal price, MealCategory mealCategory, MealType mealType) {
+	public Meal(String name, MealCategory mealCategory, MealType mealType) {
 		this.name = name;
-		this.price = price;
 		this.mealCategory = mealCategory;
 		this.mealType = mealType;
+	}
+
+	public Meal(String name){
+		this.name = name;
 	}
 
 	public String getName() {
