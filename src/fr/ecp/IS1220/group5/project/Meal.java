@@ -2,6 +2,7 @@ package fr.ecp.IS1220.group5.project;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class Meal  implements Serializable {
 
@@ -11,12 +12,16 @@ public class Meal  implements Serializable {
 	private BigDecimal price;
 	private MealCategory mealCategory;
 	private	MealType mealType;
+	private ArrayList<Item> items = new ArrayList<>();
 
-	public Meal(String name, BigDecimal price, MealCategory mealCategory, MealType mealType) {
+	public Meal(String name, MealCategory mealCategory, MealType mealType) {
 		this.name = name;
-		this.price = price;
 		this.mealCategory = mealCategory;
 		this.mealType = mealType;
+	}
+
+	public Meal(String name){
+		this.name = name;
 	}
 
 	public String getName() {
@@ -49,6 +54,10 @@ public class Meal  implements Serializable {
 
 	public void setMealType(MealType mealType) {
 		this.mealType = mealType;
+	}
+
+	public void addItem(Item item){
+		this.items.add(item);
 	}
 
 	@Override
