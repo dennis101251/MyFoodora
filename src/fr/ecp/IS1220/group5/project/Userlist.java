@@ -11,7 +11,7 @@ public class Userlist extends Observable{
     private ArrayList<User> users =  new ArrayList<>();
 
     //Editing my own
-    public static String usersPath = "/Users/dennis101251/IdeaProjects/MyFoodora/tmp/users.ser";
+    public static String usersPath = "tmp/users.ser";
 
 
     public ArrayList<User> getUsers(){
