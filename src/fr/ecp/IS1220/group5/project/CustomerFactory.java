@@ -86,7 +86,6 @@ public class CustomerFactory extends UserFactory {
                     //Type N to repeat, Y to break
 
                     if (str.equalsIgnoreCase("Y")){
-                        br.close();
                         return newCustomer;
                     }
                     else if (str.equalsIgnoreCase("N")){
@@ -103,7 +102,6 @@ public class CustomerFactory extends UserFactory {
                 continue;
             }
         }while (!str.equalsIgnoreCase("Y"));
-        br.close();
         return null;
     }
 }

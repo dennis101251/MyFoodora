@@ -28,22 +28,32 @@ public class MyFoodoraSystem {
         System.out.println("init successfully");
     }
 
+    public void addUser(User user){
+        this.users.addUser(user);
+    }
+
+    public void removeUser(String userName) throws UserNotFoundException {
+        boolean isFound = false;
+        User myUser = null;
+        for (User user: users.getUsers()) {
+            if (user.getUsername().equals(userName)){
+                myUser = user;
+                isFound = true;
+                break;
+            }
+        }
+
+        if (isFound){
+            users.removeUser(myUser);
+        }
+        else {
+            System.out.println("User: " + userName + " is not found in system");
+        }
+
+    }
+
     public void registerCustomer(String firstName, String lastName, String username, Coordinate address, String password)  {
         User newCustomer = new Customer(firstName, lastName, username, address, password);
-        this.users.addUser(newCustomer);
-        System.out.println("You have been registered successfully!");
-        System.out.println("======================================");
-    }
-
-    private void registerRestaurant(String name, String username, Coordinate address, String password) {
-        User newCustomer = new Restaurant(name, username, password, address);
-        this.users.addUser(newCustomer);
-        System.out.println("You have been registered successfully!");
-        System.out.println("======================================");
-    }
-
-    public void registerCourier(String firstName, String lastName, String username, Coordinate position, String password)  {
-        User newCustomer = new Courier(firstName, lastName, username, position, password);
         this.users.addUser(newCustomer);
         System.out.println("You have been registered successfully!");
         System.out.println("======================================");
@@ -114,7 +124,7 @@ public class MyFoodoraSystem {
         }
     }
 
-    public void loginUser(String userName, String password) {
+    public User loginUser(String userName, String password) {
 
         boolean isFound = false;
         User myUser = null;
@@ -131,9 +141,11 @@ public class MyFoodoraSystem {
                 if (PasswordHash.validatePassword(password,myUser.getPassword())){
                     this.user = myUser;
                     System.out.println("You have entered myFoodora!");
+                    return myUser;
                 }
                 else {
                     System.out.println("Invalid password");
+                    return null;
                 }
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
@@ -144,94 +156,84 @@ public class MyFoodoraSystem {
         else {
             System.out.println("User: " + userName + " is not found in system");
         }
-
+        return null;
     }
 
-    public static void main(String[] args) {
-
-        System.out.println("Welcome to MyFoodora!");
-
-        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
-        myFoodoraSystem.run();
-
-    }
-
-
-    public void run(){
-        String command = null;
-        while (!(command = this.scanner.nextLine()).equalsIgnoreCase("quit")){
-
-            String[] commands = command.split(" ");
-
-            switch (commands[0]){
-                case "login":
-                    loginUser(commands[1], commands[2]);
-                    break;
-                case "createMeal":
-                    createMeal(commands[1]);
-                    break;
-                case "addDish2Meal":
-                    addDish2Meal(commands[1], commands[2]);
-                    break;
-                case "showMeal":
-                    showMeal(commands[1]);
-                    break;
-                case "saveMeal":
-                    saveMeal(commands[1]);
-                    break;
-                case "setMealPrice":
-                    setMealPrice(commands[1]);
-                    break;
-                case "setSpecialOffer":
-                    setSpecialOffer(commands[1]);
-                    break;
-                case "removeFromSpecialOffer":
-                    removeFromSpecialOffer(commands[1]);
-                    break;
-                case "addDish":
-                    addDish(commands[1], commands[2], new BigDecimal(commands[3]));
-                    break;
-                case "addMeal2Order":
-                    addMeal2Order(commands[1]);
-                    break;
-                case "endOrder":
-                    endOrder();
-                    break;
-                case "registerCourrier":
-                    break;
-                case "onDuty":
-                    onDuty(commands[1]);
-                    break;
-                case "offDuty":
-                    offDuty(commands[1]);
-                    break;
-                case "addContactInfo":
-                    addContactInfo(commands[1]);
-                    break;
-                case "associateCard":
-                    associateCard(commands[1], commands[2]);
-                    break;
-                case "associateAgreement":
-                    associateAgreement(commands[1], commands[2]);
-                    break;
-                case "registerRestaurant":
-                    registerRestaurant(commands[1], commands[2], String2Coordinate(commands[3]),commands[4]);
-                    break;
-                case "notifySpecialOffer":
-                    break;
-                case "registerCustomer":
-                    registerCustomer(commands[1], commands[2], commands[3], String2Coordinate(commands[4]), commands[5]);
-                    break;
-                case "help":
-                    System.out.println("List of available commands:");
-                    break;
-                default:
-                    System.out.println("Unvalid command. Type help to check the available commands.");
-                    break;
-            }
-
-        }
-    }
+//    public void run(){
+//        String command = null;
+//        while (!(command = this.scanner.nextLine()).equalsIgnoreCase("quit")){
+//
+//            String[] commands = command.split(" ");
+//
+//            switch (commands[0]){
+//                case "login":
+//                    loginUser(commands[1], commands[2]);
+//                    break;
+//                case "createMeal":
+//                    createMeal(commands[1]);
+//                    break;
+//                case "addDish2Meal":
+//                    addDish2Meal(commands[1], commands[2]);
+//                    break;
+//                case "showMeal":
+//                    showMeal(commands[1]);
+//                    break;
+//                case "saveMeal":
+//                    saveMeal(commands[1]);
+//                    break;
+//                case "setMealPrice":
+//                    setMealPrice(commands[1]);
+//                    break;
+//                case "setSpecialOffer":
+//                    setSpecialOffer(commands[1]);
+//                    break;
+//                case "removeFromSpecialOffer":
+//                    removeFromSpecialOffer(commands[1]);
+//                    break;
+//                case "addDish":
+//                    addDish(commands[1], commands[2], new BigDecimal(commands[3]));
+//                    break;
+//                case "addMeal2Order":
+//                    addMeal2Order(commands[1]);
+//                    break;
+//                case "endOrder":
+//                    endOrder();
+//                    break;
+//                case "registerCourrier":
+//                    break;
+//                case "onDuty":
+//                    onDuty(commands[1]);
+//                    break;
+//                case "offDuty":
+//                    offDuty(commands[1]);
+//                    break;
+//                case "addContactInfo":
+//                    addContactInfo(commands[1]);
+//                    break;
+//                case "associateCard":
+//                    associateCard(commands[1], commands[2]);
+//                    break;
+//                case "associateAgreement":
+//                    associateAgreement(commands[1], commands[2]);
+//                    break;
+//                case "registerRestaurant":
+//                    registerRestaurant(commands[1], commands[2], String2Coordinate(commands[3]),commands[4]);
+//                    break;
+//                case "notifySpecialOffer":
+//                    break;
+//                case "registerCustomer":
+//                    registerCustomer(commands[1], commands[2], commands[3], String2Coordinate(commands[4]), commands[5]);
+//                    break;
+//                case "help":
+//                    System.out.println("List of available commands:");
+//                    break;
+//                default:
+//                    System.out.println("Unvalid command. Type help to check the available commands.");
+//                    break;
+//            }
+//
+//        }
+//    }
 
     public void createMeal(String mealName) {
         if (user instanceof Restaurant){

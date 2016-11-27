@@ -50,7 +50,6 @@ public class RestaurantFactory extends UserFactory {
                     //Type N to repeat, Y to break
 
                     if (str.equalsIgnoreCase("Y")){
-                        br.close();
                         return newRestaurant;
                     }
                     else if (str.equalsIgnoreCase("N")){
@@ -67,7 +66,6 @@ public class RestaurantFactory extends UserFactory {
                 continue;
             }
         }while (!str.equalsIgnoreCase("Y"));
-        br.close();
         return null;
     }
 

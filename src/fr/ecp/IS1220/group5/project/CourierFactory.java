@@ -70,7 +70,6 @@ public class CourierFactory extends UserFactory {
                     //Type N to repeat, Y to break
 
                     if (str.equalsIgnoreCase("Y")){
-                        br.close();
                         return newCourier;
                     }
                     else if (str.equalsIgnoreCase("N")){
@@ -87,7 +86,6 @@ public class CourierFactory extends UserFactory {
                 continue;
             }
         }while (!str.equalsIgnoreCase("Y"));
-        br.close();
         return null;
     }
 

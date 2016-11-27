@@ -16,20 +16,6 @@ public class Courier extends User {
 		this.phoneNumber = phoneNumber;
 	}
 
-    public Courier(String firstName, String lastName, String username, Coordinate position, String password) {
-        super(firstName, username, password);
-		this.surname = lastName;
-		this.position = position;
-    }
-
-//	public void	register(){
-//		this.isRegistered = true;
-//	}
-//
-//	public void unregister(){
-//		this.isRegistered = false;
-//	}
-
 	public void setState_OnDuty(){
 		this.workingState = true;
 	}

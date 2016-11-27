@@ -3,7 +3,6 @@ package fr.ecp.IS1220.group5.project;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 /**
  * Created by dennis101251 on 2016/11/18.
@@ -46,7 +45,6 @@ public class ManagerFactory extends UserFactory {
                     //Type N to repeat, Y to break
 
                     if (str.equalsIgnoreCase("Y")){
-                        br.close();
                         return newManager;
                     }
                     else if (str.equalsIgnoreCase("N")){
@@ -63,7 +61,6 @@ public class ManagerFactory extends UserFactory {
                 continue;
             }
         }while (!str.equalsIgnoreCase("Y"));
-        br.close();
         return null;
     }
 }
