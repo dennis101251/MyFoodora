@@ -2,7 +2,7 @@
 
 - [x] Initialize the system
 - [x] Register
-      - [ ] Check the repeat username
+      - [x] Check the repeat username
 - [x] Login
 - [ ] Build basic interface without realizing all function
 - [ ] Realize the functions of each kind of user
