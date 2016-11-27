@@ -1,138 +1,72 @@
 package fr.ecp.IS1220.group5.project;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+/**
+ * Created by Alexandre on 25/11/2016.
+ */
 public class MyFoodoraSystem {
-	
-	private Userlist users = new Userlist();
-	private ArrayList<Order> orders;
-	private double service_fee;
-	private double markup_percentage;
-	private double delivery_cost;
-	
-	
-	public MyFoodoraSystem() throws IOException{
+    private Userlist users = new Userlist();
+    private ArrayList<Order> orders;
+    private double service_fee;
+    private double markup_percentage;
+    private double delivery_cost;
+    private Scanner scanner = new Scanner(System.in);
+    private User user;
+
+    public MyFoodoraSystem() {
 
 //        Load all registered the users
-		retrieveUsers();
+        retrieveUsers();
         System.out.println(users.toString());
 
         System.out.println("init successfully");
-	}
+    }
 
-	public void registerUser() throws IOException {
-        //Use factory methods to produce a new User
+    public void addUser(User user){
+        this.users.addUser(user);
+    }
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str;
-
-        do {
-            System.out.println("Which kind of USER you want to register? \n" +
-                    "Customer:      (1) \n" +
-                    "Manager:       (2) \n" +
-                    "Courier:       (3) \n" +
-                    "Restaurant:    (4) \n" +
-                    "Enter the number to continue, press (N) to return the main menu");
-
-            str = br.readLine();
-
-            //Switch to different userFactory
-            if (str.equals("1")){
-
-                //Customer
-                CustomerFactory customerFactory = new CustomerFactory();
-                User newCustomer = customerFactory.createUser();
-                if (newCustomer == null){
-                    //User cancel the registering process
-                    continue;
-                }
-                else{
-                    this.users.addUser(newCustomer);
-                    System.out.println("You have been registered successfully!");
-                    System.out.println("======================================");
-                    br.close();
-                    break;
-                }
-            }
-            else if (str.equals("2")){
-
-                //Manager
-                ManagerFactory managerFactory = new ManagerFactory();
-                User newManager = managerFactory.createUser();
-                if (newManager == null){
-                    //User cancel the registering process
-                    continue;
-                }
-                else{
-                    this.users.addUser(newManager);
-                    System.out.println("You have been registered successfully!");
-                    System.out.println("======================================");
-                    br.close();
-                    break;
-                }
-            }
-            else if (str.equals("3")){
-
-                //Courier
-                CourierFactory courierFactory = new CourierFactory();
-                User newCourier = courierFactory.createUser();
-                if (newCourier == null){
-                    //User cancel the registering process
-                    continue;
-                }
-                else{
-                    this.users.addUser(newCourier);
-                    System.out.println("You have been registered successfully!");
-                    System.out.println("======================================");
-                    br.close();
-                    break;
-                }
-            }
-            else if (str.equals("4")){
-
-                //Restaurant
-                RestaurantFactory restaurantFactory = new RestaurantFactory();
-                User newRestaurant = restaurantFactory.createUser();
-                if (newRestaurant == null){
-                    //User cancel the registering process
-                    continue;
-                }
-                else{
-                    this.users.addUser(newRestaurant);
-                    System.out.println("You have been registered successfully!");
-                    System.out.println("======================================");
-                    br.close();
-                    break;
-                }
-            }
-            else if (str.equalsIgnoreCase("N")){
-                //User cancel the registering process
-                System.out.println(" *** >> Cancel the process  *** ");
-                System.out.println("================================");
+    public void removeUser(String userName) throws UserNotFoundException {
+        boolean isFound = false;
+        User myUser = null;
+        for (User user: users.getUsers()) {
+            if (user.getUsername().equals(userName)){
+                myUser = user;
+                isFound = true;
                 break;
             }
-            else {
-                System.out.println(" *** >> Invalid typing *** ");
-                System.out.println("===========================");
-                continue;
-            }
+        }
 
-        }while (!str.equals("N"));
-
+        if (isFound){
+            users.removeUser(myUser);
+        }
+        else {
+            System.out.println("User: " + userName + " is not found in system");
+        }
 
     }
 
-	public void retrieveOrders(){
+    public void registerCustomer(String firstName, String lastName, String username, Coordinate address, String password)  {
+        User newCustomer = new Customer(firstName, lastName, username, address, password);
+        this.users.addUser(newCustomer);
+        System.out.println("You have been registered successfully!");
+        System.out.println("======================================");
+    }
+
+    public void retrieveOrders(){
 
         //Verify whether the Order file exists
 
-        File file = new File("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/orders.ser");
+        File file = new File("/tmp/orders.ser");
         if (file.exists()){
             try {
-                FileInputStream fileIn = new FileInputStream("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/orders.ser");
+                FileInputStream fileIn = new FileInputStream("tmp/orders.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
 
                 orders = (ArrayList<Order>) in.readObject();
@@ -150,24 +84,24 @@ public class MyFoodoraSystem {
             System.out.println(">> There is no Order in system");
         }
 
-	}
+    }
 
-	public void retrieveUsers(){
+    public void retrieveUsers(){
         //The problem is that maybe there is no ser file at the beginning
         //Modify in userlist class
 
         this.users.retrieveUsers();
 
     }
-	
-	public void retrieveFinancial(){
-		
-		Financial financial = null;
 
-        File file = new File("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/financial.ser");
+    public void retrieveFinancial(){
+
+        Financial financial = null;
+
+        File file = new File("tmp/financial.ser");
         if (file.exists()){
             try {
-                FileInputStream fileIn = new FileInputStream("/Users/dennis101251/IdeaProjects/MyFoodora/tmp/financial.ser");
+                FileInputStream fileIn = new FileInputStream("tmp/financial.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
 
                 financial = (Financial) in.readObject();
@@ -188,14 +122,13 @@ public class MyFoodoraSystem {
         else {
             System.out.println(">> There is no Financial in system");
         }
-	}
+    }
 
-	public void loginUser(String userName, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public User loginUser(String userName, String password) {
 
         boolean isFound = false;
         User myUser = null;
-        for (User user: users.getUsers()
-             ) {
+        for (User user: users.getUsers()) {
             if (user.getUsername().equals(userName)){
                 myUser = user;
                 isFound = true;
@@ -204,17 +137,178 @@ public class MyFoodoraSystem {
         }
 
         if (isFound){
-            if (PasswordHash.validatePassword(password,myUser.getPassword())){
-                System.out.println("You have entered myFoodora!");
-            }
-            else {
-                System.out.println("Invalid password");
+            try {
+                if (PasswordHash.validatePassword(password,myUser.getPassword())){
+                    this.user = myUser;
+                    System.out.println("You have entered myFoodora!");
+                    return myUser;
+                }
+                else {
+                    System.out.println("Invalid password");
+                    return null;
+                }
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (InvalidKeySpecException e) {
+                e.printStackTrace();
             }
         }
         else {
             System.out.println("User: " + userName + " is not found in system");
         }
+        return null;
+    }
+
+//    public void run(){
+//        String command = null;
+//        while (!(command = this.scanner.nextLine()).equalsIgnoreCase("quit")){
+//
+//            String[] commands = command.split(" ");
+//
+//            switch (commands[0]){
+//                case "login":
+//                    loginUser(commands[1], commands[2]);
+//                    break;
+//                case "createMeal":
+//                    createMeal(commands[1]);
+//                    break;
+//                case "addDish2Meal":
+//                    addDish2Meal(commands[1], commands[2]);
+//                    break;
+//                case "showMeal":
+//                    showMeal(commands[1]);
+//                    break;
+//                case "saveMeal":
+//                    saveMeal(commands[1]);
+//                    break;
+//                case "setMealPrice":
+//                    setMealPrice(commands[1]);
+//                    break;
+//                case "setSpecialOffer":
+//                    setSpecialOffer(commands[1]);
+//                    break;
+//                case "removeFromSpecialOffer":
+//                    removeFromSpecialOffer(commands[1]);
+//                    break;
+//                case "addDish":
+//                    addDish(commands[1], commands[2], new BigDecimal(commands[3]));
+//                    break;
+//                case "addMeal2Order":
+//                    addMeal2Order(commands[1]);
+//                    break;
+//                case "endOrder":
+//                    endOrder();
+//                    break;
+//                case "registerCourrier":
+//                    break;
+//                case "onDuty":
+//                    onDuty(commands[1]);
+//                    break;
+//                case "offDuty":
+//                    offDuty(commands[1]);
+//                    break;
+//                case "addContactInfo":
+//                    addContactInfo(commands[1]);
+//                    break;
+//                case "associateCard":
+//                    associateCard(commands[1], commands[2]);
+//                    break;
+//                case "associateAgreement":
+//                    associateAgreement(commands[1], commands[2]);
+//                    break;
+//                case "registerRestaurant":
+//                    registerRestaurant(commands[1], commands[2], String2Coordinate(commands[3]),commands[4]);
+//                    break;
+//                case "notifySpecialOffer":
+//                    break;
+//                case "registerCustomer":
+//                    registerCustomer(commands[1], commands[2], commands[3], String2Coordinate(commands[4]), commands[5]);
+//                    break;
+//                case "help":
+//                    System.out.println("List of available commands:");
+//                    break;
+//                default:
+//                    System.out.println("Unvalid command. Type help to check the available commands.");
+//                    break;
+//            }
+//
+//        }
+//    }
+
+    public void createMeal(String mealName) {
+        if (user instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) user;
+            Meal meal = new Meal(mealName);
+            restaurant.addMeal(meal);
+
+            System.out.println(meal + " was successfully created!");
+
+        } else {
+
+            System.out.println("Your resurant must be logged in to create a meal.");
+
+        }
+    }
+
+    public void addDish2Meal(String dishName, String mealName) {
 
     }
 
+    public void showMeal(String mealName){
+
+    }
+
+    public void saveMeal(String mealName){
+
+    }
+
+    public void setMealPrice(String mealName){
+
+    }
+
+    public void setSpecialOffer(String mealName){
+
+    }
+
+    public void removeFromSpecialOffer(String mealName){
+
+    }
+
+    public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){
+
+    }
+
+    public void addMeal2Order(String mealName){
+
+    }
+
+    public void endOrder(){
+
+    }
+
+    public void onDuty(String username){
+
+    }
+
+    public void offDuty(String username){
+
+    }
+
+    public void addContactInfo(String contactInfo){
+
+    }
+
+    public void associateCard(String userName, String cardType){
+
+    }
+
+    public void associateAgreement(String username, String agreement){
+
+    }
+
+    private Coordinate String2Coordinate(String address) {
+        String[] coordinates = address.split(":");
+        return new Coordinate(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));
+    }
 }

@@ -16,14 +16,6 @@ public class Courier extends User {
 		this.phoneNumber = phoneNumber;
 	}
 
-//	public void	register(){
-//		this.isRegistered = true;
-//	}
-//
-//	public void unregister(){
-//		this.isRegistered = false;
-//	}
-
 	public void setState_OnDuty(){
 		this.workingState = true;
 	}
