@@ -21,6 +21,18 @@ public class CourierFactory extends UserFactory {
 
             if (str.equalsIgnoreCase("Y")) {
                 do {
+                    System.out.println("What's your username?");
+                    str = br.readLine();
+                    if (foundRepeatUserame(str)){
+                        System.out.println("This username has been used, pleas choose another");
+                        continue;
+                    }
+                    String username = str;
+
+                    System.out.println("What's your password?");
+                    str = br.readLine();
+                    String password = str;
+
                     System.out.println("What's your first name?");
                     str = br.readLine();
                     String firstName = str;
@@ -28,14 +40,6 @@ public class CourierFactory extends UserFactory {
                     System.out.println("What's your last name?");
                     str = br.readLine();
                     String lastName = str;
-
-                    System.out.println("What's your username?");
-                    str = br.readLine();
-                    String username = str;
-
-                    System.out.println("What's your password?");
-                    str = br.readLine();
-                    String password = str;
 
                     System.out.println("What's your address? Format: x,y");
                     str = br.readLine();

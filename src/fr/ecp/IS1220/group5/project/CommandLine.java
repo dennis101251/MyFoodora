@@ -177,7 +177,8 @@ public class CommandLine {
     }
 
     public void loginHelp(){
-
+        System.out.println(">>login help");
+        System.out.println("type the name of user which you want to choose");
     }
 
     public static void main(String[] args) throws IOException, UserNotFoundException {

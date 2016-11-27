@@ -21,17 +21,21 @@ public class RestaurantFactory extends UserFactory {
 
             if (str.equalsIgnoreCase("Y")) {
                 do {
-                    System.out.println("What's the restaurant's name?");
-                    str = br.readLine();
-                    String name = str;
-
                     System.out.println("What's your username?");
                     str = br.readLine();
+                    if (foundRepeatUserame(str)){
+                        System.out.println("This username has been used, pleas choose another");
+                        continue;
+                    }
                     String username = str;
 
                     System.out.println("What's your password?");
                     str = br.readLine();
                     String password = str;
+
+                    System.out.println("What's the restaurant's name?");
+                    str = br.readLine();
+                    String name = str;
 
                     System.out.println("What's your address? Format: x,y");
                     str = br.readLine();

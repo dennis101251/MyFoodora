@@ -5,8 +5,28 @@ import java.io.IOException;
 /**
  * Created by dennis101251 on 2016/11/18.
  */
-public abstract class UserFactory {
-    public abstract User createUser() throws IOException;
+public class UserFactory {
+    public User createUser() throws IOException {
+        return null;
+    }
+
+    /**
+     * Common method
+     */
+
+    public boolean foundRepeatUserame(String username) {
+        Userlist tempUserlist = new Userlist();
+        tempUserlist.retrieveUsers();
+        boolean repeatFound = false;
+
+        for (User user : tempUserlist.getUsers()
+                ) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
+                repeatFound = true;
+            }
+        }
+        return repeatFound;
+    }
 
     /**
      * My idea is that putting the registering process into the UserFactory
