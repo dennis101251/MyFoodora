@@ -53,13 +53,6 @@ public class MyFoodoraSystem {
 
     }
 
-    public void registerCustomer(String firstName, String lastName, String username, Coordinate address, String password) {
-        User newCustomer = new Customer(firstName, lastName, username, address, password);
-        this.users.addUser(newCustomer);
-        System.out.println("You have been registered successfully!");
-        System.out.println("======================================");
-    }
-
     public void retrieveOrders() {
 
         //Verify whether the Order file exists
@@ -156,6 +149,10 @@ public class MyFoodoraSystem {
             System.out.println("User: " + userName + " is not found in system");
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
     }
 }
 
