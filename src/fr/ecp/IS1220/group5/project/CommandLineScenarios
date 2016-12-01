@@ -14,3 +14,11 @@ saveMenu
 
 //Displaying a meal
 showMeal McDonalds BestOf
+
+//Disconnect user to the system
+disconnect
+
+//Customer
+registerCustomer Danyi Wu WDY 501 30:20 danyi.wu@student.ecp.fr 0650102722
+login WDY 501
+showRestaurant

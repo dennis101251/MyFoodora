@@ -37,7 +37,6 @@ public class MyFoodoraSystem {
                 return user;
             }
         }
-
         return null;
     }
 
@@ -159,7 +158,9 @@ public class MyFoodoraSystem {
         }
     }
 
-
+    public void disconnectUser(){
+        this.user = null;
+    }
 
     public void registerRestaurant(String name, String username, Coordinate address, String password) {
         User newRestaurant = new Restaurant(name, username, password, address);
@@ -168,14 +169,34 @@ public class MyFoodoraSystem {
         System.out.println("======================================");
     }
 
-
-    public void registerCustomer(String firstName, String lastName, String username, Coordinate address, String password) {
-        User newCustomer = new Customer(firstName, lastName, username, address, password);
+    public void registerCustomer(String firstName, String lastName, String username, String password, Coordinate address, String mail, String phone) {
+        User newCustomer = new Customer(firstName, lastName, username, password, address, mail, phone);
         this.users.addUser(newCustomer);
         System.out.println("You have been registered successfully!");
         System.out.println("======================================");
     }
 
+    public void showRestaurant(){
+        if (user instanceof Customer){
+            ArrayList<Restaurant> allReastaurant= new ArrayList<>();
+            for (User user: users.getUsers()
+                 ) {
+                if (user instanceof Restaurant){
+                    allReastaurant.add((Restaurant) user);
+                }
+            }
+
+            for (Restaurant restaurant: allReastaurant
+                 ) {
+                System.out.println(restaurant.getName());
+            }
+        }
+        else {
+
+            System.out.println("You must log in first");
+
+        }
+    }
 
     public void createItem(String itemName, BigDecimal price){
         if (user instanceof Restaurant){
@@ -303,5 +324,6 @@ public class MyFoodoraSystem {
     public void associateAgreement(String username, String agreement){
 
     }
+
 }
 

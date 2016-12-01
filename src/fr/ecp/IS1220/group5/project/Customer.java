@@ -29,7 +29,7 @@ public class Customer extends User{
 	public void setContactType_Phone(){this.contactType = "phone";}
 
 
-	public Customer(String name, String username, String password, String surname, Coordinate address, String email, String phoneNumber) {
+	public Customer(String name, String surname, String username, String password, Coordinate address, String email, String phoneNumber) {
 		super(name, username, password);
 		this.surname = surname;
 		this.address = address;
