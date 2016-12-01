@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class MyFoodoraSystem {
     private double markup_percentage;
     private double delivery_cost;
     private Scanner scanner = new Scanner(System.in);
-    private User user;
+    private User user = null;
 
     public MyFoodoraSystem() {
 
@@ -28,6 +29,16 @@ public class MyFoodoraSystem {
         System.out.println(users.toString());
 
         System.out.println("init successfully");
+    }
+
+    public User getUser(String userName){
+        for (User user : users.getUsers()){
+            if (user.getName().equalsIgnoreCase(userName)){
+                return user;
+            }
+        }
+
+        return null;
     }
 
     public void addUser(User user) {
@@ -51,13 +62,6 @@ public class MyFoodoraSystem {
             System.out.println("User: " + userName + " is not found in system");
         }
 
-    }
-
-    public void registerCustomer(String firstName, String lastName, String username, Coordinate address, String password) {
-        User newCustomer = new Customer(firstName, lastName, username, address, password);
-        this.users.addUser(newCustomer);
-        System.out.println("You have been registered successfully!");
-        System.out.println("======================================");
     }
 
     public void retrieveOrders() {
@@ -123,7 +127,7 @@ public class MyFoodoraSystem {
         }
     }
 
-    public User loginUser(String userName, String password) {
+    public void loginUser(String userName, String password) {
 
         boolean isFound = false;
         User myUser = null;
@@ -140,11 +144,9 @@ public class MyFoodoraSystem {
                 if (PasswordHash.validatePassword(password,myUser.getPassword())){
                     this.user = myUser;
                     System.out.println("You have entered myFoodora!");
-                    return myUser;
                 }
                 else {
                     System.out.println("Invalid password");
-                    return null;
                 }
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
@@ -155,7 +157,151 @@ public class MyFoodoraSystem {
         else {
             System.out.println("User: " + userName + " is not found in system");
         }
-        return null;
+    }
+
+
+
+    public void registerRestaurant(String name, String username, Coordinate address, String password) {
+        User newRestaurant = new Restaurant(name, username, password, address);
+        this.users.addUser(newRestaurant);
+        System.out.println("You have been registered successfully!");
+        System.out.println("======================================");
+    }
+
+
+    public void registerCustomer(String firstName, String lastName, String username, Coordinate address, String password) {
+        User newCustomer = new Customer(firstName, lastName, username, address, password);
+        this.users.addUser(newCustomer);
+        System.out.println("You have been registered successfully!");
+        System.out.println("======================================");
+    }
+
+
+    public void createItem(String itemName, BigDecimal price){
+        if (user instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) user;
+            Item item = new Item(itemName, price, ItemCategory.MainDish, ItemType.Standard);
+            restaurant.addItem(item);
+
+            System.out.println(item + " was successfully created!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a item.");
+
+        }
+    }
+
+    public void createMeal(String mealName) {
+        if (user instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) user;
+            Meal meal = new Meal(mealName);
+            restaurant.addMeal(meal);
+
+            System.out.println(meal + " was successfully created!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a meal.");
+
+        }
+    }
+
+    public void addDish2Meal(String itemName, String mealName) {
+        if (user instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) user;
+            Meal meal = restaurant.getMeal(mealName);
+            Item item = restaurant.getItem(itemName);
+            meal.addItem(item);
+
+            System.out.println(item + " was successfully added to " + meal + "!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to add a dish to a meal.");
+
+        }
+    }
+
+    public void saveMenu() {
+
+        if (user instanceof Restaurant){
+
+            users.saveUsers();
+
+            System.out.println("Your menu was successfully saved!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to save the menu.");
+
+        }
+
+    }
+
+    public void showMeal(String restaurantName, String mealName){
+        Restaurant restaurant = (Restaurant) getUser(restaurantName);
+        Meal meal = restaurant.getMeal(mealName);
+        System.out.println(meal);
+    }
+
+    public void saveMeal(String mealName){
+
+    }
+
+    public void setMealPrice(String mealName){
+        if (user instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) user;
+            Meal meal = restaurant.getMeal(mealName);
+            restaurant.setMealPrice(meal);
+
+        } else {
+            System.out.println("Your restaurant must be logged in to set the price of a meal.");
+        }
+    }
+
+    public void setSpecialOffer(String mealName){
+
+    }
+
+    public void removeFromSpecialOffer(String mealName){
+
+    }
+
+    public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){
+
+    }
+
+    public void addMeal2Order(String mealName){
+
+    }
+
+    public void endOrder(){
+
+    }
+
+    public void onDuty(String username){
+
+    }
+
+    public void offDuty(String username){
+
+    }
+
+    public void addContactInfo(String contactInfo){
+
+    }
+
+    public void associateCard(String userName, String cardType){
+
+    }
+
+    public void associateAgreement(String username, String agreement){
+
     }
 }
 

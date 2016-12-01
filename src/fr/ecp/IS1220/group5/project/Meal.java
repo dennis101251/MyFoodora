@@ -60,11 +60,16 @@ public class Meal  implements Serializable {
 		this.items.add(item);
 	}
 
+	public ArrayList<Item> getItems(){
+		return items;
+	}
+
 	@Override
 	public String toString() {
 		return "Meal{" +
 				"name='" + name + '\'' +
 				", price=" + price +
+				", items=" + items +
 				", mealCategory=" + mealCategory +
 				", mealType=" + mealType +
 				'}';
