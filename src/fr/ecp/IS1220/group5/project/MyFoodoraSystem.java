@@ -21,6 +21,8 @@ public class MyFoodoraSystem {
     private double delivery_cost;
     private Scanner scanner = new Scanner(System.in);
     private User user = null;
+    private Restaurant currentRestaurant = null;
+    private Order currentOrder = null;
 
     public MyFoodoraSystem() {
 
@@ -198,6 +200,149 @@ public class MyFoodoraSystem {
         }
     }
 
+    public void chooseRestaurant(String restaurant){
+        if (user instanceof Customer){
+            boolean isFound = false;
+            for (User user: users.getUsers()
+                 ) {
+                if (user.getName().equalsIgnoreCase(restaurant) && user instanceof Restaurant){
+                    isFound = true;
+                    currentRestaurant = (Restaurant) user;
+                    currentOrder = new Order(currentRestaurant);
+                    System.out.println("you have entered: " + restaurant);
+                    break;
+                }
+            }
+            if (!isFound){
+                System.out.println(restaurant + " is not found");
+            }
+        }
+        else {
+
+            System.out.println("You must log in first");
+
+        }
+    }
+
+    //Show the all the available options to the customer
+    public void showMenu(){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                System.out.println(">> items");
+                for (Item item: currentRestaurant.getItems()){
+                    System.out.println(item.getName() +": "+ item.getPrice());
+                }
+                System.out.println(">> meals");
+                for (Meal meal:currentRestaurant.getMeals()){
+                    System.out.println(meal.getName() +": "+ meal.getPrice());
+                }
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void addMeal2Order(String mealName, Integer quantity){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                boolean isFound = false;
+                for (Meal meal: currentRestaurant.getMeals()
+                     ) {
+                    if (meal.getName().equalsIgnoreCase(mealName)){
+                        isFound = true;
+
+                        for (int i = 0; i < quantity; i++) {
+                            currentOrder.addMeal(meal);
+                        }
+
+                        System.out.println("you have add " + mealName + " x" + quantity +" successfully");
+
+                        System.out.println("Order: " + Money.display(currentOrder.getTotal_price()));
+                        break;
+                    }
+                }
+                if (!isFound){
+                    System.out.println(">>" + mealName + " is not found");
+                }
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void addItem2Order(String itemName, Integer quantity){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                boolean isFound = false;
+                for (Item item: currentRestaurant.getItems()
+                        ) {
+                    if (item.getName().equalsIgnoreCase(itemName)){
+                        isFound = true;
+                        for (int i = 0; i < quantity; i++) {
+                            currentOrder.addItem(item);
+                        }
+
+                        System.out.println("you have add " + itemName +" x" + quantity + " successfully");
+                        System.out.println("Order: " + Money.display(currentOrder.getTotal_price()));
+                        break;
+                    }
+                }
+                if (!isFound){
+                    System.out.println(">>" + itemName + " is not found");
+                }
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void showOrder(){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                currentOrder.showOrder();
+                System.out.println(Money.display(currentOrder.getTotal_price()));
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void endOrder(){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                if (!currentOrder.getItems().isEmpty() && !currentOrder.getItems().isEmpty()){
+                    currentOrder.showOrder();
+                    System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
+                }
+                else {
+                    System.out.println("you have to choose an item first");
+                }
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
     public void createItem(String itemName, BigDecimal price){
         if (user instanceof Restaurant){
 
@@ -294,14 +439,6 @@ public class MyFoodoraSystem {
     }
 
     public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){
-
-    }
-
-    public void addMeal2Order(String mealName){
-
-    }
-
-    public void endOrder(){
 
     }
 

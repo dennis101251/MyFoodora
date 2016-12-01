@@ -19,13 +19,21 @@ public class Order implements Serializable{
 
 	}
 
+	public void showOrder(){
+		for (Item item: items
+			 ) {
+			System.out.println(item.getName());
+		}
+		for (Meal meal: meals){
+			System.out.println(meal.getName());
+		}
+	}
+
 	private BigDecimal compute_total_price(){
 		BigDecimal price = new BigDecimal("0");
 
 		for (Item item : items){
-
 			price = price.add(item.getPrice());
-
 		}
 
 
@@ -41,12 +49,12 @@ public class Order implements Serializable{
 
 	public void addItem(Item item){
 		this.items.add(item);
-		this.compute_total_price();
+		total_price = this.compute_total_price();
 	}
 
 	public void addMeal(Meal meal){
 		this.meals.add(meal);
-		this.compute_total_price();
+		total_price = this.compute_total_price();
 	}
 
 	public ArrayList<Item> getItems() {

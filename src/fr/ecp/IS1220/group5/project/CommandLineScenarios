@@ -22,3 +22,10 @@ disconnect
 registerCustomer Danyi Wu WDY 501 30:20 danyi.wu@student.ecp.fr 0650102722
 login WDY 501
 showRestaurant
+chooseRestaurant McDonalds
+showMenu
+addMeal2Order BestOf 2
+addMeal2Order Coco              >>expect error
+addItem2Order FrenchFries 1
+showOrder
+endOrder

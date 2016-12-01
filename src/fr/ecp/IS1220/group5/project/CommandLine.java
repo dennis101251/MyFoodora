@@ -67,8 +67,20 @@ public class CommandLine {
                 case "showRestaurant":
                     myFoodoraSystem.showRestaurant();
                     break;
+                case "chooseRestaurant":
+                    myFoodoraSystem.chooseRestaurant(commands[1]);
+                    break;
+                case "showMenu":
+                    myFoodoraSystem.showMenu();
+                    break;
                 case "addMeal2Order":
-                    myFoodoraSystem.addMeal2Order(commands[1]);
+                    myFoodoraSystem.addMeal2Order(commands[1],Integer.parseInt(commands[2]));
+                    break;
+                case "addItem2Order":
+                    myFoodoraSystem.addItem2Order(commands[1],Integer.parseInt(commands[2]));
+                    break;
+                case "showOrder":
+                    myFoodoraSystem.showOrder();
                     break;
                 case "endOrder":
                     myFoodoraSystem.endOrder();
