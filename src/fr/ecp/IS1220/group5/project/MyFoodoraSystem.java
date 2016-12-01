@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ public class MyFoodoraSystem {
     private double markup_percentage;
     private double delivery_cost;
     private Scanner scanner = new Scanner(System.in);
-    private User user;
+    private User user = null;
+    private Restaurant currentRestaurant = null;
+    private Order currentOrder = null;
 
     public MyFoodoraSystem() {
 
@@ -30,12 +33,17 @@ public class MyFoodoraSystem {
         System.out.println("init successfully");
     }
 
-    public void addUser(User user) {
-        this.users.addUser(user);
+    public User getUser(String userName){
+        for (User user : users.getUsers()){
+            if (user.getName().equalsIgnoreCase(userName)){
+                return user;
+            }
+        }
+        return null;
     }
 
-    public ArrayList<User> getUsers(){
-        return users.getUsers();
+    public void addUser(User user) {
+        this.users.addUser(user);
     }
 
     public void removeUser(String userName) throws UserNotFoundException {
@@ -120,41 +128,339 @@ public class MyFoodoraSystem {
         }
     }
 
-    public User loginUser(String userName, String password) {
+    public void loginUser(String userName, String password) {
 
         boolean isFound = false;
         User myUser = null;
-        for (User user : users.getUsers()) {
-            if (user.getUsername().equals(userName)) {
+        for (User user: users.getUsers()) {
+            if (user.getUsername().equals(userName)){
                 myUser = user;
                 isFound = true;
                 break;
             }
         }
 
-        if (isFound) {
+        if (isFound){
             try {
-                if (PasswordHash.validatePassword(password, myUser.getPassword())) {
+                if (PasswordHash.validatePassword(password,myUser.getPassword())){
                     this.user = myUser;
                     System.out.println("You have entered myFoodora!");
-                    return myUser;
-                } else {
+                }
+                else {
                     System.out.println("Invalid password");
-                    return null;
                 }
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             } catch (InvalidKeySpecException e) {
                 e.printStackTrace();
             }
-        } else {
+        }
+        else {
             System.out.println("User: " + userName + " is not found in system");
         }
-        return null;
     }
 
-    public static void main(String[] args) {
-        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+    public void disconnectUser(){
+        this.user = null;
+    }
+
+    public void registerRestaurant(String name, String username, Coordinate address, String password) {
+        User newRestaurant = new Restaurant(name, username, password, address);
+        this.users.addUser(newRestaurant);
+        System.out.println("You have been registered successfully!");
+        System.out.println("======================================");
+    }
+
+    public void registerCustomer(String firstName, String lastName, String username, String password, Coordinate address, String mail, String phone) {
+        User newCustomer = new Customer(firstName, lastName, username, password, address, mail, phone);
+        this.users.addUser(newCustomer);
+        System.out.println("You have been registered successfully!");
+        System.out.println("======================================");
+    }
+
+    public void showRestaurant(){
+        if (user instanceof Customer){
+            ArrayList<Restaurant> allReastaurant= new ArrayList<>();
+            for (User user: users.getUsers()
+                 ) {
+                if (user instanceof Restaurant){
+                    allReastaurant.add((Restaurant) user);
+                }
+            }
+
+            for (Restaurant restaurant: allReastaurant
+                 ) {
+                System.out.println(restaurant.getName());
+            }
+        }
+        else {
+
+            System.out.println("You must log in first");
+
+        }
+    }
+
+    public void chooseRestaurant(String restaurant){
+        if (user instanceof Customer){
+            boolean isFound = false;
+            for (User user: users.getUsers()
+                 ) {
+                if (user.getName().equalsIgnoreCase(restaurant) && user instanceof Restaurant){
+                    isFound = true;
+                    currentRestaurant = (Restaurant) user;
+                    currentOrder = new Order(currentRestaurant);
+                    System.out.println("you have entered: " + restaurant);
+                    break;
+                }
+            }
+            if (!isFound){
+                System.out.println(restaurant + " is not found");
+            }
+        }
+        else {
+
+            System.out.println("You must log in first");
+
+        }
+    }
+
+    //Show the all the available options to the customer
+    public void showMenu(){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                System.out.println(">> items");
+                for (Item item: currentRestaurant.getItems()){
+                    System.out.println(item.getName() +": "+ item.getPrice());
+                }
+                System.out.println(">> meals");
+                for (Meal meal:currentRestaurant.getMeals()){
+                    System.out.println(meal.getName() +": "+ meal.getPrice());
+                }
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void addMeal2Order(String mealName, Integer quantity){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                boolean isFound = false;
+                for (Meal meal: currentRestaurant.getMeals()
+                     ) {
+                    if (meal.getName().equalsIgnoreCase(mealName)){
+                        isFound = true;
+
+                        for (int i = 0; i < quantity; i++) {
+                            currentOrder.addMeal(meal);
+                        }
+
+                        System.out.println("you have add " + mealName + " x" + quantity +" successfully");
+
+                        System.out.println("Order: " + Money.display(currentOrder.getTotal_price()));
+                        break;
+                    }
+                }
+                if (!isFound){
+                    System.out.println(">>" + mealName + " is not found");
+                }
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void addItem2Order(String itemName, Integer quantity){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                boolean isFound = false;
+                for (Item item: currentRestaurant.getItems()
+                        ) {
+                    if (item.getName().equalsIgnoreCase(itemName)){
+                        isFound = true;
+                        for (int i = 0; i < quantity; i++) {
+                            currentOrder.addItem(item);
+                        }
+
+                        System.out.println("you have add " + itemName +" x" + quantity + " successfully");
+                        System.out.println("Order: " + Money.display(currentOrder.getTotal_price()));
+                        break;
+                    }
+                }
+                if (!isFound){
+                    System.out.println(">>" + itemName + " is not found");
+                }
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void showOrder(){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                currentOrder.showOrder();
+                System.out.println(Money.display(currentOrder.getTotal_price()));
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void endOrder(){
+        if (user instanceof Customer){
+            if (currentRestaurant != null){
+                if (!currentOrder.getItems().isEmpty() && !currentOrder.getItems().isEmpty()){
+                    currentOrder.showOrder();
+                    System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
+                }
+                else {
+                    System.out.println("you have to choose an item first");
+                }
+            }
+            else {
+                System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void createItem(String itemName, BigDecimal price){
+        if (user instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) user;
+            Item item = new Item(itemName, price, ItemCategory.MainDish, ItemType.Standard);
+            restaurant.addItem(item);
+
+            System.out.println(item + " was successfully created!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a item.");
+
+        }
+    }
+
+    public void createMeal(String mealName) {
+        if (user instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) user;
+            Meal meal = new Meal(mealName);
+            restaurant.addMeal(meal);
+
+            System.out.println(meal + " was successfully created!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a meal.");
+
+        }
+    }
+
+    public void addDish2Meal(String itemName, String mealName) {
+        if (user instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) user;
+            Meal meal = restaurant.getMeal(mealName);
+            Item item = restaurant.getItem(itemName);
+            meal.addItem(item);
+
+            System.out.println(item + " was successfully added to " + meal + "!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to add a dish to a meal.");
+
+        }
+    }
+
+    public void saveMenu() {
+
+        if (user instanceof Restaurant){
+
+            users.saveUsers();
+
+            System.out.println("Your menu was successfully saved!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to save the menu.");
+
+        }
+
+    }
+
+    public void showMeal(String restaurantName, String mealName){
+        Restaurant restaurant = (Restaurant) getUser(restaurantName);
+        Meal meal = restaurant.getMeal(mealName);
+        System.out.println(meal);
+    }
+
+    public void saveMeal(String mealName){
+
+    }
+
+    public void setMealPrice(String mealName){
+        if (user instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) user;
+            Meal meal = restaurant.getMeal(mealName);
+            restaurant.setMealPrice(meal);
+
+        } else {
+            System.out.println("Your restaurant must be logged in to set the price of a meal.");
+        }
+    }
+
+    public void setSpecialOffer(String mealName){
+
+    }
+
+    public void removeFromSpecialOffer(String mealName){
+
+    }
+
+    public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){
+
+    }
+
+    public void onDuty(String username){
+
+    }
+
+    public void offDuty(String username){
+
+    }
+
+    public void addContactInfo(String contactInfo){
+
+    }
+
+    public void associateCard(String userName, String cardType){
+
+    }
+
+    public void associateAgreement(String username, String agreement){
+
     }
 
 }
+

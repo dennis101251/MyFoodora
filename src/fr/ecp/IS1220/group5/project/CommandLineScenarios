@@ -1,0 +1,31 @@
+//Adding a meal
+registerRestaurant McDonalds mcdonalds 2:5 123456
+login mcdonalds 123456
+createItem FrenchFries 2
+createItem BigMac 4
+createItem CocaCola 2
+createMeal BestOf
+addDish2Meal FrenchFries BestOf
+addDish2Meal BigMac BestOf
+addDish2Meal CocaCola BestOf
+showMeal McDonalds BestOf
+setMealPrice BestOf
+saveMenu
+
+//Displaying a meal
+showMeal McDonalds BestOf
+
+//Disconnect user to the system
+disconnect
+
+//Customer
+registerCustomer Danyi Wu WDY 501 30:20 danyi.wu@student.ecp.fr 0650102722
+login WDY 501
+showRestaurant
+chooseRestaurant McDonalds
+showMenu
+addMeal2Order BestOf 2
+addMeal2Order Coco              >>expect error
+addItem2Order FrenchFries 1
+showOrder
+endOrder
