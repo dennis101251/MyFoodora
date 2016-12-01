@@ -29,58 +29,22 @@ public class CommandLine {
             String[] commands = command.split(" ");
 
             switch (commands[0]){
+                //login of system
                 case "login":
                     if (commands.length !=3 ){
-                        System.out.println("invalid login");
+                        System.out.println("invalid type");
+                    }
+                    else if (user != null){
+                        System.out.println("User: " + user.getUsername() + "has logged in");
+                        System.out.println("type: disconnect to change user");
                     }
                     else {
                         loginUser(commands[1], commands[2]);
                     }
                     break;
-                case "createMeal":
-                    createMeal(commands[1]);
-                    break;
-                case "addDish2Meal":
-                    addDish2Meal(commands[1], commands[2]);
-                    break;
-                case "showMeal":
-                    showMeal(commands[1]);
-                    break;
-                case "saveMeal":
-                    saveMeal(commands[1]);
-                    break;
-                case "setMealPrice":
-                    setMealPrice(commands[1]);
-                    break;
-                case "setSpecialOffer":
-                    setSpecialOffer(commands[1]);
-                    break;
-                case "removeFromSpecialOffer":
-                    removeFromSpecialOffer(commands[1]);
-                    break;
-                case "addDish":
-                    addDish(commands[1], commands[2], new BigDecimal(commands[3]));
-                    break;
-                case "addMeal2Order":
-                    addMeal2Order(commands[1]);
-                    break;
-                case "endOrder":
-                    endOrder();
-                    break;
-                case "onDuty":
-                    onDuty(commands[1]);
-                    break;
-                case "offDuty":
-                    offDuty(commands[1]);
-                    break;
-                case "addContactInfo":
-                    addContactInfo(commands[1]);
-                    break;
-                case "associateCard":
-                    associateCard(commands[1], commands[2]);
-                    break;
-                case "associateAgreement":
-                    associateAgreement(commands[1], commands[2]);
+                case "disconnect":
+                    System.out.printf(user.getUsername() + "has logged out");
+                    user = null;
                     break;
 
                 //Register user
@@ -109,13 +73,66 @@ public class CommandLine {
                     }
                     break;
                 case "registerManager":
-                    if (commands.length != 7){
+                    if (commands.length != 5){
                         System.out.println("invalid login");
                     }
                     else {
                         registerManager(commands[1],commands[2],commands[3],commands[4]);
                     }
                     break;
+                //Customer's command
+                case "showRestaurant":
+//                    showRestaurant();
+                    break;
+                case "choose":
+                    break;
+                case "addMeal2Order":
+                    addMeal2Order(commands[1]);
+                    break;
+                case "endOrder":
+                    endOrder();
+                    break;
+
+                case "createMeal":
+                    createMeal(commands[1]);
+                    break;
+                case "addDish2Meal":
+                    addDish2Meal(commands[1], commands[2]);
+                    break;
+                case "showMeal":
+                    showMeal(commands[1]);
+                    break;
+                case "saveMeal":
+                    saveMeal(commands[1]);
+                    break;
+                case "setMealPrice":
+                    setMealPrice(commands[1]);
+                    break;
+                case "setSpecialOffer":
+                    setSpecialOffer(commands[1]);
+                    break;
+                case "removeFromSpecialOffer":
+                    removeFromSpecialOffer(commands[1]);
+                    break;
+                case "addDish":
+                    addDish(commands[1], commands[2], new BigDecimal(commands[3]));
+                    break;
+                case "onDuty":
+                    onDuty(commands[1]);
+                    break;
+                case "offDuty":
+                    offDuty(commands[1]);
+                    break;
+                case "addContactInfo":
+                    addContactInfo(commands[1]);
+                    break;
+                case "associateCard":
+                    associateCard(commands[1], commands[2]);
+                    break;
+                case "associateAgreement":
+                    associateAgreement(commands[1], commands[2]);
+                    break;
+
 
                 case "notifySpecialOffer":
                     break;
@@ -159,6 +176,39 @@ public class CommandLine {
 
             System.out.println("Your resurant must be logged in to create a meal.");
 
+        }
+    }
+
+    public boolean isCustomer(){
+        if (user instanceof Customer){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean isCourier(){
+        if (user instanceof Courier){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean isRestaurant(){
+        if (user instanceof Restaurant){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean isManager(){
+        if (user instanceof Manager){
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
