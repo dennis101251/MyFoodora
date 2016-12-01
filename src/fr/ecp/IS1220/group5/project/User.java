@@ -38,6 +38,10 @@ public abstract class User implements Serializable{
 		return username;
 	}
 
+	public String getName(){
+		return name;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" +

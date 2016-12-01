@@ -34,6 +34,10 @@ public class MyFoodoraSystem {
         this.users.addUser(user);
     }
 
+    public ArrayList<User> getUsers(){
+        return users.getUsers();
+    }
+
     public void removeUser(String userName) throws UserNotFoundException {
         boolean isFound = false;
         User myUser = null;
@@ -120,22 +124,21 @@ public class MyFoodoraSystem {
 
         boolean isFound = false;
         User myUser = null;
-        for (User user: users.getUsers()) {
-            if (user.getUsername().equals(userName)){
+        for (User user : users.getUsers()) {
+            if (user.getUsername().equals(userName)) {
                 myUser = user;
                 isFound = true;
                 break;
             }
         }
 
-        if (isFound){
+        if (isFound) {
             try {
-                if (PasswordHash.validatePassword(password,myUser.getPassword())){
+                if (PasswordHash.validatePassword(password, myUser.getPassword())) {
                     this.user = myUser;
                     System.out.println("You have entered myFoodora!");
                     return myUser;
-                }
-                else {
+                } else {
                     System.out.println("Invalid password");
                     return null;
                 }
@@ -144,8 +147,7 @@ public class MyFoodoraSystem {
             } catch (InvalidKeySpecException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             System.out.println("User: " + userName + " is not found in system");
         }
         return null;
@@ -154,5 +156,5 @@ public class MyFoodoraSystem {
     public static void main(String[] args) {
         MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
     }
-}
 
+}

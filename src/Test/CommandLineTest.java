@@ -3,6 +3,7 @@ import fr.ecp.IS1220.group5.project.CommandLine;
 import fr.ecp.IS1220.group5.project.Coordinate;
 import org.junit.Assert;
 import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Created by dennis101251 on 2016/12/1.
@@ -29,5 +30,10 @@ public class CommandLineTest {
         String email = "danyi.wu@student.ecp.fr";
         String phone = "0650102722";
         commandLine.registerCustomer(firstname,lastname,username,password,coordinate,email,phone);
+    }
+
+    @Test
+    public void showRestaurant(){
+        new CommandLine().showResataurant();
     }
 }

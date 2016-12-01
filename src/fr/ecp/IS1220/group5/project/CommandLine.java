@@ -2,6 +2,7 @@ package fr.ecp.IS1220.group5.project;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -82,7 +83,9 @@ public class CommandLine {
                     break;
                 //Customer's command
                 case "showRestaurant":
-//                    showRestaurant();
+                    if (isCustomer()){
+                        showResataurant();
+                    }
                     break;
                 case "choose":
                     break;
@@ -240,6 +243,21 @@ public class CommandLine {
 
     }
 
+    public void showResataurant(){
+        ArrayList<User> allUser = myFoodoraSystem.getUsers();
+        ArrayList<Restaurant> allRestaurant = new ArrayList<Restaurant>();
+        for (User user: allUser
+             ) {
+            if (user instanceof Restaurant){
+                allRestaurant.add((Restaurant) user);
+            }
+        }
+        for (Restaurant user: allRestaurant
+             ) {
+            System.out.println(user.getName());
+        }
+    }
+
     public void addMeal2Order(String mealName){
 
     }
@@ -267,6 +285,7 @@ public class CommandLine {
     public void associateAgreement(String username, String agreement){
 
     }
+
 
     public Coordinate String2Coordinate(String address) {
         String[] coordinates = address.split(":");
