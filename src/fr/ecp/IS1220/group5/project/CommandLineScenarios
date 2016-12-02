@@ -25,7 +25,10 @@ showRestaurant
 chooseRestaurant McDonalds
 showMenu
 addMeal2Order BestOf 2
-addMeal2Order Coco              >>expect error
+addMeal2Order Coco 1            >>expect error
 addItem2Order FrenchFries 1
 showOrder
 endOrder
+showHistoryOfOrderOfCustomer
+
+//Customer

@@ -13,11 +13,7 @@ public class Customer extends User{
 	private boolean isNotified = false;
 	private String contactType = "email" ;
 	private FidelityCard fidelityCard = new BasicFidelityCard();
-//
-//	public Customer(String name, String surname, String username) {
-//		super(name, username);
-//		this.surname = surname;
-//	}
+	private ArrayList<Order> historyOfOrder = new ArrayList<>();
 
 	public void setNotified_On(){
 		this.isNotified = true;
@@ -60,7 +56,7 @@ public class Customer extends User{
 		orders.add(order);
 
 		try {
-			FileOutputStream fileOut = new FileOutputStream("tmp/" + this.id + "orders.ser");
+			FileOutputStream fileOut = new FileOutputStream("tmp/orders.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
 			out.writeObject(orders);
@@ -77,7 +73,7 @@ public class Customer extends User{
 		ArrayList<Order> orders = null;
 
 		try {
-			FileInputStream fileIn = new FileInputStream("tmp/" + this.id + "orders.ser");
+			FileInputStream fileIn = new FileInputStream("tmp/orders.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 
 			orders = (ArrayList<Order>) in.readObject();
@@ -94,6 +90,13 @@ public class Customer extends User{
 		return orders;
 	}
 
+	public void addOrderToHistory(Order order){
+		this.historyOfOrder.add(order);
+	}
+
+	public ArrayList<Order> getHistoryOfOrder(){
+		return historyOfOrder;
+	}
 
 	private void pay(BigDecimal price, Restaurant restaurant){
 

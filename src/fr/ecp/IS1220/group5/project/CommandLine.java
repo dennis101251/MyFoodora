@@ -22,6 +22,9 @@ public class CommandLine {
                 case "login":
                     myFoodoraSystem.loginUser(commands[1], commands[2]);
                     break;
+                case "showCurrentUser":
+                    System.out.println("Current User is " + myFoodoraSystem.getCurrentUser().getName());
+                    break;
                 case "disconnect":
                     myFoodoraSystem.disconnectUser();
                     break;
@@ -85,7 +88,12 @@ public class CommandLine {
                 case "endOrder":
                     myFoodoraSystem.endOrder();
                     break;
-
+                case "showHistoryOfOrderOfCustomer":
+                    myFoodoraSystem.showHistoryOfOrder_Customer();
+                    break;
+                case "showHistoryOfOrderOfSystem":
+                    myFoodoraSystem.showHistoryOfOrder_System();
+                    break;
                 case "onDuty":
                     myFoodoraSystem.onDuty(commands[1]);
                     break;

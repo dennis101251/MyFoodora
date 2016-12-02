@@ -22,10 +22,10 @@ public class Order implements Serializable{
 	public void showOrder(){
 		for (Item item: items
 			 ) {
-			System.out.println(item.getName());
+			System.out.println(item.getName() + " " + Money.display(item.getPrice()));
 		}
 		for (Meal meal: meals){
-			System.out.println(meal.getName());
+			System.out.println(meal.getName() + " " + Money.display(meal.getPrice()));
 		}
 	}
 
@@ -55,6 +55,10 @@ public class Order implements Serializable{
 	public void addMeal(Meal meal){
 		this.meals.add(meal);
 		total_price = this.compute_total_price();
+	}
+
+	public boolean isEmpty(){
+		return meals.isEmpty() && items.isEmpty();
 	}
 
 	public ArrayList<Item> getItems() {

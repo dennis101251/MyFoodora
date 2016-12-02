@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class MyFoodoraSystem {
     private Userlist users = new Userlist();
-    private ArrayList<Order> orders;
+    private ArrayList<Order> orders = new ArrayList<Order>();
     private double service_fee;
     private double markup_percentage;
     private double delivery_cost;
@@ -132,35 +132,46 @@ public class MyFoodoraSystem {
 
         boolean isFound = false;
         User myUser = null;
-        for (User user: users.getUsers()) {
-            if (user.getUsername().equals(userName)){
-                myUser = user;
-                isFound = true;
-                break;
-            }
-        }
 
-        if (isFound){
-            try {
-                if (PasswordHash.validatePassword(password,myUser.getPassword())){
-                    this.user = myUser;
-                    System.out.println("You have entered myFoodora!");
+        if (user == null){
+            for (User user: users.getUsers()) {
+                if (user.getUsername().equals(userName)){
+                    myUser = user;
+                    isFound = true;
+                    break;
                 }
-                else {
-                    System.out.println("Invalid password");
+            }
+
+            if (isFound){
+                try {
+                    if (PasswordHash.validatePassword(password,myUser.getPassword())){
+                        this.user = myUser;
+                        System.out.println("You have entered myFoodora!");
+                    }
+                    else {
+                        System.out.println("Invalid password");
+                    }
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeySpecException e) {
+                    e.printStackTrace();
                 }
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (InvalidKeySpecException e) {
-                e.printStackTrace();
+            }
+            else {
+                System.out.println("User: " + userName + " is not found in system");
             }
         }
         else {
-            System.out.println("User: " + userName + " is not found in system");
+            System.out.println("you have to disconnect first");
         }
     }
 
+    public User getCurrentUser(){
+        return user;
+    }
+
     public void disconnectUser(){
+        System.out.println(user.getName() + " has logged out");
         this.user = null;
     }
 
@@ -326,9 +337,12 @@ public class MyFoodoraSystem {
     public void endOrder(){
         if (user instanceof Customer){
             if (currentRestaurant != null){
-                if (!currentOrder.getItems().isEmpty() && !currentOrder.getItems().isEmpty()){
+                if (!currentOrder.isEmpty()){
                     currentOrder.showOrder();
                     System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
+                    this.orders.add(currentOrder);
+                    ((Customer) user).addOrderToHistory(currentOrder);
+                    currentOrder = null;
                 }
                 else {
                     System.out.println("you have to choose an item first");
@@ -336,6 +350,40 @@ public class MyFoodoraSystem {
             }
             else {
                 System.out.println("you have to choose a restaurant first");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void showHistoryOfOrder_Customer(){
+        if (user instanceof Customer){
+            if (!((Customer) user).getHistoryOfOrder().isEmpty()){
+                for (int i = 0; i < ((Customer) user).getHistoryOfOrder().size(); i++) {
+                    System.out.println(">> " + (i+1) + ") Order");
+                    ((Customer) user).getHistoryOfOrder().get(i).showOrder();
+                }
+            }
+            else {
+                System.out.println("Your history of order is empty");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void showHistoryOfOrder_System(){
+        if (user instanceof Manager){
+            if (!orders.isEmpty()){
+                for (int i = 0; i < ((Customer) user).getHistoryOfOrder().size(); i++) {
+                    System.out.println(">> " + (i+1) + ") Order");
+                    orders.get(i).showOrder();
+                }
+            }
+            else {
+                System.out.println("The history of order is empty");
             }
         }
         else {
