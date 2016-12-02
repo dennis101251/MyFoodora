@@ -259,7 +259,7 @@ public class MyFoodoraSystem {
 
     public void addMeal2Order(String mealName, Integer quantity){
         if (user instanceof Customer){
-            if (currentRestaurant != null){
+            if (currentOrder != null){
                 boolean isFound = false;
                 for (Meal meal: currentRestaurant.getMeals()
                      ) {
@@ -291,7 +291,7 @@ public class MyFoodoraSystem {
 
     public void addItem2Order(String itemName, Integer quantity){
         if (user instanceof Customer){
-            if (currentRestaurant != null){
+            if (currentOrder != null){
                 boolean isFound = false;
                 for (Item item: currentRestaurant.getItems()
                         ) {
@@ -321,7 +321,7 @@ public class MyFoodoraSystem {
 
     public void showOrder(){
         if (user instanceof Customer){
-            if (currentRestaurant != null){
+            if (currentOrder != null){
                 currentOrder.showOrder();
                 System.out.println(Money.display(currentOrder.getTotal_price()));
             }
@@ -336,7 +336,7 @@ public class MyFoodoraSystem {
 
     public void endOrder(){
         if (user instanceof Customer){
-            if (currentRestaurant != null){
+            if (currentOrder != null){
                 if (!currentOrder.isEmpty()){
                     currentOrder.showOrder();
                     System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
