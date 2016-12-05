@@ -10,6 +10,7 @@ public class Restaurant extends User {
 	private ArrayList<Meal> meals = new ArrayList<>();
 	private double genericDiscountFactor = 0.05;
 	private double specialDiscountFactor = 0.1;
+	private ArrayList<Order> orders = new ArrayList<>();
 
 	public Restaurant(String name, String username, String password, Coordinate address) {
 		super(name, username, password);
@@ -121,6 +122,14 @@ public class Restaurant extends User {
 	
 	public void removeMeal(Meal meal){
 		meals.remove(meal);
+	}
+
+	public void addOrder(Order order){
+		this.orders.add(order);
+	}
+
+	public ArrayList<Order> getOrders(){
+		return orders;
 	}
 
 	@Override

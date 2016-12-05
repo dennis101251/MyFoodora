@@ -11,15 +11,23 @@ public class Order implements Serializable{
 	private ArrayList<Item> items = new ArrayList<>();
 	private ArrayList<Meal> meals = new ArrayList<>();
 	private Restaurant restaurant;
+	private Customer customer;
 	private BigDecimal total_price = new BigDecimal("0");
+	private BigDecimal actual_price = new BigDecimal("0");
 
-	public Order(Restaurant restaurant) {
+	public Order(Restaurant restaurant, Customer customer) {
 
 		this.restaurant = restaurant;
+		this.customer = customer;
 
 	}
 
+	public void applyFidelityCard(BigDecimal actual_price){
+		this.actual_price = actual_price;
+	}
+
 	public void showOrder(){
+		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
 		for (Item item: items
 			 ) {
 			System.out.println(item.getName() + " " + Money.display(item.getPrice()));
@@ -72,7 +80,9 @@ public class Order implements Serializable{
 	public Restaurant getRestaurant() {
 		return restaurant;
 	}
-
+	public BigDecimal getActual_price() {
+		return actual_price;
+	}
 	public BigDecimal getTotal_price() {
 		return total_price;
 	}

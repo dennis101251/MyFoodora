@@ -1,6 +1,7 @@
 package Test;
 
 import fr.ecp.IS1220.group5.project.CommandLine;
+import fr.ecp.IS1220.group5.project.UserNotFoundException;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -12,7 +13,7 @@ import java.io.InputStream;
 public class CommandLineTest {
 
     @Test
-    public void CustomerTest(){
+    public void CustomerTest() throws UserNotFoundException {
         CommandLine commandLine = new CommandLine();
 
         String input = "login WDY 501\n";

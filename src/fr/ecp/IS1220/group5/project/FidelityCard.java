@@ -7,10 +7,12 @@ import java.math.BigDecimal;
  */
 public abstract class FidelityCard {
 
-    protected int points;
+    protected int points = 0;
     public abstract BigDecimal compute_discounted_price(BigDecimal price);
 
+    public void addPoints(int newPoints){points = this.points + newPoints;}
     public int getPoints() {
         return points;
     }
+    public String getFidelityCardName(){return "FidelityCard";}
 }

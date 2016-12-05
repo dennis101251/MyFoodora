@@ -12,4 +12,8 @@ public class BasicFidelityCard extends FidelityCard implements Serializable{
         return price;
     }
 
+    @Override
+    public String getFidelityCardName() {
+        return "Basic FidelityCard";
+    }
 }

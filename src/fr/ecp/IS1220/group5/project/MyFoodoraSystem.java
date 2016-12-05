@@ -1,9 +1,6 @@
 package fr.ecp.IS1220.group5.project;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -20,7 +17,7 @@ public class MyFoodoraSystem {
     private double markup_percentage;
     private double delivery_cost;
     private Scanner scanner = new Scanner(System.in);
-    private User user = null;
+    private User currentUser = null;
     private Restaurant currentRestaurant = null;
     private Order currentOrder = null;
 
@@ -28,6 +25,8 @@ public class MyFoodoraSystem {
 
 //        Load all registered the users
         retrieveUsers();
+        retrieveOrders();
+        System.out.println(orders.toString());
         System.out.println(users.toString());
 
         System.out.println("init successfully");
@@ -35,10 +34,12 @@ public class MyFoodoraSystem {
 
     public User getUser(String userName){
         for (User user : users.getUsers()){
-            if (user.getName().equalsIgnoreCase(userName)){
+            if (user.getUsername().equalsIgnoreCase(userName)){
+                System.out.println("found "+ userName);
                 return user;
             }
         }
+        System.out.println("didn't find " + userName);
         return null;
     }
 
@@ -47,20 +48,25 @@ public class MyFoodoraSystem {
     }
 
     public void removeUser(String userName) throws UserNotFoundException {
-        boolean isFound = false;
-        User myUser = null;
-        for (User user : users.getUsers()) {
-            if (user.getUsername().equals(userName)) {
-                myUser = user;
-                isFound = true;
-                break;
+        if (currentUser instanceof Manager){
+            boolean isFound = false;
+            User myUser = null;
+            for (User user : users.getUsers()) {
+                if (user.getUsername().equals(userName)) {
+                    myUser = user;
+                    isFound = true;
+                    break;
+                }
+            }
+
+            if (isFound) {
+                users.removeUser(myUser);
+            } else {
+                System.out.println("User: " + userName + " is not found in system");
             }
         }
-
-        if (isFound) {
-            users.removeUser(myUser);
-        } else {
-            System.out.println("User: " + userName + " is not found in system");
+        else {
+            System.out.println("You must log in first");
         }
 
     }
@@ -69,7 +75,8 @@ public class MyFoodoraSystem {
 
         //Verify whether the Order file exists
 
-        File file = new File("/tmp/orders.ser");
+        File file = new File("tmp/orders.ser");
+
         if (file.exists()) {
             try {
                 FileInputStream fileIn = new FileInputStream("tmp/orders.ser");
@@ -91,9 +98,22 @@ public class MyFoodoraSystem {
 
     }
 
+    public void saveOrders(){
+        try {
+            FileOutputStream fileOut = new FileOutputStream("tmp/orders.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+            out.writeObject(orders);
+
+            out.close();
+            fileOut.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void retrieveUsers() {
-        //The problem is that maybe there is no ser file at the beginning
-        //Modify in userlist class
 
         this.users.retrieveUsers();
 
@@ -133,7 +153,7 @@ public class MyFoodoraSystem {
         boolean isFound = false;
         User myUser = null;
 
-        if (user == null){
+        if (currentUser == null){
             for (User user: users.getUsers()) {
                 if (user.getUsername().equals(userName)){
                     myUser = user;
@@ -145,7 +165,7 @@ public class MyFoodoraSystem {
             if (isFound){
                 try {
                     if (PasswordHash.validatePassword(password,myUser.getPassword())){
-                        this.user = myUser;
+                        this.currentUser = myUser;
                         System.out.println("You have entered myFoodora!");
                     }
                     else {
@@ -167,30 +187,53 @@ public class MyFoodoraSystem {
     }
 
     public User getCurrentUser(){
-        return user;
+        return currentUser;
     }
 
     public void disconnectUser(){
-        System.out.println(user.getName() + " has logged out");
-        this.user = null;
+        System.out.println(currentUser.getName() + " has logged out");
+        this.currentUser = null;
     }
 
     public void registerRestaurant(String name, String username, Coordinate address, String password) {
-        User newRestaurant = new Restaurant(name, username, password, address);
-        this.users.addUser(newRestaurant);
-        System.out.println("You have been registered successfully!");
-        System.out.println("======================================");
+        if (getUser(username) == null){
+            User newRestaurant = new Restaurant(name, username, password, address);
+            this.users.addUser(newRestaurant);
+            System.out.println("You have been registered successfully!");
+            System.out.println("======================================");
+        }
+        else{
+            System.out.println("this username is not valid");
+        }
     }
 
     public void registerCustomer(String firstName, String lastName, String username, String password, Coordinate address, String mail, String phone) {
-        User newCustomer = new Customer(firstName, lastName, username, password, address, mail, phone);
-        this.users.addUser(newCustomer);
-        System.out.println("You have been registered successfully!");
-        System.out.println("======================================");
+        if (getUser(username) == null){
+            User newCustomer = new Customer(firstName, lastName, username, password, address, mail, phone);
+            this.users.addUser(newCustomer);
+            System.out.println("You have been registered successfully!");
+            System.out.println("======================================");
+        }
+        else{
+            System.out.println("this username is not valid");
+        }
+    }
+
+    public void registerManager(String name, String lastName, String username, String password){
+        if (getUser(username) == null){
+            User newManager = new Manager(name, username, password, lastName);
+            this.users.addUser(newManager);
+            System.out.println("You have been registered successfully!");
+            System.out.println("======================================");
+        }
+        else{
+            System.out.println("this username is not valid");
+        }
+
     }
 
     public void showRestaurant(){
-        if (user instanceof Customer){
+        if (currentUser instanceof Customer){
             ArrayList<Restaurant> allReastaurant= new ArrayList<>();
             for (User user: users.getUsers()
                  ) {
@@ -211,15 +254,29 @@ public class MyFoodoraSystem {
         }
     }
 
+    public void findUser(String userName){
+        if (currentUser instanceof Manager){
+            if (getUser(userName) == null){
+                System.out.println("this username is valid");
+            }
+            else{
+                System.out.println("this username is not valid");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
     public void chooseRestaurant(String restaurant){
-        if (user instanceof Customer){
+        if (currentUser instanceof Customer){
             boolean isFound = false;
             for (User user: users.getUsers()
                  ) {
                 if (user.getName().equalsIgnoreCase(restaurant) && user instanceof Restaurant){
                     isFound = true;
                     currentRestaurant = (Restaurant) user;
-                    currentOrder = new Order(currentRestaurant);
+                    currentOrder = new Order(currentRestaurant,(Customer) currentUser);
                     System.out.println("you have entered: " + restaurant);
                     break;
                 }
@@ -237,7 +294,7 @@ public class MyFoodoraSystem {
 
     //Show the all the available options to the customer
     public void showMenu(){
-        if (user instanceof Customer){
+        if (currentUser instanceof Customer){
             if (currentRestaurant != null){
                 System.out.println(">> items");
                 for (Item item: currentRestaurant.getItems()){
@@ -258,7 +315,7 @@ public class MyFoodoraSystem {
     }
 
     public void addMeal2Order(String mealName, Integer quantity){
-        if (user instanceof Customer){
+        if (currentUser instanceof Customer){
             if (currentOrder != null){
                 boolean isFound = false;
                 for (Meal meal: currentRestaurant.getMeals()
@@ -290,7 +347,7 @@ public class MyFoodoraSystem {
     }
 
     public void addItem2Order(String itemName, Integer quantity){
-        if (user instanceof Customer){
+        if (currentUser instanceof Customer){
             if (currentOrder != null){
                 boolean isFound = false;
                 for (Item item: currentRestaurant.getItems()
@@ -320,7 +377,7 @@ public class MyFoodoraSystem {
     }
 
     public void showOrder(){
-        if (user instanceof Customer){
+        if (currentUser instanceof Customer){
             if (currentOrder != null){
                 currentOrder.showOrder();
                 System.out.println(Money.display(currentOrder.getTotal_price()));
@@ -335,13 +392,26 @@ public class MyFoodoraSystem {
     }
 
     public void endOrder(){
-        if (user instanceof Customer){
+        if (currentUser instanceof Customer){
             if (currentOrder != null){
                 if (!currentOrder.isEmpty()){
+                    //Show the detail of order first
                     currentOrder.showOrder();
                     System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
+                    //apply the fidelity card
+                    currentOrder.applyFidelityCard(((Customer) currentUser).getFidelityCard().compute_discounted_price(currentOrder.getTotal_price()));
+                    System.out.println("After apply fidelity card>> Total: " + Money.display(currentOrder.getActual_price()));
+                    //add points to fidelity card
+                    ((Customer) currentUser).addPoints(currentOrder.getActual_price().intValue());
+                    //send the order to the restaurant
+                    currentRestaurant.addOrder(currentOrder);
+                    //save the order to the history of system
                     this.orders.add(currentOrder);
-                    ((Customer) user).addOrderToHistory(currentOrder);
+                    saveOrders();
+                    //save the order to the history of customer
+                    ((Customer) currentUser).addOrderToHistory(currentOrder);
+                    users.saveUsers();
+                    //clean current order
                     currentOrder = null;
                 }
                 else {
@@ -358,11 +428,11 @@ public class MyFoodoraSystem {
     }
 
     public void showHistoryOfOrder_Customer(){
-        if (user instanceof Customer){
-            if (!((Customer) user).getHistoryOfOrder().isEmpty()){
-                for (int i = 0; i < ((Customer) user).getHistoryOfOrder().size(); i++) {
+        if (currentUser instanceof Customer){
+            if (!((Customer) currentUser).getHistoryOfOrder().isEmpty()){
+                for (int i = 0; i < ((Customer) currentUser).getHistoryOfOrder().size(); i++) {
                     System.out.println(">> " + (i+1) + ") Order");
-                    ((Customer) user).getHistoryOfOrder().get(i).showOrder();
+                    ((Customer) currentUser).getHistoryOfOrder().get(i).showOrder();
                 }
             }
             else {
@@ -375,9 +445,9 @@ public class MyFoodoraSystem {
     }
 
     public void showHistoryOfOrder_System(){
-        if (user instanceof Manager){
+        if (currentUser instanceof Manager){
             if (!orders.isEmpty()){
-                for (int i = 0; i < ((Customer) user).getHistoryOfOrder().size(); i++) {
+                for (int i = 0; i < orders.size(); i++) {
                     System.out.println(">> " + (i+1) + ") Order");
                     orders.get(i).showOrder();
                 }
@@ -391,14 +461,24 @@ public class MyFoodoraSystem {
         }
     }
 
+    public void showFidelityCard(){
+        if (currentUser instanceof Customer){
+            System.out.println(((Customer) currentUser).getFidelityCard().getFidelityCardName());
+            System.out.println(((Customer) currentUser).getFidelityCard().getPoints() + " points");
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
     public void setNotified(String string){
-        if (user instanceof Customer) {
+        if (currentUser instanceof Customer) {
             if (string.equalsIgnoreCase("on")){
-                ((Customer) user).infoBoard.setNotified_On();
-                System.out.println("You can receive messages from Myfoodora by " + ((Customer) user).infoBoard.getContactType());
+                ((Customer) currentUser).infoBoard.setNotified_On();
+                System.out.println("You can receive messages from Myfoodora by " + ((Customer) currentUser).infoBoard.getContactType());
             }
             else if (string.equalsIgnoreCase("off")){
-                ((Customer) user).infoBoard.setNotified_Off();
+                ((Customer) currentUser).infoBoard.setNotified_Off();
                 System.out.println("you will not receive any message from myFoodora");
             }
             else{
@@ -411,10 +491,10 @@ public class MyFoodoraSystem {
     }
 
     public void checkInfoBoard(){
-        if (user instanceof Customer) {
-            if (((Customer) user).infoBoard.isNotified()){
-                Integer num = ((Customer) user).infoBoard.getNumberOfNewMeassages();
-                ArrayList<String> messages = ((Customer) user).infoBoard.getMessages();
+        if (currentUser instanceof Customer) {
+            if (((Customer) currentUser).infoBoard.isNotified()){
+                Integer num = ((Customer) currentUser).infoBoard.getNumberOfNewMeassages();
+                ArrayList<String> messages = ((Customer) currentUser).infoBoard.getMessages();
                 if (messages.isEmpty()){
                     System.out.println("You have no message");
                 }
@@ -446,9 +526,9 @@ public class MyFoodoraSystem {
     }
 
     public void createItem(String itemName, BigDecimal price){
-        if (user instanceof Restaurant){
+        if (currentUser instanceof Restaurant){
 
-            Restaurant restaurant = (Restaurant) user;
+            Restaurant restaurant = (Restaurant) currentUser;
             Item item = new Item(itemName, price, ItemCategory.MainDish, ItemType.Standard);
             restaurant.addItem(item);
 
@@ -462,9 +542,9 @@ public class MyFoodoraSystem {
     }
 
     public void createMeal(String mealName) {
-        if (user instanceof Restaurant){
+        if (currentUser instanceof Restaurant){
 
-            Restaurant restaurant = (Restaurant) user;
+            Restaurant restaurant = (Restaurant) currentUser;
             Meal meal = new Meal(mealName);
             restaurant.addMeal(meal);
 
@@ -478,9 +558,9 @@ public class MyFoodoraSystem {
     }
 
     public void addDish2Meal(String itemName, String mealName) {
-        if (user instanceof Restaurant){
+        if (currentUser instanceof Restaurant){
 
-            Restaurant restaurant = (Restaurant) user;
+            Restaurant restaurant = (Restaurant) currentUser;
             Meal meal = restaurant.getMeal(mealName);
             Item item = restaurant.getItem(itemName);
             meal.addItem(item);
@@ -496,7 +576,7 @@ public class MyFoodoraSystem {
 
     public void saveMenu() {
 
-        if (user instanceof Restaurant){
+        if (currentUser instanceof Restaurant){
 
             users.saveUsers();
 
@@ -522,7 +602,7 @@ public class MyFoodoraSystem {
 
     //
     public void sendMessage(String string){
-        if (user instanceof Restaurant){
+        if (currentUser instanceof Restaurant){
             for (User user: users.getUsers()
                  ) {
                 if (user instanceof Customer) {
@@ -537,14 +617,30 @@ public class MyFoodoraSystem {
     }
 
     public void setMealPrice(String mealName){
-        if (user instanceof Restaurant){
+        if (currentUser instanceof Restaurant){
 
-            Restaurant restaurant = (Restaurant) user;
+            Restaurant restaurant = (Restaurant) currentUser;
             Meal meal = restaurant.getMeal(mealName);
             restaurant.setMealPrice(meal);
 
         } else {
             System.out.println("Your restaurant must be logged in to set the price of a meal.");
+        }
+    }
+
+    public void showOrdersOfRestaurant(){
+        if (currentUser instanceof Restaurant){
+            if (!((Restaurant) currentUser).getOrders().isEmpty()){
+                for (int i = 0; i < ((Restaurant) currentUser).getOrders().size(); i++) {
+                    System.out.println(">> " + (i+1) + ") Order");
+                    ((Restaurant) currentUser).getOrders().get(i).showOrder();
+                }
+            }
+            else {
+                System.out.println("Your order is empty");
+            }
+        } else {
+            System.out.println("Your restaurant must log in.");
         }
     }
 

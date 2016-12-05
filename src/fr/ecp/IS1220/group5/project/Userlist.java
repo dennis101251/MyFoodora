@@ -24,7 +24,6 @@ public class Userlist extends Observable{
         notifyObservers();
     }
 
-
     public void saveUsers(){
         try {
             FileOutputStream fileOut = new FileOutputStream(usersPath);

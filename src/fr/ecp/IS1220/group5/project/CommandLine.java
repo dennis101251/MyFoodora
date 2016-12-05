@@ -12,7 +12,7 @@ public class CommandLine {
     MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
     private Scanner scanner = new Scanner(System.in);
 
-    public void run(){
+    public void run() throws UserNotFoundException {
         String command = null;
         while (!(command = this.scanner.nextLine()).equalsIgnoreCase("quit")){
 
@@ -36,7 +36,9 @@ public class CommandLine {
                     break;
                 case "registerCourier":
                     break;
-
+                case "registerManager":
+                    myFoodoraSystem.registerManager(commands[1], commands[2], commands[3], commands[4]);
+                    break;
                 //Restaurant
                 case "createItem":
                     myFoodoraSystem.createItem(commands[1], new BigDecimal(commands[2]));
@@ -97,11 +99,24 @@ public class CommandLine {
                 case "checkInfoBoard":
                     myFoodoraSystem.checkInfoBoard();
                     break;
+                case "showFidelityCard":
+                    myFoodoraSystem.showFidelityCard();
+                    break;
                 case "showHistoryOfOrderOfSystem":
                     myFoodoraSystem.showHistoryOfOrder_System();
                     break;
+                case "removeUser":
+                    myFoodoraSystem.removeUser(commands[1]);
+                    break;
+                case "findUser":
+                    myFoodoraSystem.findUser(commands[1]);
+                    break;
                 case "sendMessage":
                     myFoodoraSystem.sendMessage(commands[1]);
+                    break;
+                case "showOrdersOfRestaurant":
+                    myFoodoraSystem.showOrdersOfRestaurant();
+                    break;
                 case "onDuty":
                     myFoodoraSystem.onDuty(commands[1]);
                     break;

@@ -30,6 +30,7 @@ addItem2Order FrenchFries 1
 showOrder
 endOrder
 showHistoryOfOrderOfCustomer
+showFidelityCard
 
 setNotified on
 checkInfoBoard
@@ -48,8 +49,10 @@ disconnect
 login WDY 501
 checkInfoBoard
 
-
-
-
-
-//Customer
+//Manager
+registerManager Zexi DENG dennis 101251
+login dennis 101251
+showHistoryOfOrderOfSystem
+findUser dennis
+findUser mcdonalds
+findUser LY
