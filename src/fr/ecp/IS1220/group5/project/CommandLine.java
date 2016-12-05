@@ -91,9 +91,17 @@ public class CommandLine {
                 case "showHistoryOfOrderOfCustomer":
                     myFoodoraSystem.showHistoryOfOrder_Customer();
                     break;
+                case "setNotified":
+                    myFoodoraSystem.setNotified(commands[1]);
+                    break;
+                case "checkInfoBoard":
+                    myFoodoraSystem.checkInfoBoard();
+                    break;
                 case "showHistoryOfOrderOfSystem":
                     myFoodoraSystem.showHistoryOfOrder_System();
                     break;
+                case "sendMessage":
+                    myFoodoraSystem.sendMessage(commands[1]);
                 case "onDuty":
                     myFoodoraSystem.onDuty(commands[1]);
                     break;

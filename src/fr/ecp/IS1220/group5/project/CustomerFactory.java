@@ -65,22 +65,22 @@ public class CustomerFactory extends UserFactory {
                     str = br.readLine();
 
                     if (str.equalsIgnoreCase("Y")){
-                        newCustomer.setNotified_On();
+                        newCustomer.infoBoard.setNotified_On();
                         System.out.println("Select the contact to be used to send the offers: (E)mail/(P)hone");
                         str = br.readLine();
 
                         if (str.equalsIgnoreCase("E")|str.equalsIgnoreCase("Email")){
-                            newCustomer.setContactType_Email();
+                            newCustomer.infoBoard.setContactType_Email();
                         }
                         else if(str.equalsIgnoreCase("P")|str.equalsIgnoreCase("Phone")){
-                            newCustomer.setContactType_Phone();
+                            newCustomer.infoBoard.setContactType_Phone();
                         }
                         else {
-                            newCustomer.setContactType_Email();
+                            newCustomer.infoBoard.setContactType_Email();
                         }
                     }
                     else{
-                        newCustomer.setNotified_Off();
+                        newCustomer.infoBoard.setNotified_Off();
                     }
 
                     System.out.println(newCustomer.toString());

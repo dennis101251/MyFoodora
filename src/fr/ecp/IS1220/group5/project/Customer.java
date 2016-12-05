@@ -8,29 +8,16 @@ public class Customer extends User{
 	
 	private String surname;
 	private Coordinate address;
-	private String email;
-	private String phoneNumber;
-	private boolean isNotified = false;
-	private String contactType = "email" ;
 	private FidelityCard fidelityCard = new BasicFidelityCard();
 	private ArrayList<Order> historyOfOrder = new ArrayList<>();
-
-	public void setNotified_On(){
-		this.isNotified = true;
-	}
-	public void setNotified_Off(){
-		this.isNotified = false;
-	}
-	public void setContactType_Email(){this.contactType = "email";}
-	public void setContactType_Phone(){this.contactType = "phone";}
-
+	public InfoBoard infoBoard = new InfoBoard();
 
 	public Customer(String name, String surname, String username, String password, Coordinate address, String email, String phoneNumber) {
 		super(name, username, password);
 		this.surname = surname;
 		this.address = address;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
+		this.infoBoard.setEmail(email);
+		this.infoBoard.setPhone(phoneNumber);
 	}
 
 	public Customer(String firstName, String lastName, String username, Coordinate address, String password){
@@ -40,7 +27,6 @@ public class Customer extends User{
 	}
 
 	public void placeOrder(Order order){
-
 		this.pay(order.getTotal_price(), order.getRestaurant());
 		this.saveOrder(order);
 	}
@@ -99,7 +85,6 @@ public class Customer extends User{
 	}
 
 	private void pay(BigDecimal price, Restaurant restaurant){
-
 	}
 
 	public FidelityCard getFidelityCard() {
@@ -117,10 +102,6 @@ public class Customer extends User{
 				", username='" + username + '\'' +
 				", surname='" + surname + '\'' +
 				", address=" + address +
-				", email='" + email + '\'' +
-				", phoneNumber='" + phoneNumber + '\'' +
-				", isNotified=" + isNotified +
-				", contactType='" + contactType + '\'' +
 //				", fidelityCard=" + fidelityCard +
 				'}';
 	}

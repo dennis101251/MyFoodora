@@ -31,4 +31,25 @@ showOrder
 endOrder
 showHistoryOfOrderOfCustomer
 
+setNotified on
+checkInfoBoard
+
+disconnect
+registerCustomer Yu Lin LY 123456 50:50 yu.lin@student.ecp.fr 065088229
+login LY 123456
+setNotified off
+
+disconnect
+login mcdonalds 123456
+sendMessage helloEveryone,McDonaldsIsOpen
+sendMessage BigMacIsOnSale
+
+disconnect
+login WDY 501
+checkInfoBoard
+
+
+
+
+
 //Customer

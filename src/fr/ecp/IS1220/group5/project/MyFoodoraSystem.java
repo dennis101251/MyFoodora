@@ -391,6 +391,60 @@ public class MyFoodoraSystem {
         }
     }
 
+    public void setNotified(String string){
+        if (user instanceof Customer) {
+            if (string.equalsIgnoreCase("on")){
+                ((Customer) user).infoBoard.setNotified_On();
+                System.out.println("You can receive messages from Myfoodora by " + ((Customer) user).infoBoard.getContactType());
+            }
+            else if (string.equalsIgnoreCase("off")){
+                ((Customer) user).infoBoard.setNotified_Off();
+                System.out.println("you will not receive any message from myFoodora");
+            }
+            else{
+                System.out.println(">>invalid command");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void checkInfoBoard(){
+        if (user instanceof Customer) {
+            if (((Customer) user).infoBoard.isNotified()){
+                Integer num = ((Customer) user).infoBoard.getNumberOfNewMeassages();
+                ArrayList<String> messages = ((Customer) user).infoBoard.getMessages();
+                if (messages.isEmpty()){
+                    System.out.println("You have no message");
+                }
+                else {
+                    if ( num > 1){
+                        System.out.println("You have " + num + " new messages");
+                    }
+                    else {
+                        System.out.println("You have " + num + " new message");
+                    }
+                    for (int i = 0; i < messages.size(); i++) {
+                        if (i < num ){
+                            System.out.println(">> new message: " + messages.get(i));
+                        }
+                        else {
+                            System.out.println(">> " + messages.get(i));
+                        }
+                    }
+                }
+            }
+            else {
+                System.out.println("You can't receive message from myFoodora");
+                System.out.println("Please set infoBoard notified on");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
     public void createItem(String itemName, BigDecimal price){
         if (user instanceof Restaurant){
 
@@ -464,6 +518,22 @@ public class MyFoodoraSystem {
 
     public void saveMeal(String mealName){
 
+    }
+
+    //
+    public void sendMessage(String string){
+        if (user instanceof Restaurant){
+            for (User user: users.getUsers()
+                 ) {
+                if (user instanceof Customer) {
+                    if (((Customer) user).infoBoard.isNotified()){
+                        ((Customer) user).infoBoard.addMessage(string);
+                    }
+                }
+            }
+        } else {
+            System.out.println("You have to log in");
+        }
     }
 
     public void setMealPrice(String mealName){
