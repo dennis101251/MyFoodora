@@ -408,6 +408,34 @@ public class MyFoodoraSystem {
         }
     }
 
+    public void averageIncomePerCustomer(){
+        if (currentUser instanceof Manager){
+            if (!orders.isEmpty()){
+                Integer numberOfCustomer = 0;
+                for (User user: users.getUsers()
+                     ) {
+                    if (user instanceof Customer){
+                        if (!((Customer) user).getHistoryOfOrder().isEmpty()){
+                            numberOfCustomer = numberOfCustomer +1;
+                        }
+                    }
+                }
+                if (numberOfCustomer > 0){
+                    System.out.println(Money.display(total_income.divide(BigDecimal.valueOf(numberOfCustomer))));
+                }
+                else {
+                    System.out.println("there is no customer in the system");
+                }
+            }
+            else {
+                System.out.println("The history of order is empty");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
     /** Customer */
     public void showRestaurant(){
         if (currentUser instanceof Customer){

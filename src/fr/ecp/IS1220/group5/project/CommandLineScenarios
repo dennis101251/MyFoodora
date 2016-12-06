@@ -61,6 +61,7 @@ login dennis 101251
 totalIncome
 totalDeliveryCost
 totalProfit
+averageIncomePerCustomer
 
 //Test disactivate user for Manager
 login dennis 101251

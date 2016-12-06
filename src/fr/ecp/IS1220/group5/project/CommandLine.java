@@ -144,6 +144,9 @@ public class CommandLine {
                 case "totalProfit":
                     myFoodoraSystem.totalProfit();
                     break;
+                case "averageIncomePerCustomer":
+                    myFoodoraSystem.averageIncomePerCustomer();
+                    break;
 
                 //Courier
                 case "onDuty":
