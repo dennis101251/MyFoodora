@@ -53,7 +53,7 @@ public class Order implements Serializable{
 	}
 
 	private void computeDeliveryCost(){
-		delivery_cost = delivery_cost.add(BigDecimal.valueOf(Coordinate.getDistance(restaurant.getAddress(),customer.getAddress())));
+		delivery_cost = BigDecimal.valueOf(Coordinate.getDistance(restaurant.getAddress(),customer.getAddress()));
 		delivery_cost = delivery_cost.multiply(dilivery_cost_price);
 	}
 
@@ -108,6 +108,8 @@ public class Order implements Serializable{
 	public BigDecimal getTotal_price() {
 		return order_price;
 	}
+	public BigDecimal getDelivery_cost(){ return delivery_cost;}
+
 
 	@Override
 	public String toString() {

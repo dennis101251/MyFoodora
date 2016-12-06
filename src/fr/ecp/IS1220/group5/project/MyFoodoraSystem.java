@@ -20,6 +20,9 @@ public class MyFoodoraSystem {
     private User currentUser = null;
     private Restaurant currentRestaurant = null;
     private Order currentOrder = null;
+    private BigDecimal total_income = new BigDecimal("0");
+    private BigDecimal total_delivery_cost = new BigDecimal("0");
+    private BigDecimal total_profit = new BigDecimal("0");
 
     public MyFoodoraSystem() {
 
@@ -203,8 +206,13 @@ public class MyFoodoraSystem {
     }
 
     public void disconnectUser(){
-        System.out.println(currentUser.getName() + " has logged out");
-        this.currentUser = null;
+        if (currentUser!=null){
+            System.out.println(currentUser.getName() + " has logged out");
+            this.currentUser = null;
+        }
+        else {
+            System.out.println("there is no user connected in system");
+        }
     }
 
     public void registerRestaurant(String name, String username, Coordinate address, String password) {
@@ -244,6 +252,27 @@ public class MyFoodoraSystem {
 
     }
 
+    private void calculateFinancial(){
+        //Total income
+        BigDecimal money =new BigDecimal("0");
+        for (Order order: orders
+                ) {
+            money = money.add(order.getActual_price());
+        }
+        this.total_income = money;
+
+        //Total delivery cost
+        money = BigDecimal.valueOf(0);
+        for (Order order: orders
+                ) {
+            money = money.add(order.getDelivery_cost());
+        }
+        this.total_delivery_cost = money;
+
+        total_profit = total_income.subtract(total_delivery_cost);
+    }
+
+
     /** Manager */
     public void findUser(String userName){
         if (currentUser instanceof Manager){
@@ -251,7 +280,7 @@ public class MyFoodoraSystem {
                 System.out.println("There is no " + userName +" in myFoodora");
             }
             else{
-                System.out.println(">> " + userName + "has been found in myFoodora");
+                System.out.println(">> " + userName + " has been found in myFoodora");
             }
         }
         else {
@@ -334,12 +363,28 @@ public class MyFoodoraSystem {
 
     public void totalIncome(){
         if (currentUser instanceof Manager){
-            BigDecimal total_income =new BigDecimal("0");
-            for (Order order: orders
-                 ) {
-                total_income = total_income.add(order.getActual_price());
-            }
-            System.out.println(Money.display(total_income));;
+            calculateFinancial();
+            System.out.println(Money.display(total_income));
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void totalDeliveryCost(){
+        if (currentUser instanceof Manager){
+            calculateFinancial();
+            System.out.println(Money.display(total_delivery_cost));
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void totalProfit(){
+        if (currentUser instanceof Manager){
+            calculateFinancial();
+            System.out.println(Money.display(total_profit));
         }
         else {
             System.out.println("You must log in first");
@@ -528,6 +573,7 @@ public class MyFoodoraSystem {
 
                     //save the order to the history of system
                     this.orders.add(currentOrder);
+                    calculateFinancial();
                     saveOrders();
 
                     //save the order to the history of customer
@@ -707,7 +753,6 @@ public class MyFoodoraSystem {
 
     }
 
-    //
     public void sendMessage(String string){
         if (currentUser instanceof Restaurant){
             for (User user: users.getUsers()

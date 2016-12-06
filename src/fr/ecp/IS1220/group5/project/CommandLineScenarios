@@ -49,6 +49,7 @@ login WDY 501
 checkInfoBoard
 
 //Manager
+disconnect
 registerManager Zexi DENG dennis 101251
 login dennis 101251
 showHistoryOfOrderOfSystem
@@ -58,7 +59,8 @@ findUser LY
 
 login dennis 101251
 totalIncome
-
+totalDeliveryCost
+totalProfit
 
 //Test disactivate user for Manager
 login dennis 101251
