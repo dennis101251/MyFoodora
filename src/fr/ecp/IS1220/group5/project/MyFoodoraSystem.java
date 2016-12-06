@@ -148,6 +148,7 @@ public class MyFoodoraSystem {
         }
     }
 
+    /** System */
     public void loginUser(String userName, String password) {
 
         boolean isFound = false;
@@ -163,18 +164,24 @@ public class MyFoodoraSystem {
             }
 
             if (isFound){
-                try {
-                    if (PasswordHash.validatePassword(password,myUser.getPassword())){
-                        this.currentUser = myUser;
-                        System.out.println("You have entered myFoodora!");
+                if (myUser.getStatus()){
+                    try {
+                        if (PasswordHash.validatePassword(password,myUser.getPassword())){
+                            this.currentUser = myUser;
+                            System.out.println( myUser.getName() + ": welcome to myFoodora!");
+                            System.out.println("=======================");
+                        }
+                        else {
+                            System.out.println("Invalid password");
+                        }
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeySpecException e) {
+                        e.printStackTrace();
                     }
-                    else {
-                        System.out.println("Invalid password");
-                    }
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (InvalidKeySpecException e) {
-                    e.printStackTrace();
+                }
+                else {
+                    System.out.println("Your account has been disactivated, please contact Manager");
                 }
             }
             else {
@@ -186,8 +193,13 @@ public class MyFoodoraSystem {
         }
     }
 
-    public User getCurrentUser(){
-        return currentUser;
+    public void showCurrentUser(){
+        if (currentUser != null){
+            System.out.println("Current User is: " + currentUser.getName());
+        }
+        else {
+            System.out.println("there is no user connected in myFoodora");
+        }
     }
 
     public void disconnectUser(){
@@ -232,6 +244,50 @@ public class MyFoodoraSystem {
 
     }
 
+    /** Manager */
+    public void findUser(String userName){
+        if (currentUser instanceof Manager){
+            if (getUser(userName) == null){
+                System.out.println("There is no " + userName +" in myFoodora");
+            }
+            else{
+                System.out.println(">> " + userName + "has been found in myFoodora");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void disactivateUser(String userName) throws UserNotFoundException {
+        if (currentUser instanceof Manager){
+            if (getUser(userName) == null){
+                System.out.println("There is no " + userName +" in myFoodora");
+            }
+            else{
+                users.disactivateUser(getUser(userName));
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void activateUser(String userName) throws UserNotFoundException {
+        if (currentUser instanceof Manager){
+            if (getUser(userName) == null){
+                System.out.println("There is no " + userName +" in myFoodora");
+            }
+            else{
+                users.activateUser(getUser(userName));
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /** Customer */
     public void showRestaurant(){
         if (currentUser instanceof Customer){
             ArrayList<Restaurant> allReastaurant= new ArrayList<>();
@@ -251,20 +307,6 @@ public class MyFoodoraSystem {
 
             System.out.println("You must log in first");
 
-        }
-    }
-
-    public void findUser(String userName){
-        if (currentUser instanceof Manager){
-            if (getUser(userName) == null){
-                System.out.println("this username is valid");
-            }
-            else{
-                System.out.println("this username is not valid");
-            }
-        }
-        else {
-            System.out.println("You must log in first");
         }
     }
 
@@ -292,7 +334,6 @@ public class MyFoodoraSystem {
         }
     }
 
-    //Show the all the available options to the customer
     public void showMenu(){
         if (currentUser instanceof Customer){
             if (currentRestaurant != null){
@@ -525,6 +566,7 @@ public class MyFoodoraSystem {
         }
     }
 
+    /** Restaurant */
     public void createItem(String itemName, BigDecimal price){
         if (currentUser instanceof Restaurant){
 
@@ -655,7 +697,7 @@ public class MyFoodoraSystem {
     public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){
 
     }
-
+    /** Courier */
     public void onDuty(String username){
 
     }

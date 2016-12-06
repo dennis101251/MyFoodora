@@ -42,6 +42,12 @@ public abstract class User implements Serializable{
 		return name;
 	}
 
+	public void activate(){
+		status = true;
+	}
+	public void disactivate(){status = false;}
+	public boolean getStatus(){return status;}
+
 	@Override
 	public String toString() {
 		return "User{" +

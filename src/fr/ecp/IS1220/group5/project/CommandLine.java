@@ -19,11 +19,12 @@ public class CommandLine {
             String[] commands = command.split(" ");
 
             switch (commands[0]){
+                //System
                 case "login":
                     myFoodoraSystem.loginUser(commands[1], commands[2]);
                     break;
                 case "showCurrentUser":
-                    System.out.println("Current User is " + myFoodoraSystem.getCurrentUser().getName());
+                    myFoodoraSystem.showCurrentUser();
                     break;
                 case "disconnect":
                     myFoodoraSystem.disconnectUser();
@@ -67,6 +68,12 @@ public class CommandLine {
                 case "addDish":
                     myFoodoraSystem.addDish(commands[1], commands[2], new BigDecimal(commands[3]));
                     break;
+                case "sendMessage":
+                    myFoodoraSystem.sendMessage(commands[1]);
+                    break;
+                case "showOrdersOfRestaurant":
+                    myFoodoraSystem.showOrdersOfRestaurant();
+                    break;
 
                 //Customer
                 case "showRestaurant":
@@ -102,6 +109,8 @@ public class CommandLine {
                 case "showFidelityCard":
                     myFoodoraSystem.showFidelityCard();
                     break;
+
+                //Manager
                 case "showHistoryOfOrderOfSystem":
                     myFoodoraSystem.showHistoryOfOrder_System();
                     break;
@@ -111,12 +120,14 @@ public class CommandLine {
                 case "findUser":
                     myFoodoraSystem.findUser(commands[1]);
                     break;
-                case "sendMessage":
-                    myFoodoraSystem.sendMessage(commands[1]);
+                case "disactivateUser":
+                    myFoodoraSystem.disactivateUser(commands[1]);
                     break;
-                case "showOrdersOfRestaurant":
-                    myFoodoraSystem.showOrdersOfRestaurant();
+                case "activateUser":
+                    myFoodoraSystem.activateUser(commands[1]);
                     break;
+
+                //Courier
                 case "onDuty":
                     myFoodoraSystem.onDuty(commands[1]);
                     break;

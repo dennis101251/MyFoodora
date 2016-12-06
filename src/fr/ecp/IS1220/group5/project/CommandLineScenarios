@@ -25,7 +25,6 @@ showRestaurant
 chooseRestaurant McDonalds
 showMenu
 addMeal2Order BestOf 2
-addMeal2Order Coco 1            >>expect error
 addItem2Order FrenchFries 1
 showOrder
 endOrder
@@ -56,3 +55,14 @@ showHistoryOfOrderOfSystem
 findUser dennis
 findUser mcdonalds
 findUser LY
+
+//Test disactivate user for Manager
+login dennis 101251
+disactivateUser LY
+disconnect
+login LY 123456
+
+login dennis 101251
+activateUser LY
+disconnect
+login LY 123456
