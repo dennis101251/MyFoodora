@@ -44,6 +44,10 @@ public class Customer extends User{
 		this.fidelityCard = fidelityCard;
 	}
 
+	public Coordinate getAddress(){
+		return address;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer{" +

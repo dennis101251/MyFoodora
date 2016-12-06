@@ -170,5 +170,7 @@ public class Restaurant extends User {
 		System.out.println(price);
 	}
 
-
+	public Coordinate getAddress(){
+		return address;
+	}
 }

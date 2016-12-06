@@ -13,9 +13,9 @@ import java.util.Scanner;
 public class MyFoodoraSystem {
     private Userlist users = new Userlist();
     private ArrayList<Order> orders = new ArrayList<Order>();
-    private double service_fee;
-    private double markup_percentage;
-    private double delivery_cost;
+    public double service_fee = 0;
+    public double markup_percentage = 0;
+    public double delivery_cost_price = 1;
     private Scanner scanner = new Scanner(System.in);
     private User currentUser = null;
     private Restaurant currentRestaurant = null;
@@ -142,7 +142,7 @@ public class MyFoodoraSystem {
 
             service_fee = financial.service_fee;
             markup_percentage = financial.markup_percentage;
-            delivery_cost = financial.delivery_cost;
+            delivery_cost_price = financial.delivery_cost;
         } else {
             System.out.println(">> There is no Financial in system");
         }
@@ -289,8 +289,13 @@ public class MyFoodoraSystem {
 
     public void setService_fee(double service_fee){
         if (currentUser instanceof Manager){
-            this.service_fee = service_fee;
-            System.out.println(">> Current service fee: " + service_fee);
+            if  (service_fee > 0){
+                this.service_fee = service_fee;
+                System.out.println(">> Current service fee: " + service_fee);
+            }
+            else {
+                System.out.println("service fee should be positive");
+            }
         }
         else {
             System.out.println("You must log in first");
@@ -299,8 +304,13 @@ public class MyFoodoraSystem {
 
     public void setMarkup_percentage(double markup_percentage){
         if (currentUser instanceof Manager){
-            this.markup_percentage = markup_percentage;
-            System.out.println(">> Current markup percentage: " + markup_percentage);
+            if (markup_percentage > 1){
+                this.markup_percentage = markup_percentage;
+                System.out.println(">> Current markup percentage: " + markup_percentage);
+            }
+            else {
+                System.out.println("markup percentage should be larger than 1");
+            }
         }
         else {
             System.out.println("You must log in first");
@@ -309,8 +319,44 @@ public class MyFoodoraSystem {
 
     public void setDelivery_cost(double delivery_cost){
         if (currentUser instanceof Manager){
-            this.delivery_cost = delivery_cost;
-            System.out.println(">> Current delivery cost: " + delivery_cost);
+            if (delivery_cost > 0){
+                this.delivery_cost_price = delivery_cost;
+                System.out.println(">> Current delivery cost: " + delivery_cost);
+            }
+            else {
+                System.out.println("delivery cost should be positive");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void totalIncome(){
+        if (currentUser instanceof Manager){
+            BigDecimal total_income =new BigDecimal("0");
+            for (Order order: orders
+                 ) {
+                total_income = total_income.add(order.getActual_price());
+            }
+            System.out.println(Money.display(total_income));;
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void showHistoryOfOrder_System(){
+        if (currentUser instanceof Manager){
+            if (!orders.isEmpty()){
+                for (int i = 0; i < orders.size(); i++) {
+                    System.out.println(">> " + (i+1) + ") Order");
+                    orders.get(i).showOrder();
+                }
+            }
+            else {
+                System.out.println("The history of order is empty");
+            }
         }
         else {
             System.out.println("You must log in first");
@@ -348,7 +394,7 @@ public class MyFoodoraSystem {
                 if (user.getName().equalsIgnoreCase(restaurant) && user instanceof Restaurant){
                     isFound = true;
                     currentRestaurant = (Restaurant) user;
-                    currentOrder = new Order(currentRestaurant,(Customer) currentUser);
+                    currentOrder = new Order(currentRestaurant,(Customer) currentUser, delivery_cost_price, markup_percentage, service_fee);
                     System.out.println("you have entered: " + restaurant);
                     break;
                 }
@@ -466,22 +512,28 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Customer){
             if (currentOrder != null){
                 if (!currentOrder.isEmpty()){
+
                     //Show the detail of order first
                     currentOrder.showOrder();
-                    System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
+
                     //apply the fidelity card
                     currentOrder.applyFidelityCard(((Customer) currentUser).getFidelityCard().compute_discounted_price(currentOrder.getTotal_price()));
                     System.out.println("After apply fidelity card>> Total: " + Money.display(currentOrder.getActual_price()));
+
                     //add points to fidelity card
                     ((Customer) currentUser).addPoints(currentOrder.getActual_price().intValue());
+
                     //send the order to the restaurant
                     currentRestaurant.addOrder(currentOrder);
+
                     //save the order to the history of system
                     this.orders.add(currentOrder);
                     saveOrders();
+
                     //save the order to the history of customer
                     ((Customer) currentUser).addOrderToHistory(currentOrder);
                     users.saveUsers();
+
                     //clean current order
                     currentOrder = null;
                 }
@@ -508,23 +560,6 @@ public class MyFoodoraSystem {
             }
             else {
                 System.out.println("Your history of order is empty");
-            }
-        }
-        else {
-            System.out.println("You must log in first");
-        }
-    }
-
-    public void showHistoryOfOrder_System(){
-        if (currentUser instanceof Manager){
-            if (!orders.isEmpty()){
-                for (int i = 0; i < orders.size(); i++) {
-                    System.out.println(">> " + (i+1) + ") Order");
-                    orders.get(i).showOrder();
-                }
-            }
-            else {
-                System.out.println("The history of order is empty");
             }
         }
         else {

@@ -56,6 +56,10 @@ findUser dennis
 findUser mcdonalds
 findUser LY
 
+login dennis 101251
+totalIncome
+
+
 //Test disactivate user for Manager
 login dennis 101251
 disactivateUser LY
@@ -66,3 +70,4 @@ login dennis 101251
 activateUser LY
 disconnect
 login LY 123456
+

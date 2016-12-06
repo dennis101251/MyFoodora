@@ -31,6 +31,10 @@ public class Coordinate implements Serializable{
 		this.y = y;
 	}
 
+	public static Double getDistance(Coordinate a, Coordinate b){
+		return Math.sqrt(Math.pow(a.getX()-b.getX(),2)+Math.pow(a.getY()-b.getY(),2));
+	}
+
 	@Override
 	public String toString() {
 		return "Coordinate [x=" + x + ", y=" + y + "]";

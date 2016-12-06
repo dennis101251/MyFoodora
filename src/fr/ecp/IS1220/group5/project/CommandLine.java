@@ -134,6 +134,10 @@ public class CommandLine {
                     break;
                 case "setDeliveryCost":
                     myFoodoraSystem.setDelivery_cost(Double.parseDouble(commands[1]));
+                    break;
+                case "totalIncome":
+                    myFoodoraSystem.totalIncome();
+                    break;
 
                 //Courier
                 case "onDuty":
