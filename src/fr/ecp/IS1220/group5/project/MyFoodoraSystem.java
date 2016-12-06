@@ -287,6 +287,36 @@ public class MyFoodoraSystem {
         }
     }
 
+    public void setService_fee(double service_fee){
+        if (currentUser instanceof Manager){
+            this.service_fee = service_fee;
+            System.out.println(">> Current service fee: " + service_fee);
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void setMarkup_percentage(double markup_percentage){
+        if (currentUser instanceof Manager){
+            this.markup_percentage = markup_percentage;
+            System.out.println(">> Current markup percentage: " + markup_percentage);
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void setDelivery_cost(double delivery_cost){
+        if (currentUser instanceof Manager){
+            this.delivery_cost = delivery_cost;
+            System.out.println(">> Current delivery cost: " + delivery_cost);
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
     /** Customer */
     public void showRestaurant(){
         if (currentUser instanceof Customer){

@@ -126,6 +126,14 @@ public class CommandLine {
                 case "activateUser":
                     myFoodoraSystem.activateUser(commands[1]);
                     break;
+                case "setServiceFee":
+                    myFoodoraSystem.setService_fee(Double.parseDouble(commands[1]));
+                    break;
+                case "setMarkupPercentage":
+                    myFoodoraSystem.setMarkup_percentage(Double.parseDouble(commands[1]));
+                    break;
+                case "setDeliveryCost":
+                    myFoodoraSystem.setDelivery_cost(Double.parseDouble(commands[1]));
 
                 //Courier
                 case "onDuty":
