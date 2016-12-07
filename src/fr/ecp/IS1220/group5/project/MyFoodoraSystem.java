@@ -11,6 +11,7 @@ import java.util.Scanner;
  * <b>MyFoodoraSystem is the class managing the whole system.</b>
  * <p>
  *     This class stores:
+ *
  *     <ul>
  *         <li>The registered users (managers, restaurants, customers and couriers)</li>
  *         <li>The history of completed orders</li>
