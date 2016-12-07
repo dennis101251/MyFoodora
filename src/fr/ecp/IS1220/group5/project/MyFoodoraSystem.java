@@ -8,7 +8,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Created by Alexandre on 25/11/2016.
+ * <b>MyFoodoraSystem is the class managing the whole system.</b>
+ * <p>
+ *     This class stores:
+ *     <ul>
+ *         <li>The registered users (managers, restaurants, customers and couriers)</li>
+ *         <li>The history of completed orders</li>
+ *         <li>Profit-related information</li>
+ *     </ul>
+ * </p>
+ *
+ * @author alexandre01, dennis101251
+ * @version 2.0
  */
 public class MyFoodoraSystem {
     private Userlist users = new Userlist();
