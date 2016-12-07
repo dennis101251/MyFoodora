@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+/**
+ * <b>The class which represents a customer's cart</b>
+ *
+ * @version 2.0
+ */
 public class Order implements Serializable{
 
 	private static final long serialVersionUID = -4389016276908172461L;

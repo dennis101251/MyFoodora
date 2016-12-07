@@ -4,6 +4,20 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+/**
+ * <b>The class which represents the users of MyFoodora</b>
+ * <p>
+ *     There are 4 types of users:
+ *     <ul>
+ *         <li>Managers</li>
+ *         <li>Restaurants</li>
+ *         <li>Customers</li>
+ *         <li>Couriers</li>
+ *     </ul>
+ * </p>
+ *
+ * @version 2.0
+ */
 public abstract class User implements Serializable{
 
 	private static final long serialVersionUID = 2530207107664573253L;

@@ -23,6 +23,9 @@ import java.util.Scanner;
  * @version 2.0
  */
 public class MyFoodoraSystem {
+    /**
+     * The list that stores the list of registered users.
+      */
     private Userlist users = new Userlist();
     private ArrayList<Order> orders = new ArrayList<Order>();
     public double service_fee = 0;
@@ -47,6 +50,16 @@ public class MyFoodoraSystem {
         System.out.println("init successfully");
     }
 
+    /**
+     * Returns the user with a given username (if he exists)
+     *
+     * @param userName The username of the searched user
+     *
+     *
+     * @return The user, as a User instance
+     *
+     * @see User
+     */
     public User getUser(String userName){
         for (User user : users.getUsers()){
             if (user.getUsername().equalsIgnoreCase(userName)){
@@ -62,6 +75,13 @@ public class MyFoodoraSystem {
         this.users.addUser(user);
     }
 
+    /**
+     * Removes the user with a given name from the Userlist
+     * @param userName
+     * @throws UserNotFoundException
+     *
+     * @see MyFoodoraSystem#users
+     */
     public void removeUser(String userName) throws UserNotFoundException {
         if (currentUser instanceof Manager){
             boolean isFound = false;
@@ -86,6 +106,12 @@ public class MyFoodoraSystem {
 
     }
 
+    /**
+     * Retrieves the stored orders from a .ser file and updates the orders variable
+     *
+     * @see MyFoodoraSystem#orders
+     *
+     */
     public void retrieveOrders() {
 
         //Verify whether the Order file exists
