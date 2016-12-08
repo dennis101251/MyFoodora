@@ -72,8 +72,9 @@ public class Meal  implements Serializable {
 		this.price = price;
 	}
 
-	public Meal(String name){
+	public Meal(String name, Restaurant restaurant){
 		this.name = name;
+		this.restaurant = restaurant;
 	}
 
 	public String getName() {

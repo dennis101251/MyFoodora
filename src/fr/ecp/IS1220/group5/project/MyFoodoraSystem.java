@@ -973,7 +973,7 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
-            Meal meal = new Meal(mealName);
+            Meal meal = new Meal(mealName, (Restaurant) currentUser);
             restaurant.addMeal(meal);
 
             System.out.println(meal + " was successfully created!");
