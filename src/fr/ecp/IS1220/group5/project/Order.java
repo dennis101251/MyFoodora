@@ -53,23 +53,28 @@ public class Order implements Serializable{
 	 */
 	private BigDecimal total_price = new BigDecimal("0");
 
-	public Order(Restaurant restaurant, Customer customer, Double delivery_cost_price, Double markup_percentage, Double service_fee) {
+	public Order(Restaurant restaurant, Customer customer, BigDecimal delivery_cost_per_km, BigDecimal markup_percentage, BigDecimal service_fee) {
 		this.restaurant = restaurant;
 		this.customer = customer;
-		this.delivery_cost_per_km = BigDecimal.valueOf(delivery_cost_price);
-		this.markup_percentage = BigDecimal.valueOf(markup_percentage);
-		this.service_fee = BigDecimal.valueOf(service_fee);
+		this.delivery_cost_per_km = delivery_cost_per_km;
+		this.markup_percentage = markup_percentage;
+		this.service_fee = service_fee;
 		computeDeliveryCost();
 	}
 
 	/**
 	 * Computes the total price of the order, by applying the markup percentage, the fee and the discount (fidelity program)
 	 */
-	private void computeTotalPrice(){
+	private void updateTotalPrice(){
+
+		updateOrderPrice();
+
 		total_price = order_price;
-		total_price = total_price.multiply(markup_percentage.add(BigDecimal.valueOf(1)));
+
+		total_price = total_price.multiply(markup_percentage.add(new BigDecimal(1)));
+		System.out.println("Test " + total_price);
 		total_price = total_price.add(service_fee);
-		total_price = customer.getFidelityCard().compute_discounted_price(total_price);
+		System.out.println("Test " + total_price);
 	}
 
 	public void showOrder(){
@@ -90,7 +95,7 @@ public class Order implements Serializable{
 		delivery_cost = delivery_cost.multiply(delivery_cost_per_km);
 	}
 
-	private BigDecimal compute_order_price(){
+	private void updateOrderPrice(){
 		BigDecimal price = new BigDecimal("0");
 
 		for (Item item : items){
@@ -101,20 +106,18 @@ public class Order implements Serializable{
 			price = price.add(meal.getPrice());
 		}
 
-		return price;
+		this.order_price = price;
 
 	}
 
 	public void addItem(Item item){
 		this.items.add(item);
-		order_price = this.compute_order_price();
-		computeTotalPrice();
+		updateTotalPrice();
 	}
 
 	public void addMeal(Meal meal){
 		this.meals.add(meal);
-		order_price = this.compute_order_price();
-		computeTotalPrice();
+		updateTotalPrice();
 	}
 
 	public boolean isEmpty(){
@@ -133,7 +136,7 @@ public class Order implements Serializable{
 		return restaurant;
 	}
 	public BigDecimal getTotal_price() {
-		return order_price;
+		return total_price;
 	}
 	public BigDecimal getDelivery_cost(){ return delivery_cost;}
 
@@ -146,5 +149,9 @@ public class Order implements Serializable{
 				", restaurant=" + restaurant +
 				", total_price=" + order_price +
 				'}';
+	}
+
+	public void applyFidelityDiscount() {
+		this.total_price = customer.getFidelityCard().compute_discounted_price(this.total_price);
 	}
 }

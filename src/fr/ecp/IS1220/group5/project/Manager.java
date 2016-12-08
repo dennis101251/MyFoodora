@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -77,21 +78,21 @@ public class Manager extends User implements Observer{
 		}
 	}
 
-	public void changeServiceFee(double servicefee){
+	public void changeServiceFee(BigDecimal servicefee){
 		Financial financial = null;
 		financial = retrieveFinancial();
 		financial.service_fee = servicefee;
 		saveFinancial(financial);
 	}
 
-	public void changeMarkup_percentage(double markup_percentage){
+	public void changeMarkup_percentage(BigDecimal markup_percentage){
 		Financial financial = null;
 		financial = retrieveFinancial();
 		financial.markup_percentage = markup_percentage;
 		saveFinancial(financial);
 	}
 
-	public void changeDelivery_cost(double delivery_cost){
+	public void changeDelivery_cost(BigDecimal delivery_cost){
 		Financial financial = null;
 		financial = retrieveFinancial();
 		financial.delivery_cost = delivery_cost;

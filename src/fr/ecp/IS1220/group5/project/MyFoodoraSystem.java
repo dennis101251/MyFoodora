@@ -27,15 +27,32 @@ public class MyFoodoraSystem {
      * The list that stores the list of registered users.
       */
     private Userlist users = new Userlist();
+
     private ArrayList<Order> orders = new ArrayList<Order>();
 
-    public double service_fee = 0;
-    public double markup_percentage = 0;
-    public double delivery_cost_price = 1;
-    private Scanner scanner = new Scanner(System.in);
+
+
+
+    /**
+     *
+     */
+    public BigDecimal service_fee = new BigDecimal("0.90");
+
+    /**
+     *
+     */
+    public BigDecimal markup_percentage = new BigDecimal("0.1");
+
+    /**
+     *
+     */
+    public BigDecimal delivery_cost_price = new BigDecimal("1.0");
+
+
     private User currentUser = null;
     private Restaurant currentRestaurant = null;
     private Order currentOrder = null;
+
     private BigDecimal total_income = new BigDecimal("0");
     private BigDecimal total_delivery_cost = new BigDecimal("0");
     private BigDecimal total_profit = new BigDecimal("0");
@@ -447,9 +464,9 @@ public class MyFoodoraSystem {
      *
      * @see MyFoodoraSystem#service_fee
      */
-    public void setService_fee(double service_fee){
+    public void setService_fee(BigDecimal service_fee){
         if (currentUser instanceof Manager){
-            if  (service_fee > 0){
+            if  (!service_fee.equals(new BigDecimal("0"))){
                 this.service_fee = service_fee;
                 System.out.println(">> Current service fee: " + service_fee);
             }
@@ -468,9 +485,9 @@ public class MyFoodoraSystem {
      *
      * @param markup_percentage
      */
-    public void setMarkup_percentage(double markup_percentage){
+    public void setMarkup_percentage(BigDecimal markup_percentage){
         if (currentUser instanceof Manager){
-            if (markup_percentage > 1){
+            if (markup_percentage.compareTo(new BigDecimal("1")) == 1){ //if markup_percentage > 1
                 this.markup_percentage = markup_percentage;
                 System.out.println(">> Current markup percentage: " + markup_percentage);
             }
@@ -489,9 +506,9 @@ public class MyFoodoraSystem {
      *
      * @param delivery_cost
      */
-    public void setDelivery_cost(double delivery_cost){
+    public void setDelivery_cost(BigDecimal delivery_cost){
         if (currentUser instanceof Manager){
-            if (delivery_cost > 0){
+            if (!delivery_cost.equals(new BigDecimal("0"))){
                 this.delivery_cost_price = delivery_cost;
                 System.out.println(">> Current delivery cost: " + delivery_cost);
             }
@@ -631,6 +648,7 @@ public class MyFoodoraSystem {
     /**
      *
      * Enables a Customer to choose a restaurant by writing the restaurant's name.
+     * By calling this method, the system creates an empty order for the customer.
      *
      * @param restaurant
      *
@@ -711,7 +729,7 @@ public class MyFoodoraSystem {
                             currentOrder.addMeal(meal);
                         }
 
-                        System.out.println("you have add " + mealName + " x" + quantity +" successfully");
+                        System.out.println("you have added " + mealName + " x" + quantity +" successfully");
 
                         System.out.println("Order: " + Money.display(currentOrder.getTotal_price()));
                         break;
@@ -804,6 +822,10 @@ public class MyFoodoraSystem {
                     //Show the detail of order first
                     currentOrder.showOrder();
                     System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
+
+                    //apply Fidelity discount
+                    currentOrder.applyFidelityDiscount();
+                    System.out.println("Total (after Fidelity discount): " + Money.display(currentOrder.getTotal_price()));
 
                     //send the order to the restaurant
                     currentRestaurant.addOrder(currentOrder);
@@ -1078,21 +1100,6 @@ public class MyFoodoraSystem {
         sendMessage("Meal of the week special offer: " + meal);
     }
 
-    /**
-     *
-     * @param mealName
-     */
-    public void setMealPrice(String mealName){
-        if (currentUser instanceof Restaurant){
-
-            Restaurant restaurant = (Restaurant) currentUser;
-            Meal meal = restaurant.getMeal(mealName);
-            restaurant.setMealPrice(meal);
-
-        } else {
-            System.out.println("Your restaurant must be logged in to set the price of a meal.");
-        }
-    }
 
     /**
      *

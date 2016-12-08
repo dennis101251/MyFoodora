@@ -58,9 +58,6 @@ public class CommandLine {
                 case "saveMenu":
                     myFoodoraSystem.saveMenu();
                     break;
-                case "setMealPrice":
-                    myFoodoraSystem.setMealPrice(commands[1]);
-                    break;
                 case "setSpecialOffer":
                     myFoodoraSystem.setSpecialOffer(commands[1]);
                     break;
@@ -129,13 +126,13 @@ public class CommandLine {
                     myFoodoraSystem.activateUser(commands[1]);
                     break;
                 case "setServiceFee":
-                    myFoodoraSystem.setService_fee(Double.parseDouble(commands[1]));
+                    myFoodoraSystem.setService_fee(new BigDecimal(commands[1]));
                     break;
                 case "setMarkupPercentage":
-                    myFoodoraSystem.setMarkup_percentage(Double.parseDouble(commands[1]));
+                    myFoodoraSystem.setMarkup_percentage(new BigDecimal(commands[1]));
                     break;
                 case "setDeliveryCost":
-                    myFoodoraSystem.setDelivery_cost(Double.parseDouble(commands[1]));
+                    myFoodoraSystem.setDelivery_cost(new BigDecimal(commands[1]));
                     break;
                 case "totalIncome":
                     myFoodoraSystem.totalIncome();

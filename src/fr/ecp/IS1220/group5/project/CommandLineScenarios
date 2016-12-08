@@ -8,8 +8,6 @@ createMeal BestOf
 addDish2Meal FrenchFries BestOf
 addDish2Meal BigMac BestOf
 addDish2Meal CocaCola BestOf
-showMeal McDonalds BestOf
-setMealPrice BestOf
 saveMenu
 
 //Displaying a meal
@@ -35,16 +33,17 @@ setNotified on
 checkInfoBoard
 
 disconnect
+
 registerCustomer Yu Lin LY 123456 50:50 yu.lin@student.ecp.fr 065088229
 login LY 123456
 setNotified off
-
 disconnect
+
 login mcdonalds 123456
 sendMessage helloEveryone,McDonaldsIsOpen
 sendMessage BigMacIsOnSale
-
 disconnect
+
 login WDY 501
 checkInfoBoard
 
@@ -56,6 +55,7 @@ showHistoryOfOrderOfSystem
 findUser dennis
 findUser mcdonalds
 findUser LY
+disconnect
 
 login dennis 101251
 totalIncome

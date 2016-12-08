@@ -68,10 +68,6 @@ public class Meal  implements Serializable {
 
 	}
 
-	public void setPrice(BigDecimal price){
-		this.price = price;
-	}
-
 	public Meal(String name, Restaurant restaurant){
 		this.name = name;
 		this.restaurant = restaurant;

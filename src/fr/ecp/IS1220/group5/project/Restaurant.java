@@ -164,17 +164,6 @@ public class Restaurant extends User {
 		return null;
 	}
 
-	public void setMealPrice(Meal meal){
-		BigDecimal price = new BigDecimal(0);
-
-		for (Item item : meal.getItems()){
-			price = price.add(item.getPrice());
-		}
-
-		meal.setPrice(price);
-		System.out.println(price);
-	}
-
 	public Coordinate getAddress(){
 		return address;
 	}
