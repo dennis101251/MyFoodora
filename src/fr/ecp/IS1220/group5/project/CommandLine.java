@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 /**
- * Created by dennis101251 on 2016/11/27.
+ * <b>The class that scans the command line inputs</b>
+ *
+ * @version 2.0
  */
 public class CommandLine {
 
@@ -55,9 +57,6 @@ public class CommandLine {
                     break;
                 case "saveMenu":
                     myFoodoraSystem.saveMenu();
-                    break;
-                case "setMealPrice":
-                    myFoodoraSystem.setMealPrice(commands[1]);
                     break;
                 case "setSpecialOffer":
                     myFoodoraSystem.setSpecialOffer(commands[1]);
@@ -133,13 +132,13 @@ public class CommandLine {
                     myFoodoraSystem.activateUser(commands[1]);
                     break;
                 case "setServiceFee":
-                    myFoodoraSystem.setService_fee(Double.parseDouble(commands[1]));
+                    myFoodoraSystem.setService_fee(new BigDecimal(commands[1]));
                     break;
                 case "setMarkupPercentage":
-                    myFoodoraSystem.setMarkup_percentage(Double.parseDouble(commands[1]));
+                    myFoodoraSystem.setMarkup_percentage(new BigDecimal(commands[1]));
                     break;
                 case "setDeliveryCost":
-                    myFoodoraSystem.setDelivery_cost(Double.parseDouble(commands[1]));
+                    myFoodoraSystem.setDelivery_cost(new BigDecimal(commands[1]));
                     break;
                 case "totalIncome":
                     myFoodoraSystem.totalIncome();
@@ -201,6 +200,14 @@ public class CommandLine {
         commandLine.run();
     }
 
+    /**
+     * Converts a String to a Coordinate object.
+     * @param address the adress, the format must be "x:y"
+     * @return the adress, as a Coordinate object
+     *
+     * @see
+     *
+     */
     private Coordinate String2Coordinate(String address) {
         String[] coordinates = address.split(":");
         return new Coordinate(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));

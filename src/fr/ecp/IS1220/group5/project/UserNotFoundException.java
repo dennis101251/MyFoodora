@@ -1,5 +1,8 @@
 package fr.ecp.IS1220.group5.project;
 
+/**
+ * <b>The exception that is thrown when a user has not been found.</b>
+ */
 public class UserNotFoundException extends Exception {
 
 	public UserNotFoundException() {

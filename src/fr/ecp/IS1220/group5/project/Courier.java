@@ -1,5 +1,11 @@
 package fr.ecp.IS1220.group5.project;
 
+/**
+ * <b>The class that represents a Courier</b>
+ * It extends the <b>User</b> abstract class.
+ *
+ * @see User
+ */
 public class Courier extends User {
 	
 	private String surname;

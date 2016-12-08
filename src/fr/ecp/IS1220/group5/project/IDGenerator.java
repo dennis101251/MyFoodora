@@ -3,7 +3,10 @@ package fr.ecp.IS1220.group5.project;
 import java.io.Serializable;
 
 /**
- * Created by Alexandre on 18/11/2016.
+ * <b>The class that generates a unique ID</b>
+ * It uses the <i>singelton</i> pattern.
+ *
+ * @version 1.0
  */
 public class IDGenerator implements Serializable{
 

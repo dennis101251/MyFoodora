@@ -2,14 +2,19 @@ package fr.ecp.IS1220.group5.project;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+/**
+ * <b>The class that represents a Restaurant</b>
+ * It extends the <b>User</b> abstract class.
+ *
+ * @see User
+ */
 public class Restaurant extends User {
 
 	private Coordinate address;
 	private ArrayList<Item> items = new ArrayList<>();
 	private ArrayList<Meal> meals = new ArrayList<>();
-	private double genericDiscountFactor = 0.05;
-	private double specialDiscountFactor = 0.1;
+	private BigDecimal genericDiscountFactor = new BigDecimal("0.05");
+	private BigDecimal specialDiscountFactor = new BigDecimal("0.1");
 	private ArrayList<Order> orders = new ArrayList<>();
 
 	public Restaurant(String name, String username, String password, Coordinate address) {
@@ -19,19 +24,19 @@ public class Restaurant extends User {
 //		retrieveMeals();
 	}
 
-	public double getGenericDiscountFactor() {
+	public BigDecimal getGenericDiscountFactor() {
 		return genericDiscountFactor;
 	}
 
-	public void setGenericDiscountFactor(double genericDiscountFactor) {
+	public void setGenericDiscountFactor(BigDecimal genericDiscountFactor) {
 		this.genericDiscountFactor = genericDiscountFactor;
 	}
 
-	public double getSpecialDiscountFactor() {
+	public BigDecimal getSpecialDiscountFactor() {
 		return specialDiscountFactor;
 	}
 
-	public void setSpecialDiscountFactor(double specialDiscountFactor) {
+	public void setSpecialDiscountFactor(BigDecimal specialDiscountFactor) {
 		this.specialDiscountFactor = specialDiscountFactor;
 	}
 
@@ -101,17 +106,6 @@ public class Restaurant extends User {
 		}
 
 		return null;
-	}
-
-	public void setMealPrice(Meal meal){
-		BigDecimal price = new BigDecimal(0);
-
-		for (Item item : meal.getItems()){
-			price = price.add(item.getPrice());
-		}
-
-		meal.setPrice(price);
-		System.out.println(price);
 	}
 
 	public Coordinate getAddress(){

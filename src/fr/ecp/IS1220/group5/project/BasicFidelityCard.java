@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * Created by Alexandre on 18/11/2016.
+ * <b>The class that represents the default fidelity card of a customer.</b>
+ * It extends the <b>FidelityCard</b> abstract class.
+ *
+ * @see FidelityCard
  */
 public class BasicFidelityCard extends FidelityCard implements Serializable{
 

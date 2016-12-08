@@ -13,13 +13,13 @@ import java.math.RoundingMode;
  * <b>MyFoodoraSystem is the class managing the whole system.</b>
  * <p>
  *     This class stores:
- *
+ *</p>
  *     <ul>
  *         <li>The registered users (managers, restaurants, customers and couriers)</li>
  *         <li>The history of completed orders</li>
  *         <li>Profit-related information</li>
  *     </ul>
- * </p>
+ *
  *
  * @author alexandre01, dennis101251
  * @version 2.0
@@ -34,6 +34,26 @@ public class MyFoodoraSystem {
     public double markup_percentage = 0.1;
     public double delivery_cost_price = 0.1;
     private Scanner scanner = new Scanner(System.in);
+
+
+
+
+    /**
+     *
+     */
+    public BigDecimal service_fee = new BigDecimal("0.90");
+
+    /**
+     *
+     */
+    public BigDecimal markup_percentage = new BigDecimal("0.1");
+
+    /**
+     *
+     */
+    public BigDecimal delivery_cost_price = new BigDecimal("1.0");
+
+
     private User currentUser = null;
     private Restaurant currentRestaurant = null;
     private Order currentOrder = null;
@@ -75,6 +95,10 @@ public class MyFoodoraSystem {
         return null;
     }
 
+    /**
+     * Add a user to the list of registered users.
+     * @param user the user to add in the list.
+     */
     public void addUser(User user) {
         this.users.addUser(user);
     }
@@ -143,6 +167,11 @@ public class MyFoodoraSystem {
 
     }
 
+    /**
+     * Saves the current users in a .ser file, in order to be retrieved in the future.
+     *
+     * @see MyFoodoraSystem#retrieveOrders()
+     */
     public void saveOrders(){
         try {
             FileOutputStream fileOut = new FileOutputStream("tmp/orders.ser");
@@ -158,13 +187,57 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * Retrieves the registered users in the users list.
+     */
     public void retrieveUsers() {
 
         this.users.retrieveUsers();
 
     }
 
-    /** System */
+    /**
+     * Retrieves the financal parameters. There are 3 variables:
+     * <ul>
+     *     <li>The service fee</li>
+     *     <li>The markup percentage</li>
+     *     <li>The delivery cost</li>
+     * </ul>
+     */
+    public void retrieveFinancial() {
+
+        Financial financial = null;
+
+        File file = new File("tmp/financial.ser");
+        if (file.exists()) {
+            try {
+                FileInputStream fileIn = new FileInputStream("tmp/financial.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+
+                financial = (Financial) in.readObject();
+
+                in.close();
+                fileIn.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            service_fee = financial.service_fee;
+            markup_percentage = financial.markup_percentage;
+            delivery_cost_price = financial.delivery_cost;
+        } else {
+            System.out.println(">> There is no Financial in system");
+        }
+    }
+
+    /**
+     * To login a user
+      * @param userName the username of the user
+     * @param password the password of the user
+     */
     public void loginUser(String userName, String password) {
 
         boolean isFound = false;
@@ -209,6 +282,9 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * Prints the currently logged in user.
+     */
     public void showCurrentUser(){
         if (currentUser != null){
             System.out.println("Current User is: " + currentUser.getName());
@@ -218,6 +294,9 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * Logs out the currently logged in user.
+     */
     public void disconnectUser(){
         if (currentUser!=null){
             System.out.println(currentUser.getName() + " has logged out");
@@ -228,6 +307,14 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * Registers a new Restaurant user.
+     *
+     * @param name the name of the Restaurant.
+     * @param username the username of the Restaurant.
+     * @param address the address of the Restaurant.
+     * @param password the password of the Restaurant.
+     */
     public void registerRestaurant(String name, String username, Coordinate address, String password) {
         if (getUser(username) == null){
             User newRestaurant = new Restaurant(name, username, password, address);
@@ -240,6 +327,17 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * Registers a new Customer user.
+     *
+     * @param firstName the first name of the Customer.
+     * @param lastName the last name of the Customer.
+     * @param username the username of the Customer.
+     * @param password the password of the Customer.
+     * @param address the address of the Customer.
+     * @param mail the email of the Customer.
+     * @param phone the phone nulmber of the Customer.
+     */
     public void registerCustomer(String firstName, String lastName, String username, String password, Coordinate address, String mail, String phone) {
         if (getUser(username) == null){
             User newCustomer = new Customer(firstName, lastName, username, password, address, mail, phone);
@@ -252,6 +350,14 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * Registers a new Manager user.
+     *
+     * @param name the name of the Manager.
+     * @param lastName the last name of the Manager.
+     * @param username the username of the Manager.
+     * @param password the password of the Manager.
+     */
     public void registerManager(String name, String lastName, String username, String password){
         if (getUser(username) == null){
             User newManager = new Manager(name, username, password, lastName);
@@ -265,12 +371,20 @@ public class MyFoodoraSystem {
 
     }
 
+    /**
+     * Computes the financial parameters:
+     * <ul>
+     *     <li>The total income</li>
+     *     <li>The total delivery cost</li>
+     *     <li>The total profit</li>
+     * </ul>
+     */
     private void calculateFinancial(){
         //Total income
         BigDecimal money =new BigDecimal("0");
         for (Order order: orders
                 ) {
-            money = money.add(order.getActual_price());
+            money = money.add(order.getTotal_price());
         }
         this.total_income = money;
 
@@ -285,7 +399,13 @@ public class MyFoodoraSystem {
         total_profit = total_income.subtract(total_delivery_cost);
     }
 
-    /** Manager */
+
+    /**
+     *
+     * Prints whether the user with given username exists or not in the database.
+     *
+     * @param userName the username of the searched user.
+     */
     public void findUser(String userName){
         if (currentUser instanceof Manager){
             if (getUser(userName) == null){
@@ -300,6 +420,13 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * Enables a manger to disactivate the account of a given user.
+     *
+     * @param userName the username of the user to disactivate.
+     * @throws UserNotFoundException
+     */
     public void disactivateUser(String userName) throws UserNotFoundException {
         if (currentUser instanceof Manager){
             if (getUser(userName) == null){
@@ -314,6 +441,12 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * Enables a manger to activate the account of a given user.
+     *
+     * @param userName the username of the user to activate.
+     * @throws UserNotFoundException
+     */
     public void activateUser(String userName) throws UserNotFoundException {
         if (currentUser instanceof Manager){
             if (getUser(userName) == null){
@@ -328,9 +461,18 @@ public class MyFoodoraSystem {
         }
     }
 
-    public void setService_fee(double service_fee){
+    /**
+     *
+     * Sets the service fee.
+     * Settable only by <b>managers</b>.
+     *
+     * @param service_fee
+     *
+     * @see MyFoodoraSystem#service_fee
+     */
+    public void setService_fee(BigDecimal service_fee){
         if (currentUser instanceof Manager){
-            if  (service_fee > 0){
+            if  (!service_fee.equals(new BigDecimal("0"))){
                 this.service_fee = service_fee;
                 System.out.println(">> Current service fee: " + service_fee);
             }
@@ -343,9 +485,15 @@ public class MyFoodoraSystem {
         }
     }
 
-    public void setMarkup_percentage(double markup_percentage){
+    /**
+     * Sets the markup percentage.
+     * Settable only by managers.
+     *
+     * @param markup_percentage
+     */
+    public void setMarkup_percentage(BigDecimal markup_percentage){
         if (currentUser instanceof Manager){
-            if (markup_percentage > 1){
+            if (markup_percentage.compareTo(new BigDecimal("1")) == 1){ //if markup_percentage > 1
                 this.markup_percentage = markup_percentage;
                 System.out.println(">> Current markup percentage: " + markup_percentage);
             }
@@ -358,9 +506,15 @@ public class MyFoodoraSystem {
         }
     }
 
-    public void setDelivery_cost(double delivery_cost){
+    /**
+     * Sets the delivery cost.
+     * Settable only by managers.
+     *
+     * @param delivery_cost
+     */
+    public void setDelivery_cost(BigDecimal delivery_cost){
         if (currentUser instanceof Manager){
-            if (delivery_cost > 0){
+            if (!delivery_cost.equals(new BigDecimal("0"))){
                 this.delivery_cost_price = delivery_cost;
                 System.out.println(">> Current delivery cost: " + delivery_cost);
             }
@@ -373,6 +527,10 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *  Displays the total income.
+     *  Only for managers.
+     */
     public void totalIncome(){
         if (currentUser instanceof Manager){
             calculateFinancial();
@@ -383,6 +541,10 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *  Displays the total Delivery cost.
+     *  Only for managers.
+     */
     public void totalDeliveryCost(){
         if (currentUser instanceof Manager){
             calculateFinancial();
@@ -393,6 +555,10 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *  Displays the total profit.
+     *  Only for managers.
+     */
     public void totalProfit(){
         if (currentUser instanceof Manager){
             calculateFinancial();
@@ -403,6 +569,12 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * Displays the history of orders.
+     * Only for managers.
+     *
+     *
+     */
     public void showHistoryOfOrder_System(){
         if (currentUser instanceof Manager){
             if (!orders.isEmpty()){
@@ -420,6 +592,12 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * Displays the average income per customer.
+     * Only for managers.
+     *
+     */
     public void averageIncomePerCustomer(){
         if (currentUser instanceof Manager){
             if (!orders.isEmpty()){
@@ -737,7 +915,9 @@ public class MyFoodoraSystem {
         }
     }
 
-    /** Customer */
+    /**
+     *
+     */
     public void showRestaurant(){
         if (currentUser instanceof Customer){
             ArrayList<Restaurant> allReastaurant= new ArrayList<>();
@@ -760,6 +940,15 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * Enables a Customer to choose a restaurant by writing the restaurant's name.
+     * By calling this method, the system creates an empty order for the customer.
+     *
+     * @param restaurant
+     *
+     * @see Restaurant
+     */
     public void chooseRestaurant(String restaurant){
         if (currentUser instanceof Customer){
             boolean isFound = false;
@@ -784,6 +973,12 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * <b>Shows to the Customer the menu of the currently selected restaurant.</b>
+     *
+     * @see Restaurant
+     */
     public void showMenu(){
         if (currentUser instanceof Customer){
             if (currentRestaurant != null){
@@ -805,6 +1000,17 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * <b>Adds a given meal to the customer's order.</b>
+     *
+     * @param mealName
+     * @param quantity
+     *
+     * @see Customer
+     * @see Meal
+     * @see Order
+     */
     public void addMeal2Order(String mealName, Integer quantity){
         if (currentUser instanceof Customer){
             if (currentOrder != null){
@@ -818,7 +1024,7 @@ public class MyFoodoraSystem {
                             currentOrder.addMeal(meal);
                         }
 
-                        System.out.println("you have add " + mealName + " x" + quantity +" successfully");
+                        System.out.println("you have added " + mealName + " x" + quantity +" successfully");
 
                         System.out.println("Order: " + Money.display(currentOrder.getTotal_price()));
                         break;
@@ -837,6 +1043,16 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *<b>Adds an item to the customer's order.</b>
+     *
+     * @param itemName
+     * @param quantity
+     *
+     * @see Customer
+     * @see Order
+     * @see Item
+     */
     public void addItem2Order(String itemName, Integer quantity){
         if (currentUser instanceof Customer){
             if (currentOrder != null){
@@ -867,6 +1083,13 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * <b>Shows the customer's current order (if not empty).</b>
+     *
+     * @see Customer
+     * @see Order
+     */
     public void showOrder(){
         if (currentUser instanceof Customer){
             if (currentOrder != null){
@@ -882,6 +1105,10 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * <b>Ends an customer's order, applies the fidelity program and send the order to the restaurant.</b>
+     *
+     */
     public void endOrder(){
         if (currentUser instanceof Customer){
             if (currentOrder != null){
@@ -889,13 +1116,11 @@ public class MyFoodoraSystem {
 
                     //Show the detail of order first
                     currentOrder.showOrder();
+                    System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
 
-                    //apply the fidelity card
-                    currentOrder.applyFidelityCard(((Customer) currentUser).getFidelityCard().compute_discounted_price(currentOrder.getTotal_price()));
-                    System.out.println("After apply fidelity card>> Total: " + Money.display(currentOrder.getActual_price()));
-
-                    //add points to fidelity card
-                    ((Customer) currentUser).addPoints(currentOrder.getActual_price().intValue());
+                    //apply Fidelity discount
+                    currentOrder.applyFidelityDiscount();
+                    System.out.println("Total (after Fidelity discount): " + Money.display(currentOrder.getTotal_price()));
 
                     //send the order to the restaurant
                     currentRestaurant.addOrder(currentOrder);
@@ -925,6 +1150,11 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * <b>Shows the complete customer's history of orders.</b>
+     *
+     */
     public void showHistoryOfOrder_Customer(){
         if (currentUser instanceof Customer){
             if (!((Customer) currentUser).getHistoryOfOrder().isEmpty()){
@@ -942,6 +1172,12 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * <b>Shows the fidelity program to which the customer is registered, and the total of collected points.</b>
+     *  Only for customers.
+     *
+     */
     public void showFidelityCard(){
         if (currentUser instanceof Customer){
             System.out.println(((Customer) currentUser).getFidelityCard().getFidelityCardName());
@@ -952,6 +1188,16 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * Changes the notification status of a customer.
+     * <ul>
+     *     <li>On: to receive messages from MyFooddora</li>
+     *     <li>Off: to disable notifications.</li>
+     * </ul>
+     *
+     * @param string "on" if the customer wants to be notified, "off" if he doesn't.
+     */
     public void setNotified(String string){
         if (currentUser instanceof Customer) {
             if (string.equalsIgnoreCase("on")){
@@ -971,6 +1217,9 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     */
     public void checkInfoBoard(){
         if (currentUser instanceof Customer) {
             if (((Customer) currentUser).infoBoard.isNotified()){
@@ -1006,7 +1255,14 @@ public class MyFoodoraSystem {
         }
     }
 
-    /** Restaurant */
+    /**
+     *
+     * <b>Creates a new Item to the Restaurant's menu.</b>
+     * Only for Restaurants
+     *
+     * @param itemName
+     * @param price
+     */
     public void createItem(String itemName, BigDecimal price){
         if (currentUser instanceof Restaurant){
 
@@ -1023,11 +1279,18 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * <b>Creates a new meal to the Restaurant's menu.</b>
+     * Only for Restaurants.
+     *
+     * @param mealName the name of the new meal.
+     */
     public void createMeal(String mealName) {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
-            Meal meal = new Meal(mealName);
+            Meal meal = new Meal(mealName, (Restaurant) currentUser);
             restaurant.addMeal(meal);
 
             System.out.println(meal + " was successfully created!");
@@ -1039,6 +1302,14 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * <b>to add an item to an existing meal.</b>
+     * Only for Restaurants.
+     *
+     * @param itemName
+     * @param mealName
+     */
     public void addDish2Meal(String itemName, String mealName) {
         if (currentUser instanceof Restaurant){
 
@@ -1056,6 +1327,11 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * <b>To save a Restaurant's menu.</b>
+     * Only for Restaurants.
+     */
     public void saveMenu() {
 
         if (currentUser instanceof Restaurant){
@@ -1072,6 +1348,13 @@ public class MyFoodoraSystem {
 
     }
 
+    /**
+     *
+     * <b>To show the content of given Restaurant's mel</b>
+     *
+     * @param restaurantName the name of the given Restaurant.
+     * @param mealName the name of the given meal.
+     */
     public void showMeal(String restaurantName, String mealName){
         Restaurant restaurant = (Restaurant) getUser(restaurantName);
         Meal meal = restaurant.getMeal(mealName);
@@ -1082,6 +1365,10 @@ public class MyFoodoraSystem {
 
     }
 
+    /**
+     *
+     * @param string
+     */
     public void sendMessage(String string){
         if (currentUser instanceof Restaurant){
             for (User user: users.getUsers()
@@ -1097,18 +1384,21 @@ public class MyFoodoraSystem {
         }
     }
 
-    public void setMealPrice(String mealName){
-        if (currentUser instanceof Restaurant){
+    /**
+     *
+     *
+     *
+     * @param meal
+     */
+    public void sendSpecialOffer(Meal meal){
 
-            Restaurant restaurant = (Restaurant) currentUser;
-            Meal meal = restaurant.getMeal(mealName);
-            restaurant.setMealPrice(meal);
-
-        } else {
-            System.out.println("Your restaurant must be logged in to set the price of a meal.");
-        }
+        sendMessage("Meal of the week special offer: " + meal);
     }
 
+
+    /**
+     *
+     */
     public void showOrdersOfRestaurant(){
         if (currentUser instanceof Restaurant){
             if (!((Restaurant) currentUser).getOrders().isEmpty()){
@@ -1136,23 +1426,45 @@ public class MyFoodoraSystem {
     public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){
 
     }
-    /** Courier */
+
+    /**
+     *
+     * @param username
+     */
     public void onDuty(String username){
 
     }
 
+    /**
+     *
+     * @param username
+     */
     public void offDuty(String username){
 
     }
 
+    /**
+     *
+     * @param contactInfo
+     */
     public void addContactInfo(String contactInfo){
 
     }
 
+    /**
+     *
+     * @param userName
+     * @param cardType
+     */
     public void associateCard(String userName, String cardType){
 
     }
 
+    /**
+     *
+     * @param username
+     * @param agreement
+     */
     public void associateAgreement(String username, String agreement){
 
     }

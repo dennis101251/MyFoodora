@@ -8,13 +8,14 @@ import java.security.spec.InvalidKeySpecException;
  * <b>The class which represents the users of MyFoodora</b>
  * <p>
  *     There are 4 types of users:
+ * </p>
  *     <ul>
  *         <li>Managers</li>
  *         <li>Restaurants</li>
  *         <li>Customers</li>
  *         <li>Couriers</li>
  *     </ul>
- * </p>
+ *
  *
  * @version 2.0
  */
