@@ -19,11 +19,14 @@ public class Order implements Serializable{
 	private Customer customer;
 	private BigDecimal order_price = new BigDecimal("0");
 	private BigDecimal actual_price = new BigDecimal("0");
+	private BigDecimal total_price = new BigDecimal("0");
+
 	private BigDecimal delivery_cost = new BigDecimal("0");
 	private BigDecimal dilivery_cost_price = new BigDecimal("1");
 	private BigDecimal markup_percentage = new BigDecimal("0");
 	private BigDecimal service_fee = new BigDecimal("0");
-	private BigDecimal total_price = new BigDecimal("0");
+
+	private BigDecimal delivery_distance = new BigDecimal("0");
 
 	public Order(Restaurant restaurant, Customer customer, Double dilivery_cost_price, Double markup_percentage, Double service_fee) {
 		this.restaurant = restaurant;
@@ -55,11 +58,13 @@ public class Order implements Serializable{
 		}
 		System.out.println(">>order price: " + Money.display(order_price));
 		System.out.println(">>total price: " + Money.display(total_price));
+		System.out.println(">>actual price: " + Money.display(actual_price));
 	}
 
 	private void computeDeliveryCost(){
-		delivery_cost = BigDecimal.valueOf(Coordinate.getDistance(restaurant.getAddress(),customer.getAddress()));
-		delivery_cost = delivery_cost.multiply(dilivery_cost_price);
+		this.delivery_cost = BigDecimal.valueOf(Coordinate.getDistance(restaurant.getAddress(),customer.getAddress()));
+		this.delivery_distance = delivery_cost;
+		this.delivery_cost = delivery_cost.multiply(dilivery_cost_price);
 	}
 
 	private BigDecimal compute_order_price(){
@@ -111,9 +116,11 @@ public class Order implements Serializable{
 		return actual_price;
 	}
 	public BigDecimal getTotal_price() {
-		return order_price;
+		return total_price;
 	}
+	public BigDecimal getOrder_price(){return order_price;}
 	public BigDecimal getDelivery_cost(){ return delivery_cost;}
+	public BigDecimal getDelivery_distance(){return delivery_distance;}
 
 
 	@Override

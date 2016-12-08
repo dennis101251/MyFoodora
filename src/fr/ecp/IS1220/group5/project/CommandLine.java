@@ -147,6 +147,18 @@ public class CommandLine {
                 case "averageIncomePerCustomer":
                     myFoodoraSystem.averageIncomePerCustomer();
                     break;
+                case "setTarget_profit":
+                    myFoodoraSystem.setTarget_profit(Double.parseDouble(commands[1]));
+                    break;
+                case "determineService_fee":
+                    myFoodoraSystem.determineService_fee();
+                    break;
+                case "determineMarkup_Percentage":
+                    myFoodoraSystem.determineMarkup_Percentage();
+                    break;
+                case "determineDelivery_Cost":
+                    myFoodoraSystem.determineDelivery_Cost();
+                    break;
 
                 //Courier
                 case "onDuty":

@@ -1,5 +1,5 @@
 //Adding a meal
-registerRestaurant McDonalds mcdonalds 2:5 123456
+registerRestaurant McDonalds mcdonalds 0:0 123456
 login mcdonalds 123456
 createItem FrenchFries 2
 createItem BigMac 4
@@ -74,3 +74,12 @@ activateUser LY
 disconnect
 login LY 123456
 
+//
+login dennis 101251
+setTarget_profit 30
+determineService_fee
+determineMarkup_Percentage
+determineDelivery_Cost
+
+setTarget_profit 23
+determineDelivery_Cost

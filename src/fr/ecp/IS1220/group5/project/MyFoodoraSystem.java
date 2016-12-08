@@ -4,8 +4,10 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.math.RoundingMode;
 
 /**
  * <b>MyFoodoraSystem is the class managing the whole system.</b>
@@ -28,16 +30,18 @@ public class MyFoodoraSystem {
       */
     private Userlist users = new Userlist();
     private ArrayList<Order> orders = new ArrayList<Order>();
-    public double service_fee = 0;
-    public double markup_percentage = 0;
-    public double delivery_cost_price = 1;
+    public double service_fee = 5;
+    public double markup_percentage = 0.1;
+    public double delivery_cost_price = 0.1;
     private Scanner scanner = new Scanner(System.in);
     private User currentUser = null;
     private Restaurant currentRestaurant = null;
     private Order currentOrder = null;
+
     private BigDecimal total_income = new BigDecimal("0");
     private BigDecimal total_delivery_cost = new BigDecimal("0");
     private BigDecimal total_profit = new BigDecimal("0");
+    private BigDecimal target_profit = new BigDecimal("0");
 
     public MyFoodoraSystem() {
 
@@ -160,35 +164,6 @@ public class MyFoodoraSystem {
 
     }
 
-    public void retrieveFinancial() {
-
-        Financial financial = null;
-
-        File file = new File("tmp/financial.ser");
-        if (file.exists()) {
-            try {
-                FileInputStream fileIn = new FileInputStream("tmp/financial.ser");
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-
-                financial = (Financial) in.readObject();
-
-                in.close();
-                fileIn.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            service_fee = financial.service_fee;
-            markup_percentage = financial.markup_percentage;
-            delivery_cost_price = financial.delivery_cost;
-        } else {
-            System.out.println(">> There is no Financial in system");
-        }
-    }
-
     /** System */
     public void loginUser(String userName, String password) {
 
@@ -309,7 +284,6 @@ public class MyFoodoraSystem {
 
         total_profit = total_income.subtract(total_delivery_cost);
     }
-
 
     /** Manager */
     public void findUser(String userName){
@@ -463,6 +437,203 @@ public class MyFoodoraSystem {
                 }
                 else {
                     System.out.println("there is no customer in the system");
+                }
+            }
+            else {
+                System.out.println("The history of order is empty");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * set target profit before determining the parameters
+     *
+     * @param target_profit
+     */
+
+    public void setTarget_profit(Double target_profit){
+        if (currentUser instanceof Manager){
+            this.target_profit = BigDecimal.valueOf(target_profit);
+            System.out.println(">> Current profit: " + Money.display(total_profit));
+            System.out.println(">> Target profit: " + Money.display(BigDecimal.valueOf(target_profit)));
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * determining the Service Fee to meet the target profit
+     *
+     */
+
+    public void determineService_fee(){
+        if (currentUser instanceof Manager){
+            if (!orders.isEmpty()){
+                if (target_profit != BigDecimal.valueOf(0)){
+                    BigDecimal sumOrderPrice = new BigDecimal("0");
+                    BigDecimal sumDeliveryDistance = new BigDecimal("0");
+
+                    for (Order order: orders
+                         ) {
+                        sumOrderPrice = sumOrderPrice.add(order.getOrder_price());
+                    }
+
+                    for (Order order: orders
+                         ) {
+                        sumDeliveryDistance = sumDeliveryDistance.add(order.getDelivery_distance());
+                    }
+
+                    BigDecimal tmpService_fee = new BigDecimal("0");
+                    BigDecimal tmpMarkup_percentage = new BigDecimal("0");
+                    BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
+
+                    tmpDelivery_cost_price = BigDecimal.valueOf(delivery_cost_price);
+                    tmpMarkup_percentage = BigDecimal.valueOf(markup_percentage);
+
+                    BigDecimal tmp = new BigDecimal("0");
+                    tmp = target_profit.add(sumDeliveryDistance.multiply(tmpDelivery_cost_price));
+                    tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage.add(BigDecimal.valueOf(1))));
+                    tmpService_fee = tmp.divide(BigDecimal.valueOf(orders.size()), 3, RoundingMode.HALF_UP);
+
+                    System.out.println("you have choose targetProfit_ServiceFee");
+                    System.out.println("current parameters: ");
+                    System.out.println(">> markup percentage: " + Percentage.display(BigDecimal.valueOf(markup_percentage)) );
+                    System.out.println(">> delivery price: " + Money.display(BigDecimal.valueOf(delivery_cost_price)) );
+                    System.out.println(">> service fee: " + Money.display(BigDecimal.valueOf(service_fee)));
+                    System.out.println("In order to meet the target profit: " + Money.display(target_profit));
+                    System.out.println(">> service fee should be: " + Money.display(tmpService_fee));
+                }
+                else {
+                    System.out.println("You haven't set target profit yet");
+                }
+            }
+            else {
+                System.out.println("The history of order is empty");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * determining the Markup percentage to meet the target profit
+     *
+     */
+
+    public void determineMarkup_Percentage(){
+        if (currentUser instanceof Manager){
+            if (!orders.isEmpty()){
+                if (target_profit != BigDecimal.valueOf(0)){
+                    BigDecimal sumOrderPrice = new BigDecimal("0");
+                    BigDecimal sumDeliveryDistance = new BigDecimal("0");
+
+                    for (Order order: orders
+                            ) {
+                        sumOrderPrice = sumOrderPrice.add(order.getOrder_price());
+                    }
+
+                    for (Order order: orders
+                            ) {
+                        sumDeliveryDistance = sumDeliveryDistance.add(order.getDelivery_distance());
+                    }
+
+                    BigDecimal tmpService_fee = new BigDecimal("0");
+                    BigDecimal tmpMarkup_percentage = new BigDecimal("0");
+                    BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
+
+                    tmpDelivery_cost_price = BigDecimal.valueOf(delivery_cost_price);
+                    tmpService_fee = BigDecimal.valueOf(service_fee);
+
+                    BigDecimal tmp = new BigDecimal("0");
+                    tmp = target_profit.add(sumDeliveryDistance.multiply(tmpDelivery_cost_price));
+                    tmp = tmp.subtract(tmpService_fee.multiply(BigDecimal.valueOf(orders.size())));
+                    tmpMarkup_percentage = tmp.divide(sumOrderPrice, 6, RoundingMode.HALF_UP).subtract(BigDecimal.valueOf(1));
+
+                    NumberFormat percent = NumberFormat.getPercentInstance();
+                    percent.setMaximumFractionDigits(3);
+
+                    System.out.println("you have choose targetProfit_Markup");
+                    System.out.println("current parameters: ");
+                    System.out.println(">> markup percentage: " + Percentage.display(BigDecimal.valueOf(markup_percentage)) );
+                    System.out.println(">> delivery price: " + Money.display(BigDecimal.valueOf(delivery_cost_price)) );
+                    System.out.println(">> service fee: " + Money.display(BigDecimal.valueOf(service_fee)));
+                    System.out.println("In order to meet the target profit: " + Money.display(target_profit));
+                    System.out.println(">> Markup percentage should be: " + Percentage.display(tmpMarkup_percentage));
+                }
+                else {
+                    System.out.println("You haven't set target profit yet");
+                }
+            }
+            else {
+                System.out.println("The history of order is empty");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * determining the Markup percentage to meet the target profit
+     *
+     */
+
+    public void determineDelivery_Cost(){
+        if (currentUser instanceof Manager){
+            if (!orders.isEmpty()){
+                if (target_profit != BigDecimal.valueOf(0)){
+                    if (total_income.doubleValue() < target_profit.doubleValue()){
+                        System.out.println("Total income is less than target profit");
+                        System.out.println("Can't apply TargetProfit_DeliveryCost");
+                    }
+                    else {
+                        BigDecimal sumOrderPrice = new BigDecimal("0");
+                        BigDecimal sumDeliveryDistance = new BigDecimal("0");
+
+                        for (Order order: orders
+                                ) {
+                            sumOrderPrice = sumOrderPrice.add(order.getOrder_price());
+                        }
+
+                        for (Order order: orders
+                                ) {
+                            sumDeliveryDistance = sumDeliveryDistance.add(order.getDelivery_distance());
+                        }
+
+                        BigDecimal tmpService_fee = new BigDecimal("0");
+                        BigDecimal tmpMarkup_percentage = new BigDecimal("0");
+                        BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
+
+                        tmpService_fee = BigDecimal.valueOf(service_fee);
+                        tmpMarkup_percentage = BigDecimal.valueOf((markup_percentage));
+
+                        BigDecimal tmp = new BigDecimal("0");
+                        tmp = target_profit.subtract(tmpService_fee.multiply(BigDecimal.valueOf(orders.size())));
+                        tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage.add(BigDecimal.valueOf(1))));
+                        tmp = tmp.divide(sumDeliveryDistance, 6, RoundingMode.HALF_UP);
+                        tmpDelivery_cost_price = tmp.abs();
+
+                        NumberFormat percent = NumberFormat.getPercentInstance();
+                        percent.setMaximumFractionDigits(3);
+                        System.out.println("========================================");
+                        System.out.println("you have choose targetProfit_Markup");
+                        System.out.println("========================================");
+                        System.out.println("current parameters: ");
+                        System.out.println(">> markup percentage: " + Percentage.display(BigDecimal.valueOf(markup_percentage)) );
+                        System.out.println(">> delivery price: " + Money.display(BigDecimal.valueOf(delivery_cost_price)) );
+                        System.out.println(">> service fee: " + Money.display(BigDecimal.valueOf(service_fee)));
+                        System.out.println("========================================");
+                        System.out.println("In order to meet the target profit: " + Money.display(target_profit));
+                        System.out.println(">> Delivery price should be: " + Money.display(tmpDelivery_cost_price));
+                    }
+                }
+                else {
+                    System.out.println("You haven't set target profit yet");
                 }
             }
             else {
