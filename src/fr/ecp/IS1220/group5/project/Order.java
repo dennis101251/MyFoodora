@@ -70,11 +70,11 @@ public class Order implements Serializable{
 		updateOrderPrice();
 
 		total_price = order_price;
-
+		System.out.println("Total: " + total_price);
 		total_price = total_price.multiply(markup_percentage.add(new BigDecimal(1)));
-		System.out.println("Test " + total_price);
+		System.out.println("Total (with markup percentage): " + total_price);
 		total_price = total_price.add(service_fee);
-		System.out.println("Test " + total_price);
+		System.out.println("Total (with fees): " + total_price);
 	}
 
 	public void showOrder(){
