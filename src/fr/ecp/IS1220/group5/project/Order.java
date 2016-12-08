@@ -6,8 +6,13 @@ import java.util.ArrayList;
 
 /**
  * <b>The class which represents a customer's cart</b>
+ * It is created by a <b>Customer</b>, who can add <b>Items</b> and <b>Meals</b>.
  *
  * @version 2.0
+ *
+ * @see Customer
+ * @see Item
+ * @see Meal
  */
 public class Order implements Serializable{
 

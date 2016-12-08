@@ -7,7 +7,9 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-/*
+/**
+ * The class that hashes the users' passwords.
+ *
  * PBKDF2 salted password hashing.
  * Author: havoc AT defuse.ca
  * www: http://crackstation.net/hashing-security.htm
@@ -30,6 +32,9 @@ public class PasswordHash
      *
      * @param   password    the password to hash
      * @return              a salted PBKDF2 hash of the password
+     *
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
      */
     public static String createHash(String password)
             throws NoSuchAlgorithmException, InvalidKeySpecException
@@ -42,6 +47,10 @@ public class PasswordHash
      *
      * @param   password    the password to hash
      * @return              a salted PBKDF2 hash of the password
+     *
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     *
      */
     public static String createHash(char[] password)
             throws NoSuchAlgorithmException, InvalidKeySpecException
@@ -63,6 +72,9 @@ public class PasswordHash
      * @param   password    the password to check
      * @param   goodHash    the hash of the valid password
      * @return              true if the password is correct, false if not
+     *
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
      */
     public static boolean validatePassword(String password, String goodHash)
             throws NoSuchAlgorithmException, InvalidKeySpecException
@@ -76,6 +88,9 @@ public class PasswordHash
      * @param   password    the password to check
      * @param   goodHash    the hash of the valid password
      * @return              true if the password is correct, false if not
+     *
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
      */
     public static boolean validatePassword(char[] password, String goodHash)
             throws NoSuchAlgorithmException, InvalidKeySpecException
@@ -118,6 +133,9 @@ public class PasswordHash
      * @param   iterations  the iteration count (slowness factor)
      * @param   bytes       the length of the hash to compute in bytes
      * @return              the PBDKF2 hash of the password
+     *
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
      */
     private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes)
             throws NoSuchAlgorithmException, InvalidKeySpecException

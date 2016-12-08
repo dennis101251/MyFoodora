@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * Created by dennis101251 on 2016/11/15.
+ * <b>The class that stores the list of registerd users.</b>
  */
 public class Userlist extends Observable{
     private ArrayList<User> users =  new ArrayList<>();

@@ -6,15 +6,9 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
- * Created by dennis101251 on 2016/11/16.
+ * Use this Test class to generate a serialization file to initialize the main system
  */
 public class UserlistTest {
-
-    /**
-    * Use this Test class to generate a serialization file to initialize the main system
-    *
-    * */
-
 
     public static void main(String[] args) {
 
