@@ -185,6 +185,14 @@ public class CommandLine {
         commandLine.run();
     }
 
+    /**
+     * Converts a String to a Coordinate object.
+     * @param address the adress, the format must be "x:y"
+     * @return the adress, as a Coordinate object
+     *
+     * @see
+     *
+     */
     private Coordinate String2Coordinate(String address) {
         String[] coordinates = address.split(":");
         return new Coordinate(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));

@@ -15,6 +15,20 @@ public class Customer extends User{
 	private ArrayList<Order> historyOfOrder = new ArrayList<>();
 	public InfoBoard infoBoard = new InfoBoard();
 
+	/**
+	 *
+	 *
+	 *
+	 * @param name
+	 * @param surname
+	 * @param username
+	 * @param password
+	 * @param address
+	 * @param email
+	 * @param phoneNumber
+	 *
+	 * @see Coordinate
+	 */
 	public Customer(String name, String surname, String username, String password, Coordinate address, String email, String phoneNumber) {
 		super(name, username, password);
 		this.surname = surname;

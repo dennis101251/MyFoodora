@@ -13,8 +13,8 @@ public class Restaurant extends User {
 	private Coordinate address;
 	private ArrayList<Item> items = new ArrayList<>();
 	private ArrayList<Meal> meals = new ArrayList<>();
-	private double genericDiscountFactor = 0.05;
-	private double specialDiscountFactor = 0.1;
+	private BigDecimal genericDiscountFactor = new BigDecimal("0.05");
+	private BigDecimal specialDiscountFactor = new BigDecimal("0.1");
 	private ArrayList<Order> orders = new ArrayList<>();
 
 	public Restaurant(String name, String username, String password, Coordinate address) {
@@ -89,19 +89,19 @@ public class Restaurant extends User {
 //		}
 //	}
 
-	public double getGenericDiscountFactor() {
+	public BigDecimal getGenericDiscountFactor() {
 		return genericDiscountFactor;
 	}
 
-	public void setGenericDiscountFactor(double genericDiscountFactor) {
+	public void setGenericDiscountFactor(BigDecimal genericDiscountFactor) {
 		this.genericDiscountFactor = genericDiscountFactor;
 	}
 
-	public double getSpecialDiscountFactor() {
+	public BigDecimal getSpecialDiscountFactor() {
 		return specialDiscountFactor;
 	}
 
-	public void setSpecialDiscountFactor(double specialDiscountFactor) {
+	public void setSpecialDiscountFactor(BigDecimal specialDiscountFactor) {
 		this.specialDiscountFactor = specialDiscountFactor;
 	}
 

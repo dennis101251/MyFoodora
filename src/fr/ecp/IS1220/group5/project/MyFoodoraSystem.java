@@ -1075,6 +1075,17 @@ public class MyFoodoraSystem {
 
     /**
      *
+     *
+     *
+     * @param meal
+     */
+    public void sendSpecialOffer(Meal meal){
+
+        sendMessage("Meal of the week special offer: " + meal);
+    }
+
+    /**
+     *
      * @param mealName
      */
     public void setMealPrice(String mealName){
