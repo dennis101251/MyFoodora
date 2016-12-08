@@ -74,6 +74,12 @@ public class CommandLine {
                 case "showOrdersOfRestaurant":
                     myFoodoraSystem.showOrdersOfRestaurant();
                     break;
+                case "mostSellingRestaurant":
+                    myFoodoraSystem.mostSellingRestaurant();
+                    break;
+                case "leastSellingRestaurant":
+                    myFoodoraSystem.leastSellingRestaurant();
+                    break;
 
                 //Customer
                 case "showRestaurant":

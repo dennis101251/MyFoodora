@@ -18,71 +18,6 @@ public class Restaurant extends User {
 //		retrieveItems();
 //		retrieveMeals();
 	}
-//
-//	public void retrieveItems() {
-//		try {
-//			FileInputStream fileIn = new FileInputStream("tmp/" + this.id + "items.ser");
-//			ObjectInputStream in = new ObjectInputStream(fileIn);
-//
-//			this.items = (ArrayList<Item>) in.readObject();
-//
-//			in.close();
-//			fileIn.close();
-//
-//		} catch (IOException e) {
-//			//New file
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	public void saveItems(){
-//		try {
-//			FileOutputStream fileOut = new FileOutputStream("tmp/" + this.id + "items.ser");
-//			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-//
-//			out.writeObject(this.items);
-//
-//			out.close();
-//			fileOut.close();
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	public void retrieveMeals() {
-//		try {
-//			FileInputStream fileIn = new FileInputStream("tmp/" + this.id + "meals.ser");
-//			ObjectInputStream in = new ObjectInputStream(fileIn);
-//
-//			this.meals = (ArrayList<Meal>) in.readObject();
-//
-//
-//			in.close();
-//			fileIn.close();
-//
-//		} catch (IOException e) {
-//			//New file
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	public void saveMeals(){
-//		try {
-//			FileOutputStream fileOut = new FileOutputStream("tmp/" + this.id + "meals.ser");
-//			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-//
-//			out.writeObject(meals);
-//
-//			out.close();
-//			fileOut.close();
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	public double getGenericDiscountFactor() {
 		return genericDiscountFactor;
@@ -130,6 +65,15 @@ public class Restaurant extends User {
 
 	public ArrayList<Order> getOrders(){
 		return orders;
+	}
+
+	public BigDecimal getIncome(){
+		BigDecimal sum = new BigDecimal("0");
+		for (Order order: orders
+			 ) {
+			sum = sum.add(order.getOrder_price());
+		}
+		return sum;
 	}
 
 	@Override

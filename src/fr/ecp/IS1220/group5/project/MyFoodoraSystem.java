@@ -579,7 +579,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     * determining the Markup percentage to meet the target profit
+     * determining the Delivery Cost to meet the target profit
      *
      */
 
@@ -638,6 +638,98 @@ public class MyFoodoraSystem {
             }
             else {
                 System.out.println("The history of order is empty");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * determining the most selling restaurant
+     *
+     */
+    public void mostSellingRestaurant(){
+        if (currentUser instanceof Manager){
+            boolean isFound = false;
+            for (User user: users.getUsers()
+                 ) {
+                if (user instanceof Restaurant){
+                    isFound = true;
+                    break;
+                }
+            }
+            if (isFound){
+                Restaurant bestRestaurant = null;
+                ArrayList<Restaurant> restaurants = new ArrayList<>();
+                for (User user: users.getUsers()){
+                    if (user instanceof Restaurant){
+                        restaurants.add((Restaurant) user);
+                    }
+                }
+                if (restaurants.size()>1){
+                    for (int i = 0; i < restaurants.size() - 1; i++) {
+                        if (restaurants.get(i).getIncome().doubleValue() > restaurants.get(i+1).getIncome().doubleValue()){
+                            bestRestaurant = restaurants.get(i);
+                        }
+                        else {
+                            bestRestaurant = restaurants.get(i+1);
+                        }
+                    }
+
+                    System.out.println(">> The best is " + bestRestaurant.getName());
+                    System.out.println(">> income: " + Money.display(bestRestaurant.getIncome()));
+                }
+                else {
+                    System.out.println("You only have one restaurant:" + restaurants.get(0).getName());
+                }
+            }
+            else {
+                System.out.println("There is no restaurant in myFoodora");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void leastSellingRestaurant(){
+        if (currentUser instanceof Manager){
+            boolean isFound = false;
+            for (User user: users.getUsers()
+                    ) {
+                if (user instanceof Restaurant){
+                    isFound = true;
+                    break;
+                }
+            }
+            if (isFound){
+                Restaurant leastRestaurant = null;
+                ArrayList<Restaurant> restaurants = new ArrayList<>();
+                for (User user: users.getUsers()){
+                    if (user instanceof Restaurant){
+                        restaurants.add((Restaurant) user);
+                    }
+                }
+                if (restaurants.size()>1){
+                    for (int i = 0; i < restaurants.size() - 1; i++) {
+                        if (restaurants.get(i).getIncome().doubleValue() < restaurants.get(i+1).getIncome().doubleValue()){
+                            leastRestaurant = restaurants.get(i);
+                        }
+                        else {
+                            leastRestaurant = restaurants.get(i+1);
+                        }
+                    }
+
+                    System.out.println(">> The least is " + leastRestaurant.getName());
+                    System.out.println(">> income: " + Money.display(leastRestaurant.getIncome()));
+                }
+                else {
+                    System.out.println("You only have one restaurant:" + restaurants.get(0).getName());
+                }
+            }
+            else {
+                System.out.println("There is no restaurant in myFoodora");
             }
         }
         else {

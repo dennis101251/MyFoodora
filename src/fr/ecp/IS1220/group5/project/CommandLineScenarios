@@ -74,7 +74,7 @@ activateUser LY
 disconnect
 login LY 123456
 
-//
+//Determine the parameters
 login dennis 101251
 setTarget_profit 30
 determineService_fee
@@ -83,3 +83,36 @@ determineDelivery_Cost
 
 setTarget_profit 23
 determineDelivery_Cost
+
+//New restaurant KFC
+disconnect
+registerRestaurant KFC kfc 10:10 123456
+login kfc 123456
+createItem FrenchFries 1
+createItem Chicken 3
+createItem CocaCola 1.5
+createMeal Happymeal
+addDish2Meal FrenchFries Happymeal
+addDish2Meal Chicken Happymeal
+addDish2Meal CocaCola Happymeal
+showMeal KFC Happymeal
+setMealPrice Happymeal
+saveMenu
+
+disconnect
+registerCustomer Yu Lin LY 123456 50:50 yu.lin@student.ecp.fr 065088229
+login LY 123456
+chooseRestaurant KFC
+showMenu
+addMeal2Order Happymeal 1
+addItem2Order FrenchFries 1
+showOrder
+endOrder
+
+login dennis 101251
+totalIncome
+totalDeliveryCost
+totalProfit
+
+mostSellingRestaurant
+leastSellingRestaurant
