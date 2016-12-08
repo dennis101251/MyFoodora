@@ -30,13 +30,10 @@ public class MyFoodoraSystem {
       */
     private Userlist users = new Userlist();
     private ArrayList<Order> orders = new ArrayList<Order>();
-    public double service_fee = 5;
-    public double markup_percentage = 0.1;
-    public double delivery_cost_price = 0.1;
+//    public double service_fee = 5;
+//    public double markup_percentage = 0.1;
+//    public double delivery_cost_price = 0.1;
     private Scanner scanner = new Scanner(System.in);
-
-
-
 
     /**
      *
@@ -669,19 +666,21 @@ public class MyFoodoraSystem {
                     BigDecimal tmpMarkup_percentage = new BigDecimal("0");
                     BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
 
-                    tmpDelivery_cost_price = BigDecimal.valueOf(delivery_cost_price);
-                    tmpMarkup_percentage = BigDecimal.valueOf(markup_percentage);
+                    tmpDelivery_cost_price = delivery_cost_price;
+                    tmpMarkup_percentage = markup_percentage;
 
                     BigDecimal tmp = new BigDecimal("0");
                     tmp = target_profit.add(sumDeliveryDistance.multiply(tmpDelivery_cost_price));
                     tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage.add(BigDecimal.valueOf(1))));
                     tmpService_fee = tmp.divide(BigDecimal.valueOf(orders.size()), 3, RoundingMode.HALF_UP);
 
+                    System.out.println("========================================");
                     System.out.println("you have choose targetProfit_ServiceFee");
+                    System.out.println("========================================");
                     System.out.println("current parameters: ");
-                    System.out.println(">> markup percentage: " + Percentage.display(BigDecimal.valueOf(markup_percentage)) );
-                    System.out.println(">> delivery price: " + Money.display(BigDecimal.valueOf(delivery_cost_price)) );
-                    System.out.println(">> service fee: " + Money.display(BigDecimal.valueOf(service_fee)));
+                    System.out.println(">> markup percentage: " + Percentage.display(markup_percentage) );
+                    System.out.println(">> delivery price: " + Money.display(delivery_cost_price) );
+                    System.out.println(">> service fee: " + Money.display(service_fee));
                     System.out.println("In order to meet the target profit: " + Money.display(target_profit));
                     System.out.println(">> service fee should be: " + Money.display(tmpService_fee));
                 }
@@ -724,8 +723,8 @@ public class MyFoodoraSystem {
                     BigDecimal tmpMarkup_percentage = new BigDecimal("0");
                     BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
 
-                    tmpDelivery_cost_price = BigDecimal.valueOf(delivery_cost_price);
-                    tmpService_fee = BigDecimal.valueOf(service_fee);
+                    tmpDelivery_cost_price = delivery_cost_price;
+                    tmpService_fee = service_fee;
 
                     BigDecimal tmp = new BigDecimal("0");
                     tmp = target_profit.add(sumDeliveryDistance.multiply(tmpDelivery_cost_price));
@@ -735,11 +734,13 @@ public class MyFoodoraSystem {
                     NumberFormat percent = NumberFormat.getPercentInstance();
                     percent.setMaximumFractionDigits(3);
 
+                    System.out.println("========================================");
                     System.out.println("you have choose targetProfit_Markup");
+                    System.out.println("========================================");
                     System.out.println("current parameters: ");
-                    System.out.println(">> markup percentage: " + Percentage.display(BigDecimal.valueOf(markup_percentage)) );
-                    System.out.println(">> delivery price: " + Money.display(BigDecimal.valueOf(delivery_cost_price)) );
-                    System.out.println(">> service fee: " + Money.display(BigDecimal.valueOf(service_fee)));
+                    System.out.println(">> markup percentage: " + Percentage.display(markup_percentage) );
+                    System.out.println(">> delivery price: " + Money.display(delivery_cost_price) );
+                    System.out.println(">> service fee: " + Money.display(service_fee));
                     System.out.println("In order to meet the target profit: " + Money.display(target_profit));
                     System.out.println(">> Markup percentage should be: " + Percentage.display(tmpMarkup_percentage));
                 }
@@ -787,8 +788,8 @@ public class MyFoodoraSystem {
                         BigDecimal tmpMarkup_percentage = new BigDecimal("0");
                         BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
 
-                        tmpService_fee = BigDecimal.valueOf(service_fee);
-                        tmpMarkup_percentage = BigDecimal.valueOf((markup_percentage));
+                        tmpService_fee = service_fee;
+                        tmpMarkup_percentage = markup_percentage;
 
                         BigDecimal tmp = new BigDecimal("0");
                         tmp = target_profit.subtract(tmpService_fee.multiply(BigDecimal.valueOf(orders.size())));
@@ -799,12 +800,12 @@ public class MyFoodoraSystem {
                         NumberFormat percent = NumberFormat.getPercentInstance();
                         percent.setMaximumFractionDigits(3);
                         System.out.println("========================================");
-                        System.out.println("you have choose targetProfit_Markup");
+                        System.out.println("you have choose targetProfit_DeliveryCost");
                         System.out.println("========================================");
                         System.out.println("current parameters: ");
-                        System.out.println(">> markup percentage: " + Percentage.display(BigDecimal.valueOf(markup_percentage)) );
-                        System.out.println(">> delivery price: " + Money.display(BigDecimal.valueOf(delivery_cost_price)) );
-                        System.out.println(">> service fee: " + Money.display(BigDecimal.valueOf(service_fee)));
+                        System.out.println(">> markup percentage: " + Percentage.display(markup_percentage) );
+                        System.out.println(">> delivery price: " + Money.display(delivery_cost_price) );
+                        System.out.println(">> service fee: " + Money.display(service_fee));
                         System.out.println("========================================");
                         System.out.println("In order to meet the target profit: " + Money.display(target_profit));
                         System.out.println(">> Delivery price should be: " + Money.display(tmpDelivery_cost_price));
@@ -1120,6 +1121,7 @@ public class MyFoodoraSystem {
 
                     //apply Fidelity discount
                     currentOrder.applyFidelityDiscount();
+                    ((Customer) currentUser).getFidelityCard().addPoints(currentOrder.getTotal_price().intValue());
                     System.out.println("Total (after Fidelity discount): " + Money.display(currentOrder.getTotal_price()));
 
                     //send the order to the restaurant

@@ -94,10 +94,8 @@ public class Order implements Serializable{
 
 	private void computeDeliveryCost(){
 		delivery_cost = BigDecimal.valueOf(Coordinate.getDistance(restaurant.getAddress(),customer.getAddress()));
+		delivery_distance = delivery_cost;
 		delivery_cost = delivery_cost.multiply(delivery_cost_per_km);
-		this.delivery_cost = BigDecimal.valueOf(Coordinate.getDistance(restaurant.getAddress(),customer.getAddress()));
-		this.delivery_distance = delivery_cost;
-		this.delivery_cost = delivery_cost.multiply(dilivery_cost_price);
 	}
 
 	private void updateOrderPrice(){

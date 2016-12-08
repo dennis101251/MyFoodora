@@ -17,6 +17,7 @@ showMeal McDonalds BestOf
 disconnect
 
 //Customer
+disconnect
 registerCustomer Danyi Wu WDY 501 30:20 danyi.wu@student.ecp.fr 0650102722
 login WDY 501
 showRestaurant
@@ -76,7 +77,7 @@ login LY 123456
 
 //Determine the parameters
 login dennis 101251
-setTarget_profit 30
+setTarget_profit 10
 determineService_fee
 determineMarkup_Percentage
 determineDelivery_Cost
@@ -109,6 +110,7 @@ addItem2Order FrenchFries 1
 showOrder
 endOrder
 
+disconnect
 login dennis 101251
 totalIncome
 totalDeliveryCost
