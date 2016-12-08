@@ -361,7 +361,7 @@ public class MyFoodoraSystem {
         BigDecimal money =new BigDecimal("0");
         for (Order order: orders
                 ) {
-            money = money.add(order.getActual_price());
+            money = money.add(order.getTotal_price());
         }
         this.total_income = money;
 
@@ -803,13 +803,7 @@ public class MyFoodoraSystem {
 
                     //Show the detail of order first
                     currentOrder.showOrder();
-
-                    //apply the fidelity card
-                    currentOrder.applyFidelityCard(((Customer) currentUser).getFidelityCard().compute_discounted_price(currentOrder.getTotal_price()));
-                    System.out.println("After apply fidelity card>> Total: " + Money.display(currentOrder.getActual_price()));
-
-                    //add points to fidelity card
-                    ((Customer) currentUser).addPoints(currentOrder.getActual_price().intValue());
+                    System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
 
                     //send the order to the restaurant
                     currentRestaurant.addOrder(currentOrder);
