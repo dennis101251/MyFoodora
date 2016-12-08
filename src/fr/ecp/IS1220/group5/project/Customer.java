@@ -1,7 +1,12 @@
 package fr.ecp.IS1220.group5.project;
 
 import java.util.ArrayList;
-
+/**
+ * <b>The class that represents a Customer</b>
+ * It extends the <b>User</b> abstract class.
+ *
+ * @see User
+ */
 public class Customer extends User{
 	
 	private String surname;

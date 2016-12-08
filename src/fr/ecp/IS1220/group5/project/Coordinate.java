@@ -2,6 +2,11 @@ package fr.ecp.IS1220.group5.project;
 
 import java.io.Serializable;
 
+/**
+ * <b>The class that represents a point on a 2-dimensional map.</b>
+ *
+ * @version 1.0
+ */
 public class Coordinate implements Serializable{
 
 	private static final long serialVersionUID = -7726249259128496946L;

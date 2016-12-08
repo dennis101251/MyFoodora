@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 /**
- * Created by dennis101251 on 2016/11/27.
+ * <b>The class that scans the command line inputs</b>
+ *
+ * @version 2.0
  */
 public class CommandLine {
 

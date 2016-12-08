@@ -2,7 +2,12 @@ package fr.ecp.IS1220.group5.project;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+/**
+ * <b>The class that represents a Restaurant</b>
+ * It extends the <b>User</b> abstract class.
+ *
+ * @see User
+ */
 public class Restaurant extends User {
 
 	private Coordinate address;

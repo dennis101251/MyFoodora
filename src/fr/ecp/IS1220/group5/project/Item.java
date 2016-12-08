@@ -3,6 +3,13 @@ package fr.ecp.IS1220.group5.project;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * <b>The class that represents an Item</b>
+ * It can be created by a <b>Restaurant</b>, and chosen by a <b>Customer</b>.
+ *
+ * @see Restaurant
+ * @see Customer
+ */
 public class Item  implements Serializable {
 
 	private static final long serialVersionUID = 455302071054673253L;

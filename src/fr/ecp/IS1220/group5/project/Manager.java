@@ -8,7 +8,12 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
+/**
+ * <b>The class that represents a Manager</b>
+ * It extends the <b>User</b> abstract class.
+ *
+ * @see User
+ */
 public class Manager extends User implements Observer{
 	
 	private String surname;

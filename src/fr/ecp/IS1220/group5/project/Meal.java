@@ -4,6 +4,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+/**
+ * <b>The class that represents a meal</b>
+ *
+ * It can be created by a <b>Restaurant</b> and chosen by a <b>Customer</b>.
+ *
+ * @see Restaurant
+ * @see Customer
+ */
 public class Meal  implements Serializable {
 
 	private static final long serialVersionUID = 2530546545664573253L;
