@@ -123,3 +123,20 @@ leastSellingRestaurant
 disconnect
 registerCourier Steve Jobs sj 123456 0:0 87654562
 
+//Delegate order to courier
+disconnect
+login dennis 101251
+setDeliveryPolicy fastDelivery
+setDeliveryPolicy fairOccupationDelivery
+
+
+
+
+
+
+
+
+
+
+
+

@@ -168,6 +168,9 @@ public class CommandLine {
                 case "determineDelivery_Cost":
                     myFoodoraSystem.determineDelivery_Cost();
                     break;
+                case "setDeliveryPolicy":
+                    myFoodoraSystem.setDeliveryPolicy(commands[1]);
+                    break;
 
                 //Courier
                 case "onDuty":

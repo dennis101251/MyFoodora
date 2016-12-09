@@ -35,9 +35,6 @@ public class MyFoodoraSystem {
       */
     private Userlist users = new Userlist();
     private ArrayList<Order> orders = new ArrayList<Order>();
-//    public double service_fee = 5;
-//    public double markup_percentage = 0.1;
-//    public double delivery_cost_price = 0.1;
     private Scanner scanner = new Scanner(System.in);
 
     /**
@@ -55,15 +52,27 @@ public class MyFoodoraSystem {
      */
     public BigDecimal delivery_cost_price = new BigDecimal("1.0");
 
-
+    //User
     private User currentUser = null;
     private Restaurant currentRestaurant = null;
     private Order currentOrder = null;
 
+    //Current financial
     private BigDecimal total_income = new BigDecimal("0");
     private BigDecimal total_delivery_cost = new BigDecimal("0");
     private BigDecimal total_profit = new BigDecimal("0");
     private BigDecimal target_profit = new BigDecimal("0");
+
+    /**
+     * <b>Delivery policy: </b>
+     * <ul>
+     *     <li>fastest delivery policy</li>
+     *     <li>fair-occupation delivery policy</li>
+     * </ul>
+     * <p>by default: fast delivery</p>
+     *
+     */
+    private String deliveryPolicy = "fastDelivery";
 
     public MyFoodoraSystem() {
 
@@ -932,6 +941,27 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * set the delivery policy
+     */
+    public void setDeliveryPolicy(String policy){
+        if (currentUser instanceof Manager){
+            if (policy.equalsIgnoreCase("fastDelivery")){
+                this.deliveryPolicy = "fastDelivery";
+                System.out.println("You have changed the delivery policy as: fastDelivery");
+            }
+            else if ((policy.equalsIgnoreCase("fairOccupationDelivery"))){
+                this.deliveryPolicy = "fairOccupationDelivery";
+                System.out.println("You have changed the delivery policy as: fairOccupationDelivery");
+            }
+            else {
+                System.out.println("invalid input argument");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
     /**
      *
      */

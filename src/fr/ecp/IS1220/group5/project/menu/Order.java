@@ -1,10 +1,13 @@
 package fr.ecp.IS1220.group5.project.menu;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import fr.ecp.IS1220.group5.project.menu.Item;
 import fr.ecp.IS1220.group5.project.menu.Meal;
+import fr.ecp.IS1220.group5.project.user.Courier;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
+import fr.ecp.IS1220.group5.project.util.IDGenerator;
 import fr.ecp.IS1220.group5.project.util.Money;
 
 import java.io.Serializable;
@@ -29,6 +32,8 @@ public class Order implements Serializable{
 	private ArrayList<Meal> meals = new ArrayList<>();
 	private Restaurant restaurant;
 	private Customer customer;
+	private Courier courier;
+	private int id;
 
 	/**
 	 *	this price is the sum of the items' and meals' prices, without any fee, markup percentage or discount.
@@ -62,14 +67,38 @@ public class Order implements Serializable{
 	 */
 	private BigDecimal total_price = new BigDecimal("0");
 
+	/**
+	 * True if this order has been delegated
+	 * False if this order is still waiting to be delegated
+	 */
+	private Boolean deliveryState = false;
+
 	public Order(Restaurant restaurant, Customer customer, BigDecimal delivery_cost_per_km, BigDecimal markup_percentage, BigDecimal service_fee) {
 		this.restaurant = restaurant;
 		this.customer = customer;
 		this.delivery_cost_per_km = delivery_cost_per_km;
 		this.markup_percentage = markup_percentage;
 		this.service_fee = service_fee;
+		IDGenerator idGenerator = IDGenerator.getInstance();
+		this.id = idGenerator.getNextID();
 		computeDeliveryCost();
 	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+	public BigDecimal getTotal_price() {
+		return total_price;
+	}
+	public BigDecimal getOrder_price(){return order_price;}
+	public BigDecimal getDelivery_cost(){ return delivery_cost;}
+	public BigDecimal getDelivery_distance(){return delivery_distance;}
+	public Boolean getDeliveryState(){return deliveryState;}
+
+	/**
+	 * when a courier has accepted this order, it should be set as finished
+	 */
+	public void setDeliveryStateAsFinished(){ this.deliveryState = true;}
 
 	/**
 	 * Computes the total price of the order, by applying the markup percentage, the fee and the discount (fidelity program)
@@ -142,16 +171,16 @@ public class Order implements Serializable{
 		return meals;
 	}
 
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
-	public BigDecimal getTotal_price() {
-		return total_price;
-	}
-	public BigDecimal getOrder_price(){return order_price;}
-	public BigDecimal getDelivery_cost(){ return delivery_cost;}
-	public BigDecimal getDelivery_distance(){return delivery_distance;}
+	/**
+	 * get the unique id of each order has been created
+	 * @return id
+	 */
+	public int getId(){return id;}
 
+	/**
+	 * when a courier accept this order, he should connect with this order
+	 * @param courier
+	 */
 	public void setCourier(Courier courier){
 		this.courier = courier;
 	}

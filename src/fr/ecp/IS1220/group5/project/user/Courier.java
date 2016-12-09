@@ -3,6 +3,8 @@ package fr.ecp.IS1220.group5.project.user;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
 import fr.ecp.IS1220.group5.project.menu.Order;
 
+import java.util.ArrayList;
+
 /**
  * <b>The class that represents a Courier</b>
  * It extends the <b>User</b> abstract class.
@@ -34,6 +36,23 @@ public class Courier extends User {
 	 * The working state of the Courier. True if he is on-duty, false if he is off-duty.
 	 */
 	private boolean workingState = false;
+
+	/**
+	 * After system delegates an order, the courier should be notified
+	 * True if there is a new order to do
+	 * False if there is no new order
+	 */
+	private boolean newOrder = false;
+
+	/**
+	 * the list of orders which has been refused by this courier
+	 */
+	private ArrayList<Order> refuseOrders = new ArrayList<>();
+
+	/**
+	 *the list of orders which has been delivered by this courier
+	 */
+	private ArrayList<Order> historyOfOrders = new ArrayList<>();
 
 	/**
 	 * The constructor of the Courier class
@@ -74,24 +93,19 @@ public class Courier extends User {
 	}
 
 	/**
-	 * The method that is used to notify the system that the Courier is accepting the given order.
-	 * @param order the name of the order
+	 * notify courier that there is new order
 	 */
-	public void accept(Order order){
-//		take the order, order's state will be changed and the courier's state will also be changed
-		this.deliveredOrdersCounter += 1;
-		this.workingState = true;
-//		not finish yet
+	public void notifyNewOrder(){
+		newOrder = true;
 	}
 
 	/**
-	 * The method that is used to notify the system that the Courier is accepting the given order.
-	 * @param order the name of the order
+	 * when courier has checked this message(login), this notification should be disabled
 	 */
-	public void refuse(Order order){
-//		It should return something to let system know the condition
-//		not finish yet
+	public void disableNewOrder(){
+		newOrder = false;
 	}
+
 
 	/**
 	 *
