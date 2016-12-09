@@ -135,6 +135,43 @@ login dennis 101251
 setDeliveryPolicy fastDelivery
 setDeliveryPolicy fairOccupationDelivery
 
+//
+registerRestaurant McDonalds mcdonalds 0:0 123456
+login mcdonalds 123456
+createItem FrenchFries 2
+createItem BigMac 4
+createItem CocaCola 2
+createMeal BestOf
+addDish2Meal FrenchFries BestOf
+addDish2Meal BigMac BestOf
+addDish2Meal CocaCola BestOf
+saveMenu
+
+disconnect
+registerCourier Steve Jobs sj 123456 10:10 87654562
+login sj 123456
+onDuty
+disconnect
+registerCourier Bill Gates BG 123456 2:2 87654562
+login BG 123456
+onDuty
+disconnect
+registerCourier Zemin Jiang JZ 123456 3:5 87654562
+login JZ 123456
+onDuty
+
+disconnect
+registerCustomer Danyi Wu WDY 501 30:20 danyi.wu@student.ecp.fr 0650102722
+login WDY 501
+showRestaurant
+chooseRestaurant McDonalds
+showMenu
+addMeal2Order BestOf 2
+addItem2Order FrenchFries 1
+showOrder
+endOrder
+
+disconnect
 
 
 

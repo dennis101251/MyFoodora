@@ -197,6 +197,12 @@ public class CommandLine {
                 case "associateAgreement":
                     myFoodoraSystem.associateAgreement(commands[1], commands[2]);
                     break;
+                case "refuse":
+                    myFoodoraSystem.refuse();
+                    break;
+                case "accept":
+                    myFoodoraSystem.accept();
+                    break;
 
                 case "notifySpecialOffer":
                     break;

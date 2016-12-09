@@ -1,5 +1,6 @@
 package fr.ecp.IS1220.group5.project.user;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
 import fr.ecp.IS1220.group5.project.menu.Order;
 
@@ -38,11 +39,9 @@ public class Courier extends User {
 	private boolean workingState = true;
 
 	/**
-	 * After system delegates an order, the courier should be notified
-	 * True if there is a new order to do
-	 * False if there is no new order
+	 * the order waiting to be deliver
 	 */
-	private boolean newOrder = false;
+	private Order newOrder = null;
 
 	/**
 	 * the list of orders which has been refused by this courier
@@ -99,23 +98,9 @@ public class Courier extends User {
 	}
 
 	/**
-	 * notify courier that there is new order
-	 */
-	public void notifyNewOrder(){
-		newOrder = true;
-	}
-
-	/**
-	 * when courier has checked this message(login), this notification should be disabled
-	 */
-	public void disableNewOrder(){
-		newOrder = false;
-	}
-
-	/**
 	 * get the condition of new order treated by the courier
 	 */
-	public boolean getNewOrderCondition(){return newOrder;}
+	public boolean getNewOrderCondition(){return newOrder != null;}
 
 	public Coordinate getPosition(){return position;}
 
@@ -123,7 +108,25 @@ public class Courier extends User {
 
 	public void setDeliveredOrdersCounter(int num){this.deliveredOrdersCounter = num;}
 
-	public void setNewOrder(){this.newOrder = true;}
+	public void addDeliveredOrdersCounter(){this.deliveredOrdersCounter = this.deliveredOrdersCounter + 1;}
+
+	public Order getNewOrder(){return newOrder;}
+
+	public void removeNewOrder(){
+		this.newOrder = null;
+	}
+
+	public void addOrder2History(Order order){
+		historyOfOrders.add(order);
+	}
+
+	public void addOrder2RefuseList(Order order){this.refuseOrders.add(order);}
+
+	/**
+	 * set up new order for the courier
+	 * @param order
+	 */
+	public void setNewOrder(Order order){this.newOrder = order;}
 
 	/**
 	 *

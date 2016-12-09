@@ -1131,7 +1131,7 @@ public class MyFoodoraSystem {
      *
      * @param order the order that you try to delegate
      */
-    public void delegateOrder2Courier(Order order){
+    public void delegateOrder2Courier(Order order) throws UserNotFoundException {
         Courier courier = null;
         if (deliveryPolicy.equalsIgnoreCase("fastDelivery")){
             courier = findCourier_FastDelivery(getAvailableCourier(order),order);
@@ -1143,15 +1143,14 @@ public class MyFoodoraSystem {
             System.out.println("error");
         }
         if (courier != null){
-            findUser(courier.getUsername());
-//            users.getUsers().get()
-            courier.setNewOrder();
-
+            courier.setNewOrder(order);
+            updateUser(courier);
+            order.addCourier2DemandeHistory(courier);
+            updateOrder(order);
         }
         else {
             System.out.println("there is no available courier in myFoodora");
         }
-
     }
 
     /**
@@ -1348,7 +1347,7 @@ public class MyFoodoraSystem {
      * <b>Ends an customer's order, applies the fidelity program and send the order to the restaurant.</b>
      *
      */
-    public void endOrder(){
+    public void endOrder() throws UserNotFoundException {
         if (currentUser instanceof Customer){
             if (currentOrder != null){
                 if (!currentOrder.isEmpty()){
@@ -1368,10 +1367,11 @@ public class MyFoodoraSystem {
                     //save the order to the history of system
                     this.orders.add(currentOrder);
                     calculateFinancial();
+                    saveOrders();
 
                     //distribute the order to courier
                     System.out.println(getAvailableCourier(currentOrder).toString());
-                    saveOrders();
+                    delegateOrder2Courier(currentOrder);
 
                     //save the order to the history of customer
                     ((Customer) currentUser).addOrderToHistory(currentOrder);
@@ -1692,6 +1692,54 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * Accept the order
+     */
+    public void accept() throws UserNotFoundException {
+        if (currentUser instanceof Courier){
+            if ( ((Courier) currentUser).getNewOrderCondition()){
+                Order order = ((Courier) currentUser).getNewOrder();
+                order.setDeliveryStateAsFinished();
+                order.setCourier((Courier) currentUser);
+                updateOrder(order);
+
+                ((Courier) currentUser).addDeliveredOrdersCounter();
+                ((Courier) currentUser).changePosition(order.getRestaurant().getAddress());
+                ((Courier) currentUser).addOrder2History(order);
+                ((Courier) currentUser).removeNewOrder();
+                updateUser(currentUser);
+                System.out.println("Order" + order.getId() + " has been accepted by "+ currentUser.getName());
+            }
+            else {
+                System.out.println("you don't have an order to accept");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * Refuse the order
+     */
+    public void refuse() throws UserNotFoundException {
+        if (currentUser instanceof Courier){
+            if ( ((Courier) currentUser).getNewOrderCondition()){
+                Order order = ((Courier) currentUser).getNewOrder();
+                delegateOrder2Courier(order);
+
+                ((Courier) currentUser).addOrder2RefuseList(order);
+                ((Courier) currentUser).removeNewOrder();
+                System.out.println("Order" + order.getId() + " has been refused by "+ currentUser.getName());
+            }
+            else {
+                System.out.println("you don't have an order to accept");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
 
 
     /**

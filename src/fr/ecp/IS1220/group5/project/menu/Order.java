@@ -85,7 +85,7 @@ public class Order implements Serializable{
 	 * True if this order has been delegated
 	 * False if this order is still waiting to be delegated
 	 */
-	private Boolean deliveryState = false;
+	private Boolean deliveryStateIsFinished = false;
 
 	private ArrayList<Courier> couriersDemandeHistory = new ArrayList<Courier>();
 
@@ -146,12 +146,12 @@ public class Order implements Serializable{
 	 * Returns the delivery state of this order.
 	 * @return the delivery state of this order.
 	 */
-	public Boolean getDeliveryState(){return deliveryState;}
+	public Boolean getDeliveryState(){return deliveryStateIsFinished;}
 
 	/**
 	 * when a courier has accepted this order, it should be set as finished
 	 */
-	public void setDeliveryStateAsFinished(){ this.deliveryState = true;}
+	public void setDeliveryStateAsFinished(){ this.deliveryStateIsFinished = true;}
 
 	/**
 	 * Computes the total price of the order, by applying the markup percentage, the fee and the discount (fidelity program)
@@ -173,6 +173,12 @@ public class Order implements Serializable{
 	 */
 	public void showOrder(){
 		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
+		if (deliveryStateIsFinished){
+			System.out.println("Courier: " + courier.getName());
+		}
+		else {
+			System.out.println("waiting to be delivered");
+		}
 		for (Item item: items
 			 ) {
 			System.out.println(item.getName() + " " + Money.display(item.getPrice()));

@@ -108,4 +108,44 @@ public class MyFoodoraSystemTest {
         Assert.assertTrue(myFoodoraSystem.findOrer(id).getDeliveryState());
     }
 
+    @Test
+    public void delegateOrder2Courier() throws UserNotFoundException {
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+
+        myFoodoraSystem.registerCourier("Zemin","Jianf","JZ","123456",new Coordinate(10,10),"123456");
+        myFoodoraSystem.registerCourier("Jintao","Hu","HJ","123456",new Coordinate(20,20),"123456");
+
+        Assert.assertTrue(!((Courier) myFoodoraSystem.getUser("JZ")).getNewOrderCondition());
+
+        Restaurant restaurant = new Restaurant("KFC","kfc","123456",new Coordinate(0,0));
+        Customer customer = new Customer("Zexi","DENG","dennis",new Coordinate(40,0), "123456");
+        Order order = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+
+        myFoodoraSystem.delegateOrder2Courier(order);
+        Assert.assertTrue(((Courier) myFoodoraSystem.getUser("JZ")).getNewOrderCondition());
+    }
+
+    @Test
+    public void delegateOrder2Courier_NoCourierIsAvailable() throws UserNotFoundException {
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+
+        myFoodoraSystem.registerCourier("Zemin","Jianf","JZ","123456",new Coordinate(10,10),"123456");
+        myFoodoraSystem.registerCourier("Jintao","Hu","HJ","123456",new Coordinate(20,20),"123456");
+
+        Courier courier = (Courier) myFoodoraSystem.getUser("JZ");
+        courier.setState_OffDuty();
+        myFoodoraSystem.updateUser(courier);
+        courier = (Courier) myFoodoraSystem.getUser("HJ");
+        courier.setState_OffDuty();
+        myFoodoraSystem.updateUser(courier);
+
+        Restaurant restaurant = new Restaurant("KFC","kfc","123456",new Coordinate(0,0));
+        Customer customer = new Customer("Zexi","DENG","dennis",new Coordinate(40,0), "123456");
+        Order order = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+
+        myFoodoraSystem.delegateOrder2Courier(order);
+    }
+
+
+
 }
