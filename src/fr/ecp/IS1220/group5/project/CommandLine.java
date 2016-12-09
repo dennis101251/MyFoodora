@@ -1,5 +1,8 @@
 package fr.ecp.IS1220.group5.project;
 
+import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
+import fr.ecp.IS1220.group5.project.util.Coordinate;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Scanner;
