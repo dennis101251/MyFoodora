@@ -5,12 +5,18 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
- * Created by dennis101251 on 2016/12/8.
+ * A useful class to display percentages
  */
 public class Percentage {
-    public static String display(BigDecimal price){
-        NumberFormat percent = NumberFormat.getPercentInstance();
-        percent.setMaximumFractionDigits(3);
-        return percent.format(price);
+
+    /**
+     * Returns the percentage representation of a factor, e.g. 0,02% for 0.0002.
+     * @param percent the factor to be displayed in percentage
+     * @return the percent representation, as a string.
+     */
+    public static String display(BigDecimal percent){
+        NumberFormat percentFormat = NumberFormat.getPercentInstance();
+        percentFormat.setMaximumFractionDigits(3);
+        return percentFormat.format(percent);
     }
 }

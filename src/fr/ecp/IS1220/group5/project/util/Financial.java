@@ -9,9 +9,17 @@ import java.math.BigDecimal;
 public class Financial implements Serializable {
 
 	private static final long serialVersionUID = 3789197273932947254L;
-
+	/**
+	 * The service fee of MyFoodora's system.
+	 */
 	public BigDecimal service_fee;
+	/**
+	 * The markup percentage of MyFoodora's system.
+	 */
 	public BigDecimal markup_percentage;
+	/**
+	 * The delivery cost of MyFoodora's system.
+	 */
 	public BigDecimal delivery_cost;
 	
 }
