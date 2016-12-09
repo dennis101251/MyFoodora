@@ -1,4 +1,4 @@
-package fr.ecp.IS1220.group5.project.menu;
+package fr.ecp.IS1220.group5.project.old_classes;
 
 import java.math.BigDecimal;
 

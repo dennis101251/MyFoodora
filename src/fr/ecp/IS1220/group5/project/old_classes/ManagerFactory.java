@@ -1,23 +1,23 @@
-package fr.ecp.IS1220.group5.project.user;
+package fr.ecp.IS1220.group5.project.old_classes;
 
-import fr.ecp.IS1220.group5.project.util.Coordinate;
+import fr.ecp.IS1220.group5.project.user.Manager;
+import fr.ecp.IS1220.group5.project.user.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 /**
  * Created by dennis101251 on 2016/11/18.
  */
-public class CourierFactory extends UserFactory {
+public class ManagerFactory extends UserFactory {
     @Override
     public User createUser() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str;
 
         do {
-            System.out.println("Hi, Courier: Press (Y) to continue, press (N) to return");
+            System.out.println("Hi, Manager: Press (Y) to continue, press (N) to return");
 
             str = br.readLine();
 
@@ -43,40 +43,16 @@ public class CourierFactory extends UserFactory {
                     str = br.readLine();
                     String lastName = str;
 
-                    System.out.println("What's your address? Format: x,y");
-                    str = br.readLine();
+                    Manager newManager = new Manager(firstName,username,password,lastName);
 
-                    StringTokenizer st = new StringTokenizer(str,",");
-                    double X = Double.parseDouble(st.nextToken());
-                    double Y = Double.parseDouble(st.nextToken());
-                    Coordinate address = new Coordinate(X,Y);//tag: Don't check out the format
-
-                    System.out.println("What's your phone number?");
-                    str = br.readLine();
-                    String phone = str;
-
-                    Courier newCourier = new Courier(firstName,username,password,lastName,address,phone);
-
-                    //Set up attribute
-
-                    System.out.println("What is your current duty status? (On)_duty/(Off)_duty");
-                    str = br.readLine();
-
-                    if (str.equalsIgnoreCase("On")|str.equalsIgnoreCase("On_duty")){
-                        newCourier.setState_OnDuty();
-                    }
-                    else {
-                        newCourier.setState_OffDuty();
-                    }
-
-                    System.out.println(newCourier.toString());
+                    System.out.println(newManager.toString());
 
                     System.out.println("Do you confirm your information? Y/N");
                     str = br.readLine();
                     //Type N to repeat, Y to break
 
                     if (str.equalsIgnoreCase("Y")){
-                        return newCourier;
+                        return newManager;
                     }
                     else if (str.equalsIgnoreCase("N")){
                         continue;
@@ -93,17 +69,5 @@ public class CourierFactory extends UserFactory {
             }
         }while (!str.equalsIgnoreCase("Y"));
         return null;
-    }
-
-    public static void main(String[] args) throws IOException {
-        CourierFactory courierFactory = new CourierFactory();
-        User user = courierFactory.createUser();
-        if (user == null){
-            System.out.println("no user");
-        }
-        else {
-            System.out.println(user.toString());;
-        }
-
     }
 }

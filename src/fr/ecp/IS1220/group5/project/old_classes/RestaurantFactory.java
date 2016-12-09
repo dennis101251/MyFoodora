@@ -1,24 +1,25 @@
-package fr.ecp.IS1220.group5.project.user;
+package fr.ecp.IS1220.group5.project.old_classes;
 
-import fr.ecp.IS1220.group5.project.user.Manager;
+import fr.ecp.IS1220.group5.project.user.Restaurant;
 import fr.ecp.IS1220.group5.project.user.User;
-import fr.ecp.IS1220.group5.project.user.UserFactory;
+import fr.ecp.IS1220.group5.project.util.Coordinate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 /**
  * Created by dennis101251 on 2016/11/18.
  */
-public class ManagerFactory extends UserFactory {
+public class RestaurantFactory extends UserFactory {
     @Override
     public User createUser() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str;
 
         do {
-            System.out.println("Hi, Manager: Press (Y) to continue, press (N) to return");
+            System.out.println("Hi, restaurant: Press (Y) to continue, press (N) to return");
 
             str = br.readLine();
 
@@ -36,24 +37,28 @@ public class ManagerFactory extends UserFactory {
                     str = br.readLine();
                     String password = str;
 
-                    System.out.println("What's your first name?");
+                    System.out.println("What's the restaurant's name?");
                     str = br.readLine();
-                    String firstName = str;
+                    String name = str;
 
-                    System.out.println("What's your last name?");
+                    System.out.println("What's your address? Format: x,y");
                     str = br.readLine();
-                    String lastName = str;
 
-                    Manager newManager = new Manager(firstName,username,password,lastName);
+                    StringTokenizer st = new StringTokenizer(str,",");
+                    double X = Double.parseDouble(st.nextToken());
+                    double Y = Double.parseDouble(st.nextToken());
+                    Coordinate address = new Coordinate(X,Y);
 
-                    System.out.println(newManager.toString());
+                    Restaurant newRestaurant = new Restaurant(name,username,password,address);
+
+                    System.out.println(newRestaurant.toString());
 
                     System.out.println("Do you confirm your information? Y/N");
                     str = br.readLine();
                     //Type N to repeat, Y to break
 
                     if (str.equalsIgnoreCase("Y")){
-                        return newManager;
+                        return newRestaurant;
                     }
                     else if (str.equalsIgnoreCase("N")){
                         continue;
@@ -71,4 +76,18 @@ public class ManagerFactory extends UserFactory {
         }while (!str.equalsIgnoreCase("Y"));
         return null;
     }
+
+
+//      Test
+//   public static void main(String[] args) throws IOException {
+//        RestaurantFactory restaurantFactory = new RestaurantFactory();
+//        User user = restaurantFactory.createUser();
+//        if (user == null){
+//            System.out.println("no user");
+//        }
+//        else {
+//            System.out.println(user.toString());;
+//        }
+//
+//    }
 }

@@ -1,4 +1,6 @@
-package fr.ecp.IS1220.group5.project;
+package fr.ecp.IS1220.group5.project.old_classes;
+
+import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 
 import java.io.BufferedReader;
 import java.io.IOException;

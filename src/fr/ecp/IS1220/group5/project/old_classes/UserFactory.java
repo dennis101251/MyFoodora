@@ -1,4 +1,4 @@
-package fr.ecp.IS1220.group5.project.user;
+package fr.ecp.IS1220.group5.project.old_classes;
 
 import fr.ecp.IS1220.group5.project.user.User;
 import fr.ecp.IS1220.group5.project.user.Userlist;

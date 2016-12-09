@@ -1,7 +1,7 @@
-package fr.ecp.IS1220.group5.project.user;
+package fr.ecp.IS1220.group5.project.old_classes;
 
+import fr.ecp.IS1220.group5.project.old_classes.CustomerFactory;
 import fr.ecp.IS1220.group5.project.user.Customer;
-import fr.ecp.IS1220.group5.project.user.CustomerFactory;
 
 import java.io.IOException;
 

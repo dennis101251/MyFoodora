@@ -25,13 +25,33 @@ import java.security.spec.InvalidKeySpecException;
 public abstract class User implements Serializable{
 
 	private static final long serialVersionUID = 2530207107664573253L;
-	
+	/**
+	 * the name of the User.
+	 */
 	protected String name;
+	/**
+	 * the username of the User.
+	 */
 	protected String username;
+	/**
+	 * The hashed password of the User.
+	 */
 	protected String password;
+	/**
+	 * The unique ID of the User.
+	 */
 	protected int id;
+	/**
+	 * The current status of the User (true or false).
+	 */
 	protected boolean status = true;
 
+	/**
+	 * The constructor of the User.
+	 * @param name the name of the User.
+	 * @param username the username of the User.
+	 * @param password the password of the User.
+	 */
 	public User(String name, String username, String password) {
 
 		try {
@@ -48,23 +68,55 @@ public abstract class User implements Serializable{
 
 	}
 
-	public void setId(int id){
-		this.id = id;
-	}
-
+	/**
+	 * Return the username of the User.
+	 * @return the username of the User.
+	 */
 	public String getUsername() {
 		return username;
 	}
 
+	/**
+	 * Return the name of the User.
+	 * @return the name of the User.
+	 */
 	public String getName(){
 		return name;
 	}
 
+	/**
+	 * Activates a User.
+	 */
 	public void activate(){
 		status = true;
 	}
+
+	/**
+	 * Disactivates a User.
+	 */
 	public void disactivate(){status = false;}
+
+	/**
+	 * Returns the status of a User.
+	 * @return true of activated, false if disactivated.
+	 */
 	public boolean getStatus(){return status;}
+
+	/**
+	 * Returns the unique ID of the customer.
+	 * @return the unique ID of the custimer.
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * Returns the hashed password of the User.
+	 * @return the hashed password of the User
+	 */
+	public String getPassword() {
+		return password;
+	}
 
 	@Override
 	public String toString() {
@@ -74,13 +126,5 @@ public abstract class User implements Serializable{
 				", password='" + password + '\'' +
 				", id=" + id +
 				'}';
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public String getPassword() {
-		return password;
 	}
 }

@@ -16,7 +16,10 @@ public class Userlist extends Observable{
     //Editing my own
     public static String usersPath = "tmp/users.ser";
 
-
+    /**
+     * Returns the registered Users of the system
+     * @return the list of registered users.
+     */
     public ArrayList<User> getUsers(){
         return users;
     }
@@ -27,6 +30,9 @@ public class Userlist extends Observable{
         notifyObservers();
     }
 
+    /**
+     * Saves the list of registered Users in a .ser file.
+     */
     public void saveUsers(){
         try {
             FileOutputStream fileOut = new FileOutputStream(usersPath);
@@ -42,6 +48,9 @@ public class Userlist extends Observable{
         }
     }
 
+    /**
+     * Retrieves the list of registered Users from a .ser file.
+     */
     public void retrieveUsers(){
 
         File file = new File(usersPath);
@@ -67,16 +76,30 @@ public class Userlist extends Observable{
         }
     }
 
+    /**
+     * Adds a user to the list of registered users.
+     * @param user the user to add to the list.
+     */
     public void addUser(User user){
         users.add(user);
         saveAndNotify();
     }
 
+    /**
+     * Removes a user from the list of registered users.
+     * @param user the user to remove from the list.
+     * @throws UserNotFoundException
+     */
     public void removeUser(User user) throws UserNotFoundException {
         users.remove(user);
         saveAndNotify();
     }
 
+    /**
+     * Activates a given user.
+     * @param user the user to activate.
+     * @throws UserNotFoundException
+     */
     public void activateUser(User user) throws UserNotFoundException{
         if (users.contains(user)){
             users.get(users.lastIndexOf(user)).status = true;
@@ -87,6 +110,11 @@ public class Userlist extends Observable{
         saveAndNotify();
     }
 
+    /**
+     * Disactivates a given user.
+     * @param user the user to disactivate.
+     * @throws UserNotFoundException
+     */
     public void disactivateUser(User user) throws UserNotFoundException {
         if (users.contains(user)){
             users.get(users.lastIndexOf(user)).status = false;
