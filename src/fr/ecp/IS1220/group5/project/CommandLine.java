@@ -38,6 +38,7 @@ public class CommandLine {
                     myFoodoraSystem.registerCustomer(commands[1], commands[2], commands[3], commands[4], String2Coordinate(commands[5]), commands[6], commands[7]);
                     break;
                 case "registerCourier":
+                    myFoodoraSystem.registerCourier(commands[1], commands[2], commands[3], commands[4], String2Coordinate(commands[5]), commands[6]);
                     break;
                 case "registerManager":
                     myFoodoraSystem.registerManager(commands[1], commands[2], commands[3], commands[4]);
@@ -167,10 +168,10 @@ public class CommandLine {
 
                 //Courier
                 case "onDuty":
-                    myFoodoraSystem.onDuty(commands[1]);
+                    myFoodoraSystem.onDuty();
                     break;
                 case "offDuty":
-                    myFoodoraSystem.offDuty(commands[1]);
+                    myFoodoraSystem.offDuty();
                     break;
                 case "addContactInfo":
                     myFoodoraSystem.addContactInfo(commands[1]);

@@ -88,7 +88,7 @@ public class MyFoodoraSystem {
                 return user;
             }
         }
-        System.out.println("didn't find " + userName);
+        System.out.println("didn't find " + userName + ", your username is valid");
         return null;
     }
 
@@ -368,6 +368,18 @@ public class MyFoodoraSystem {
 
     }
 
+    public void registerCourier(String firstname, String lastname, String username, String password, Coordinate address, String phone){
+        if (getUser(username) == null){
+            User newCourier = new Courier(firstname,username,password,lastname,address,phone);
+            this.users.addUser(newCourier);
+            System.out.println("You have been registered successfully!");
+            System.out.println("======================================");
+        }
+        else{
+            System.out.println("this username is not valid");
+        }
+    }
+
     /**
      * Computes the financial parameters:
      * <ul>
@@ -395,7 +407,6 @@ public class MyFoodoraSystem {
 
         total_profit = total_income.subtract(total_delivery_cost);
     }
-
 
     /**
      *
@@ -1130,6 +1141,9 @@ public class MyFoodoraSystem {
                     //save the order to the history of system
                     this.orders.add(currentOrder);
                     calculateFinancial();
+
+                    //distribute the order to courier
+
                     saveOrders();
 
                     //save the order to the history of customer
@@ -1397,7 +1411,6 @@ public class MyFoodoraSystem {
         sendMessage("Meal of the week special offer: " + meal);
     }
 
-
     /**
      *
      */
@@ -1430,20 +1443,30 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
-     * @param username
+     * set up the state of the courier
      */
-    public void onDuty(String username){
-
+    public void onDuty(){
+        if (currentUser instanceof Courier){
+            ((Courier) currentUser).setState_OnDuty();
+        }
+        else {
+            System.out.println("You must log in first");
+        }
     }
 
     /**
-     *
-     * @param username
+     *set up the state of the courier
      */
-    public void offDuty(String username){
-
+    public void offDuty(){
+        if (currentUser instanceof Courier){
+            ((Courier) currentUser).setState_OffDuty();
+        }
+        else {
+            System.out.println("You must log in first");
+        }
     }
+
+
 
     /**
      *

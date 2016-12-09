@@ -22,6 +22,7 @@ public class Order implements Serializable{
 	private ArrayList<Meal> meals = new ArrayList<>();
 	private Restaurant restaurant;
 	private Customer customer;
+	private Courier courier;
 
 	/**
 	 *	this price is the sum of the items' and meals' prices, without any fee, markup percentage or discount.
@@ -144,6 +145,10 @@ public class Order implements Serializable{
 	public BigDecimal getOrder_price(){return order_price;}
 	public BigDecimal getDelivery_cost(){ return delivery_cost;}
 	public BigDecimal getDelivery_distance(){return delivery_distance;}
+
+	public void setCourier(Courier courier){
+		this.courier = courier;
+	}
 
 
 	@Override
