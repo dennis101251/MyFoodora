@@ -27,12 +27,29 @@ import java.util.ArrayList;
 public class Order implements Serializable{
 
 	private static final long serialVersionUID = -4389016276908172461L;
-
+	/**
+	 * the list of items contained in the order.
+	 */
 	private ArrayList<Item> items = new ArrayList<>();
+	/**
+	 * the list of meals contained in the order.
+	 */
 	private ArrayList<Meal> meals = new ArrayList<>();
+	/**
+	 * the restaurant from which the meals and items are taken.
+	 */
 	private Restaurant restaurant;
+	/**
+	 * the customer that is ordering.
+	 */
 	private Customer customer;
+	/**
+	 * the courier who will to deliver this order.
+	 */
 	private Courier courier;
+	/**
+	 * the unique ID of this order.
+	 */
 	private int id;
 
 	/**
@@ -73,6 +90,14 @@ public class Order implements Serializable{
 	 */
 	private Boolean deliveryState = false;
 
+	/**
+	 * Constructor of the order.
+	 * @param restaurant the restaurant from which the meals and items are taken.
+	 * @param customer the customer who is ordering.
+	 * @param delivery_cost_per_km the delivery cost per kilometer.
+	 * @param markup_percentage the markup percentage of MyFoodora's system.
+	 * @param service_fee the service fee of MyFoodora's system.
+	 */
 	public Order(Restaurant restaurant, Customer customer, BigDecimal delivery_cost_per_km, BigDecimal markup_percentage, BigDecimal service_fee) {
 		this.restaurant = restaurant;
 		this.customer = customer;
@@ -84,15 +109,44 @@ public class Order implements Serializable{
 		computeDeliveryCost();
 	}
 
+	/**
+	 * Returns the restaurant from which the meals and items are taken.
+	 * @return the restaurant from which the meals and items are taken.
+	 */
 	public Restaurant getRestaurant() {
 		return restaurant;
 	}
+
+	/**
+	 * Return the total price of the order (includign markup percentage and fees)
+	 * @return the total price of the order (includign markup percentage and fees)
+	 */
 	public BigDecimal getTotal_price() {
 		return total_price;
 	}
+
+	/**
+	 * Return the price as the sum of the meals' and items' prices (without markup percentage and fees)
+	 * @return the price as the sum of the meals' and items' prices (without markup percentage and fees)
+	 */
 	public BigDecimal getOrder_price(){return order_price;}
+
+	/**
+	 * Returns the delivery cost of this order.
+	 * @return the delivery cost of this order.
+	 */
 	public BigDecimal getDelivery_cost(){ return delivery_cost;}
+
+	/**
+	 * Return the distance the courier has to travel to deliver this order.
+	 * @return the delivery distance.
+	 */
 	public BigDecimal getDelivery_distance(){return delivery_distance;}
+
+	/**
+	 * Returns the delivery state of this order.
+	 * @return the delivery state of this order.
+	 */
 	public Boolean getDeliveryState(){return deliveryState;}
 
 	/**
@@ -115,6 +169,9 @@ public class Order implements Serializable{
 		System.out.println("Total (with fees): " + total_price);
 	}
 
+	/**
+	 * Displays a user friendly representation of this order.
+	 */
 	public void showOrder(){
 		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
 		for (Item item: items
@@ -128,12 +185,19 @@ public class Order implements Serializable{
 		System.out.println(">>total price: " + Money.display(total_price));
 	}
 
+	/**
+	 * Computes the delivery cost of this order.
+	 * Delivery_cost = delivery_distance * delivery_cost_per_km
+	 */
 	private void computeDeliveryCost(){
 		delivery_cost = BigDecimal.valueOf(Coordinate.getDistance(restaurant.getAddress(),customer.getAddress()));
 		delivery_distance = delivery_cost;
 		delivery_cost = delivery_cost.multiply(delivery_cost_per_km);
 	}
 
+	/**
+	 * Updates the price of the order (without markup percentages or fees).
+	 */
 	private void updateOrderPrice(){
 		BigDecimal price = new BigDecimal("0");
 
@@ -149,24 +213,52 @@ public class Order implements Serializable{
 
 	}
 
+	/**
+	 * Adds an item to the order
+	 * @param item the item to be added.
+	 *
+	 * @see Item
+	 */
 	public void addItem(Item item){
 		this.items.add(item);
 		updateTotalPrice();
 	}
 
+	/**
+	 * Adds a meal to the order.
+	 * @param meal the meal to be added.
+	 *
+	 * @see Meal
+	 */
 	public void addMeal(Meal meal){
 		this.meals.add(meal);
 		updateTotalPrice();
 	}
 
+	/**
+	 * Checks whether the order is empty (true) or not (false)
+	 * @return true if the order is empty, false otherwise.
+	 */
 	public boolean isEmpty(){
 		return meals.isEmpty() && items.isEmpty();
 	}
 
+	/**
+	 * Returns the list of items containted in this order
+	 * @return the list of items containted in this order
+	 *
+	 * @see Item
+	 */
 	public ArrayList<Item> getItems() {
 		return items;
 	}
 
+	/**
+	 * Returns the list of meals contained in this order.
+	 * @return the list of meals contained in this order.
+	 *
+	 * @see Meal
+	 */
 	public ArrayList<Meal> getMeals() {
 		return meals;
 	}
@@ -196,6 +288,9 @@ public class Order implements Serializable{
 				'}';
 	}
 
+	/**
+	 * applies the fidelity card discount and adds points to the customer.
+	 */
 	public void applyFidelityDiscount() {
 		this.total_price = customer.getFidelityCard().compute_discounted_price(this.total_price);
 	}
