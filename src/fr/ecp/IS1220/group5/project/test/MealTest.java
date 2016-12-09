@@ -23,7 +23,6 @@ public class MealTest {
         Meal meal = new Meal("meal", restaurant, MealCategory.HalfMeals, MealType.Standard);
         meal.addItem(pizza);
 
-        meal.updatePrice();
         assertTrue(meal.getPrice().equals(new BigDecimal("4.75")));
 
         meal.setMealOfTheWeek(true);

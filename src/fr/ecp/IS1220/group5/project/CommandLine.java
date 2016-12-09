@@ -13,10 +13,19 @@ import java.util.Scanner;
  * @version 2.0
  */
 public class CommandLine {
-
+    /**
+     * MyFoodora's system.
+     */
     MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+    /**
+     * A scanner that scans the command line inputs.
+     */
     private Scanner scanner = new Scanner(System.in);
 
+    /**
+     * A loop that scans command line inputs until the user quits.
+     * @throws UserNotFoundException
+     */
     public void run() throws UserNotFoundException {
         String command = null;
         while (!(command = this.scanner.nextLine()).equalsIgnoreCase("quit")){
@@ -202,6 +211,12 @@ public class CommandLine {
         }
     }
 
+    /**
+     * The main function that is called at the beginning of the program.
+     * @param args
+     * @throws IOException
+     * @throws UserNotFoundException
+     */
     public static void main(String[] args) throws IOException, UserNotFoundException {
         CommandLine commandLine = new CommandLine();
         commandLine.run();
@@ -212,7 +227,7 @@ public class CommandLine {
      * @param address the adress, the format must be "x:y"
      * @return the adress, as a Coordinate object
      *
-     * @see
+     * @see Coordinate
      *
      */
     private Coordinate String2Coordinate(String address) {
