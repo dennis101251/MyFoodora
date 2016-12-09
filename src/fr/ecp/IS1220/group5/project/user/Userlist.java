@@ -125,6 +125,15 @@ public class Userlist extends Observable{
         saveAndNotify();
     }
 
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
+
+    public void updateUser(User user) throws UserNotFoundException {
+        removeUser(user);
+        addUser(user);
+    }
+
     @Override
     public String toString() {
         String str = new String();

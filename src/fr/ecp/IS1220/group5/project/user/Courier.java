@@ -123,6 +123,7 @@ public class Courier extends User {
 
 	public void setDeliveredOrdersCounter(int num){this.deliveredOrdersCounter = num;}
 
+	public void setNewOrder(){this.newOrder = true;}
 
 	/**
 	 *

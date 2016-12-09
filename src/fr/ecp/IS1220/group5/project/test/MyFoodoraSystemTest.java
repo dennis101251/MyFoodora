@@ -1,10 +1,15 @@
 package fr.ecp.IS1220.group5.project.test;
 
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
+import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
+import fr.ecp.IS1220.group5.project.menu.Item;
+import fr.ecp.IS1220.group5.project.menu.ItemCategory;
+import fr.ecp.IS1220.group5.project.menu.ItemType;
 import fr.ecp.IS1220.group5.project.menu.Order;
 import fr.ecp.IS1220.group5.project.user.Courier;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
+import fr.ecp.IS1220.group5.project.user.User;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
 import org.junit.Assert;
 import org.junit.Test;
@@ -68,4 +73,39 @@ public class MyFoodoraSystemTest {
 
         Assert.assertTrue(bestCourier.getName().equalsIgnoreCase("Steve"));
     }
+
+    @Test
+    public void updateUserTest() throws UserNotFoundException {
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+        myFoodoraSystem.registerCourier("Zemin","Jianf","JZ","123456",new Coordinate(10,10),"123456");
+
+        Courier courier = (Courier) myFoodoraSystem.getUser("JZ");
+        Assert.assertEquals(courier.getDeliveredOrdersCounter(),0);
+
+        courier.setDeliveredOrdersCounter(10);
+
+        myFoodoraSystem.updateUser(courier);
+        courier = (Courier) myFoodoraSystem.getUser("JZ");
+        Assert.assertEquals(courier.getDeliveredOrdersCounter(),10);
+    }
+    @Test
+    public void updateOrderTest(){
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+
+        Restaurant restaurant = new Restaurant("KFC","kfc","123456",new Coordinate(0,0));
+        Customer customer = new Customer("Zexi","DENG","dennis",new Coordinate(40,0), "123456");
+        Order order = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+
+
+        int id = order.getId();
+        myFoodoraSystem.addOrder(order);
+        Assert.assertTrue(!myFoodoraSystem.findOrer(id).getDeliveryState());
+
+        Order newOrder = myFoodoraSystem.findOrer(id);
+        newOrder.setDeliveryStateAsFinished();
+
+        myFoodoraSystem.updateOrder(newOrder);
+        Assert.assertTrue(myFoodoraSystem.findOrer(id).getDeliveryState());
+    }
+
 }

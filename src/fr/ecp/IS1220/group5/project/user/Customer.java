@@ -118,13 +118,7 @@ public class Customer extends User {
 		this.fidelityCard = fidelityCard;
 	}
 
-	/**
-	 * Return the address of the customer
-	 * @return the address of the customer, as a Coordinate object.
-	 */
-	public Coordinate getAddress(){
-		return address;
-	}
+	public Coordinate getAddress(){return address;}
 
 	@Override
 	public String toString() {

@@ -116,6 +116,38 @@ public class MyFoodoraSystem {
     }
 
     /**
+     *Update user's state
+     */
+    public void updateUser(User user) throws UserNotFoundException {
+        users.updateUser(user);
+    }
+
+    /**
+     * Update order's state
+     */
+    public void updateOrder(Order order){
+        orders.remove(order);
+        orders.add(order);
+        saveOrders();
+    }
+
+    public void addOrder(Order order){
+        this.orders.add(order);
+        saveOrders();
+    }
+
+    public Order findOrer(int ID){
+        for (Order order: orders
+             ) {
+            if (order.getId() == ID){
+                return order;
+            }
+        }
+        System.out.println("This order is not found in the system");
+        return null;
+    }
+
+    /**
      * Removes the user with a given name from the Userlist
      * @param userName
      * @throws UserNotFoundException
@@ -270,7 +302,8 @@ public class MyFoodoraSystem {
                         if (PasswordHash.validatePassword(password,myUser.getPassword())){
                             this.currentUser = myUser;
                             System.out.println( myUser.getName() + ": welcome to myFoodora!");
-                            System.out.println("=======================");
+                            System.out.println("==============================================");
+                            loginInformation();
                         }
                         else {
                             System.out.println("Invalid password");
@@ -291,6 +324,35 @@ public class MyFoodoraSystem {
         }
         else {
             System.out.println("you have to disconnect first");
+        }
+    }
+
+    /**
+     * the information show at every time user login
+     */
+    public void loginInformation(){
+        if (currentUser instanceof Customer ){
+            checkInfoBoard();
+        }
+        else if (currentUser instanceof Restaurant){
+            showOrdersOfRestaurant();
+            System.out.println("==============================================");
+        }
+        else if (currentUser instanceof Manager){
+            showHistoryOfOrder_System();
+            System.out.println("==============================================");
+        }
+        else if (currentUser instanceof Courier){
+            if (((Courier) currentUser).getNewOrderCondition()){
+                System.out.println("You have a NEW order to deliver");
+                System.out.println("accept/refuse");
+            }
+            else {
+                System.out.println("There is no order to deliver");
+            }
+        }
+        else {
+            System.out.println("error");
         }
     }
 
@@ -1061,6 +1123,35 @@ public class MyFoodoraSystem {
             }
         }
         return bestCourier;
+    }
+
+    /**
+     * delegate the order to a courier
+     * use strategy pattern to apply different policies
+     *
+     * @param order the order that you try to delegate
+     */
+    public void delegateOrder2Courier(Order order){
+        Courier courier = null;
+        if (deliveryPolicy.equalsIgnoreCase("fastDelivery")){
+            courier = findCourier_FastDelivery(getAvailableCourier(order),order);
+        }
+        else if (deliveryPolicy.equalsIgnoreCase("fairOccupationDelivery")){
+            courier = findCourier_FairOccupationDelivery(getAvailableCourier(order),order);
+        }
+        else {
+            System.out.println("error");
+        }
+        if (courier != null){
+            findUser(courier.getUsername());
+//            users.getUsers().get()
+            courier.setNewOrder();
+
+        }
+        else {
+            System.out.println("there is no available courier in myFoodora");
+        }
+
     }
 
     /**
