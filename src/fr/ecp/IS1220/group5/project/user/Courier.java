@@ -35,7 +35,7 @@ public class Courier extends User {
 	/**
 	 * The working state of the Courier. True if he is on-duty, false if he is off-duty.
 	 */
-	private boolean workingState = false;
+	private boolean workingState = true;
 
 	/**
 	 * After system delegates an order, the courier should be notified
@@ -85,6 +85,12 @@ public class Courier extends User {
 	}
 
 	/**
+	 * get the working state
+	 */
+	public boolean getWorkingState(){
+		return workingState;
+	}
+	/**
 	 * Changes the Courier's position.
 	 * @param newposition the new position
 	 */
@@ -105,6 +111,11 @@ public class Courier extends User {
 	public void disableNewOrder(){
 		newOrder = false;
 	}
+
+	/**
+	 * get the condition of new order treated by the courier
+	 */
+	public boolean getNewOrderCondition(){return newOrder;}
 
 
 	/**

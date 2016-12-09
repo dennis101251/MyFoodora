@@ -72,6 +72,10 @@ public class Order implements Serializable{
 	 * False if this order is still waiting to be delegated
 	 */
 	private Boolean deliveryState = false;
+	/**
+	 * the list of courier which has demanded before
+	 */
+	private ArrayList<Courier> couriersDemandeHistory = new ArrayList<>();
 
 	public Order(Restaurant restaurant, Customer customer, BigDecimal delivery_cost_per_km, BigDecimal markup_percentage, BigDecimal service_fee) {
 		this.restaurant = restaurant;
@@ -93,7 +97,7 @@ public class Order implements Serializable{
 	public BigDecimal getOrder_price(){return order_price;}
 	public BigDecimal getDelivery_cost(){ return delivery_cost;}
 	public BigDecimal getDelivery_distance(){return delivery_distance;}
-	public Boolean getDeliveryState(){return deliveryState;}
+	public boolean getDeliveryState(){return deliveryState;}
 
 	/**
 	 * when a courier has accepted this order, it should be set as finished
@@ -185,6 +189,23 @@ public class Order implements Serializable{
 		this.courier = courier;
 	}
 
+	public void addCourier2DemandeHistory(Courier courier){
+		this.couriersDemandeHistory.add(courier);
+	}
+
+	/**
+	 * Find this courier whether has been notified before
+	 * @param courier
+	 * @return boolean
+	 */
+	public boolean isCourierHasBeenNotified(Courier courier){
+		if (couriersDemandeHistory.isEmpty()){
+			return false;
+		}
+		else {
+			return couriersDemandeHistory.contains(courier);
+		}
+	}
 
 	@Override
 	public String toString() {

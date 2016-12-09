@@ -962,6 +962,39 @@ public class MyFoodoraSystem {
             System.out.println("You must log in first");
         }
     }
+
+    /**
+     * Get the list of available courier
+     *
+     * @param order
+     * @return a list of available courier
+     */
+    public ArrayList<Courier> getAvailableCourier(Order order){
+        ArrayList<Courier> couriers = new ArrayList<>();
+        for (User user: users.getUsers()){
+            if (user instanceof Courier){
+                if (((Courier) user).getWorkingState()){
+                    if (!order.isCourierHasBeenNotified((Courier) user)){
+                        if (!((Courier) user).getNewOrderCondition()){
+                            couriers.add((Courier) user);
+                        }
+                    }
+                }
+            }
+        }
+        return couriers;
+    }
+
+    /**
+     * private method
+     * find a courier with respect of fastDelivery policy
+     * return null if there is no appropriate courier
+     */
+    private Courier findCourier_FastDelivery(ArrayList<Courier> availableCouriers){
+        return null;
+    }
+
+
     /**
      *
      */
@@ -1178,7 +1211,7 @@ public class MyFoodoraSystem {
                     calculateFinancial();
 
                     //distribute the order to courier
-
+                    System.out.println(getAvailableCourier(currentOrder).toString());
                     saveOrders();
 
                     //save the order to the history of customer
