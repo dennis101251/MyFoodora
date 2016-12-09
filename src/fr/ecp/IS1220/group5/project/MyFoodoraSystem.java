@@ -1,5 +1,6 @@
 package fr.ecp.IS1220.group5.project;
 
+import com.sun.org.apache.regexp.internal.RE;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.*;
@@ -871,13 +872,21 @@ public class MyFoodoraSystem {
                         restaurants.add((Restaurant) user);
                     }
                 }
+                BigDecimal incomeBest = BigDecimal.valueOf(0);
+                BigDecimal incomeTmp = BigDecimal.valueOf(0);
+
                 if (restaurants.size()>1){
-                    for (int i = 0; i < restaurants.size() - 1; i++) {
-                        if (restaurants.get(i).getIncome().doubleValue() > restaurants.get(i+1).getIncome().doubleValue()){
+                    for (int i = 0; i < restaurants.size(); i++) {
+                        if (bestRestaurant == null){
+                            incomeBest = restaurants.get(i).getIncome();
                             bestRestaurant = restaurants.get(i);
                         }
                         else {
-                            bestRestaurant = restaurants.get(i+1);
+                            incomeTmp = restaurants.get(i).getIncome();
+                            if (incomeTmp.doubleValue() > incomeBest.doubleValue()){
+                                incomeBest = incomeTmp;
+                                bestRestaurant = restaurants.get(i);
+                            }
                         }
                     }
 
@@ -915,17 +924,25 @@ public class MyFoodoraSystem {
                         restaurants.add((Restaurant) user);
                     }
                 }
+                BigDecimal incomeBest = BigDecimal.valueOf(0);
+                BigDecimal incomeTmp = BigDecimal.valueOf(0);
+
                 if (restaurants.size()>1){
-                    for (int i = 0; i < restaurants.size() - 1; i++) {
-                        if (restaurants.get(i).getIncome().doubleValue() < restaurants.get(i+1).getIncome().doubleValue()){
+                    for (int i = 0; i < restaurants.size(); i++) {
+                        if (leastRestaurant == null){
+                            incomeBest = restaurants.get(i).getIncome();
                             leastRestaurant = restaurants.get(i);
                         }
                         else {
-                            leastRestaurant = restaurants.get(i+1);
+                            incomeTmp = restaurants.get(i).getIncome();
+                            if (incomeTmp.doubleValue() < incomeBest.doubleValue()){
+                                incomeBest = incomeTmp;
+                                leastRestaurant = restaurants.get(i);
+                            }
                         }
                     }
 
-                    System.out.println(">> The least is " + leastRestaurant.getName());
+                    System.out.println(">> The best is " + leastRestaurant.getName());
                     System.out.println(">> income: " + Money.display(leastRestaurant.getIncome()));
                 }
                 else {
@@ -965,6 +982,7 @@ public class MyFoodoraSystem {
 
     /**
      * Get the list of available courier
+     * Have to be careful the list can be null
      *
      * @param order
      * @return a list of available courier
@@ -987,11 +1005,32 @@ public class MyFoodoraSystem {
 
     /**
      * private method
+     *
      * find a courier with respect of fastDelivery policy
      * return null if there is no appropriate courier
+     *
+     * @param availableCouriers
+     * @param order to get the restaurant connected in this order
+     *
      */
-    private Courier findCourier_FastDelivery(ArrayList<Courier> availableCouriers){
-        return null;
+    public Courier findCourier_FastDelivery(ArrayList<Courier> availableCouriers, Order order){
+        Restaurant restaurant = order.getRestaurant();
+        Courier bestCourier = null;
+        Double distanceBest = Double.valueOf(0);
+        Double distanceTmp = Double.valueOf(0);
+        for (int i = 0; i < availableCouriers.size(); i++) {
+            if (bestCourier == null){
+                bestCourier = availableCouriers.get(i);
+            }
+            else {
+                distanceBest = Coordinate.getDistance(bestCourier.getPosition(),restaurant.getAddress());
+                distanceTmp = Coordinate.getDistance(availableCouriers.get(i).getPosition(),restaurant.getAddress());
+                if (distanceTmp < distanceBest){
+                    bestCourier = availableCouriers.get(i);
+                }
+            }
+        }
+        return bestCourier;
     }
 
 
@@ -1475,7 +1514,6 @@ public class MyFoodoraSystem {
      * @param meal
      */
     public void sendSpecialOffer(Meal meal){
-
         sendMessage("Meal of the week special offer: " + meal);
     }
 

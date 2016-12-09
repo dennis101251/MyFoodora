@@ -121,11 +121,11 @@ leastSellingRestaurant
 
 //Courier
 disconnect
-registerCourier Steve Jobs sj 123456 0:0 87654562
+registerCourier Steve Jobs sj 123456 10:10 87654562
 login sj 123456
 onDuty
 disconnect
-registerCourier Bill Gates BG 123456 0:0 87654562
+registerCourier Bill Gates BG 123456 2:2 87654562
 login BG 123456
 onDuty
 

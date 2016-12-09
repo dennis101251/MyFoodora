@@ -117,6 +117,8 @@ public class Courier extends User {
 	 */
 	public boolean getNewOrderCondition(){return newOrder;}
 
+	public Coordinate getPosition(){return position;}
+
 
 	/**
 	 *

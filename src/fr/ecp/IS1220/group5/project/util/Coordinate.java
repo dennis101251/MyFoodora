@@ -20,6 +20,11 @@ public class Coordinate implements Serializable{
 		this.y = y;
 	}
 
+	public Coordinate(String x, String y){
+		this.x = Double.parseDouble(x);
+		this.y = Double.parseDouble(y);
+	}
+
 	public double getX() {
 		return x;
 	}

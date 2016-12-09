@@ -1,8 +1,5 @@
 package fr.ecp.IS1220.group5.project.menu;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
-import fr.ecp.IS1220.group5.project.menu.Item;
-import fr.ecp.IS1220.group5.project.menu.Meal;
 import fr.ecp.IS1220.group5.project.user.Courier;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
@@ -89,6 +86,8 @@ public class Order implements Serializable{
 	 * False if this order is still waiting to be delegated
 	 */
 	private Boolean deliveryState = false;
+
+	private ArrayList<Courier> couriersDemandeHistory = new ArrayList<Courier>();
 
 	/**
 	 * Constructor of the order.
