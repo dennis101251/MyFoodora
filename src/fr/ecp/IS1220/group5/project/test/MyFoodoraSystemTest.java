@@ -35,5 +35,37 @@ public class MyFoodoraSystemTest {
 
         Assert.assertTrue(bestCourier.getName().equalsIgnoreCase("Bill"));
     }
+    @Test
+    public void findCourier_FastDelivery_IfEmpty() throws Exception {
+        Restaurant restaurant = new Restaurant("KFC","kfc","123456",new Coordinate(0,0));
+        Customer customer = new Customer("Zexi","DENG","dennis",new Coordinate(40,0), "123456");
+        Order order = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+        ArrayList<Courier> couriers = new ArrayList<>();
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+        Courier bestCourier = myFoodoraSystem.findCourier_FastDelivery(couriers, order);
 
+        Assert.assertTrue(bestCourier == null);
+
+    }
+    @Test
+    public void findCourier_FairOccupationDelivery() throws Exception  {
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+        Courier courier1 = new Courier("Bill","BG","123456","Gates",new Coordinate(10,10),"123456");
+        courier1.setDeliveredOrdersCounter(3);
+        Courier courier2 = new Courier("Steve","SJ","123456","Jobs",new Coordinate(20,20),"123456");
+        courier2.setDeliveredOrdersCounter(2);
+        Courier courier3 = new Courier("Zemin","JZ","123456","Jiang",new Coordinate(15,20),"123456");
+        courier3.setDeliveredOrdersCounter(2);
+        ArrayList<Courier> couriers = new ArrayList<>();
+        couriers.add(courier1);
+        couriers.add(courier2);
+        couriers.add(courier3);
+
+        Restaurant restaurant = new Restaurant("KFC","kfc","123456",new Coordinate(0,0));
+        Customer customer = new Customer("Zexi","DENG","dennis",new Coordinate(40,0), "123456");
+        Order order = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+        Courier bestCourier =  myFoodoraSystem.findCourier_FairOccupationDelivery(couriers,order);
+
+        Assert.assertTrue(bestCourier.getName().equalsIgnoreCase("Steve"));
+    }
 }

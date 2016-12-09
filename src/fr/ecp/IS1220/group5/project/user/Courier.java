@@ -119,6 +119,10 @@ public class Courier extends User {
 
 	public Coordinate getPosition(){return position;}
 
+	public int getDeliveredOrdersCounter(){return this.deliveredOrdersCounter;}
+
+	public void setDeliveredOrdersCounter(int num){this.deliveredOrdersCounter = num;}
+
 
 	/**
 	 *

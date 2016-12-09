@@ -1033,6 +1033,35 @@ public class MyFoodoraSystem {
         return bestCourier;
     }
 
+    /**
+     * private method
+     *
+     * find a courier with respect of fFairOccupationDelivery policy
+     * return null if there is no appropriate courier
+     *
+     * @param availableCouriers
+     * @param order to get the restaurant connected in this order
+     *
+     */
+    public Courier findCourier_FairOccupationDelivery(ArrayList<Courier> availableCouriers, Order order){
+        Restaurant restaurant = order.getRestaurant();
+        Courier bestCourier = null;
+        int counter = 0;
+
+        for (int i = 0; i < availableCouriers.size(); i++) {
+            if (bestCourier == null){
+                bestCourier = availableCouriers.get(i);
+                counter = availableCouriers.get(i).getDeliveredOrdersCounter();
+            }
+            else {
+                if (availableCouriers.get(i).getDeliveredOrdersCounter() < counter){
+                    bestCourier = availableCouriers.get(i);
+                    counter = bestCourier.getDeliveredOrdersCounter();
+                }
+            }
+        }
+        return bestCourier;
+    }
 
     /**
      *
