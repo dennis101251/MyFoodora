@@ -16,13 +16,34 @@ import java.math.BigDecimal;
 public class Item  implements Serializable {
 
 	private static final long serialVersionUID = 455302071054673253L;
-
+	/**
+	 * The name of this item.
+	 */
 	private String name;
+	/**
+	 * The price of this item.
+	 */
 	private BigDecimal price;
+	/**
+	 * The item category of this item.
+	 *
+	 * @see ItemCategory
+	 */
 	private ItemCategory itemCategory;
+	/**
+	 * the item type of this item.
+	 *
+	 * @see ItemType
+	 */
 	private ItemType itemType;
-	
-	
+
+	/**
+	 * The constructor of this item.
+	 * @param name the name of this item.
+	 * @param price the price of this item.
+	 * @param itemCategory the item category of this item.
+	 * @param itemtype the item type of this item.
+	 */
 	public Item(String name, BigDecimal price, ItemCategory itemCategory, ItemType itemtype) {
 		this.itemCategory = itemCategory;
 		this.price = price;
@@ -30,34 +51,66 @@ public class Item  implements Serializable {
 		this.itemType = itemType;
 	}
 
+	/**
+	 * Returns the name of the item.
+	 * @return the name of the item.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets the name of this item.
+	 * @param name the new name of this item.
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns the price of this item.
+	 * @return the price of this item.
+	 */
 	public BigDecimal getPrice() {
 		return price;
 	}
 
+	/**
+	 * Sets the price of this item.
+	 * @param price the new price of this item.
+	 */
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
+	/**
+	 * Returns the item category of this item.
+	 * @return the item category of this item.
+	 */
 	public ItemCategory getItemCategory() {
 		return itemCategory;
 	}
 
+	/**
+	 * Sets the item category of this item.
+	 * @param itemCategory the new item category.
+	 */
 	public void setItemCategory(ItemCategory itemCategory) {
 		this.itemCategory = itemCategory;
 	}
 
+	/**
+	 * Returns the item type of this item.
+	 * @return the item type of this item.
+	 */
 	public ItemType getItemType() {
 		return itemType;
 	}
 
+	/**
+	 * Sets the item type of this item.
+	 * @param itemType the new item type of this item.
+	 */
 	public void setItemType(ItemType itemType) {
 		this.itemType = itemType;
 	}

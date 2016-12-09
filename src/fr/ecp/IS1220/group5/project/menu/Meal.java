@@ -18,11 +18,29 @@ import java.util.ArrayList;
 public class Meal  implements Serializable {
 
 	private static final long serialVersionUID = 2530546545664573253L;
-
+	/**
+	 * the name of this meal.
+	 */
 	private String name;
+	/**
+	 * the price of this meal.
+	 */
 	private BigDecimal price;
+	/**
+	 * The meal category of this meal.
+	 *
+	 * @see MealCategory
+	 */
 	private MealCategory mealCategory;
+	/**
+	 * The meal type of this meal.
+	 *
+	 * @see MealType
+	 */
 	private MealType mealType;
+	/**
+	 * The items contained in this meal.
+	 */
 	private ArrayList<Item> items = new ArrayList<>();
 	/**
 	 * The Restaurant that has created this meal.
@@ -33,6 +51,13 @@ public class Meal  implements Serializable {
 	 */
 	private boolean isMealOfTheWeek = false;
 
+	/**
+	 * The constructor of this meal.
+	 * @param name the name of this meal.
+	 * @param restaurant the restaurant that has created this meal.
+	 * @param mealCategory the meal category.
+	 * @param mealType the meal type.
+	 */
 	public Meal(String name, Restaurant restaurant, MealCategory mealCategory, MealType mealType) {
 		this.name = name;
 		this.restaurant = restaurant;
@@ -71,44 +96,87 @@ public class Meal  implements Serializable {
 
 	}
 
+	/**
+	 * Another constructor of this meal (only name and restaurant)
+	 * @param name the name of this meal.
+	 * @param restaurant the restaurant that has created this meal.
+	 */
 	public Meal(String name, Restaurant restaurant){
 		this.name = name;
 		this.restaurant = restaurant;
 	}
 
+	/**
+	 * Returns the name of this meal.
+	 * @return the name of this meal.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets the name of this meal.
+	 * @param name the name of this meal.
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns the price of this meal.
+	 * @return the price of this meal.
+	 */
 	public BigDecimal getPrice() {
 		return price;
 	}
 
+	/**
+	 * Returns the meal category of this meal.
+	 * @return the meal of this meal.
+	 */
 	public MealCategory getMealCategory() {
 		return mealCategory;
 	}
 
+	/**
+	 * Sets the meal category.
+	 * @param mealCategory the new meal category.
+	 */
 	public void setMealCategory(MealCategory mealCategory) {
 		this.mealCategory = mealCategory;
 	}
 
+	/**
+	 * Returns the meal type of this meal.
+	 * @return the meal type of this meal.
+	 */
 	public MealType getMealType() {
 		return mealType;
 	}
 
+	/**
+	 * Sets the meal type
+	 * @param mealType the new meal type.
+	 */
 	public void setMealType(MealType mealType) {
 		this.mealType = mealType;
 	}
 
+	/**
+	 * Adds an item to this meal.
+	 * @param item the item to be added to this meal.
+	 */
 	public void addItem(Item item){
 		this.items.add(item);
 		this.updatePrice();
 	}
 
+	/**
+	 * Returns the list of items contained in this meal.
+	 * @return the list of items
+	 *
+	 * @see Item
+	 */
 	public ArrayList<Item> getItems(){
 		return items;
 	}
