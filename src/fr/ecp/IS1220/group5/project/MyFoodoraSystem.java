@@ -80,6 +80,7 @@ public class MyFoodoraSystem {
 //        Load all registered the users
         retrieveUsers();
         retrieveOrders();
+        retrieveFinancial();
         System.out.println(orders.toString());
         System.out.println(users.toString());
 
@@ -1020,6 +1021,110 @@ public class MyFoodoraSystem {
         }
     }
 
+    public void mostActiveCourier(){
+        if (currentUser instanceof Manager){
+            boolean isFound = false;
+            for (User user: users.getUsers()
+                    ) {
+                if (user instanceof Courier){
+                    isFound = true;
+                    break;
+                }
+            }
+            if (isFound){
+                Courier bestCourier = null;
+                ArrayList<Courier> couriers = new ArrayList<>();
+                for (User user: users.getUsers()){
+                    if (user instanceof Courier){
+                        couriers.add((Courier) user);
+                    }
+                }
+                int best = 0;
+                int tmp = 0;
+
+                if (couriers.size()>1){
+                    for (int i = 0; i < couriers.size(); i++) {
+                        if (bestCourier == null){
+                            best = couriers.get(i).getDeliveredOrdersCounter();
+                            bestCourier = couriers.get(i);
+                        }
+                        else {
+                            tmp = couriers.get(i).getDeliveredOrdersCounter();
+                            if (tmp > best){
+                                best = tmp;
+                                bestCourier = couriers.get(i);
+                            }
+                        }
+                    }
+
+                    System.out.println(">> The best is " + bestCourier.getName());
+                    System.out.println(">> Number: " + bestCourier.getDeliveredOrdersCounter());
+                }
+                else {
+                    System.out.println("You only have one restaurant:" + couriers.get(0).getName());
+                }
+            }
+            else {
+                System.out.println("There is no courier in myFoodora");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void leastActiveCourier(){
+        if (currentUser instanceof Manager){
+            boolean isFound = false;
+            for (User user: users.getUsers()
+                    ) {
+                if (user instanceof Courier){
+                    isFound = true;
+                    break;
+                }
+            }
+            if (isFound){
+                Courier bestCourier = null;
+                ArrayList<Courier> couriers = new ArrayList<>();
+                for (User user: users.getUsers()){
+                    if (user instanceof Courier){
+                        couriers.add((Courier) user);
+                    }
+                }
+                int best = 0;
+                int tmp = 0;
+
+                if (couriers.size()>1){
+                    for (int i = 0; i < couriers.size(); i++) {
+                        if (bestCourier == null){
+                            best = couriers.get(i).getDeliveredOrdersCounter();
+                            bestCourier = couriers.get(i);
+                        }
+                        else {
+                            tmp = couriers.get(i).getDeliveredOrdersCounter();
+                            if (tmp < best){
+                                best = tmp;
+                                bestCourier = couriers.get(i);
+                            }
+                        }
+                    }
+
+                    System.out.println(">> The least active is " + bestCourier.getName());
+                    System.out.println(">> Number: " + bestCourier.getDeliveredOrdersCounter());
+                }
+                else {
+                    System.out.println("You only have one restaurant:" + couriers.get(0).getName());
+                }
+            }
+            else {
+                System.out.println("There is no courier in myFoodora");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
     /**
      * set the delivery policy
      */
@@ -1694,6 +1799,7 @@ public class MyFoodoraSystem {
 
     /**
      * Accept the order
+     * and update the states of courier and order
      */
     public void accept() throws UserNotFoundException {
         if (currentUser instanceof Courier){
@@ -1721,6 +1827,7 @@ public class MyFoodoraSystem {
 
     /**
      * Refuse the order
+     * and redelegate the order to other couriers
      */
     public void refuse() throws UserNotFoundException {
         if (currentUser instanceof Courier){
@@ -1741,6 +1848,20 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * change the position to where the courier wants
+     *
+     * @param coordinate new position
+     */
+    public void changePosition(Coordinate coordinate) throws UserNotFoundException {
+        if (currentUser instanceof Courier){
+            ((Courier) currentUser).changePosition(coordinate);
+            updateUser(currentUser);
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
 
     /**
      *

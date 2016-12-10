@@ -55,6 +55,7 @@ public class CommandLine {
                 case "registerManager":
                     myFoodoraSystem.registerManager(commands[1], commands[2], commands[3], commands[4]);
                     break;
+
                 //Restaurant
                 case "createItem":
                     myFoodoraSystem.createItem(commands[1], new BigDecimal(commands[2]));
@@ -85,12 +86,6 @@ public class CommandLine {
                     break;
                 case "showOrdersOfRestaurant":
                     myFoodoraSystem.showOrdersOfRestaurant();
-                    break;
-                case "mostSellingRestaurant":
-                    myFoodoraSystem.mostSellingRestaurant();
-                    break;
-                case "leastSellingRestaurant":
-                    myFoodoraSystem.leastSellingRestaurant();
                     break;
 
                 //Customer
@@ -180,6 +175,18 @@ public class CommandLine {
                 case "setDeliveryPolicy":
                     myFoodoraSystem.setDeliveryPolicy(commands[1]);
                     break;
+                case "mostSellingRestaurant":
+                    myFoodoraSystem.mostSellingRestaurant();
+                    break;
+                case "leastSellingRestaurant":
+                    myFoodoraSystem.leastSellingRestaurant();
+                    break;
+                case "mostActiveCourier":
+                    myFoodoraSystem.mostActiveCourier();
+                    break;
+                case "leastActiveCourier":
+                    myFoodoraSystem.leastActiveCourier();
+                    break;
 
                 //Courier
                 case "onDuty":
@@ -203,7 +210,9 @@ public class CommandLine {
                 case "accept":
                     myFoodoraSystem.accept();
                     break;
-
+                case "changePosition":
+                    myFoodoraSystem.changePosition(String2Coordinate(commands[1]));
+                    break;
                 case "notifySpecialOffer":
                     break;
 
