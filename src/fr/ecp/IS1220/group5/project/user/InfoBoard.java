@@ -13,10 +13,7 @@ public class InfoBoard implements Serializable{
      * The stored message of the info-board.
      */
     private ArrayList<String> messages = new ArrayList<>();
-    /**
-     * true if all messages have been read, false otherwise. False by default.
-     */
-    private Boolean allMessagesAreRead = false;
+
     /**
      * where the Customer will receive his notification ("email" ord "phone").
      */
@@ -96,22 +93,6 @@ public class InfoBoard implements Serializable{
     }
 
     /**
-     * Returns true if all messages have been read, false otherwise.
-     * @return true if all messages have been read, false otherwise.
-     */
-    public Boolean getAllMessagesAreRead() {
-        return allMessagesAreRead;
-    }
-
-    /**
-     * Sets the allMessagesAreRead attribute to a given value (true or fale)
-      * @param allMessagesAreRead the new value of allMessagesAreRead (true or false)
-     */
-    public void setAllMessagesAreRead(Boolean allMessagesAreRead) {
-        this.allMessagesAreRead = allMessagesAreRead;
-    }
-
-    /**
      * Sets the contact type to "email"
      */
     public void setContactType_Email(){this.contactType = "email";}
@@ -143,7 +124,9 @@ public class InfoBoard implements Serializable{
         this.isNotified = false;
     }
 
-
+    /**
+     * @return the state of info board
+     */
     public Boolean isNotified(){
         return isNotified;
     }

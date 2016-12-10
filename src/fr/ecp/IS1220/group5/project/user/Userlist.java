@@ -129,6 +129,13 @@ public class Userlist extends Observable{
         this.users = users;
     }
 
+
+    /**
+     * update the state of one user who already exists in the system
+     *
+     * @param user the user you want to update
+     * @throws UserNotFoundException
+     */
     public void updateUser(User user) throws UserNotFoundException {
         removeUser(user);
         addUser(user);

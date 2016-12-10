@@ -1,6 +1,7 @@
 package fr.ecp.IS1220.group5.project.user;
 
 import com.sun.org.apache.xpath.internal.operations.Or;
+import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
 import fr.ecp.IS1220.group5.project.menu.Order;
 
@@ -102,20 +103,56 @@ public class Courier extends User {
 	 */
 	public boolean getNewOrderCondition(){return newOrder != null;}
 
+	/**
+	 * get the position of courier
+     *
+	 * @return the current position
+     * @see fr.ecp.IS1220.group5.project.MyFoodoraSystem#findCourier_FastDelivery(ArrayList, Order)
+	 */
 	public Coordinate getPosition(){return position;}
 
+    /**
+     * get the number of finished orders
+     *
+     * @return counter
+     * @see fr.ecp.IS1220.group5.project.MyFoodoraSystem#findCourier_FairOccupationDelivery(ArrayList, Order)
+     */
 	public int getDeliveredOrdersCounter(){return this.deliveredOrdersCounter;}
 
+    /**
+     * set the counter when we do the test
+     * @param num
+     */
 	public void setDeliveredOrdersCounter(int num){this.deliveredOrdersCounter = num;}
 
+    /**
+     * after complete one order, update the counter
+     *
+     * @see MyFoodoraSystem#endOrder()
+     */
 	public void addDeliveredOrdersCounter(){this.deliveredOrdersCounter = this.deliveredOrdersCounter + 1;}
 
+    /**
+     * transfer the information of the new order to system
+     *
+     * @return the new order
+     */
 	public Order getNewOrder(){return newOrder;}
 
+    /**
+     * when the courier wants to refuse this order
+     *
+     * @see MyFoodoraSystem#refuse()
+     */
 	public void removeNewOrder(){
 		this.newOrder = null;
 	}
 
+    /**
+     * store the order after the courier accept this order
+     *
+     * @param order
+     */
 	public void addOrder2History(Order order){
 		historyOfOrders.add(order);
 	}
@@ -124,7 +161,9 @@ public class Courier extends User {
 
 	/**
 	 * set up new order for the courier
+     *
 	 * @param order
+     * @see MyFoodoraSystem#delegateOrder2Courier(Order)
 	 */
 	public void setNewOrder(Order order){this.newOrder = order;}
 
