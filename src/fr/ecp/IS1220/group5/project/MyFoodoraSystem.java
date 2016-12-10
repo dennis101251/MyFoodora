@@ -35,27 +35,45 @@ public class MyFoodoraSystem {
      * The list that stores the list of registered users.
       */
     private Userlist users = new Userlist();
+    /**
+     * The list of orders terminated
+     */
     private ArrayList<Order> orders = new ArrayList<Order>();
-    private Scanner scanner = new Scanner(System.in);
 
     /**
-     *
+     *The fixed service fee that adds to the order price
+     * @see Manager#changeServiceFee(BigDecimal)
+     * @see Financial
      */
     public BigDecimal service_fee = new BigDecimal("0.90");
 
     /**
-     *
+     * The ratio of markup of the order price
+     *@see Manager#changeMarkup_percentage(BigDecimal)
+     *@see Financial
      */
     public BigDecimal markup_percentage = new BigDecimal("0.1");
 
     /**
-     *
+     * the price of delivery per kilometer which the system should pay for the courier
+     * @see Courier
+     * @see Manager#changeDelivery_cost(BigDecimal)
+     * @see Financial
      */
     public BigDecimal delivery_cost_price = new BigDecimal("1.0");
 
     //User
+    /**
+     * The user which has been logged in
+     */
     private User currentUser = null;
+    /**
+     * The restaurant chosen by the customer
+     */
     private Restaurant currentRestaurant = null;
+    /**
+     * temporary order stored in the system
+     */
     private Order currentOrder = null;
 
     //Current financial
@@ -76,22 +94,20 @@ public class MyFoodoraSystem {
     private String deliveryPolicy = "fastDelivery";
 
     public MyFoodoraSystem() {
-
-//        Load all registered the users
         retrieveUsers();
         retrieveOrders();
         retrieveFinancial();
-        System.out.println(orders.toString());
-        System.out.println(users.toString());
-
-        System.out.println("init successfully");
+//        System.out.println(orders.toString());
+//        System.out.println(users.toString());
+        System.out.println("=================================");
+        System.out.println("       init successfully         ");
+        System.out.println("=================================");
     }
 
     /**
      * Returns the user with a given username (if he exists)
      *
      * @param userName The username of the searched user
-     *
      *
      * @return The user, as a User instance
      *
@@ -132,11 +148,20 @@ public class MyFoodoraSystem {
         saveOrders();
     }
 
+    /**
+     * Add a user to system
+     * @param order
+     */
     public void addOrder(Order order){
         this.orders.add(order);
         saveOrders();
     }
 
+    /**
+     * Use order to find an order to edit
+     * @param ID
+     * @return
+     */
     public Order findOrer(int ID){
         for (Order order: orders
              ) {
@@ -446,6 +471,16 @@ public class MyFoodoraSystem {
 
     }
 
+    /**
+     * Register a new Courier user.
+     *
+     * @param firstname the name of the Courier
+     * @param lastname the last name of the Courier
+     * @param username the username of the Courier
+     * @param password the password of the Courier
+     * @param address the current position of the Courier
+     * @param phone the phone number of the Courier
+     */
     public void registerCourier(String firstname, String lastname, String username, String password, Coordinate address, String phone){
         if (getUser(username) == null){
             User newCourier = new Courier(firstname,username,password,lastname,address,phone);
@@ -489,6 +524,7 @@ public class MyFoodoraSystem {
     /**
      *
      * Prints whether the user with given username exists or not in the database.
+     * a method for manager to verify one user's existence
      *
      * @param userName the username of the searched user.
      */
@@ -507,8 +543,8 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
      * Enables a manger to disactivate the account of a given user.
+     * This user can not login but the account still remains in the system
      *
      * @param userName the username of the user to disactivate.
      * @throws UserNotFoundException
@@ -529,6 +565,7 @@ public class MyFoodoraSystem {
 
     /**
      * Enables a manger to activate the account of a given user.
+     * This user can use his account again
      *
      * @param userName the username of the user to activate.
      * @throws UserNotFoundException
@@ -548,7 +585,6 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
      * Sets the service fee.
      * Settable only by <b>managers</b>.
      *
@@ -576,6 +612,8 @@ public class MyFoodoraSystem {
      * Settable only by managers.
      *
      * @param markup_percentage
+     *
+     * @see MyFoodoraSystem#markup_percentage
      */
     public void setMarkup_percentage(BigDecimal markup_percentage){
         if (currentUser instanceof Manager){
@@ -597,12 +635,14 @@ public class MyFoodoraSystem {
      * Settable only by managers.
      *
      * @param delivery_cost
+     *
+     * @see MyFoodoraSystem#delivery_cost_price
      */
     public void setDelivery_cost(BigDecimal delivery_cost){
         if (currentUser instanceof Manager){
             if (!delivery_cost.equals(new BigDecimal("0"))){
                 this.delivery_cost_price = delivery_cost;
-                System.out.println(">> Current delivery cost: " + delivery_cost);
+                System.out.println(">> Current delivery price per km: " + delivery_cost);
             }
             else {
                 System.out.println("delivery cost should be positive");
@@ -658,8 +698,6 @@ public class MyFoodoraSystem {
     /**
      * Displays the history of orders.
      * Only for managers.
-     *
-     *
      */
     public void showHistoryOfOrder_System(){
         if (currentUser instanceof Manager){
@@ -679,10 +717,8 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
      * Displays the average income per customer.
      * Only for managers.
-     *
      */
     public void averageIncomePerCustomer(){
         if (currentUser instanceof Manager){
@@ -714,7 +750,6 @@ public class MyFoodoraSystem {
 
     /**
      * set target profit before determining the parameters
-     *
      * @param target_profit
      */
 
@@ -731,7 +766,6 @@ public class MyFoodoraSystem {
 
     /**
      * determining the Service Fee to meet the target profit
-     *
      */
 
     public void determineService_fee(){
@@ -770,6 +804,7 @@ public class MyFoodoraSystem {
                     System.out.println(">> markup percentage: " + Percentage.display(markup_percentage) );
                     System.out.println(">> delivery price: " + Money.display(delivery_cost_price) );
                     System.out.println(">> service fee: " + Money.display(service_fee));
+                    System.out.println("========================================");
                     System.out.println("In order to meet the target profit: " + Money.display(target_profit));
                     System.out.println(">> service fee should be: " + Money.display(tmpService_fee));
                 }
@@ -788,7 +823,6 @@ public class MyFoodoraSystem {
 
     /**
      * determining the Markup percentage to meet the target profit
-     *
      */
 
     public void determineMarkup_Percentage(){
@@ -830,6 +864,7 @@ public class MyFoodoraSystem {
                     System.out.println(">> markup percentage: " + Percentage.display(markup_percentage) );
                     System.out.println(">> delivery price: " + Money.display(delivery_cost_price) );
                     System.out.println(">> service fee: " + Money.display(service_fee));
+                    System.out.println("========================================");
                     System.out.println("In order to meet the target profit: " + Money.display(target_profit));
                     System.out.println(">> Markup percentage should be: " + Percentage.display(tmpMarkup_percentage));
                 }
@@ -848,7 +883,6 @@ public class MyFoodoraSystem {
 
     /**
      * determining the Delivery Cost to meet the target profit
-     *
      */
 
     public void determineDelivery_Cost(){
@@ -916,6 +950,7 @@ public class MyFoodoraSystem {
     /**
      * determining the most selling restaurant
      *
+     * @see Restaurant#getIncome()
      */
     public void mostSellingRestaurant(){
         if (currentUser instanceof Manager){
@@ -969,6 +1004,11 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * determining the least selling restaurant
+     *
+     * @see Restaurant#getIncome()
+     */
     public void leastSellingRestaurant(){
         if (currentUser instanceof Manager){
             boolean isFound = false;
@@ -1021,6 +1061,11 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * determine the most active courier
+     *
+     * @see Courier#deliveredOrdersCounter
+     */
     public void mostActiveCourier(){
         if (currentUser instanceof Manager){
             boolean isFound = false;
@@ -1073,6 +1118,11 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * determine the least active courier
+     *
+     * @see Courier#deliveredOrdersCounter
+     */
     public void leastActiveCourier(){
         if (currentUser instanceof Manager){
             boolean isFound = false;
@@ -1148,13 +1198,15 @@ public class MyFoodoraSystem {
     }
 
     /**
+     * private method
+     *
      * Get the list of available courier
-     * Have to be careful the list can be null
+     * the list can be null if there is no available couriers
      *
      * @param order
      * @return a list of available courier
      */
-    public ArrayList<Courier> getAvailableCourier(Order order){
+    private ArrayList<Courier> getAvailableCourier(Order order){
         ArrayList<Courier> couriers = new ArrayList<>();
         for (User user: users.getUsers()){
             if (user instanceof Courier){
@@ -1173,14 +1225,14 @@ public class MyFoodoraSystem {
     /**
      * private method
      *
-     * find a courier with respect of fastDelivery policy
+     * find a courier according to the fastDelivery policy
      * return null if there is no appropriate courier
      *
      * @param availableCouriers
      * @param order to get the restaurant connected in this order
      *
      */
-    public Courier findCourier_FastDelivery(ArrayList<Courier> availableCouriers, Order order){
+    private Courier findCourier_FastDelivery(ArrayList<Courier> availableCouriers, Order order){
         Restaurant restaurant = order.getRestaurant();
         Courier bestCourier = null;
         Double distanceBest = Double.valueOf(0);
@@ -1203,14 +1255,14 @@ public class MyFoodoraSystem {
     /**
      * private method
      *
-     * find a courier with respect of fFairOccupationDelivery policy
+     * find a courier according to the FairOccupationDelivery policy
      * return null if there is no appropriate courier
      *
      * @param availableCouriers
      * @param order to get the restaurant connected in this order
      *
      */
-    public Courier findCourier_FairOccupationDelivery(ArrayList<Courier> availableCouriers, Order order){
+    private Courier findCourier_FairOccupationDelivery(ArrayList<Courier> availableCouriers, Order order){
         Restaurant restaurant = order.getRestaurant();
         Courier bestCourier = null;
         int counter = 0;
@@ -1259,7 +1311,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
+     * show the available restaurants for the customer
      */
     public void showRestaurant(){
         if (currentUser instanceof Customer){
@@ -1284,9 +1336,8 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
      * Enables a Customer to choose a restaurant by writing the restaurant's name.
-     * By calling this method, the system creates an empty order for the customer.
+     * And the system creates an empty order for the customer at the same time.
      *
      * @param restaurant
      *
@@ -1451,6 +1502,16 @@ public class MyFoodoraSystem {
     /**
      * <b>Ends an customer's order, applies the fidelity program and send the order to the restaurant.</b>
      *
+     * <ul>
+     *     <li>apply the fidelity program</li>
+     *     <li>send the order to the restaurant</li>
+     *     <li>save the order to </li>
+     *     <li>save the order to the history of system</li>
+     *     <li>delegate this order to an available courier</li>
+     *     <li>save the order to the history of the customer</li>
+     *     <li>clean the current order</li>
+     * </ul>
+     *
      */
     public void endOrder() throws UserNotFoundException {
         if (currentUser instanceof Customer){
@@ -1499,9 +1560,8 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
      * <b>Shows the complete customer's history of orders.</b>
-     *
+     * Only for customers.
      */
     public void showHistoryOfOrder_Customer(){
         if (currentUser instanceof Customer){
@@ -1521,10 +1581,8 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
      * <b>Shows the fidelity program to which the customer is registered, and the total of collected points.</b>
      *  Only for customers.
-     *
      */
     public void showFidelityCard(){
         if (currentUser instanceof Customer){
@@ -1566,7 +1624,8 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
+     * show the info board every time the customer login
+     * customer can also check the info board later
      */
     public void checkInfoBoard(){
         if (currentUser instanceof Customer) {
