@@ -23,13 +23,35 @@ import java.math.BigDecimal;
  * @see LotteryFidelityCard
  */
 public abstract class FidelityCard {
-
+    /**
+     * the number of collected points.
+     */
     protected int points = 0;
+
+    /**
+     * Computes the discounted price for a given price and updates the number of points (1 point for each 10 euros spent).
+     * @param price the price from which the discount is computed.
+     * @return the discounted price.
+     */
     public abstract BigDecimal compute_discounted_price(BigDecimal price);
 
+    /**
+     * Adds a number of points to the fidelity card.
+     * @param newPoints the number of points to be added to the card.
+     */
     public void addPoints(int newPoints){points = this.points + newPoints;}
+
+    /**
+     * Return the number of points on the fidelity card.
+     * @return the number of points on the fidelity card.
+     */
     public int getPoints() {
         return points;
     }
-    public String getFidelityCardName(){return "FidelityCard";}
+
+    /**
+     * Returns the selected program for the fidelity card.
+     * @return the name of the fidelity card.
+     */
+    public abstract String getFidelityCardName();
 }

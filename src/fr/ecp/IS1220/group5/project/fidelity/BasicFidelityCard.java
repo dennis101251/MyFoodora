@@ -10,7 +10,11 @@ import java.math.BigDecimal;
  * @see FidelityCard
  */
 public class BasicFidelityCard extends FidelityCard implements Serializable{
-
+    /**
+     * In the case of the basic fidelity card, the discounted price is the price itself.
+     * @param price the price from which the discount is computed.
+     * @return
+     */
     public BigDecimal compute_discounted_price(BigDecimal price){
         return price;
     }
