@@ -18,8 +18,8 @@ disconnect
 
 //Customer
 disconnect
-registerCustomer Danyi Wu WDY 501 30:20 danyi.wu@student.ecp.fr 0650102722
-login WDY 501
+registerCustomer Marco Merlotti MM 501 50:50 marco.merlotti@student.ecp.fr 0611041568
+login MM 501
 showRestaurant
 chooseRestaurant McDonalds
 showMenu
@@ -45,7 +45,7 @@ sendMessage helloEveryone,McDonaldsIsOpen
 sendMessage BigMacIsOnSale
 disconnect
 
-login WDY 501
+login MM 501
 checkInfoBoard
 
 //Manager
@@ -101,8 +101,8 @@ setMealPrice Happymeal
 saveMenu
 
 disconnect
-registerCustomer Yu Lin LY 123456 50:50 yu.lin@student.ecp.fr 065088229
-login LY 123456
+registerCustomer Brad Pitt brad 123456 50:50 brad.pitt@gmail.com 0606060606
+login brad 123456
 chooseRestaurant KFC
 showMenu
 addMeal2Order Happymeal 1
@@ -156,8 +156,8 @@ registerCourier Bill Gates BG 123456 2:2 87654562
 login BG 123456
 onDuty
 disconnect
-registerCourier Zemin Jiang JZ 123456 3:5 87654562
-login JZ 123456
+registerCourier Elon Musk EM 123456 3:5 87654562
+login EM 123456
 onDuty
 
 disconnect
@@ -176,13 +176,3 @@ registerManager Zexi DENG dennis 101251
 login dennis 101251
 mostActiveCourier
 leastActiveCourier
-
-
-
-
-
-
-
-
-
-

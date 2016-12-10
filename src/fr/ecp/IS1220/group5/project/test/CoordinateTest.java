@@ -13,7 +13,7 @@ public class CoordinateTest {
         Coordinate point1 = new Coordinate(3,4);
         Coordinate point2 = new Coordinate(0,0);
 
-        Assert.assertEquals(5, Coordinate.getDistance(point1, point2), 1E-3);
+        Assert.assertEquals(5, Coordinate.getDistance(point1, point2), 0.001);
     }
 
 }
