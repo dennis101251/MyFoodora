@@ -1232,7 +1232,7 @@ public class MyFoodoraSystem {
      * @param order to get the restaurant connected in this order
      *
      */
-    private Courier findCourier_FastDelivery(ArrayList<Courier> availableCouriers, Order order){
+    public Courier findCourier_FastDelivery(ArrayList<Courier> availableCouriers, Order order){
         Restaurant restaurant = order.getRestaurant();
         Courier bestCourier = null;
         Double distanceBest = Double.valueOf(0);
@@ -1262,7 +1262,7 @@ public class MyFoodoraSystem {
      * @param order to get the restaurant connected in this order
      *
      */
-    private Courier findCourier_FairOccupationDelivery(ArrayList<Courier> availableCouriers, Order order){
+    public Courier findCourier_FairOccupationDelivery(ArrayList<Courier> availableCouriers, Order order){
         Restaurant restaurant = order.getRestaurant();
         Courier bestCourier = null;
         int counter = 0;
@@ -1773,6 +1773,8 @@ public class MyFoodoraSystem {
     }
 
     /**
+     * Enables a restaurant to send a message to customers who have set notifications "on".
+     * Only for restaurants.
      *
      * @param string
      */
@@ -1793,7 +1795,8 @@ public class MyFoodoraSystem {
 
     /**
      *
-     *
+     * Enables a restaurant to inform customers that a meal is the meal of the week.
+     * Only for restaurants.
      *
      * @param meal
      */
