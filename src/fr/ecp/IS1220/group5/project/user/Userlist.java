@@ -72,7 +72,22 @@ public class Userlist extends Observable{
             }
         }
         else {
-            System.out.println("There is no User in myFoodora");
+            System.out.println(">> There is no User in myFoodora");
+        }
+    }
+
+    /**
+     * provide a static method to delete the userlist file when we do the test
+     */
+    public static void delateUserFile(){
+        File file = new File(usersPath);
+
+        if (file.exists()){
+            file.delete();
+            System.out.println("user file has been formatted");
+        }
+        else {
+            System.out.println(">> There is no User in myFoodora");
         }
     }
 

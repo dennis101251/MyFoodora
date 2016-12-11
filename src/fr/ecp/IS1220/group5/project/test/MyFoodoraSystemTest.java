@@ -37,6 +37,7 @@ public class MyFoodoraSystemTest {
 
         Assert.assertTrue(bestCourier.getName().equalsIgnoreCase("Bill"));
     }
+
     @Test
     public void findCourier_FastDelivery_IfEmpty() throws Exception {
         Restaurant restaurant = new Restaurant("KFC","kfc","123456",new Coordinate(0,0));
@@ -166,5 +167,23 @@ public class MyFoodoraSystemTest {
         myFoodoraSystem.loginUser("HJ","123456");
     }
 
+    @Test
+    public void registerFidelityCardTest() throws UserNotFoundException {
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+        myFoodoraSystem.registerCustomer("Jintao","Hu","HJ","123456",new Coordinate(0,0),"*","*");
+        myFoodoraSystem.loginUser("HJ","123456");
 
+        Assert.assertTrue(((Customer) myFoodoraSystem.getUser("HJ")).getFidelityCard().getFidelityCardName().equalsIgnoreCase("BasicFidelityCard"));
+
+        myFoodoraSystem.registerFidelityCard("LotteryFidelityCard");
+
+        Assert.assertTrue(((Customer) myFoodoraSystem.getUser("HJ")).getFidelityCard().getFidelityCardName().equalsIgnoreCase("LotteryFidelityCard"));
+    }
+
+    @Test
+    public void getUserTest(){
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+
+
+    }
 }

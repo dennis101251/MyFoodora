@@ -2,6 +2,9 @@ package fr.ecp.IS1220.group5.project;
 
 import com.sun.org.apache.regexp.internal.RE;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
+import fr.ecp.IS1220.group5.project.fidelity.BasicFidelityCard;
+import fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard;
+import fr.ecp.IS1220.group5.project.fidelity.PointFidelityCard;
 import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.*;
 import fr.ecp.IS1220.group5.project.util.*;
@@ -1596,6 +1599,37 @@ public class MyFoodoraSystem {
 
     /**
      *
+     * @param userName
+     * @param cardType
+     */
+    public void registerFidelityCard(String cardType) throws UserNotFoundException {
+        if (currentUser instanceof Customer){
+            if (cardType.equalsIgnoreCase("basicFidelityCard") ){
+                ((Customer) currentUser).setFidelityCard(new BasicFidelityCard());
+                System.out.println("you have registered << BasicFidelityCard>> ");
+                updateUser(currentUser);
+            }
+            else if (cardType.equalsIgnoreCase("LotteryFidelityCard")){
+                ((Customer) currentUser).setFidelityCard(new LotteryFidelityCard());
+                System.out.println("you have registered << LotteryFidelityCard>> ");
+                updateUser(currentUser);
+            }
+            else if (cardType.equalsIgnoreCase("PointFidelityCard")){
+                ((Customer) currentUser).setFidelityCard(new PointFidelityCard());
+                System.out.println("you have registered << PointFidelityCard>> ");
+                updateUser(currentUser);
+            }
+            else {
+                System.out.println("invalid input");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     *
      * Changes the notification status of a customer.
      * <ul>
      *     <li>On: to receive messages from MyFooddora</li>
@@ -1793,7 +1827,6 @@ public class MyFoodoraSystem {
         }
     }
 
-
     /**
      *
      */
@@ -1960,15 +1993,6 @@ public class MyFoodoraSystem {
      * @param contactInfo
      */
     public void addContactInfo(String contactInfo){
-
-    }
-
-    /**
-     *
-     * @param userName
-     * @param cardType
-     */
-    public void associateCard(String userName, String cardType){
 
     }
 

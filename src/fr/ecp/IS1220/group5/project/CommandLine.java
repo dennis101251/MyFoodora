@@ -129,6 +129,9 @@ public class CommandLine {
                 case "setSpecialDiscountFactor":
                     myFoodoraSystem.setSpecialDiscountFactor(new BigDecimal(commands[1]));
                     break;
+                case "registerFidelityCard":
+                    myFoodoraSystem.registerFidelityCard(commands[1]);
+                    break;
 
                 //Manager
                 case "showHistoryOfOrderOfSystem":
@@ -205,9 +208,6 @@ public class CommandLine {
                 case "addContactInfo":
                     myFoodoraSystem.addContactInfo(commands[1]);
                     break;
-                case "associateCard":
-                    myFoodoraSystem.associateCard(commands[1], commands[2]);
-                    break;
                 case "associateAgreement":
                     myFoodoraSystem.associateAgreement(commands[1], commands[2]);
                     break;
@@ -219,8 +219,6 @@ public class CommandLine {
                     break;
                 case "changePosition":
                     myFoodoraSystem.changePosition(String2Coordinate(commands[1]));
-                    break;
-                case "notifySpecialOffer":
                     break;
 
                 case "help":

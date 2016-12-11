@@ -32,6 +32,6 @@ public class LotteryFidelityCard extends FidelityCard {
 
     @Override
     public String getFidelityCardName() {
-        return "Lottery FidelityCard";
+        return "LotteryFidelityCard";
     }
 }

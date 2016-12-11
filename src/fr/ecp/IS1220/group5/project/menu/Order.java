@@ -7,7 +7,7 @@ import fr.ecp.IS1220.group5.project.util.Coordinate;
 import fr.ecp.IS1220.group5.project.util.IDGenerator;
 import fr.ecp.IS1220.group5.project.util.Money;
 
-import java.io.Serializable;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -106,6 +106,20 @@ public class Order implements Serializable{
 		IDGenerator idGenerator = IDGenerator.getInstance();
 		this.id = idGenerator.getNextID();
 		computeDeliveryCost();
+	}
+
+	/**
+	 * delete the file of order when we do the test
+	 */
+	public static void delateOrders(){
+		File file = new File("tmp/orders.ser");
+
+		if (file.exists()) {
+			file.delete();
+			System.out.println("orders file has been formatted");
+		} else {
+			System.out.println(">> There is no Order in system");
+		}
 	}
 
 	/**

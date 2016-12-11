@@ -4,6 +4,7 @@ import fr.ecp.IS1220.group5.project.fidelity.BasicFidelityCard;
 import fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard;
 import fr.ecp.IS1220.group5.project.fidelity.PointFidelityCard;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -22,7 +23,9 @@ import java.math.BigDecimal;
  * @see PointFidelityCard
  * @see LotteryFidelityCard
  */
-public abstract class FidelityCard {
+public abstract class FidelityCard implements Serializable {
+
+    private static final long serialVersionUID = 2185346276548559322L;
     /**
      * the number of collected points.
      */

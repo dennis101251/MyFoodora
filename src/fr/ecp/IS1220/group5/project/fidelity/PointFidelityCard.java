@@ -30,6 +30,6 @@ public class PointFidelityCard extends FidelityCard {
 
     @Override
     public String getFidelityCardName() {
-        return "Point FidelityCard";
+        return "PointFidelityCard";
     }
 }
