@@ -123,6 +123,12 @@ public class CommandLine {
                 case "showFidelityCard":
                     myFoodoraSystem.showFidelityCard();
                     break;
+                case "setGenericDiscountFactor":
+                    myFoodoraSystem.setGenericDiscountFactor(new BigDecimal(commands[1]));
+                    break;
+                case "setSpecialDiscountFactor":
+                    myFoodoraSystem.setSpecialDiscountFactor(new BigDecimal(commands[1]));
+                    break;
 
                 //Manager
                 case "showHistoryOfOrderOfSystem":

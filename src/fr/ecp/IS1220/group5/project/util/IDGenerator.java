@@ -28,5 +28,4 @@ public class IDGenerator implements Serializable{
     public int getNextID(){
         return id++;
     }
-
 }

@@ -1206,7 +1206,7 @@ public class MyFoodoraSystem {
      * @param order
      * @return a list of available courier
      */
-    private ArrayList<Courier> getAvailableCourier(Order order){
+    public ArrayList<Courier> getAvailableCourier(Order order){
         ArrayList<Courier> couriers = new ArrayList<>();
         for (User user: users.getUsers()){
             if (user instanceof Courier){
@@ -1793,16 +1793,6 @@ public class MyFoodoraSystem {
         }
     }
 
-    /**
-     *
-     * Enables a restaurant to inform customers that a meal is the meal of the week.
-     * Only for restaurants.
-     *
-     * @param meal
-     */
-    public void sendSpecialOffer(Meal meal){
-        sendMessage("Meal of the week special offer: " + meal);
-    }
 
     /**
      *
@@ -1823,12 +1813,52 @@ public class MyFoodoraSystem {
         }
     }
 
-    public void setSpecialOffer(String mealName){
+    public void setGenericDiscountFactor(BigDecimal GenericDiscountFactor){
+        if (currentUser instanceof Restaurant){
+            if (GenericDiscountFactor.doubleValue() < 1 && GenericDiscountFactor.doubleValue() > 0){
+                ((Restaurant) currentUser).setGenericDiscountFactor(GenericDiscountFactor);
+            }
+            else {
+                System.out.println("invalid input");
+            }
+        } else {
+            System.out.println("Your restaurant must log in.");
+        }
+    }
 
+    public void setSpecialDiscountFactor(BigDecimal specialDiscountFactor){
+        if (currentUser instanceof Restaurant){
+            if (specialDiscountFactor.doubleValue() < 1 && specialDiscountFactor.doubleValue() > 0){
+                ((Restaurant) currentUser).setSpecialDiscountFactor(specialDiscountFactor);
+            }
+            else {
+                System.out.println("invalid input");
+            }
+        } else {
+            System.out.println("Your restaurant must log in.");
+        }
+    }
+
+    public void setSpecialOffer(String mealName){
+        if (currentUser instanceof Restaurant){
+            Meal meal = ((Restaurant) currentUser).getMeal(mealName);
+            meal.setMealOfTheWeek(true);
+            ((Restaurant) currentUser).updateMeal(meal);
+            sendMessage("Meal of week || " + currentUser.getName() + " << " + mealName + " >>" );
+        } else {
+            System.out.println("Your restaurant must log in.");
+        }
     }
 
     public void removeFromSpecialOffer(String mealName){
-
+        if (currentUser instanceof Restaurant){
+            Meal meal = ((Restaurant) currentUser).getMeal(mealName);
+            meal.setMealOfTheWeek(false);
+            ((Restaurant) currentUser).updateMeal(meal);
+            System.out.println(meal.getName() + "has been removed from the special offer");
+        } else {
+            System.out.println("Your restaurant must log in.");
+        }
     }
 
     public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){

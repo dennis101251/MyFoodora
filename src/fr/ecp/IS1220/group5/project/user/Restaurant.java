@@ -53,6 +53,12 @@ public class Restaurant extends User {
 //		retrieveMeals();
 	}
 
+	public void updateMeal(Meal meal){
+		String mealName = meal.getName();
+		meals.remove(getMeal(mealName));
+		meals.add(meal);
+	}
+
 	/**
 	 * Returns the generic discount factor of this restaurant.
 	 * @return the generic discount factor.

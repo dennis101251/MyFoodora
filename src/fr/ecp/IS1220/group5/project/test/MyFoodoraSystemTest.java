@@ -2,10 +2,7 @@ package fr.ecp.IS1220.group5.project.test;
 
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
-import fr.ecp.IS1220.group5.project.menu.Item;
-import fr.ecp.IS1220.group5.project.menu.ItemCategory;
-import fr.ecp.IS1220.group5.project.menu.ItemType;
-import fr.ecp.IS1220.group5.project.menu.Order;
+import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.Courier;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
@@ -146,6 +143,28 @@ public class MyFoodoraSystemTest {
         myFoodoraSystem.delegateOrder2Courier(order);
     }
 
+    @Test
+    public void setSpecialOffer(){
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+        myFoodoraSystem.registerCustomer("Jintao","Hu","HJ","123456",new Coordinate(0,0),"*","*");
+
+        Restaurant restaurant = new Restaurant("Pizzeria", "pizzeria", "123456", new Coordinate(1,3));
+
+        Item pizza = new Item("pizza", new BigDecimal(5), ItemCategory.MainDish, ItemType.Standard);
+
+        Meal meal = new Meal("meal", restaurant, MealCategory.HalfMeals, MealType.Standard);
+        meal.addItem(pizza);
+
+        myFoodoraSystem.registerRestaurant("Pizzeria","pizzeria",new Coordinate(1,3),"123456");
+        myFoodoraSystem.loginUser("pizzeria", "123456");
+        myFoodoraSystem.createItem("pizza", new BigDecimal(5));
+        myFoodoraSystem.createMeal("meal");
+        myFoodoraSystem.addDish2Meal("pizza","meal");
+        myFoodoraSystem.setSpecialOffer("meal");
+
+        myFoodoraSystem.disconnectUser();
+        myFoodoraSystem.loginUser("HJ","123456");
+    }
 
 
 }
