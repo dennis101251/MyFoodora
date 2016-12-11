@@ -1,6 +1,5 @@
 package fr.ecp.IS1220.group5.project;
 
-import com.sun.org.apache.regexp.internal.RE;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.fidelity.BasicFidelityCard;
 import fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard;
@@ -11,12 +10,11 @@ import fr.ecp.IS1220.group5.project.util.*;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.math.RoundingMode;
 
 /**
  * <b>MyFoodoraSystem is the class managing the whole system.</b>
@@ -1809,10 +1807,6 @@ public class MyFoodoraSystem {
         System.out.println(meal);
     }
 
-    public void saveMeal(String mealName){
-
-    }
-
     /**
      * Enables a restaurant to send a message to customers who have set notifications "on".
      * Only for restaurants.
@@ -1853,6 +1847,10 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * set the general discount for all the meal
+     * @param GenericDiscountFactor
+     */
     public void setGenericDiscountFactor(BigDecimal GenericDiscountFactor){
         if (currentUser instanceof Restaurant){
             if (GenericDiscountFactor.doubleValue() < 1 && GenericDiscountFactor.doubleValue() > 0){
@@ -1866,6 +1864,10 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * set the special offer discount factor
+     * @param specialDiscountFactor
+     */
     public void setSpecialDiscountFactor(BigDecimal specialDiscountFactor){
         if (currentUser instanceof Restaurant){
             if (specialDiscountFactor.doubleValue() < 1 && specialDiscountFactor.doubleValue() > 0){
@@ -1879,6 +1881,11 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * set the special offer for a meal
+     * @param mealName
+     * @see Restaurant
+     */
     public void setSpecialOffer(String mealName){
         if (currentUser instanceof Restaurant){
             Meal meal = ((Restaurant) currentUser).getMeal(mealName);
@@ -1890,6 +1897,10 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * cancel the special offer for a meal
+     * @param mealName
+     */
     public void removeFromSpecialOffer(String mealName){
         if (currentUser instanceof Restaurant){
             Meal meal = ((Restaurant) currentUser).getMeal(mealName);
@@ -1901,6 +1912,12 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     *
+     * @param dishName
+     * @param dishCategory
+     * @param unitPrice
+     */
     public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){
 
     }
