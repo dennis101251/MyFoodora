@@ -48,7 +48,7 @@ public class MyFoodoraSystem {
      * @see Manager#changeServiceFee(BigDecimal)
      * @see Financial
      */
-    public BigDecimal service_fee = new BigDecimal("0.90");
+    public BigDecimal service_fee = new BigDecimal("4.0");
 
     /**
      * The ratio of markup of the order price
@@ -125,6 +125,13 @@ public class MyFoodoraSystem {
         }
         System.out.println("didn't find " + userName + ", your username is valid");
         return null;
+    }
+
+    /**
+     * get the current User
+     */
+    public User getCurrentUser(){
+        return currentUser;
     }
 
     /**
@@ -1539,7 +1546,7 @@ public class MyFoodoraSystem {
                     saveOrders();
 
                     //distribute the order to courier
-                    System.out.println(getAvailableCourier(currentOrder).toString());
+//                    System.out.println(getAvailableCourier(currentOrder).toString());
                     delegateOrder2Courier(currentOrder);
 
                     //save the order to the history of customer
