@@ -1923,10 +1923,12 @@ public class MyFoodoraSystem {
     }
 
     /**
-     * get the list of all meals ordered in the system
+     * get the list of all meals from given orders
+     *
+     * @param orders
      */
-    public ArrayList<Foods> getAllMeals(ArrayList<Order> orders){
-        ArrayList<Foods> allMeals = new ArrayList<>();
+    public ArrayList<Food> getAllMeals(ArrayList<Order> orders){
+        ArrayList<Food> allMeals = new ArrayList<>();
 
         for (Order order: orders
              ) {
@@ -1939,10 +1941,12 @@ public class MyFoodoraSystem {
     }
 
     /**
-     * get the list of all meals ordered in the system
+     * get the list of all items from given orders
+     *
+     * @param orders
      */
-    public ArrayList<Foods> getAllItems(ArrayList<Order> orders){
-        ArrayList<Foods> allItems = new ArrayList<>();
+    public ArrayList<Food> getAllItems(ArrayList<Order> orders){
+        ArrayList<Food> allItems = new ArrayList<>();
 
         for (Order order: orders
                 ) {
@@ -1955,16 +1959,18 @@ public class MyFoodoraSystem {
     }
 
     /**
-     * get the quantity of each kind of meal
+     * get the quantity of each kind of meal or item
+     *
+     * @param foods the list of foods
      */
-    public ArrayList<Sort> getQuantityOfFoods(ArrayList<Foods> foodss){
+    public ArrayList<Sort> getQuantityOfFoods(ArrayList<Food> foods){
         ArrayList<Sort> sortFoods = new ArrayList<>();
-        ArrayList<Foods> addedFoods = new ArrayList<>();
+        ArrayList<Food> addedFoods = new ArrayList<>();
 
-        for (Foods foods1: foodss){
+        for (Food foods1: foods){
             boolean isFound = false;
-            for (Foods foods : addedFoods){
-                if (foods.getName().equalsIgnoreCase(foods1.getName())){
+            for (Food food : addedFoods){
+                if (food.getName().equalsIgnoreCase(foods1.getName())){
                     isFound = true;
                     break;
                 }
@@ -1991,7 +1997,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     * sort the shipped order according to the most order meals
+     * sort ordered meals in ascending sequence
      */
     public void sortMostMeal(){
         if (currentUser instanceof Manager){
@@ -2016,7 +2022,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     * sort the shipped order according to the most order meals
+     * sort ordered meals in descend sequence
      */
     public void sortLeastMeal(){
         if (currentUser instanceof Manager){
@@ -2041,7 +2047,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     * sort the shipped order according to the most order meals
+     * sort ordered items in ascending sequence
      */
     public void sortMostItem(){
         if (currentUser instanceof Manager){
@@ -2066,7 +2072,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     * sort the shipped order according to the most order meals
+     * sort ordered items in descend sequence
      */
     public void sortLeasItem(){
         if (currentUser instanceof Manager){
@@ -2196,6 +2202,5 @@ public class MyFoodoraSystem {
     public void associateAgreement(String username, String agreement){
 
     }
-
 }
 

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @see Restaurant
  * @see Customer
  */
-public class Meal  implements Serializable, Foods{
+public class Meal  implements Serializable, Food {
 
 	private static final long serialVersionUID = 2530546545664573253L;
 	/**

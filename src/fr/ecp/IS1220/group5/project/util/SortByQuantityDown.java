@@ -3,6 +3,8 @@ package fr.ecp.IS1220.group5.project.util;
 import java.util.Comparator;
 
 /**
+ * implement the interface of comparator
+ *
  * Created by dennis101251 on 2016/12/13.
  */
 public class SortByQuantityDown implements Comparator<Sort> {

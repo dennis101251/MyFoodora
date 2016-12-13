@@ -3,6 +3,7 @@ package fr.ecp.IS1220.group5.project.util;
 import fr.ecp.IS1220.group5.project.menu.Item;
 
 /**
+ * The subclass of Sort
  * Created by dennis101251 on 2016/12/13.
  */
 public class SortItem extends Sort {
