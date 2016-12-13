@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * @see Restaurant
  * @see Customer
  */
-public class Item  implements Serializable {
+public class Item  implements Serializable, Foods{
 
 	private static final long serialVersionUID = 455302071054673253L;
 	/**
@@ -23,7 +23,7 @@ public class Item  implements Serializable {
 	/**
 	 * The price of this item.
 	 */
-	private BigDecimal price;
+	private BigDecimal price = new BigDecimal(0);
 	/**
 	 * The item category of this item.
 	 *

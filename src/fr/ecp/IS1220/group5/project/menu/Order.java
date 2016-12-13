@@ -7,7 +7,8 @@ import fr.ecp.IS1220.group5.project.util.Coordinate;
 import fr.ecp.IS1220.group5.project.util.IDGenerator;
 import fr.ecp.IS1220.group5.project.util.Money;
 
-import java.io.*;
+import java.io.File;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 

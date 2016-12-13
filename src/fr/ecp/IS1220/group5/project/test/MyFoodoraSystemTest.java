@@ -1,18 +1,19 @@
 package fr.ecp.IS1220.group5.project.test;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.*;
-import fr.ecp.IS1220.group5.project.user.*;
+import fr.ecp.IS1220.group5.project.user.Courier;
+import fr.ecp.IS1220.group5.project.user.Customer;
+import fr.ecp.IS1220.group5.project.user.Restaurant;
+import fr.ecp.IS1220.group5.project.user.Userlist;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
+import fr.ecp.IS1220.group5.project.util.Sort;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by dennis101251 on 2016/12/9.
@@ -166,7 +167,6 @@ public class MyFoodoraSystemTest {
         myFoodoraSystem.determineDelivery_Cost();
         myFoodoraSystem.determineMarkup_Percentage();
         myFoodoraSystem.determineService_fee();
-
     }
 
     @Test
@@ -350,5 +350,78 @@ public class MyFoodoraSystemTest {
         MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
 
 
+    }
+
+    @Test
+    public void getAllMealsTest(){
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+
+        Restaurant restaurant = new Restaurant("KFC","kfc","123456",new Coordinate(0,0));
+        Customer customer = new Customer("Zexi","DENG","dennis",new Coordinate(40,0), "123456");
+        Order order1 = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+        Meal meal1 = new Meal("Happy", restaurant);
+        Meal meal2 = new Meal("Sad",restaurant);
+        order1.addMeal(meal1);
+        order1.addMeal(meal1);
+        order1.addMeal(meal2);
+        Order order2 = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+        order2.addMeal(meal2);
+
+        ArrayList<Order> orders = new ArrayList<>();
+        orders.add(order1);
+        orders.add(order2);
+
+        Assert.assertTrue(myFoodoraSystem.getAllMeals(orders).size() == 4);
+        System.out.println(orders.toString());
+    }
+
+    @Test
+    public void getQuantityOfMealTest(){
+        Order.delateOrders();
+        Userlist.delateUserFile();
+
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+
+        Restaurant restaurant = new Restaurant("KFC","kfc","123456",new Coordinate(0,0));
+        Customer customer = new Customer("Zexi","DENG","dennis",new Coordinate(40,0), "123456");
+        Order order1 = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+        Meal meal1 = new Meal("Happy", restaurant);
+        Meal meal2 = new Meal("Sad",restaurant);
+        order1.addMeal(meal1);
+        order1.addMeal(meal1);
+        order1.addMeal(meal2);
+        Order order2 = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+        order2.addMeal(meal2);
+        order2.addMeal(meal2);
+
+        Item item1 = new Item ("Onion",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+        Item item2 = new Item ("Chicken",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+        Item item3 = new Item ("Burger",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+        order1.addItem(item1);
+        order1.addItem(item1);
+        order1.addItem(item2);
+        order1.addItem(item3);
+        order2.addItem(item3);
+
+
+        ArrayList<Order> orders = new ArrayList<>();
+        orders.add(order1);
+        orders.add(order2);
+
+        ArrayList<Sort> sortMeals = myFoodoraSystem.getQuantityOfFoods(myFoodoraSystem.getAllMeals(orders));
+        ArrayList<Sort> sortItems = myFoodoraSystem.getQuantityOfFoods(myFoodoraSystem.getAllItems(orders));
+
+        for (Sort sortmeal: sortMeals
+             ) {
+            System.out.println((sortmeal.getType()).getName() + "||" + sortmeal.getQuantity());
+        }
+
+        System.out.println("=============");
+
+        for (Sort sortmeal: sortItems
+                ) {
+            System.out.println((sortmeal.getType()).getName() + "||" + sortmeal.getQuantity());
+        }
+        Assert.assertTrue(sortMeals.get(0).getQuantity() == 2);
     }
 }

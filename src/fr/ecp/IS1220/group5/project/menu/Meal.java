@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @see Restaurant
  * @see Customer
  */
-public class Meal  implements Serializable {
+public class Meal  implements Serializable, Foods{
 
 	private static final long serialVersionUID = 2530546545664573253L;
 	/**
@@ -25,7 +25,7 @@ public class Meal  implements Serializable {
 	/**
 	 * the price of this meal.
 	 */
-	private BigDecimal price;
+	private BigDecimal price = new BigDecimal(0);
 	/**
 	 * The meal category of this meal.
 	 *

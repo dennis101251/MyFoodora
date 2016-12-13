@@ -2,7 +2,6 @@ package fr.ecp.IS1220.group5.project;
 
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
-import fr.ecp.IS1220.group5.project.util.IDGenerator;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -36,7 +35,12 @@ public class CommandLine {
             switch (commands[0]){
                 //System
                 case "login":
-                    myFoodoraSystem.loginUser(commands[1], commands[2]);
+                    if (commands.length==3){
+                        myFoodoraSystem.loginUser(commands[1], commands[2]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "showCurrentUser":
                     myFoodoraSystem.showCurrentUser();
@@ -45,42 +49,109 @@ public class CommandLine {
                     myFoodoraSystem.disconnectUser();
                     break;
                 case "registerRestaurant":
+                    if (commands.length == 5){
                     myFoodoraSystem.registerRestaurant(commands[1], commands[2], String2Coordinate(commands[3]), commands[4]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "registerCustomer":
-                    myFoodoraSystem.registerCustomer(commands[1], commands[2], commands[3], commands[4], String2Coordinate(commands[5]), commands[6], commands[7]);
+                    if (commands.length == 8) {
+                        myFoodoraSystem.registerCustomer(commands[1], commands[2], commands[3], commands[4], String2Coordinate(commands[5]), commands[6], commands[7]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "registerCourier":
-                    myFoodoraSystem.registerCourier(commands[1], commands[2], commands[3], commands[4], String2Coordinate(commands[5]), commands[6]);
+                    if (commands.length == 7) {
+                        myFoodoraSystem.registerCourier(commands[1], commands[2], commands[3], commands[4], String2Coordinate(commands[5]), commands[6]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "registerManager":
-                    myFoodoraSystem.registerManager(commands[1], commands[2], commands[3], commands[4]);
+                    if (commands.length == 5) {
+                        myFoodoraSystem.registerManager(commands[1], commands[2], commands[3], commands[4]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
+                    break;
+                case "sortMostMeal":
+                    myFoodoraSystem.sortMostMeal();
+                    break;
+                case "sortLeastMeal":
+                    myFoodoraSystem.sortLeastMeal();
+                    break;
+                case "sortMostItem":
+                    myFoodoraSystem.sortMostItem();
+                    break;
+                case "sortLeasItem":
+                    myFoodoraSystem.sortLeasItem();
                     break;
 
                 //Restaurant
                 case "createItem":
-                    myFoodoraSystem.createItem(commands[1], new BigDecimal(commands[2]));
+                    if (commands.length == 3) {
+                        myFoodoraSystem.createItem(commands[1], new BigDecimal(commands[2]));
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "createMeal":
-                    myFoodoraSystem.createMeal(commands[1]);
+                    if (commands.length == 2) {
+                        myFoodoraSystem.createMeal(commands[1]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "addDish2Meal":
-                    myFoodoraSystem.addDish2Meal(commands[1], commands[2]);
+                    if (commands.length == 3) {
+                        myFoodoraSystem.addDish2Meal(commands[1], commands[2]);
+                    }
+                    else{
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "showMeal":
-                    myFoodoraSystem.showMeal(commands[1], commands[2]);
+                    if (commands.length == 3) {
+                        myFoodoraSystem.showMeal(commands[1], commands[2]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "saveMenu":
                     myFoodoraSystem.saveMenu();
                     break;
                 case "setSpecialOffer":
-                    myFoodoraSystem.setSpecialOffer(commands[1]);
+                    if (commands.length == 2) {
+                        myFoodoraSystem.setSpecialOffer(commands[1]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "removeFromSpecialOffer":
-                    myFoodoraSystem.removeFromSpecialOffer(commands[1]);
+                    if (commands.length == 2) {
+                        myFoodoraSystem.removeFromSpecialOffer(commands[1]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "addDish":
-                    myFoodoraSystem.addDish(commands[1], commands[2], new BigDecimal(commands[3]));
+                    if (commands.length == 4) {
+                        myFoodoraSystem.addDish(commands[1], commands[2], new BigDecimal(commands[3]));
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "sendMessage":
                     myFoodoraSystem.sendMessage(commands[1]);
@@ -94,16 +165,31 @@ public class CommandLine {
                     myFoodoraSystem.showRestaurant();
                     break;
                 case "chooseRestaurant":
-                    myFoodoraSystem.chooseRestaurant(commands[1]);
+                    if (commands.length == 2) {
+                        myFoodoraSystem.chooseRestaurant(commands[1]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "showMenu":
                     myFoodoraSystem.showMenu();
                     break;
                 case "addMeal2Order":
-                    myFoodoraSystem.addMeal2Order(commands[1],Integer.parseInt(commands[2]));
+                    if (commands.length == 3) {
+                        myFoodoraSystem.addMeal2Order(commands[1], Integer.parseInt(commands[2]));
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "addItem2Order":
-                    myFoodoraSystem.addItem2Order(commands[1],Integer.parseInt(commands[2]));
+                    if (commands.length == 3) {
+                        myFoodoraSystem.addItem2Order(commands[1], Integer.parseInt(commands[2]));
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "showOrder":
                     myFoodoraSystem.showOrder();
@@ -115,7 +201,12 @@ public class CommandLine {
                     myFoodoraSystem.showHistoryOfOrder_Customer();
                     break;
                 case "setNotified":
-                    myFoodoraSystem.setNotified(commands[1]);
+                    if (commands.length == 2) {
+                        myFoodoraSystem.setNotified(commands[1]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "checkInfoBoard":
                     myFoodoraSystem.checkInfoBoard();
@@ -124,13 +215,28 @@ public class CommandLine {
                     myFoodoraSystem.showFidelityCard();
                     break;
                 case "setGenericDiscountFactor":
-                    myFoodoraSystem.setGenericDiscountFactor(new BigDecimal(commands[1]));
+                    if (commands.length == 2) {
+                        myFoodoraSystem.setGenericDiscountFactor(new BigDecimal(commands[1]));
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "setSpecialDiscountFactor":
-                    myFoodoraSystem.setSpecialDiscountFactor(new BigDecimal(commands[1]));
+                    if (commands.length == 2) {
+                        myFoodoraSystem.setSpecialDiscountFactor(new BigDecimal(commands[1]));
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "registerFidelityCard":
-                    myFoodoraSystem.registerFidelityCard(commands[1]);
+                    if (commands.length == 2) {
+                        myFoodoraSystem.registerFidelityCard(commands[1]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
 
                 //Manager
@@ -206,10 +312,20 @@ public class CommandLine {
                     myFoodoraSystem.offDuty();
                     break;
                 case "addContactInfo":
-                    myFoodoraSystem.addContactInfo(commands[1]);
+                    if (commands.length == 2) {
+                        myFoodoraSystem.addContactInfo(commands[1]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "associateAgreement":
-                    myFoodoraSystem.associateAgreement(commands[1], commands[2]);
+                    if (commands.length == 3) {
+                        myFoodoraSystem.associateAgreement(commands[1], commands[2]);
+                    }
+                    else {
+                        System.out.println("not enough input");
+                    }
                     break;
                 case "refuse":
                     myFoodoraSystem.refuse();

@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <b>MyFoodoraSystem is the class managing the whole system.</b>
@@ -1604,7 +1605,6 @@ public class MyFoodoraSystem {
 
     /**
      *
-     * @param userName
      * @param cardType
      */
     public void registerFidelityCard(String cardType) throws UserNotFoundException {
@@ -1920,6 +1920,174 @@ public class MyFoodoraSystem {
      */
     public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){
 
+    }
+
+    /**
+     * get the list of all meals ordered in the system
+     */
+    public ArrayList<Foods> getAllMeals(ArrayList<Order> orders){
+        ArrayList<Foods> allMeals = new ArrayList<>();
+
+        for (Order order: orders
+             ) {
+            for (Meal meal: order.getMeals()
+                 ) {
+                allMeals.add(meal);
+            }
+        }
+        return allMeals;
+    }
+
+    /**
+     * get the list of all meals ordered in the system
+     */
+    public ArrayList<Foods> getAllItems(ArrayList<Order> orders){
+        ArrayList<Foods> allItems = new ArrayList<>();
+
+        for (Order order: orders
+                ) {
+            for (Item item: order.getItems()
+                    ) {
+                allItems.add(item);
+            }
+        }
+        return allItems;
+    }
+
+    /**
+     * get the quantity of each kind of meal
+     */
+    public ArrayList<Sort> getQuantityOfFoods(ArrayList<Foods> foodss){
+        ArrayList<Sort> sortFoods = new ArrayList<>();
+        ArrayList<Foods> addedFoods = new ArrayList<>();
+
+        for (Foods foods1: foodss){
+            boolean isFound = false;
+            for (Foods foods : addedFoods){
+                if (foods.getName().equalsIgnoreCase(foods1.getName())){
+                    isFound = true;
+                    break;
+                }
+            }
+            if (isFound){
+                for (Sort sort: sortFoods){
+                    if ((sort.getType()).getName().equalsIgnoreCase(foods1.getName())){
+                        sort.addQuantity();
+                    }
+                }
+            }
+            else {
+                //if this a new meal, then add to the addedmeals list and new
+                addedFoods.add(foods1);
+                if (foods1 instanceof Meal){
+                    sortFoods.add(new SortMeal((Meal) foods1));
+                }
+                else if (foods1 instanceof Item){
+                    sortFoods.add(new SortItem((Item) foods1));
+                }
+            }
+        }
+        return sortFoods;
+    }
+
+    /**
+     * sort the shipped order according to the most order meals
+     */
+    public void sortMostMeal(){
+        if (currentUser instanceof Manager){
+            ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllMeals(orders));
+            Collections.sort(sortMeal, new SortByQuantityDown());
+            for (Sort sortmeal: sortMeal
+                    ) {
+                System.out.println((sortmeal.getType()).getName() + "     " + sortmeal.getQuantity());
+            }
+        }
+        else if (currentUser instanceof Restaurant){
+            ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllMeals(((Restaurant) currentUser).getOrders()));
+            Collections.sort(sortMeal, new SortByQuantityDown());
+            for (Sort sortmeal: sortMeal
+                    ) {
+                System.out.println((sortmeal.getType()).getName() + "     " + sortmeal.getQuantity());
+            }
+        }
+        else {
+            System.out.println("Your must log in first");
+        }
+    }
+
+    /**
+     * sort the shipped order according to the most order meals
+     */
+    public void sortLeastMeal(){
+        if (currentUser instanceof Manager){
+            ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllMeals(orders));
+            Collections.sort(sortMeal, new SortByQuantityUp());
+            for (Sort sortmeal: sortMeal
+                    ) {
+                System.out.println((sortmeal.getType()).getName() + "     " + sortmeal.getQuantity());
+            }
+        }
+        else if (currentUser instanceof Restaurant){
+            ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllMeals(((Restaurant) currentUser).getOrders()));
+            Collections.sort(sortMeal, new SortByQuantityUp());
+            for (Sort sortmeal: sortMeal
+                    ) {
+                System.out.println((sortmeal.getType()).getName() + "     " + sortmeal.getQuantity());
+            }
+        }
+        else {
+            System.out.println("Your must log in first");
+        }
+    }
+
+    /**
+     * sort the shipped order according to the most order meals
+     */
+    public void sortMostItem(){
+        if (currentUser instanceof Manager){
+            ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllItems(orders));
+            Collections.sort(sortMeal, new SortByQuantityDown());
+            for (Sort sortmeal: sortMeal
+                    ) {
+                System.out.println((sortmeal.getType()).getName() + "     " + sortmeal.getQuantity());
+            }
+        }
+        else if (currentUser instanceof Restaurant){
+            ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllItems(((Restaurant) currentUser).getOrders()));
+            Collections.sort(sortMeal, new SortByQuantityDown());
+            for (Sort sortmeal: sortMeal
+                    ) {
+                System.out.println((sortmeal.getType()).getName() + "     " + sortmeal.getQuantity());
+            }
+        }
+        else {
+            System.out.println("Your must log in first");
+        }
+    }
+
+    /**
+     * sort the shipped order according to the most order meals
+     */
+    public void sortLeasItem(){
+        if (currentUser instanceof Manager){
+            ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllItems(orders));
+            Collections.sort(sortMeal, new SortByQuantityUp());
+            for (Sort sortmeal: sortMeal
+                    ) {
+                System.out.println((sortmeal.getType()).getName() + "     " + sortmeal.getQuantity());
+            }
+        }
+        else if (currentUser instanceof Restaurant){
+            ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllItems(((Restaurant) currentUser).getOrders()));
+            Collections.sort(sortMeal, new SortByQuantityUp());
+            for (Sort sortmeal: sortMeal
+                    ) {
+                System.out.println((sortmeal.getType()).getName() + "     " + sortmeal.getQuantity());
+            }
+        }
+        else {
+            System.out.println("Your must log in first");
+        }
     }
 
     /**

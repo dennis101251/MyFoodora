@@ -1,7 +1,6 @@
 package fr.ecp.IS1220.group5.project.user;
 
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
-import fr.ecp.IS1220.group5.project.user.User;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -143,7 +142,6 @@ public class Userlist extends Observable{
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
-
 
     /**
      * update the state of one user who already exists in the system
