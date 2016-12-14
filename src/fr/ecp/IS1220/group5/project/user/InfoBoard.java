@@ -31,7 +31,6 @@ public class InfoBoard implements Serializable{
      */
     private Integer numberOfNewMeassages = 0;
 
-
     private Boolean isNotified = true;
 
     /**

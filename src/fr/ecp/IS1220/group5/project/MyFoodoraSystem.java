@@ -33,10 +33,12 @@ import java.util.Collections;
  * @version 2.0
  */
 public class MyFoodoraSystem {
+
     /**
      * The list that stores the list of registered users.
       */
     private Userlist users = new Userlist();
+
     /**
      * The list of orders terminated
      */
@@ -69,10 +71,12 @@ public class MyFoodoraSystem {
      * The user which has been logged in
      */
     private User currentUser = null;
+
     /**
      * The restaurant chosen by the customer
      */
     private Restaurant currentRestaurant = null;
+
     /**
      * temporary order stored in the system
      */
@@ -95,7 +99,16 @@ public class MyFoodoraSystem {
      */
     private String deliveryPolicy = "fastDelivery";
 
-    public MyFoodoraSystem() {
+    /**
+     * The constructor of the system
+     *
+     * initialize the system from the serialization file
+     *
+     * @see MyFoodoraSystem#retrieveUsers()
+     * @see MyFoodoraSystem#retrieveOrders()
+     * @see MyFoodoraSystem#retrieveFinancial()
+     */
+    public MyFoodoraSystem(){
         retrieveUsers();
         retrieveOrders();
         retrieveFinancial();
@@ -761,7 +774,6 @@ public class MyFoodoraSystem {
      * set target profit before determining the parameters
      * @param target_profit
      */
-
     public void setTarget_profit(Double target_profit){
         if (currentUser instanceof Manager){
             this.target_profit = BigDecimal.valueOf(target_profit);
@@ -776,7 +788,6 @@ public class MyFoodoraSystem {
     /**
      * determining the Service Fee to meet the target profit
      */
-
     public void determineService_fee(){
         if (currentUser instanceof Manager){
             if (!orders.isEmpty()){
@@ -833,7 +844,6 @@ public class MyFoodoraSystem {
     /**
      * determining the Markup percentage to meet the target profit
      */
-
     public void determineMarkup_Percentage(){
         if (currentUser instanceof Manager){
             if (!orders.isEmpty()){
@@ -893,7 +903,6 @@ public class MyFoodoraSystem {
     /**
      * determining the Delivery Cost to meet the target profit
      */
-
     public void determineDelivery_Cost(){
         if (currentUser instanceof Manager){
             if (!orders.isEmpty()){
@@ -1829,7 +1838,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
+     * Show all the orders of a restaurant
      */
     public void showOrdersOfRestaurant(){
         if (currentUser instanceof Restaurant){
@@ -1913,10 +1922,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *
-     * @param dishName
-     * @param dishCategory
-     * @param unitPrice
+     * Not developed, maybe will be deleted in the future
      */
     public void addDish(String dishName, String dishCategory, BigDecimal unitPrice){
 
@@ -1962,6 +1968,8 @@ public class MyFoodoraSystem {
      * get the quantity of each kind of meal or item
      *
      * @param foods the list of foods
+     * @return the list of foods and their quantities
+     *
      */
     public ArrayList<Sort> getQuantityOfFoods(ArrayList<Food> foods){
         ArrayList<Sort> sortFoods = new ArrayList<>();
