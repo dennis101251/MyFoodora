@@ -88,6 +88,8 @@ public class MyFoodoraSystem {
     private BigDecimal total_profit = new BigDecimal("0");
     private BigDecimal target_profit = new BigDecimal("0");
 
+    private static MyFoodoraSystem onlySystem;
+
     /**
      * <b>Delivery policy: </b>
      * <ul>
@@ -117,6 +119,19 @@ public class MyFoodoraSystem {
         System.out.println("=================================");
         System.out.println("       init successfully         ");
         System.out.println("=================================");
+    }
+
+    /**
+     * Use the singleton pattern
+     */
+    public static MyFoodoraSystem getIstanceOfSysteme(){
+        if (onlySystem == null){
+            onlySystem = new MyFoodoraSystem();
+            return onlySystem;
+        }
+        else {
+            return onlySystem;
+        }
     }
 
     /**
