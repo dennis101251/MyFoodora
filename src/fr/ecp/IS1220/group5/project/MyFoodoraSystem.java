@@ -37,12 +37,12 @@ public class MyFoodoraSystem {
     /**
      * The list that stores the list of registered users.
       */
-    private Userlist users = new Userlist();
+    protected Userlist users = new Userlist();
 
     /**
      * The list of orders terminated
      */
-    private ArrayList<Order> orders = new ArrayList<Order>();
+    protected ArrayList<Order> orders = new ArrayList<Order>();
 
     /**
      *The fixed service fee that adds to the order price
@@ -70,23 +70,23 @@ public class MyFoodoraSystem {
     /**
      * The user which has been logged in
      */
-    private User currentUser = null;
+    protected User currentUser = null;
 
     /**
      * The restaurant chosen by the customer
      */
-    private Restaurant currentRestaurant = null;
+    protected Restaurant currentRestaurant = null;
 
     /**
      * temporary order stored in the system
      */
-    private Order currentOrder = null;
+    protected Order currentOrder = null;
 
     //Current financial
-    private BigDecimal total_income = new BigDecimal("0");
-    private BigDecimal total_delivery_cost = new BigDecimal("0");
-    private BigDecimal total_profit = new BigDecimal("0");
-    private BigDecimal target_profit = new BigDecimal("0");
+    protected BigDecimal total_income = new BigDecimal("0");
+    protected BigDecimal total_delivery_cost = new BigDecimal("0");
+    protected BigDecimal total_profit = new BigDecimal("0");
+    protected BigDecimal target_profit = new BigDecimal("0");
 
     private static MyFoodoraSystem onlySystem;
 
@@ -99,7 +99,7 @@ public class MyFoodoraSystem {
      * <p>by default: fast delivery</p>
      *
      */
-    private String deliveryPolicy = "fastDelivery";
+    protected String deliveryPolicy = "fastDelivery";
 
     /**
      * The constructor of the system
