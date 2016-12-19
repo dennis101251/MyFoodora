@@ -60,7 +60,11 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
                             System.out.println( myUser.getName() + ": welcome to myFoodora!");
                             System.out.println("==============================================");
 //                            loginInformation();
+
                             JOptionPane.showMessageDialog(new JFrame(),"Welcome: "+myFoodoraSystemGUI.getCurrentUser().getName(),"Login",JOptionPane.INFORMATION_MESSAGE);
+
+
+
                             creatDashboard(myUser);
                         }
                         else {

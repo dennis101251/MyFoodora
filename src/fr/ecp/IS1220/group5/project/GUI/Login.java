@@ -25,20 +25,22 @@ public class Login extends JFrame implements ActionListener{
     /**
      * we have two buttons of login and register
      */
-    JButton[] buttons = new JButton[2];
+    JButton loginButton;
+    JButton registerButton;
     /**
-     * two text fields for username and password
+     * two fields for username and password
      */
-    JTextField[] textFields = new JTextField[2];
+    JTextField usernameTextField;
+    JPasswordField passwordField;
     /**
      * Label of "Welcome"
      */
-    JLabel welcomeLabel = new JLabel();
+    JLabel welcomeLabel;
 
     Dimension buttonDimension = new Dimension(100,35);
     Dimension labelDimension = new Dimension(80, 35);
     Dimension textFieldDimension = new Dimension(120,35);
-    Dimension welcomDimension = new Dimension(250,60);
+    Dimension welcomeDimension = new Dimension(250,60);
 
 
     Font welcomeFont = new Font("Gill Sans", Font.BOLD,20);
@@ -49,55 +51,70 @@ public class Login extends JFrame implements ActionListener{
         super("Login");
 
         // set the size of the window
-        setSize(380, 250);
+        setSize(400, 280);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+
         GridLayout grid = new GridLayout(4,1);
-        setLayout(grid);
+        panel.setLayout(grid);
+        this.setContentPane(panel);
+
 
         for(int i = 0; i < 4; i++)
             row[i] = new JPanel();
 
+        //Welcome label
         welcomeLabel = new JLabel("Welcome to MyFoodora");
-        welcomeLabel.setPreferredSize(welcomDimension);
+        welcomeLabel.setPreferredSize(welcomeDimension);
         welcomeLabel.setFont(welcomeFont);
         row[0].add(welcomeLabel);
         add(row[0]);
 
-        JLabel username = new JLabel("Username");
+
+        //Enter Username
+        JLabel username = new JLabel("Username:");
         username.setPreferredSize(labelDimension);
         username.setFont(normalFont);
-        textFields[0] = new JTextField();
-//        textFields[0].setPreferredSize(textFieldDimension);
+        usernameTextField = new JTextField(20);
+        usernameTextField.setMaximumSize(usernameTextField.getPreferredSize());
         row[1].setLayout(new BoxLayout(row[1],BoxLayout.X_AXIS));
         row[1].add(username);
-        row[1].add(textFields[0]);
+        row[1].add(Box.createHorizontalGlue());
+        row[1].add(usernameTextField);
         add(row[1]);
 
-        JLabel password = new JLabel("Password");
+        //Enter Password
+        JLabel password = new JLabel("Password:");
         username.setPreferredSize(labelDimension);
         username.setFont(normalFont);
-        textFields[1] = new JTextField();
-//        textFields[1].setPreferredSize(textFieldDimension);
+        passwordField = new JPasswordField(20);
+        passwordField.setMaximumSize(passwordField.getPreferredSize());
         row[2].setLayout(new BoxLayout(row[2],BoxLayout.X_AXIS));
         row[2].add(password);
-        row[2].add(textFields[1]);
+        row[2].add(Box.createHorizontalGlue());
+        row[2].add(passwordField);
         add(row[2]);
 
 
-        buttons[0] = new JButton("Login");
-        buttons[1] = new JButton("Register");
-        for (int i = 0; i < buttons.length; i++) {
-            buttons[i].addActionListener(this);
-            buttons[i].setPreferredSize(buttonDimension);
-        }
+        //Buttons
+        loginButton = new JButton("Login");
+        loginButton.addActionListener(this);
+        loginButton.setPreferredSize(buttonDimension);
+
+        registerButton = new JButton("Register");
+        registerButton.addActionListener(this);
+        registerButton.setPreferredSize(buttonDimension);
+
         //Set the layout of the two buttons
         BoxLayout b1 = new BoxLayout(row[1],BoxLayout.Y_AXIS);
         row[3].setLayout(b1);
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(buttons[0]);
-        buttonPanel.add(Box.createHorizontalGlue ());
-        buttonPanel.add(buttons[1]);
+        buttonPanel.add(loginButton);
+        buttonPanel.add(Box.createHorizontalGlue());
+        buttonPanel.add(registerButton);
         BoxLayout b2 = new BoxLayout(buttonPanel,BoxLayout.X_AXIS);
         buttonPanel.setLayout(b2);
 //        row[3].add(Box.createVerticalStrut (10));
@@ -114,14 +131,14 @@ public class Login extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttons[0]){
-            String username = textFields[0].getText();
-            String password = textFields[1].getText();
+        if (e.getSource() == loginButton){
+            String username = usernameTextField.getText();
+            String password = passwordField.getText();
             System.out.println(username);
             System.out.println(password);
             myFoodoraSystemGUI.loginUser(username,password);
         }
-        else if (e.getSource() == buttons[1]){
+        else if (e.getSource() == registerButton){
             System.out.println("register");
         }
     }
