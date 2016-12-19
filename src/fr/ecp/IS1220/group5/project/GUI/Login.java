@@ -1,6 +1,6 @@
 package fr.ecp.IS1220.group5.project.GUI;
 
-import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
+import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ public class Login extends JFrame implements ActionListener{
      *
      * the problem is that I didn't realize this before, and we can't change the constructor in to private
      */
-    MyFoodoraSystem myFoodoraSystem = MyFoodoraSystem.getIstanceOfSysteme();
+    MyFoodoraSystemGUI myFoodoraSystemGUI;
 
     /**
      * we have 4 rows of info at the login frame
@@ -105,6 +105,8 @@ public class Login extends JFrame implements ActionListener{
 //        row[3].add(Box.createVerticalStrut (10));
         add(row[3]);
 
+        myFoodoraSystemGUI = MyFoodoraSystemGUI.getInstance();
+
         setVisible(true);
     }
 
@@ -117,7 +119,7 @@ public class Login extends JFrame implements ActionListener{
             String password = textFields[1].getText();
             System.out.println(username);
             System.out.println(password);
-            myFoodoraSystem.loginUser(username,password);
+            myFoodoraSystemGUI.loginUser(username,password);
         }
         else if (e.getSource() == buttons[1]){
             System.out.println("register");
@@ -125,7 +127,6 @@ public class Login extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args) {
-        MyFoodoraSystem myFoodoraSystem = MyFoodoraSystem.getIstanceOfSysteme();
 //        myFoodoraSystem.registerCustomer("Marco", "Merlotti", "MM", "501", new Coordinate(50,50), "marco.merlotti@student.ecp.fr", "0611041568");
 //        myFoodoraSystem.loginUser("MM", "501");
         Login login = new Login();
