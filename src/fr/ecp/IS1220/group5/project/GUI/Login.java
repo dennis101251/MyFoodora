@@ -110,25 +110,6 @@ public class Login extends JFrame implements ActionListener{
         setVisible(true);
     }
 
-//    private void performance(int result){
-//        switch (result){
-//            case 1:
-//                //Login successfully
-//                JOptionPane.showMessageDialog(this,"Welcome: "+myFoodoraSystemGUI.getCurrentUser().getName(),"Login",JOptionPane.INFORMATION_MESSAGE);
-//                break;
-//            case 2:
-//                //Invalid password
-//                JOptionPane.showMessageDialog(this,"Invalid password","Login",JOptionPane.INFORMATION_MESSAGE);
-//                break;
-//            case 3:
-//                JOptionPane.showMessageDialog(this,"You have been deactivated","Login",JOptionPane.INFORMATION_MESSAGE);
-//                break;
-//            case 4:
-//                JOptionPane.showMessageDialog(this,,"Login",JOptionPane.INFORMATION_MESSAGE);
-//                break;
-//        }
-//
-//    }
 
 
     @Override

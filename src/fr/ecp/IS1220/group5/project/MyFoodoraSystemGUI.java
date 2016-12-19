@@ -1,6 +1,10 @@
 package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.user.User;
+import fr.ecp.IS1220.group5.project.GUI.CourierDashboard;
+import fr.ecp.IS1220.group5.project.GUI.CustomerDashboard;
+import fr.ecp.IS1220.group5.project.GUI.ManagerDashboard;
+import fr.ecp.IS1220.group5.project.GUI.RestaurantDashboard;
+import fr.ecp.IS1220.group5.project.user.*;
 import fr.ecp.IS1220.group5.project.util.PasswordHash;
 
 import javax.swing.*;
@@ -55,8 +59,9 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
                             this.currentUser = myUser;
                             System.out.println( myUser.getName() + ": welcome to myFoodora!");
                             System.out.println("==============================================");
-                            loginInformation();
+//                            loginInformation();
                             JOptionPane.showMessageDialog(new JFrame(),"Welcome: "+myFoodoraSystemGUI.getCurrentUser().getName(),"Login",JOptionPane.INFORMATION_MESSAGE);
+                            creatDashboard(myUser);
                         }
                         else {
                             //Invalid password
@@ -88,7 +93,20 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         }
     }
 
-//    public int loginUserWithParameter(String userName, String password) {
-//
-//    }
+    public void creatDashboard(User user){
+        if (user instanceof Customer){
+            new CustomerDashboard();
+        }
+        else if (user instanceof Restaurant){
+            new RestaurantDashboard();
+        }
+        else if (user instanceof Manager){
+            new ManagerDashboard();
+        }
+        else if (user instanceof Courier){
+            new CourierDashboard();
+        }
+    }
+
+
 }
