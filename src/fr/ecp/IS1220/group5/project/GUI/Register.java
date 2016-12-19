@@ -12,6 +12,8 @@ public class Register extends JFrame{
     private JFrame[] jFrame = new JFrame[4];
     private JLabel name;
 
+
+
     public Register(){
 
         Object input = JOptionPane.showInputDialog(new JFrame("register"),"Which kind of user you you want to choose?","register", JOptionPane.QUESTION_MESSAGE,null,
