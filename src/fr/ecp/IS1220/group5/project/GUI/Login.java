@@ -140,6 +140,8 @@ public class Login extends JFrame implements ActionListener{
         }
         else if (e.getSource() == registerButton){
             System.out.println("register");
+            Login.this.dispose();
+            Register2 register = new Register2();
         }
     }
 
