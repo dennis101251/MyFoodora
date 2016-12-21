@@ -1,15 +1,16 @@
 package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.GUI.CourierDashboard;
-import fr.ecp.IS1220.group5.project.GUI.CustomerDashboard;
-import fr.ecp.IS1220.group5.project.GUI.ManagerDashboard;
-import fr.ecp.IS1220.group5.project.GUI.RestaurantDashboard;
+import fr.ecp.IS1220.group5.project.GUI.*;
+import fr.ecp.IS1220.group5.project.menu.Food;
+import fr.ecp.IS1220.group5.project.menu.Item;
+import fr.ecp.IS1220.group5.project.menu.Meal;
 import fr.ecp.IS1220.group5.project.user.*;
 import fr.ecp.IS1220.group5.project.util.PasswordHash;
 
 import javax.swing.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 
 /**
  *
@@ -97,9 +98,49 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         }
     }
 
+    /**
+     * Returns the list of all available restaurants
+     * @return an array of restaurants
+     */
+    public Restaurant[] getRestaurants(){
+        if (currentUser instanceof Customer){
+            ArrayList<Restaurant> allReastaurant= new ArrayList<>();
+            for (User user: users.getUsers()
+                    ) {
+                if (user instanceof Restaurant){
+                    allReastaurant.add((Restaurant) user);
+                }
+            }
+
+            return allReastaurant.toArray(new Restaurant[allReastaurant.size()]);
+        }
+
+        return new Restaurant[0];
+    }
+
+    public String[] getRestaurantsNames(){
+        if (currentUser instanceof Customer){
+            ArrayList<String> allReastaurant= new ArrayList<>();
+            for (User user: users.getUsers()
+                    ) {
+                if (user instanceof Restaurant){
+                    allReastaurant.add(user.getName());
+                }
+            }
+
+            return allReastaurant.toArray(new String[allReastaurant.size()]);
+        }
+        else {
+
+            return new String[0];
+
+        }
+    }
+
+
     public void creatDashboard(User user){
         if (user instanceof Customer){
-            new CustomerDashboard();
+            new CustomerDashboard2();
         }
         else if (user instanceof Restaurant){
             new RestaurantDashboard();
@@ -109,6 +150,65 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         }
         else if (user instanceof Courier){
             new CourierDashboard();
+        }
+    }
+
+    public void setCurrentRestaurant(Restaurant restaurant){
+
+        currentRestaurant = restaurant;
+
+
+    }
+
+    public Food[] getMenu(){
+            if (currentUser instanceof Customer){
+                if (currentRestaurant != null){
+
+                    ArrayList<Food> menu = new ArrayList<>();
+
+                    for (Item item: currentRestaurant.getItems()){
+                        menu.add(item);
+                    }
+
+                    for (Meal meal:currentRestaurant.getMeals()){
+                        menu.add(meal);
+                    }
+
+                    return menu.toArray(new Food[menu.size()]);
+
+                }
+                else {
+                    return new Food[0];
+                }
+            }
+            else {
+                return new Food[0];
+            }
+    }
+
+    public String[] getMenuNames(){
+        if (currentUser instanceof Customer){
+            if (currentRestaurant != null){
+
+                ArrayList<String> menu = new ArrayList<>();
+
+                for (Item item: currentRestaurant.getItems()){
+                    menu.add(item.getName());
+                }
+
+                for (Meal meal:currentRestaurant.getMeals()){
+                    menu.add(meal.getName());
+                }
+
+                return menu.toArray(new String[menu.size()]);
+
+            }
+            else {
+                return new String[0];
+            }
+        }
+        else {
+            return new String[0];
         }
     }
 

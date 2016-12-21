@@ -66,7 +66,7 @@ public class MyFoodoraSystem {
      */
     public BigDecimal delivery_cost_price = new BigDecimal("1.0");
 
-    //User
+//User
     /**
      * The user which has been logged in
      */
@@ -132,6 +132,22 @@ public class MyFoodoraSystem {
         else {
             return onlySystem;
         }
+    }
+
+    public BigDecimal getMarkup_percentage() {
+        return markup_percentage;
+    }
+
+    public BigDecimal getDelivery_cost_price() {
+        return delivery_cost_price;
+    }
+
+    public Restaurant getCurrentRestaurant() {
+        return currentRestaurant;
+    }
+
+    public BigDecimal getService_fee() {
+        return service_fee;
     }
 
     /**

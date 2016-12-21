@@ -1,12 +1,30 @@
 package fr.ecp.IS1220.group5.project.GUI;
 
+import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
+import fr.ecp.IS1220.group5.project.menu.Food;
+import fr.ecp.IS1220.group5.project.menu.Item;
+import fr.ecp.IS1220.group5.project.menu.Meal;
+import fr.ecp.IS1220.group5.project.menu.Order;
+import fr.ecp.IS1220.group5.project.user.Customer;
+import fr.ecp.IS1220.group5.project.user.Restaurant;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by alexandre_carlier on 20/12/2016.
  */
-public class CustomerDashboard2 extends JFrame {
+public class CustomerDashboard2 extends JFrame implements Observer{
+
+    MyFoodoraSystemGUI myFoodoraSystem;
+
+    Restaurant[] restaurants;
+    Food[] dishes;
 
 
     JPanel mainPanel;
@@ -17,8 +35,16 @@ public class CustomerDashboard2 extends JFrame {
     JPanel leftPanel;
     JPanel rightPanel;
 
+    JList<String> list;
+    JList<String> list2;
+    JList<String> list3;
+
+    private Order order;
+
     public CustomerDashboard2(){
 
+        myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
+        restaurants = myFoodoraSystem.getRestaurants();
 
         this.setSize(500, 400);
         this.setResizable(false);
@@ -35,7 +61,7 @@ public class CustomerDashboard2 extends JFrame {
         headerPanel = new JPanel();
         headerPanel.setLayout(new GridBagLayout());
 
-        JLabel welcomeLabel = new JLabel("Welcome Customer!");
+        JLabel welcomeLabel = new JLabel("Welcome " + myFoodoraSystem.getCurrentUser().getName() + "!");
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
@@ -72,21 +98,46 @@ public class CustomerDashboard2 extends JFrame {
 
         leftPanel.add(new JLabel("Choose a restaurant:"));
 
-        String[] restaurants = {"McDonalds", "Pizzeria", "Sushi", "KFC", "Subway"};
-        JList<String> list = new JList<>(restaurants);
+        String[] restaurantsNames = myFoodoraSystem.getRestaurantsNames();
+        myFoodoraSystem.setCurrentRestaurant(restaurants[0]);
+
+        list = new JList<>(restaurantsNames);
         list.setVisibleRowCount(5);
         list.setFixedCellHeight(20);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.isSelectedIndex(0);
+        list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                updateMenuList();
+
+            }
+
+        });
         JScrollPane scrollPane = new JScrollPane(list);
+
         leftPanel.add(scrollPane);
 
-        leftPanel.add(new JLabel("Choose your dishes:"));
+        leftPanel.add(new JLabel("Choose your dishes: (double-click to select)"));
 
-        String[] dishes = {"BigMac", "French Fries", "Coca Cola", "Ham Burger"};
-        JList<String> list2 = new JList<>(dishes);
+        dishes = myFoodoraSystem.getMenu();
+        String[] dishesNames = myFoodoraSystem.getMenuNames();
+
+        list2 = new JList<>(dishesNames);
         list2.setVisibleRowCount(5);
         list2.setFixedCellHeight(20);
         list2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    updateOrder();
+                }
+
+            }
+
+        });
         JScrollPane scrollPane2 = new JScrollPane(list2);
         leftPanel.add(scrollPane2);
 
@@ -111,8 +162,12 @@ public class CustomerDashboard2 extends JFrame {
 
         rightPanel.add(new JLabel("Your order"));
 
-        String[] chosenDishes = {"BigMac", "French Fries", "Coca Cola"};
-        JList<String> list3 = new JList<>(chosenDishes);
+        order = new Order(myFoodoraSystem.getCurrentRestaurant(), (Customer) myFoodoraSystem.getCurrentUser(), myFoodoraSystem.getDelivery_cost_price(), myFoodoraSystem.getMarkup_percentage(), myFoodoraSystem.getService_fee());
+        order.addObserver(this);
+
+
+        String[] chosenDishes = {};
+        list3 = new JList<>(chosenDishes);
         list3.setVisibleRowCount(5);
         list3.setFixedCellHeight(20);
         JScrollPane scrollPane3 = new JScrollPane(list3);
@@ -151,5 +206,45 @@ public class CustomerDashboard2 extends JFrame {
 
     }
 
+    public void updateMenuList(){
 
+        myFoodoraSystem.setCurrentRestaurant(restaurants[list.getSelectedIndex()]);
+        order.setRestaurant(restaurants[list.getSelectedIndex()]);
+        order.empty();
+
+        String[] dishesNames = myFoodoraSystem.getMenuNames();
+
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for(String dishName : dishesNames)
+            model.addElement(dishName);
+
+        list2.setModel(model);
+
+    }
+
+
+    public void updateOrder(){
+
+        Food food = dishes[list2.getSelectedIndex()];
+
+        if (food instanceof Item){
+            order.addItem((Item) food);
+        }else{
+            order.addMeal((Meal) food);
+        }
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+        //When the order is changed.
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for(Food food: order.getFood()) {
+            model.addElement(food.getName());
+        }
+        list3.setModel(model);
+
+
+    }
 }

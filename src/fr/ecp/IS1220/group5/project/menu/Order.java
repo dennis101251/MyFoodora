@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * <b>The class which represents a customer's cart</b>
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  * @see Item
  * @see Meal
  */
-public class Order implements Serializable{
+public class Order  extends Observable implements Serializable{
 
 	private static final long serialVersionUID = -4389016276908172461L;
 	/**
@@ -131,6 +132,11 @@ public class Order implements Serializable{
 		return restaurant;
 	}
 
+	public void setRestaurant(Restaurant restaurant){
+		this.restaurant = restaurant;
+	}
+
+
 	/**
 	 * Return the total price of the order (includign markup percentage and fees)
 	 * @return the total price of the order (includign markup percentage and fees)
@@ -181,6 +187,10 @@ public class Order implements Serializable{
 		System.out.println("Total (with markup percentage): " + total_price);
 		total_price = total_price.add(service_fee);
 		System.out.println("Total (with fees): " + total_price);
+
+		//Whenever something is changed in the order, it calls the updateTotalPrice method, so we can call the setChanged method and notify the observers.
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -255,6 +265,12 @@ public class Order implements Serializable{
 		updateTotalPrice();
 	}
 
+	public void empty(){
+		this.items = new ArrayList<>();
+		this.meals = new ArrayList<>();
+		updateTotalPrice();
+	}
+
 	/**
 	 * Checks whether the order is empty (true) or not (false)
 	 * @return true if the order is empty, false otherwise.
@@ -281,6 +297,19 @@ public class Order implements Serializable{
 	 */
 	public ArrayList<Meal> getMeals() {
 		return meals;
+	}
+
+	public ArrayList<Food> getFood(){
+
+		ArrayList<Food> food = new ArrayList<>();
+		for (Item item : items){
+			food.add(item);
+		}
+		for (Meal meal : meals){
+			food.add(meal);
+		}
+		return food;
+
 	}
 
 	/**
