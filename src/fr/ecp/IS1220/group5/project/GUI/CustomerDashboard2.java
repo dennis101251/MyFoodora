@@ -1,18 +1,18 @@
 package fr.ecp.IS1220.group5.project.GUI;
 
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
+import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.Food;
 import fr.ecp.IS1220.group5.project.menu.Item;
 import fr.ecp.IS1220.group5.project.menu.Meal;
 import fr.ecp.IS1220.group5.project.menu.Order;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
+import fr.ecp.IS1220.group5.project.util.Money;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -39,6 +39,9 @@ public class CustomerDashboard2 extends JFrame implements Observer{
     JList<String> list2;
     JList<String> list3;
 
+    JLabel intermediatePrice;
+    JLabel totalPrice;
+
     private Order order;
 
     public CustomerDashboard2(){
@@ -46,7 +49,7 @@ public class CustomerDashboard2 extends JFrame implements Observer{
         myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
         restaurants = myFoodoraSystem.getRestaurants();
 
-        this.setSize(500, 400);
+        this.setSize(600, 450);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -70,6 +73,14 @@ public class CustomerDashboard2 extends JFrame implements Observer{
         headerPanel.add(welcomeLabel, c);
 
         JButton logoutButton = new JButton("Log out");
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myFoodoraSystem.disconnectUser();
+                CustomerDashboard2.this.dispose();
+                new Login();
+            }
+        });
         c.gridx = 1;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
@@ -132,7 +143,7 @@ public class CustomerDashboard2 extends JFrame implements Observer{
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    updateOrder();
+                    addItem2Order();
                 }
 
             }
@@ -144,7 +155,7 @@ public class CustomerDashboard2 extends JFrame implements Observer{
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
-        c.weightx = 0.65;
+        c.weightx = 0.6;
         c.weighty = 1;
         orderPanel.add(leftPanel, c);
 
@@ -158,9 +169,9 @@ public class CustomerDashboard2 extends JFrame implements Observer{
         //Right panel
         rightPanel = new JPanel();
         rightPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
-        rightPanel.setLayout(new GridLayout(4, 1));
+        rightPanel.setLayout(new GridLayout(5, 1));
 
-        rightPanel.add(new JLabel("Your order"));
+        rightPanel.add(new JLabel("Your order (double-click to remove)"));
 
         order = new Order(myFoodoraSystem.getCurrentRestaurant(), (Customer) myFoodoraSystem.getCurrentUser(), myFoodoraSystem.getDelivery_cost_price(), myFoodoraSystem.getMarkup_percentage(), myFoodoraSystem.getService_fee());
         order.addObserver(this);
@@ -170,20 +181,45 @@ public class CustomerDashboard2 extends JFrame implements Observer{
         list3 = new JList<>(chosenDishes);
         list3.setVisibleRowCount(5);
         list3.setFixedCellHeight(20);
+        list3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    removeItemFromOrder();
+                }
+
+            }
+
+        });
         JScrollPane scrollPane3 = new JScrollPane(list3);
         rightPanel.add(scrollPane3);
 
-        rightPanel.add(new JLabel("Total price: 5€"));
+
+        intermediatePrice = new JLabel("Intemediate price: " + Money.display(order.getOrder_price()));
+        totalPrice = new JLabel("Total price (w. fees): " +  Money.display(order.getTotal_price()));
+
+        rightPanel.add(intermediatePrice);
+        rightPanel.add(totalPrice);
 
         JPanel endOrderPanel = new JPanel();
         JButton endOrder = new JButton("End order");
+        endOrder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    myFoodoraSystem.endOrder();
+                } catch (UserNotFoundException e1) {
+                    System.out.println("Error");
+                }
+            }
+        });
         endOrderPanel.add(endOrder);
         rightPanel.add(endOrderPanel);
 
         c.gridx = 2;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
-        c.weightx = 0.25;
+        c.weightx = 0.3;
         c.weighty = 1;
         orderPanel.add(rightPanel, c);
 
@@ -195,6 +231,8 @@ public class CustomerDashboard2 extends JFrame implements Observer{
         c.weighty = 1;
         mainPanel.add(orderPanel, c);
 
+
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
 
 
@@ -223,7 +261,7 @@ public class CustomerDashboard2 extends JFrame implements Observer{
     }
 
 
-    public void updateOrder(){
+    public void addItem2Order(){
 
         Food food = dishes[list2.getSelectedIndex()];
 
@@ -235,16 +273,26 @@ public class CustomerDashboard2 extends JFrame implements Observer{
 
     }
 
+    public void removeItemFromOrder(){
+
+        order.removeAtIndex(list3.getSelectedIndex());
+
+    }
+
     @Override
     public void update(Observable o, Object arg) {
 
         //When the order is changed.
         DefaultListModel<String> model = new DefaultListModel<>();
         for(Food food: order.getFood()) {
-            model.addElement(food.getName());
+            model.addElement(food.getName() + " - " + Money.display(food.getPrice()));
         }
         list3.setModel(model);
 
+        intermediatePrice.setText("Intemediate price: " + Money.display(order.getOrder_price()));
+        totalPrice.setText("Total price (w. fees): " +  Money.display(order.getTotal_price()));
+
 
     }
+
 }

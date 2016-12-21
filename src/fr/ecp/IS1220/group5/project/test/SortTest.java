@@ -1,5 +1,6 @@
 package fr.ecp.IS1220.group5.project.test;
 
+import fr.ecp.IS1220.group5.project.GUI.Login;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.*;

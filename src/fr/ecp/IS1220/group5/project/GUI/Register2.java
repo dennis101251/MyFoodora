@@ -120,6 +120,15 @@ public class Register2 extends JFrame {
         //Register button panel
 
         registerPanel = new JPanel();
+        registerPanel.setLayout(new BoxLayout(registerPanel,BoxLayout.X_AXIS));
+        JButton loginButton = new JButton("← Back to Login");
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Register2.this.dispose();
+                new Login();
+            }
+        });
         registerButton = new JButton("Register");
         registerButton.addActionListener(new ActionListener() {
             @Override
@@ -127,6 +136,8 @@ public class Register2 extends JFrame {
                 registerUser();
             }
         });
+        registerPanel.add(loginButton);
+        registerPanel.add(Box.createHorizontalGlue());
         registerPanel.add(registerButton);
 
         c.gridx = 0;
@@ -138,6 +149,7 @@ public class Register2 extends JFrame {
 
 
         //Set visible
+        this.setLocationRelativeTo(null);
         setVisible(true);
     }
 

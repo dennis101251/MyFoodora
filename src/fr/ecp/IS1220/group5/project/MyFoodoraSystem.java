@@ -1,5 +1,6 @@
 package fr.ecp.IS1220.group5.project;
 
+import fr.ecp.IS1220.group5.project.GUI.Login;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.fidelity.BasicFidelityCard;
 import fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard;
@@ -49,7 +50,7 @@ public class MyFoodoraSystem {
      * @see Manager#changeServiceFee(BigDecimal)
      * @see Financial
      */
-    public BigDecimal service_fee = new BigDecimal("4.0");
+    public BigDecimal service_fee = new BigDecimal("0.95");
 
     /**
      * The ratio of markup of the order price
@@ -358,8 +359,8 @@ public class MyFoodoraSystem {
 
     /**
      * To login a user
-      * @param userName the username of the user
-     * @param password the password of the user
+     * @param userName the username of the user
+    * @param password the password of the user
      */
     public void loginUser(String userName, String password) {
 

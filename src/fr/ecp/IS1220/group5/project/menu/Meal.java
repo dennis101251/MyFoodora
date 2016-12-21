@@ -126,6 +126,7 @@ public class Meal  implements Serializable, Food {
 	 * Returns the price of this meal.
 	 * @return the price of this meal.
 	 */
+	@Override
 	public BigDecimal getPrice() {
 		return price;
 	}

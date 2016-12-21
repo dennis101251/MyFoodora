@@ -100,21 +100,20 @@ public class Login extends JFrame implements ActionListener{
 
 
         //Buttons
+        registerButton = new JButton("Don't have an acccount? Register →");
+        registerButton.addActionListener(this);
+
         loginButton = new JButton("Login");
         loginButton.addActionListener(this);
         loginButton.setPreferredSize(buttonDimension);
-
-        registerButton = new JButton("Register");
-        registerButton.addActionListener(this);
-        registerButton.setPreferredSize(buttonDimension);
 
         //Set the layout of the two buttons
         BoxLayout b1 = new BoxLayout(row[1],BoxLayout.Y_AXIS);
         row[3].setLayout(b1);
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(loginButton);
-        buttonPanel.add(Box.createHorizontalGlue());
         buttonPanel.add(registerButton);
+        buttonPanel.add(Box.createHorizontalGlue());
+        buttonPanel.add(loginButton);
         BoxLayout b2 = new BoxLayout(buttonPanel,BoxLayout.X_AXIS);
         buttonPanel.setLayout(b2);
 //        row[3].add(Box.createVerticalStrut (10));
@@ -124,6 +123,7 @@ public class Login extends JFrame implements ActionListener{
 
         myFoodoraSystemGUI = MyFoodoraSystemGUI.getInstance();
 
+        this.setLocationRelativeTo(null);
         setVisible(true);
     }
 
@@ -136,7 +136,7 @@ public class Login extends JFrame implements ActionListener{
             String password = passwordField.getText();
             System.out.println(username);
             System.out.println(password);
-            myFoodoraSystemGUI.loginUser(username,password);
+            myFoodoraSystemGUI.loginUser(username,password, Login.this);
         }
         else if (e.getSource() == registerButton){
             System.out.println("register");

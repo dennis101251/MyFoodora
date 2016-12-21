@@ -38,8 +38,7 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         }
     }
 
-    @Override
-    public void loginUser(String userName, String password) {
+    public void loginUser(String userName, String password, Login login) {
         boolean isFound = false;
         User myUser = null;
 
@@ -61,7 +60,7 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
                             System.out.println( myUser.getName() + ": welcome to myFoodora!");
                             System.out.println("==============================================");
 //                            loginInformation();
-
+                            login.dispose();
                             JOptionPane.showMessageDialog(new JFrame(),"Welcome: "+myFoodoraSystemGUI.getCurrentUser().getName(),"Login",JOptionPane.INFORMATION_MESSAGE);
 
 

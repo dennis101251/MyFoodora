@@ -71,6 +71,7 @@ public class Item  implements Serializable, Food {
 	 * Returns the price of this item.
 	 * @return the price of this item.
 	 */
+	@Override
 	public BigDecimal getPrice() {
 		return price;
 	}

@@ -108,6 +108,7 @@ public class Order  extends Observable implements Serializable{
 		IDGenerator idGenerator = IDGenerator.getInstance();
 		this.id = idGenerator.getNextID();
 		computeDeliveryCost();
+		updateTotalPrice();
 	}
 
 	/**
@@ -254,6 +255,13 @@ public class Order  extends Observable implements Serializable{
 		updateTotalPrice();
 	}
 
+	public void removeItem(Item item){
+
+		this.items.remove(item);
+		updateTotalPrice();
+
+	}
+
 	/**
 	 * Adds a meal to the order.
 	 * @param meal the meal to be added.
@@ -263,6 +271,13 @@ public class Order  extends Observable implements Serializable{
 	public void addMeal(Meal meal){
 		this.meals.add(meal);
 		updateTotalPrice();
+	}
+
+	public void removeMeal(Meal meal){
+
+		this.items.remove(meal);
+		updateTotalPrice();
+
 	}
 
 	public void empty(){
@@ -359,5 +374,20 @@ public class Order  extends Observable implements Serializable{
 	 */
 	public void applyFidelityDiscount() {
 		this.total_price = customer.getFidelityCard().compute_discounted_price(this.total_price);
+	}
+
+	public void removeAtIndex(int selectedIndex) {
+
+		ArrayList<Food> foodList = this.getFood();
+		Food food = foodList.get(selectedIndex);
+
+		if (food instanceof Item){
+			this.items.remove((Item) food);
+		}else {
+			this.meals.remove((Meal) food);
+		}
+
+		updateTotalPrice();
+
 	}
 }

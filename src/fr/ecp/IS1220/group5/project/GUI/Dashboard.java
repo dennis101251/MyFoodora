@@ -1,5 +1,7 @@
 package fr.ecp.IS1220.group5.project.GUI;
 
+import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +10,7 @@ import java.awt.event.ActionListener;
  * to set all the dashboards with the same format
  * User dashboard is created at the loginUser() in the class MyFoodoraSystemGUI
  *
- * @see fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI#loginUser(String, String)
+ * @see MyFoodoraSystem#loginUser(String, String)
  *
  * Created by dennis101251 on 2016/12/19.
  */

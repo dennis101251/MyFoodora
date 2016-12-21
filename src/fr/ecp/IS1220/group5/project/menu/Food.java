@@ -1,5 +1,7 @@
 package fr.ecp.IS1220.group5.project.menu;
 
+import java.math.BigDecimal;
+
 /**
  *
  * In order to sort the list of item and meals in a more general way
@@ -12,4 +14,7 @@ package fr.ecp.IS1220.group5.project.menu;
  */
 public interface Food {
     public String getName();
+
+    public BigDecimal getPrice();
+
 }
