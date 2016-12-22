@@ -1,13 +1,9 @@
 package fr.ecp.IS1220.group5.project.user;
 
-import fr.ecp.IS1220.group5.project.util.Financial;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
+import fr.ecp.IS1220.group5.project.util.Financial;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.Observable;
 import java.util.Observer;
@@ -37,6 +33,14 @@ public class Manager extends User implements Observer{
 	public Manager(String name, String username, String password, String surname) {
 		super(name, username, password);
 		this.surname = surname;
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public String getType(){
+		return "Manager";
 	}
 
 	/**

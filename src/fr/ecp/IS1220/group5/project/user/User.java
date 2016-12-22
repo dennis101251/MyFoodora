@@ -65,9 +65,12 @@ public abstract class User implements Serializable{
 		} catch (InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
-
 	}
 
+	/**
+	 * get the type of user
+	 */
+	public String getType(){return null;};
 	/**
 	 * Return the username of the User.
 	 * @return the username of the User.

@@ -1,9 +1,8 @@
 package fr.ecp.IS1220.group5.project.user;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
-import fr.ecp.IS1220.group5.project.util.Coordinate;
 import fr.ecp.IS1220.group5.project.menu.Order;
+import fr.ecp.IS1220.group5.project.util.Coordinate;
 
 import java.util.ArrayList;
 
@@ -70,6 +69,13 @@ public class Courier extends User {
 		this.phoneNumber = phoneNumber;
 	}
 
+	/**
+	 *
+	 */
+	@Override
+	public String getType(){
+		return "Courier";
+	}
 	/**
 	 * Sets the working-state of the Courier to "on-duty".
 	 */

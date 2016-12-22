@@ -13,8 +13,6 @@ import java.awt.event.ActionListener;
 public class Login extends JFrame implements ActionListener{
     /**
      * get the only one system
-     *
-     * the problem is that I didn't realize this before, and we can't change the constructor in to private
      */
     MyFoodoraSystemGUI myFoodoraSystemGUI;
 

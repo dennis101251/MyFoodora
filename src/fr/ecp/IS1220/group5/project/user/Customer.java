@@ -76,6 +76,13 @@ public class Customer extends User {
 		this.surname = lastName;
 		this.address = address;
 	}
+	/**
+	 *
+	 */
+	@Override
+	public String getType(){
+		return "Customer";
+	}
 
 	/**
 	 * Adds a given order to the Customer"s history.

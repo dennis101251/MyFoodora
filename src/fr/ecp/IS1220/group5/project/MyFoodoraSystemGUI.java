@@ -81,19 +81,19 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
                 else {
                     //Deactivated
                     System.out.println("Your account has been disactivated, please contact Manager");
-                    JOptionPane.showMessageDialog(new JFrame(),"You have been deactivated","Login",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(new JFrame(),"You have been deactivated","Login",JOptionPane.ERROR_MESSAGE);
                 }
             }
             else {
                 //User not found
                 System.out.println("User: " + userName + " is not found in system");
-                JOptionPane.showMessageDialog(new JFrame(),"User: " + userName + " is not found in system","Login",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(new JFrame(),"User: " + userName + " is not found in system","Login",JOptionPane.ERROR_MESSAGE);
             }
         }
         else {
             //Forget to disconnect
             System.out.println("you have to disconnect first");
-            JOptionPane.showMessageDialog(new JFrame(),"you have to disconnect first","Login",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(new JFrame(),"you have to disconnect first","Login",JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -139,7 +139,7 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
 
     public void creatDashboard(User user){
         if (user instanceof Customer){
-            new CustomerDashboard2();
+            new CustomerDashboard();
         }
         else if (user instanceof Restaurant){
             new RestaurantDashboard();
@@ -212,4 +212,16 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
     }
 
 
+    @Override
+    public void disconnectUser() {
+        if (currentUser!=null){
+            System.out.println(currentUser.getName() + " has logged out");
+            JOptionPane.showMessageDialog(new JFrame(), myFoodoraSystemGUI.getCurrentUser().getName() + " has disconnect","Disconnect",JOptionPane.PLAIN_MESSAGE);
+            this.currentUser = null;
+        }
+        else {
+            System.out.println("there is no user connected in system");
+            JOptionPane.showMessageDialog(new JFrame(),"there is no user connected in system","Disconnect",JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

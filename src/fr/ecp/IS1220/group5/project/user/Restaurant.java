@@ -1,9 +1,9 @@
 package fr.ecp.IS1220.group5.project.user;
 
-import fr.ecp.IS1220.group5.project.util.Coordinate;
 import fr.ecp.IS1220.group5.project.menu.Item;
 import fr.ecp.IS1220.group5.project.menu.Meal;
 import fr.ecp.IS1220.group5.project.menu.Order;
+import fr.ecp.IS1220.group5.project.util.Coordinate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -51,6 +51,14 @@ public class Restaurant extends User {
 		this.address = address;
 //		retrieveItems();
 //		retrieveMeals();
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public String getType(){
+		return "Restaurant";
 	}
 
 	public void updateMeal(Meal meal){
