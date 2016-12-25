@@ -1,0 +1,12 @@
+registerRestaurant McDonalds mcdonalds 0:0 123456
+login mcdonalds 123456
+disconnect
+quit
+createItem FrenchFries 2
+createItem BigMac 4
+createItem CocaCola 2
+createMeal BestOf
+addDish2Meal FrenchFries BestOf
+addDish2Meal BigMac BestOf
+addDish2Meal CocaCola BestOf
+saveMenu
