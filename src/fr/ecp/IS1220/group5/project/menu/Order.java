@@ -314,6 +314,12 @@ public class Order  extends Observable implements Serializable{
 		return meals;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
+	public boolean getDeliveryStateIsFinished(){return deliveryStateIsFinished;}
+
 	public ArrayList<Food> getFood(){
 
 		ArrayList<Food> food = new ArrayList<>();

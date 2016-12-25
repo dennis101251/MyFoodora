@@ -1,6 +1,5 @@
 package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.GUI.Login;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.fidelity.BasicFidelityCard;
 import fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard;
@@ -133,6 +132,17 @@ public class MyFoodoraSystem {
         else {
             return onlySystem;
         }
+    }
+
+    public void cleanHistory(){
+        users = new Userlist();
+        orders = new ArrayList<>();
+
+        currentUser = null;
+        currentRestaurant = null;
+        currentOrder = null;
+
+        System.out.println("Your system has been reinitialized");
     }
 
     public BigDecimal getMarkup_percentage() {
@@ -1361,6 +1371,44 @@ public class MyFoodoraSystem {
     }
 
     /**
+     * Adapt to the professor's new requirement
+     *
+     * reuse the method delegateOrder2Courier(Order order)
+     */
+
+    public void findDeliverer(int orderID) {
+        if(currentUser instanceof Restaurant){
+            //Find the order instance by the name
+            Order newOrder = null;
+            for (Order order: orders
+                 ) {
+                if (order.getId() == orderID){
+                    newOrder = order;
+                }
+            }
+            //Deal with the order
+            if (newOrder != null){
+                if (!newOrder.getDeliveryState()){
+                    try {
+                        delegateOrder2Courier(newOrder);
+                    } catch (UserNotFoundException e) {
+                        System.out.println("There is no available courier in the system");
+                    }
+                }
+                else {
+                    System.out.println("This order has been delegated");
+                }
+            }
+            else {
+                System.out.println("Didn't find any correspond order: " + orderID);
+            }
+        }
+        else {
+            System.out.println("You have to log in first!");
+        }
+    }
+
+    /**
      * show the available restaurants for the customer
      */
     public void showRestaurant(){
@@ -1671,6 +1719,42 @@ public class MyFoodoraSystem {
         }
         else {
             System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * for the currently logged on myFoodora manager to associate a fidelity card to a user with given name
+     *
+     */
+    public void associateCard(String userName, String cardType) throws UserNotFoundException {
+        if (currentUser instanceof Manager){
+            User user = getUser(userName);
+            if (user instanceof Customer){
+                if (cardType.equalsIgnoreCase("basicFidelityCard") ){
+                    ((Customer) user).setFidelityCard(new BasicFidelityCard());
+                    System.out.println("you have registered << BasicFidelityCard>> ");
+                    updateUser(user);
+                }
+                else if (cardType.equalsIgnoreCase("LotteryFidelityCard")){
+                    ((Customer) user).setFidelityCard(new LotteryFidelityCard());
+                    System.out.println("you have registered << LotteryFidelityCard>> ");
+                    updateUser(user);
+                }
+                else if (cardType.equalsIgnoreCase("PointFidelityCard")){
+                    ((Customer) user).setFidelityCard(new PointFidelityCard());
+                    System.out.println("you have registered << PointFidelityCard>> ");
+                    updateUser(user);
+                }
+                else {
+                    System.out.println("invalid input");
+                }
+            }
+            else {
+                System.out.println(userName + "can't apply this command");
+            }
+        }
+        else {
+            System.out.println("you have to log in first");
         }
     }
 
@@ -2242,5 +2326,6 @@ public class MyFoodoraSystem {
     public void associateAgreement(String username, String agreement){
 
     }
+
 }
 
