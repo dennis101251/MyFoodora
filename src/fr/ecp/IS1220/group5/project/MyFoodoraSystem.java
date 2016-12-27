@@ -607,6 +607,87 @@ public class MyFoodoraSystem {
     }
 
     /**
+     * get the list of registered customer
+     */
+    public void showAllCustomers(){
+        if (currentUser instanceof Manager){
+            ArrayList<Customer> customers = new ArrayList<>();
+            for (User user: users.getUsers()){
+                if (user instanceof Customer){
+                    customers.add((Customer) user);
+                }
+            }
+            if (customers != null){
+                int i = 0;
+                for (Customer customer: customers){
+                    i++;
+                    System.out.println( i + ") " + customer.getName());
+                }
+            }
+            else {
+                System.out.println("There is no customer in the system");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * get the list of registered restaurant
+     */
+    public void showAllRestaurants(){
+        if (currentUser instanceof Manager){
+            ArrayList<Restaurant> restaurants = new ArrayList<>();
+            for (User user: users.getUsers()){
+                if (user instanceof Restaurant){
+                    restaurants.add((Restaurant) user);
+                }
+            }
+            if (restaurants != null){
+                int i = 0;
+                for (Restaurant restaurant: restaurants){
+                    i++;
+                    System.out.println( i + ") " + restaurant.getName());
+                }
+            }
+            else {
+                System.out.println("There is no restaurant in the system");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * get the list of registered courier
+     */
+    public void showAllCouriers(){
+        if (currentUser instanceof Manager){
+            ArrayList<Courier> couriers = new ArrayList<>();
+            for (User user: users.getUsers()){
+                if (user instanceof Courier){
+                    couriers.add((Courier) user);
+                }
+            }
+            if (couriers != null){
+                int i = 0;
+                for (Courier courier: couriers){
+                    i++;
+                    System.out.println( i + ") " + courier.getName());
+                }
+            }
+            else {
+                System.out.println("There is no restaurant in the system");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
      * Enables a manger to disactivate the account of a given user.
      * This user can not login but the account still remains in the system
      *

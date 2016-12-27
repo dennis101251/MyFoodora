@@ -29,7 +29,6 @@ public class CustomerDashboard extends JFrame implements Observer{
     Restaurant[] restaurants;
     Food[] dishes;
 
-
     JPanel mainPanel;
 
     JPanel headerPanel;
@@ -67,7 +66,7 @@ public class CustomerDashboard extends JFrame implements Observer{
         headerPanel = new JPanel();
         headerPanel.setLayout(new GridBagLayout());
 
-        JLabel welcomeLabel = new JLabel("Welcome " + myFoodoraSystem.getCurrentUser().getName() + "!");
+        JLabel welcomeLabel = new JLabel("Welcome " + myFoodoraSystem.getCurrentUser().getName() + " !");
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
@@ -243,7 +242,7 @@ public class CustomerDashboard extends JFrame implements Observer{
 
     public static void main(String[] args) {
         MyFoodoraSystemGUI myFoodoraSystemGUI = MyFoodoraSystemGUI.getInstance();
-        myFoodoraSystemGUI.loginUser("MM","501");
+        myFoodoraSystemGUI.loginUser("WDY","501");
         CustomerDashboard dashboard = new CustomerDashboard();
 
     }

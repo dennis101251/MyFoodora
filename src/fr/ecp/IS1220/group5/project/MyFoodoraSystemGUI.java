@@ -70,7 +70,7 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
                         else {
                             //Invalid password
                             System.out.println("Invalid password");
-                            JOptionPane.showMessageDialog(new JFrame(),"Invalid password","Login",JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(new JFrame(),"Invalid password","Login",JOptionPane.ERROR_MESSAGE);
                         }
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
@@ -102,7 +102,7 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
      * @return an array of restaurants
      */
     public Restaurant[] getRestaurants(){
-        if (currentUser instanceof Customer){
+        if (currentUser instanceof Customer || currentUser instanceof Manager){
             ArrayList<Restaurant> allReastaurant= new ArrayList<>();
             for (User user: users.getUsers()
                     ) {
@@ -115,6 +115,38 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         }
 
         return new Restaurant[0];
+    }
+
+    public Customer[] getCustomers(){
+        if (currentUser instanceof Manager){
+            ArrayList<Customer> allCustomers= new ArrayList<>();
+            for (User user: users.getUsers()
+                    ) {
+                if (user instanceof Customer){
+                    allCustomers.add((Customer) user);
+                }
+            }
+
+            return allCustomers.toArray(new Customer[allCustomers.size()]);
+        }
+
+        return new Customer[0];
+    }
+
+    public Courier[] getCouriers(){
+        if (currentUser instanceof Manager){
+            ArrayList<Courier> allCouriers= new ArrayList<>();
+            for (User user: users.getUsers()
+                    ) {
+                if (user instanceof Courier){
+                    allCouriers.add((Courier) user);
+                }
+            }
+
+            return allCouriers.toArray(new Courier[allCouriers.size()]);
+        }
+
+        return new Courier[0];
     }
 
     public String[] getRestaurantsNames(){
@@ -135,7 +167,6 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
 
         }
     }
-
 
     public void creatDashboard(User user){
         if (user instanceof Customer){

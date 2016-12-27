@@ -1,7 +1,19 @@
 registerRestaurant McDonalds mcdonalds 0:0 123456
-login mcdonalds 123456
+registerRestaurant KFC kfc 10:0 123456
+registerRestaurant BurgerKing bk 0:20 123456
+registerCustomer Marco Merlotti MM 123456 30:30 marco.merlotti@student.ecp.fr 0611041568 
+registerCustomer Danyi Wu WDY 501 30:20 danyi.wu@student.ecp.fr 0650102722
+registerCustomer Lin Yu ly 873433 10:10 yu.lin@student.ecp.fr 0611041568
+registerCourier Steve Jobs sj 123456 10:10 87654562
+registerCourier Bill Gates BG 123456 20:28 87654562
+registerCourier Zemin Jiang jz 123456 8:9 87654562
+registerManager Zexi DENG dennis 101251
+login dennis 101251
+showAllCustomers
+showAllRestaurants
+showAllCouriers
 disconnect
-quit
+login mcdonalds 123456
 createItem FrenchFries 2
 createItem BigMac 4
 createItem CocaCola 2
