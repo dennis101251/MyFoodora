@@ -269,6 +269,19 @@ public class MyFoodoraSystem {
     }
 
     /**
+     * get the number of all clients(Customer, Restaurant, Courier)
+     */
+    public int getNumOfAllCLients(){
+        int num = 0;
+        for (User user: users.getUsers()){
+            if (!(user instanceof Manager)){
+                num++;
+            }
+        }
+        return num;
+    }
+
+    /**
      * Retrieves the stored orders from a .ser file and updates the orders variable
      *
      * @see MyFoodoraSystem#orders

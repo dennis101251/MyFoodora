@@ -10,6 +10,8 @@ import java.util.Observable;
  * <b>The class that stores the list of registerd users.</b>
  */
 public class Userlist extends Observable{
+
+
     private ArrayList<User> users =  new ArrayList<>();
 
     //Editing my own
