@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
  */
 public class CustomerInfoPanel extends JPanel {
     private Customer customer;
-    JPanel headerPanel;
     JPanel infoPanel;
     JPanel leftPanel;
     JPanel rightPanel;
@@ -30,6 +29,8 @@ public class CustomerInfoPanel extends JPanel {
     JButton status;
 
     MyFoodoraSystemGUI myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
+
+    private UserInfoPanel userInfoPanel;
 
     public CustomerInfoPanel(){
         super();
@@ -81,14 +82,22 @@ public class CustomerInfoPanel extends JPanel {
         JPanel statusPanel = new JPanel();
         statusPanel.setLayout(new GridLayout(1,2));
         statusPanel.add(new JLabel("Account Status:"));
-        status = new JButton(Boolean.toString(customer.getStatus()));
+        String buttonText;
+        if (customer.getStatus()){
+            buttonText = "Active";
+        }
+        else {
+            buttonText = "Disactive";
+        }
+        status = new JButton(buttonText);
         status.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (customer.getStatus()){
                     try {
                         myFoodoraSystem.disactivateUser(customer.getUsername());
-                        status.setText(Boolean.toString(customer.getStatus()));
+                        status.setText("Disactive");
+                        notifyObserver();
                     } catch (UserNotFoundException e1) {
                         e1.printStackTrace();
                     }
@@ -96,7 +105,8 @@ public class CustomerInfoPanel extends JPanel {
                 else {
                     try {
                         myFoodoraSystem.activateUser(customer.getUsername());
-                        status.setText(Boolean.toString(customer.getStatus()));
+                        status.setText("Active");
+                        notifyObserver();
                     } catch (UserNotFoundException e1) {
                         e1.printStackTrace();
                     }
@@ -106,6 +116,7 @@ public class CustomerInfoPanel extends JPanel {
 
         statusPanel.add(status);
         rightPanel.add(statusPanel);
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
 
         c.gridx = 1;
         c.gridy = 0;
@@ -115,12 +126,18 @@ public class CustomerInfoPanel extends JPanel {
         infoPanel.add(rightPanel,c);
 
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
-        c.weighty = 1;
+        c.weighty = 0;
         this.add(infoPanel,c);
     }
 
+    public synchronized void addObserver(UserInfoPanel userInfoPanel){
+        this.userInfoPanel = userInfoPanel;
+    }
 
+    public void notifyObserver(){
+        userInfoPanel.updateInfo();
+    }
 }

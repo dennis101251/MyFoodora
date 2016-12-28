@@ -2351,9 +2351,10 @@ public class MyFoodoraSystem {
                 updateOrder(order);
 
                 ((Courier) currentUser).addDeliveredOrdersCounter();
-                ((Courier) currentUser).changePosition(order.getRestaurant().getAddress());
+                ((Courier) currentUser).changePosition(order.getCustomer().getAddress());
                 ((Courier) currentUser).addOrder2History(order);
                 ((Courier) currentUser).removeNewOrder();
+                ((Courier) currentUser).addDeliveryIncome(order.getDelivery_cost());
                 updateUser(currentUser);
                 System.out.println("Order" + order.getId() + " has been accepted by "+ currentUser.getName());
             }

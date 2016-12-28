@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by dennis101251 on 2016/12/27.
  */
-public class userTabPanel extends JPanel {
+public class UserTabPanel extends JPanel{
     MyFoodoraSystemGUI myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
     Customer[] customers;
     Restaurant[] restaurants;
@@ -33,10 +33,10 @@ public class userTabPanel extends JPanel {
     DefaultListModel<String> customersNames;
     DefaultListModel<String> restaurantsName;
     DefaultListModel<String> couriersName;
-    UserInfoPanal userInfoPanal;
+    UserInfoPanel userInfoPanal;
     int[] size = {5,20,200};
 
-    public userTabPanel(){
+    public UserTabPanel(){
         super();
         this.setLayout(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
@@ -62,6 +62,7 @@ public class userTabPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
         c.weighty = 0.1;
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
         this.add(headerPanel,c);
 
         workingPanel = new JPanel();
@@ -203,7 +204,8 @@ public class userTabPanel extends JPanel {
         c.weighty = 1;
         this.add(workingPanel,c);
 
-        userInfoPanal = new UserInfoPanal();
+        userInfoPanal = new UserInfoPanel();
+        userInfoPanal.addObserver(this);
         c.gridx = 0;
         c.gridy = 2;
         c.fill = GridBagConstraints.BOTH;
@@ -224,5 +226,11 @@ public class userTabPanel extends JPanel {
             }
         }
         return nameModel;
+    }
+
+    public void updateInfo(){
+        customersList.setModel(listUser(customers));
+        restaurantList.setModel(listUser(restaurants));
+        courierList.setModel(listUser(couriers));
     }
 }

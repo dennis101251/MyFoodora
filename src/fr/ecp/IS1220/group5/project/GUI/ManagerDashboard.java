@@ -1,6 +1,6 @@
 package fr.ecp.IS1220.group5.project.GUI;
 
-import fr.ecp.IS1220.group5.project.GUI.managerDashboard.userTabPanel;
+import fr.ecp.IS1220.group5.project.GUI.managerDashboard.UserTabPanel;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 
 import javax.swing.*;
@@ -90,7 +90,7 @@ public class ManagerDashboard extends JFrame{
 
         tabbedPane = new JTabbedPane();
 
-        userTabPanel = new userTabPanel();
+        userTabPanel = new UserTabPanel();
         userTabPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
         financialTabPanel = new JPanel();
         deliveryTabPanel = new JPanel();

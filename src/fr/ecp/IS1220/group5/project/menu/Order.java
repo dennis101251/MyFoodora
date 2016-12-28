@@ -137,7 +137,6 @@ public class Order  extends Observable implements Serializable{
 		this.restaurant = restaurant;
 	}
 
-
 	/**
 	 * Return the total price of the order (includign markup percentage and fees)
 	 * @return the total price of the order (includign markup percentage and fees)
@@ -395,5 +394,9 @@ public class Order  extends Observable implements Serializable{
 
 		updateTotalPrice();
 
+	}
+
+	public Customer getCustomer() {
+		return customer;
 	}
 }
