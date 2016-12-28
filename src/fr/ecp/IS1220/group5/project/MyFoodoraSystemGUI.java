@@ -3,6 +3,8 @@ package fr.ecp.IS1220.group5.project;
 import fr.ecp.IS1220.group5.project.GUI.*;
 import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
 import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
+import fr.ecp.IS1220.group5.project.exception.IncompatibleFoodTypeException;
+import fr.ecp.IS1220.group5.project.exception.TooManyItemsException;
 import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.*;
 import fr.ecp.IS1220.group5.project.util.PasswordHash;
@@ -270,14 +272,14 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
 
     }
 
-    public String[] getItems(ItemCategory itemCategory, ItemType itemType) {
+    public String[] getItems(ItemCategory itemCategory, FoodType foodType) {
 
        ArrayList<Item> items = ((Restaurant) currentUser).getItems();
        ArrayList<String> itemsOfCategoryAndType = new ArrayList<>();
 
        for (Item item : items){
 
-           if ((item.getItemCategory() == itemCategory) && (item.getItemType() == itemType)){
+           if ((item.getItemCategory() == itemCategory) && (item.getFoodType() == foodType)){
 
                itemsOfCategoryAndType.add(item.getName());
 
@@ -289,7 +291,7 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
 
     }
 
-    public void createItemGUI(String itemName, BigDecimal price, ItemCategory itemCategory, ItemType itemType) throws EmptyNameException, DuplicateNameException {
+    public void createItemGUI(String itemName, BigDecimal price, ItemCategory itemCategory, FoodType foodType) throws EmptyNameException, DuplicateNameException {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
@@ -300,7 +302,7 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
 
             } else {
 
-                Item item = new Item(itemName, price, itemCategory, itemType);
+                Item item = new Item(itemName, price, itemCategory, foodType);
                 restaurant.addItem(item);
 
                 System.out.println(item + " was successfully created!");
@@ -315,7 +317,7 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         }
     }
 
-    public void createMealGUI(String mealName, MealCategory mealCategory, MealType mealType) throws DuplicateNameException, EmptyNameException {
+    public void createMealGUI(String mealName, MealCategory mealCategory, FoodType foodType) throws DuplicateNameException, EmptyNameException {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
@@ -328,7 +330,7 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
 
                 Meal meal = null;
 
-                meal = new Meal(mealName, (Restaurant) currentUser, mealCategory, mealType);
+                meal = new Meal(mealName, (Restaurant) currentUser, mealCategory, foodType);
 
                 restaurant.addMeal(meal);
 
@@ -340,6 +342,21 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         } else {
 
             System.out.println("Your restaurant must be logged in to create a meal.");
+
+        }
+    }
+
+    public void addDish2MealGUI(String itemName, String mealName) throws IncompatibleFoodTypeException, TooManyItemsException {
+        if (currentUser instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) currentUser;
+            Meal meal = restaurant.getMeal(mealName);
+            Item item = restaurant.getItem(itemName);
+            meal.addItem(item);
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to add a dish to a meal.");
 
         }
     }

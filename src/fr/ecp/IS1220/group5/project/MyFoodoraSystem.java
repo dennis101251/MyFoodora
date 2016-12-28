@@ -1,7 +1,8 @@
 package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
 import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
+import fr.ecp.IS1220.group5.project.exception.IncompatibleFoodTypeException;
+import fr.ecp.IS1220.group5.project.exception.TooManyItemsException;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.fidelity.BasicFidelityCard;
 import fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard;
@@ -2018,7 +2019,7 @@ public class MyFoodoraSystem {
             } else {
                 Item item = null;
                 try {
-                    item = new Item(itemName, price, ItemCategory.MainDish, ItemType.Standard);
+                    item = new Item(itemName, price, ItemCategory.MainDish, FoodType.Standard);
                 } catch (EmptyNameException e) {
                     System.out.println("The item's name must not be empty.");
                 }
@@ -2035,7 +2036,7 @@ public class MyFoodoraSystem {
         }
     }
 
-    public void createItem(String itemName, BigDecimal price, ItemCategory itemCategory, ItemType itemType)  {
+    public void createItem(String itemName, BigDecimal price, ItemCategory itemCategory, FoodType foodType)  {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
@@ -2048,7 +2049,7 @@ public class MyFoodoraSystem {
 
                 Item item = null;
                 try {
-                    item = new Item(itemName, price, itemCategory, itemType);
+                    item = new Item(itemName, price, itemCategory, foodType);
                 } catch (EmptyNameException e) {
                     System.out.println("The item's name must not be empty.");
                 }
@@ -2097,7 +2098,7 @@ public class MyFoodoraSystem {
         }
     }
 
-    public void createMeal(String mealName, MealCategory mealCategory, MealType mealType) {
+    public void createMeal(String mealName, MealCategory mealCategory, FoodType foodType) {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
@@ -2110,7 +2111,7 @@ public class MyFoodoraSystem {
 
                 Meal meal = null;
                 try {
-                    meal = new Meal(mealName, (Restaurant) currentUser, mealCategory, mealType);
+                    meal = new Meal(mealName, (Restaurant) currentUser, mealCategory, foodType);
                 } catch (EmptyNameException e) {
 
                     System.out.println("The item's name must not be empty.");
@@ -2144,9 +2145,17 @@ public class MyFoodoraSystem {
             Restaurant restaurant = (Restaurant) currentUser;
             Meal meal = restaurant.getMeal(mealName);
             Item item = restaurant.getItem(itemName);
-            meal.addItem(item);
+            try {
+                meal.addItem(item);
+                System.out.println(item + " was successfully added to " + meal + "!");
 
-            System.out.println(item + " was successfully added to " + meal + "!");
+            } catch (IncompatibleFoodTypeException e) {
+                System.out.println("The category of this item isn't compatible with the meal's one.");
+            } catch (TooManyItemsException e) {
+                System.out.println("There is already an item of this type OR there are too many items in this meal.");
+            }
+
+
 
         } else {
 

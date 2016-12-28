@@ -18,9 +18,9 @@ public class MealTest {
 
         Restaurant restaurant = new Restaurant("Pizzeria", "pizzeria", "123456", new Coordinate(1,3));
 
-        Item pizza = new Item("pizza", new BigDecimal(5), ItemCategory.MainDish, ItemType.Standard);
+        Item pizza = new Item("pizza", new BigDecimal(5), ItemCategory.MainDish, FoodType.Standard);
 
-        Meal meal = new Meal("meal", restaurant, MealCategory.HalfMeals, MealType.Standard);
+        Meal meal = new Meal("meal", restaurant, MealCategory.HalfMeals, FoodType.Standard);
         meal.addItem(pizza);
 
         assertTrue(meal.getPrice().equals(new BigDecimal("4.75")));

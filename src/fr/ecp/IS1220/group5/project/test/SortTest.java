@@ -1,6 +1,5 @@
 package fr.ecp.IS1220.group5.project.test;
 
-import fr.ecp.IS1220.group5.project.GUI.Login;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
@@ -43,9 +42,9 @@ public class SortTest {
 
         Item item1 = null;
         try {
-            item1 = new Item("Onion",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-            Item item2 = new Item ("Chicken",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-            Item item3 = new Item ("Burger",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+            item1 = new Item("Onion",new BigDecimal(1), ItemCategory.Dessert, FoodType.Standard);
+            Item item2 = new Item ("Chicken",new BigDecimal(1), ItemCategory.Dessert, FoodType.Standard);
+            Item item3 = new Item ("Burger",new BigDecimal(1), ItemCategory.Dessert, FoodType.Standard);
 
             order1.addItem(item1);
             order1.addItem(item1);

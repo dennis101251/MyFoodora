@@ -2,6 +2,8 @@ package fr.ecp.IS1220.group5.project.test;
 
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
+import fr.ecp.IS1220.group5.project.exception.IncompatibleFoodTypeException;
+import fr.ecp.IS1220.group5.project.exception.TooManyItemsException;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.Courier;
@@ -319,18 +321,24 @@ public class MyFoodoraSystemTest {
 
         Item pizza = null;
         try {
-            pizza = new Item("pizza", new BigDecimal(5), ItemCategory.MainDish, ItemType.Standard);
+            pizza = new Item("pizza", new BigDecimal(5), ItemCategory.MainDish, FoodType.Standard);
         } catch (EmptyNameException e) {
             e.printStackTrace();
         }
 
         Meal meal = null;
         try {
-            meal = new Meal("meal", restaurant, MealCategory.HalfMeals, MealType.Standard);
+            meal = new Meal("meal", restaurant, MealCategory.HalfMeals, FoodType.Standard);
         } catch (EmptyNameException e) {
             e.printStackTrace();
         }
-        meal.addItem(pizza);
+        try {
+            meal.addItem(pizza);
+        } catch (IncompatibleFoodTypeException e) {
+            e.printStackTrace();
+        } catch (TooManyItemsException e) {
+            e.printStackTrace();
+        }
 
         myFoodoraSystem.registerRestaurant("Pizzeria","pizzeria",new Coordinate(1,3),"123456");
         myFoodoraSystem.loginUser("pizzeria", "123456");
@@ -407,9 +415,9 @@ public class MyFoodoraSystemTest {
 
         Item item1 = null;
         try {
-            item1 = new Item("Onion",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-            Item item2 = new Item ("Chicken",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-            Item item3 = new Item ("Burger",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+            item1 = new Item("Onion",new BigDecimal(1), ItemCategory.Dessert, FoodType.Standard);
+            Item item2 = new Item ("Chicken",new BigDecimal(1), ItemCategory.Dessert, FoodType.Standard);
+            Item item3 = new Item ("Burger",new BigDecimal(1), ItemCategory.Dessert, FoodType.Standard);
             order1.addItem(item1);
             order1.addItem(item1);
             order1.addItem(item2);

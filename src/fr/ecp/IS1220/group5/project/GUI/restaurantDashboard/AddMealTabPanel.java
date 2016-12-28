@@ -1,18 +1,17 @@
 package fr.ecp.IS1220.group5.project.GUI.restaurantDashboard;
 
 import fr.ecp.IS1220.group5.project.GUI.RestaurantDashboard;
-import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
 import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
+import fr.ecp.IS1220.group5.project.exception.IncompatibleFoodTypeException;
+import fr.ecp.IS1220.group5.project.exception.TooManyItemsException;
 import fr.ecp.IS1220.group5.project.menu.*;
-import fr.ecp.IS1220.group5.project.util.Money;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 
 /**
  * Created by alexandre_carlier on 27/12/2016.
@@ -31,7 +30,7 @@ public class AddMealTabPanel extends JPanel {
     JRadioButton starterAndMainDishButton;
     JRadioButton mainDishAndDessertButton;
 
-    private ItemType itemType = ItemType.Standard;
+    private FoodType foodType = FoodType.Standard;
     JRadioButton standardButton;
     JRadioButton vegetarianButton;
     JRadioButton glutenFreeButton;
@@ -152,7 +151,7 @@ public class AddMealTabPanel extends JPanel {
         standardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddMealTabPanel.this.itemType = ItemType.Standard;
+                AddMealTabPanel.this.foodType = FoodType.Standard;
                 update();
             }
         });
@@ -162,7 +161,7 @@ public class AddMealTabPanel extends JPanel {
         vegetarianButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddMealTabPanel.this.itemType = ItemType.Vegetarian;
+                AddMealTabPanel.this.foodType = FoodType.Vegetarian;
                 update();
             }
         });
@@ -171,7 +170,7 @@ public class AddMealTabPanel extends JPanel {
         glutenFreeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddMealTabPanel.this.itemType = ItemType.GlutenFree;
+                AddMealTabPanel.this.foodType = FoodType.GlutenFree;
                 update();
             }
         });
@@ -192,7 +191,7 @@ public class AddMealTabPanel extends JPanel {
 
 
         //Starter
-        starters = myFoodoraSystem.getItems(ItemCategory.Starter, itemType);
+        starters = myFoodoraSystem.getItems(ItemCategory.Starter, foodType);
 
         starterPanel = new JPanel();
         starterPanel.setLayout(new BoxLayout(starterPanel,BoxLayout.X_AXIS));
@@ -205,7 +204,7 @@ public class AddMealTabPanel extends JPanel {
         this.add(starterPanel);
 
         //Main Dish
-        mainDishes = myFoodoraSystem.getItems(ItemCategory.MainDish, itemType);
+        mainDishes = myFoodoraSystem.getItems(ItemCategory.MainDish, foodType);
 
         mainDishPanel = new JPanel();
         mainDishPanel.setLayout(new BoxLayout(mainDishPanel,BoxLayout.X_AXIS));
@@ -218,7 +217,7 @@ public class AddMealTabPanel extends JPanel {
         this.add(mainDishPanel);
 
         //Dessert
-        desserts = myFoodoraSystem.getItems(ItemCategory.Dessert, itemType);
+        desserts = myFoodoraSystem.getItems(ItemCategory.Dessert, foodType);
 
         dessertPanel = new JPanel();
         dessertPanel.setLayout(new BoxLayout(dessertPanel,BoxLayout.X_AXIS));
@@ -291,13 +290,13 @@ public class AddMealTabPanel extends JPanel {
                 mealCategory = MealCategory.FullMeals;
             }
 
-        MealType mealType;
+        FoodType foodType;
             if (standardButton.isSelected()){
-                mealType = MealType.Standard;
+                foodType = FoodType.Standard;
             } else if (vegetarianButton.isSelected()){
-                mealType = MealType.Vegetarian;
+                foodType = FoodType.Vegetarian;
             } else {
-                mealType = MealType.GlutenFree;
+                foodType = FoodType.GlutenFree;
             }
 
         String starter = (startersComboBox.getSelectedIndex() >= 0) ? starters[startersComboBox.getSelectedIndex()] : null;
@@ -312,10 +311,10 @@ public class AddMealTabPanel extends JPanel {
                     JOptionPane.showMessageDialog(new JFrame(),"You must choose a starter, a main dish and a dessert.","Error",JOptionPane.ERROR_MESSAGE);
                 } else {
 
-                    myFoodoraSystem.createMealGUI(mealName, mealCategory, mealType);
-                    myFoodoraSystem.addDish2Meal(starter, mealName);
-                    myFoodoraSystem.addDish2Meal(mainDish, mealName);
-                    myFoodoraSystem.addDish2Meal(dessert, mealName);
+                    myFoodoraSystem.createMealGUI(mealName, mealCategory, foodType);
+                    myFoodoraSystem.addDish2MealGUI(starter, mealName);
+                    myFoodoraSystem.addDish2MealGUI(mainDish, mealName);
+                    myFoodoraSystem.addDish2MealGUI(dessert, mealName);
                     success();
                 }
             } else { //Meal category = half meal
@@ -325,9 +324,9 @@ public class AddMealTabPanel extends JPanel {
                         System.out.println("Error: You must choose a starter and a main dish.");
                         JOptionPane.showMessageDialog(new JFrame(),"You must choose a starter and a main dish.","Error",JOptionPane.ERROR_MESSAGE);
                     } else {
-                        myFoodoraSystem.createMealGUI(mealName, mealCategory, mealType);
-                        myFoodoraSystem.addDish2Meal(starter, mealName);
-                        myFoodoraSystem.addDish2Meal(mainDish, mealName);
+                        myFoodoraSystem.createMealGUI(mealName, mealCategory, foodType);
+                        myFoodoraSystem.addDish2MealGUI(starter, mealName);
+                        myFoodoraSystem.addDish2MealGUI(mainDish, mealName);
                         success();
 
 
@@ -339,9 +338,9 @@ public class AddMealTabPanel extends JPanel {
                         System.out.println("Error: You must choose a main dish and a dessert.");
                         JOptionPane.showMessageDialog(new JFrame(),"You must choose a main dish and a dessert.","Error",JOptionPane.ERROR_MESSAGE);
                     } else {
-                        myFoodoraSystem.createMealGUI(mealName, mealCategory, mealType);
-                        myFoodoraSystem.addDish2Meal(mainDish, mealName);
-                        myFoodoraSystem.addDish2Meal(dessert, mealName);
+                        myFoodoraSystem.createMealGUI(mealName, mealCategory, foodType);
+                        myFoodoraSystem.addDish2MealGUI(mainDish, mealName);
+                        myFoodoraSystem.addDish2MealGUI(dessert, mealName);
                         success();
                     }
 
@@ -351,6 +350,10 @@ public class AddMealTabPanel extends JPanel {
             JOptionPane.showMessageDialog(new JFrame(),"The meal's name must not be empty.","Error", JOptionPane.ERROR_MESSAGE);
         } catch (DuplicateNameException e) {
             JOptionPane.showMessageDialog(new JFrame(),"This meal's name already exists.","Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IncompatibleFoodTypeException e) {
+            JOptionPane.showMessageDialog(new JFrame(),"The category of this item isn't compatible with the meal's one.","Error", JOptionPane.ERROR_MESSAGE);
+        } catch (TooManyItemsException e) {
+            JOptionPane.showMessageDialog(new JFrame(),"There is already an item of this type OR there are too many items in this meal.","Error", JOptionPane.ERROR_MESSAGE);
         }
 
 
@@ -371,9 +374,9 @@ public class AddMealTabPanel extends JPanel {
 
     public void update() {
 
-        starters = myFoodoraSystem.getItems(ItemCategory.Starter, itemType);
-        mainDishes = myFoodoraSystem.getItems(ItemCategory.MainDish, itemType);
-        desserts = myFoodoraSystem.getItems(ItemCategory.Dessert, itemType);
+        starters = myFoodoraSystem.getItems(ItemCategory.Starter, foodType);
+        mainDishes = myFoodoraSystem.getItems(ItemCategory.MainDish, foodType);
+        desserts = myFoodoraSystem.getItems(ItemCategory.Dessert, foodType);
 
         startersComboBox.setModel(new DefaultComboBoxModel<>(starters));
         mainDishesComboBox.setModel(new DefaultComboBoxModel<>(mainDishes));

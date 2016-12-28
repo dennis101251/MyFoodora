@@ -1,14 +1,11 @@
 package fr.ecp.IS1220.group5.project.GUI.restaurantDashboard;
 
 import fr.ecp.IS1220.group5.project.GUI.RestaurantDashboard;
-import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
 import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
-import fr.ecp.IS1220.group5.project.menu.Item;
+import fr.ecp.IS1220.group5.project.menu.FoodType;
 import fr.ecp.IS1220.group5.project.menu.ItemCategory;
-import fr.ecp.IS1220.group5.project.menu.ItemType;
-import fr.ecp.IS1220.group5.project.menu.MealType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -154,18 +151,18 @@ public class AddItemTabPanel extends JPanel implements ActionListener {
             }
 
 
-        ItemType itemType;
+        FoodType foodType;
             if (standardButton.isSelected()){
-                itemType = ItemType.Standard;
+                foodType = FoodType.Standard;
             } else if (vegetarianButton.isSelected()){
-                itemType = ItemType.Vegetarian;
+                foodType = FoodType.Vegetarian;
             } else { //glutenFreeButton.isSelected()
-                itemType = ItemType.GlutenFree;
+                foodType = FoodType.GlutenFree;
             }
 
         try {
 
-            myFoodoraSystem.createItemGUI(nameTextField.getText(), new BigDecimal(priceTextField.getText()), itemCategory, itemType);
+            myFoodoraSystem.createItemGUI(nameTextField.getText(), new BigDecimal(priceTextField.getText()), itemCategory, foodType);
             myFoodoraSystem.saveMenu();
             restaurantDashboard.update();
             nameTextField.setText("");

@@ -34,18 +34,18 @@ public class Item  implements Serializable, Food {
 	/**
 	 * the item type of this item.
 	 *
-	 * @see ItemType
+	 * @see FoodType
 	 */
-	private ItemType itemType;
+	private FoodType foodType;
 
 	/**
 	 * The constructor of this item.
 	 * @param name the name of this item.
 	 * @param price the price of this item.
 	 * @param itemCategory the item category of this item.
-	 * @param itemType the item type of this item.
+	 * @param foodType the item type of this item.
 	 */
-	public Item(String name, BigDecimal price, ItemCategory itemCategory, ItemType itemType) throws EmptyNameException {
+	public Item(String name, BigDecimal price, ItemCategory itemCategory, FoodType foodType) throws EmptyNameException {
 		this.itemCategory = itemCategory;
 		this.price = price;
 
@@ -55,7 +55,7 @@ public class Item  implements Serializable, Food {
 			this.name = name;
 		}
 
-		this.itemType = itemType;
+		this.foodType = foodType;
 	}
 
 	/**
@@ -111,16 +111,16 @@ public class Item  implements Serializable, Food {
 	 * Returns the item type of this item.
 	 * @return the item type of this item.
 	 */
-	public ItemType getItemType() {
-		return itemType;
+	public FoodType getFoodType() {
+		return foodType;
 	}
 
 	/**
 	 * Sets the item type of this item.
-	 * @param itemType the new item type of this item.
+	 * @param foodType the new item type of this item.
 	 */
-	public void setItemType(ItemType itemType) {
-		this.itemType = itemType;
+	public void setFoodType(FoodType foodType) {
+		this.foodType = foodType;
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class Item  implements Serializable, Food {
 				"name='" + name + '\'' +
 				", price=" + price +
 				", itemCategory=" + itemCategory +
-				", itemType=" + itemType +
+				", foodType=" + foodType +
 				'}';
 	}
 }
