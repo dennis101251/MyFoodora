@@ -140,7 +140,6 @@ public class Login extends JFrame implements ActionListener{
             System.out.println("register");
             Login.this.dispose();
             Register register = new Register();
-//            Register2 register = new Register2();
         }
     }
 
