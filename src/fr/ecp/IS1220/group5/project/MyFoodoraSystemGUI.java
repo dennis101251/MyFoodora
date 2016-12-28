@@ -1,11 +1,14 @@
 package fr.ecp.IS1220.group5.project;
 
 import fr.ecp.IS1220.group5.project.GUI.*;
+import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.*;
 import fr.ecp.IS1220.group5.project.util.PasswordHash;
 
 import javax.swing.*;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
@@ -284,5 +287,60 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
 
        return itemsOfCategoryAndType.toArray(new String[itemsOfCategoryAndType.size()]);
 
+    }
+
+    public void createItemGUI(String itemName, BigDecimal price, ItemCategory itemCategory, ItemType itemType) throws EmptyNameException, DuplicateNameException {
+        if (currentUser instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) currentUser;
+
+            if (restaurant.getItem(itemName) != null){ //This item already exists
+
+                throw new DuplicateNameException();
+
+            } else {
+
+                Item item = new Item(itemName, price, itemCategory, itemType);
+                restaurant.addItem(item);
+
+                System.out.println(item + " was successfully created!");
+
+            }
+
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a item.");
+
+        }
+    }
+
+    public void createMealGUI(String mealName, MealCategory mealCategory, MealType mealType) throws DuplicateNameException, EmptyNameException {
+        if (currentUser instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) currentUser;
+
+            if (restaurant.getMeal(mealName) != null){ //This meal already exists
+
+                throw new DuplicateNameException();
+
+            } else {
+
+                Meal meal = null;
+
+                meal = new Meal(mealName, (Restaurant) currentUser, mealCategory, mealType);
+
+                restaurant.addMeal(meal);
+
+                System.out.println(meal + " was successfully created!");
+
+            }
+
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a meal.");
+
+        }
     }
 }

@@ -2,6 +2,7 @@ package fr.ecp.IS1220.group5.project.test;
 
 import fr.ecp.IS1220.group5.project.GUI.Login;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.Customer;
@@ -40,15 +41,23 @@ public class SortTest {
         order2.addMeal(meal2);
         order2.addMeal(meal2);
 
-        Item item1 = new Item ("Onion",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-        Item item2 = new Item ("Chicken",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-        Item item3 = new Item ("Burger",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-        order1.addItem(item1);
-        order1.addItem(item1);
-        order1.addItem(item2);
-        order1.addItem(item3);
-        order2.addItem(item3);
-        order2.addItem(item3);
+        Item item1 = null;
+        try {
+            item1 = new Item("Onion",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+            Item item2 = new Item ("Chicken",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+            Item item3 = new Item ("Burger",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+
+            order1.addItem(item1);
+            order1.addItem(item1);
+            order1.addItem(item2);
+            order1.addItem(item3);
+            order2.addItem(item3);
+            order2.addItem(item3);
+
+        } catch (EmptyNameException e) {
+            e.printStackTrace();
+        }
+
 
 
         ArrayList<Order> orders = new ArrayList<>();

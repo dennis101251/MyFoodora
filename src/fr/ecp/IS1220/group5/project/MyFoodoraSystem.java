@@ -1,5 +1,7 @@
 package fr.ecp.IS1220.group5.project;
 
+import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.fidelity.BasicFidelityCard;
 import fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard;
@@ -2004,14 +2006,27 @@ public class MyFoodoraSystem {
      * @param itemName
      * @param price
      */
-    public void createItem(String itemName, BigDecimal price){
+    public void createItem(String itemName, BigDecimal price) {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
-            Item item = new Item(itemName, price, ItemCategory.MainDish, ItemType.Standard);
-            restaurant.addItem(item);
 
-            System.out.println(item + " was successfully created!");
+            if (restaurant.getItem(itemName) != null){ //This item already exists
+
+                System.out.println("Error: this item's name already exists.");
+
+            } else {
+                Item item = null;
+                try {
+                    item = new Item(itemName, price, ItemCategory.MainDish, ItemType.Standard);
+                } catch (EmptyNameException e) {
+                    System.out.println("The item's name must not be empty.");
+                }
+                restaurant.addItem(item);
+
+                System.out.println(item + " was successfully created!");
+            }
+
 
         } else {
 
@@ -2020,14 +2035,29 @@ public class MyFoodoraSystem {
         }
     }
 
-    public void createItem(String itemName, BigDecimal price, ItemCategory itemCategory, ItemType itemType){
+    public void createItem(String itemName, BigDecimal price, ItemCategory itemCategory, ItemType itemType)  {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
-            Item item = new Item(itemName, price, itemCategory, itemType);
-            restaurant.addItem(item);
 
-            System.out.println(item + " was successfully created!");
+            if (restaurant.getItem(itemName) != null){ //This item already exists
+
+                System.out.println("Error: this item's name already exists.");
+
+            } else {
+
+                Item item = null;
+                try {
+                    item = new Item(itemName, price, itemCategory, itemType);
+                } catch (EmptyNameException e) {
+                    System.out.println("The item's name must not be empty.");
+                }
+                restaurant.addItem(item);
+
+                System.out.println(item + " was successfully created!");
+
+            }
+
 
         } else {
 
@@ -2047,10 +2077,18 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
-            Meal meal = new Meal(mealName, (Restaurant) currentUser);
-            restaurant.addMeal(meal);
 
-            System.out.println(meal + " was successfully created!");
+            if (restaurant.getMeal(mealName) != null){ //This meal already exists
+
+                System.out.println("Error: this meal's name already exists.");
+
+            } else {
+
+                Meal meal = new Meal(mealName, (Restaurant) currentUser);
+                restaurant.addMeal(meal);
+
+                System.out.println(meal + " was successfully created!");
+            }
 
         } else {
 
@@ -2063,10 +2101,27 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Restaurant){
 
             Restaurant restaurant = (Restaurant) currentUser;
-            Meal meal = new Meal(mealName, (Restaurant) currentUser, mealCategory, mealType);
-            restaurant.addMeal(meal);
 
-            System.out.println(meal + " was successfully created!");
+            if (restaurant.getMeal(mealName) != null){ //This meal already exists
+
+                System.out.println("Error: this meal's name already exists.");
+
+            } else {
+
+                Meal meal = null;
+                try {
+                    meal = new Meal(mealName, (Restaurant) currentUser, mealCategory, mealType);
+                } catch (EmptyNameException e) {
+
+                    System.out.println("The item's name must not be empty.");
+
+                }
+                restaurant.addMeal(meal);
+
+                System.out.println(meal + " was successfully created!");
+
+            }
+
 
         } else {
 

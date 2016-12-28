@@ -3,6 +3,8 @@ package fr.ecp.IS1220.group5.project.GUI.restaurantDashboard;
 import fr.ecp.IS1220.group5.project.GUI.RestaurantDashboard;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
+import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.util.Money;
 
@@ -302,42 +304,53 @@ public class AddMealTabPanel extends JPanel {
         String mainDish = (mainDishesComboBox.getSelectedIndex() >= 0) ? mainDishes[mainDishesComboBox.getSelectedIndex()] : null;
         String dessert = (dessertsComboBox.getSelectedIndex()>= 0) ? desserts[dessertsComboBox.getSelectedIndex()]: null;
 
-        if (mealCategory == MealCategory.FullMeals){
-            if ((starter == null) || (mainDish == null) || (dessert == null)){
-                System.out.println("Error: You must choose a starter, a main dish and a dessert.");
-            } else {
-                myFoodoraSystem.createMeal(mealName, mealCategory, mealType);
-                myFoodoraSystem.addDish2Meal(starter, mealName);
-                myFoodoraSystem.addDish2Meal(mainDish, mealName);
-                myFoodoraSystem.addDish2Meal(dessert, mealName);
-                success();
-            }
-        } else { //Meal category = half meal
-            if (starterAndMainDishButton.isSelected()){
+        try {
 
-                if ((starter == null) || (mainDish == null)){
-                    System.out.println("Error: You must choose a starter and a main dish.");
+            if (mealCategory == MealCategory.FullMeals){
+                if ((starter == null) || (mainDish == null) || (dessert == null)){
+                    System.out.println("Error: You must choose a starter, a main dish and a dessert.");
+                    JOptionPane.showMessageDialog(new JFrame(),"You must choose a starter, a main dish and a dessert.","Error",JOptionPane.ERROR_MESSAGE);
                 } else {
-                    myFoodoraSystem.createMeal(mealName, mealCategory, mealType);
+
+                    myFoodoraSystem.createMealGUI(mealName, mealCategory, mealType);
                     myFoodoraSystem.addDish2Meal(starter, mealName);
-                    myFoodoraSystem.addDish2Meal(mainDish, mealName);
-                    success();
-
-
-                }
-
-            } else { // mainDishAndDessertButton.isSelected()
-
-                if ((mainDish == null) || (dessert == null)){
-                    System.out.println("Error: You must choose a main dish and a dessert.");
-                } else {
-                    myFoodoraSystem.createMeal(mealName, mealCategory, mealType);
                     myFoodoraSystem.addDish2Meal(mainDish, mealName);
                     myFoodoraSystem.addDish2Meal(dessert, mealName);
                     success();
                 }
+            } else { //Meal category = half meal
+                if (starterAndMainDishButton.isSelected()){
 
+                    if ((starter == null) || (mainDish == null)){
+                        System.out.println("Error: You must choose a starter and a main dish.");
+                        JOptionPane.showMessageDialog(new JFrame(),"You must choose a starter and a main dish.","Error",JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        myFoodoraSystem.createMealGUI(mealName, mealCategory, mealType);
+                        myFoodoraSystem.addDish2Meal(starter, mealName);
+                        myFoodoraSystem.addDish2Meal(mainDish, mealName);
+                        success();
+
+
+                    }
+
+                } else { // mainDishAndDessertButton.isSelected()
+
+                    if ((mainDish == null) || (dessert == null)){
+                        System.out.println("Error: You must choose a main dish and a dessert.");
+                        JOptionPane.showMessageDialog(new JFrame(),"You must choose a main dish and a dessert.","Error",JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        myFoodoraSystem.createMealGUI(mealName, mealCategory, mealType);
+                        myFoodoraSystem.addDish2Meal(mainDish, mealName);
+                        myFoodoraSystem.addDish2Meal(dessert, mealName);
+                        success();
+                    }
+
+                }
             }
+        } catch (EmptyNameException e) {
+            JOptionPane.showMessageDialog(new JFrame(),"The meal's name must not be empty.","Error", JOptionPane.ERROR_MESSAGE);
+        } catch (DuplicateNameException e) {
+            JOptionPane.showMessageDialog(new JFrame(),"This meal's name already exists.","Error", JOptionPane.ERROR_MESSAGE);
         }
 
 

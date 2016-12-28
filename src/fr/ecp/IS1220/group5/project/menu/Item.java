@@ -1,5 +1,6 @@
 package fr.ecp.IS1220.group5.project.menu;
 
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
 
@@ -44,10 +45,16 @@ public class Item  implements Serializable, Food {
 	 * @param itemCategory the item category of this item.
 	 * @param itemType the item type of this item.
 	 */
-	public Item(String name, BigDecimal price, ItemCategory itemCategory, ItemType itemType) {
+	public Item(String name, BigDecimal price, ItemCategory itemCategory, ItemType itemType) throws EmptyNameException {
 		this.itemCategory = itemCategory;
 		this.price = price;
-		this.name = name;
+
+		if (name.equals("")) {
+			throw new EmptyNameException();
+		} else {
+			this.name = name;
+		}
+
 		this.itemType = itemType;
 	}
 

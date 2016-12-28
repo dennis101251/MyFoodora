@@ -1,5 +1,6 @@
 package fr.ecp.IS1220.group5.project.menu;
 
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
 
@@ -58,8 +59,14 @@ public class Meal  implements Serializable, Food {
 	 * @param mealCategory the meal category.
 	 * @param mealType the meal type.
 	 */
-	public Meal(String name, Restaurant restaurant, MealCategory mealCategory, MealType mealType) {
-		this.name = name;
+	public Meal(String name, Restaurant restaurant, MealCategory mealCategory, MealType mealType) throws EmptyNameException {
+
+		if (name.equals("")) {
+			throw new EmptyNameException();
+		} else {
+			this.name = name;
+		}
+
 		this.restaurant = restaurant;
 		this.mealCategory = mealCategory;
 		this.mealType = mealType;

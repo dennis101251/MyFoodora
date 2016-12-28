@@ -3,6 +3,8 @@ package fr.ecp.IS1220.group5.project.GUI.restaurantDashboard;
 import fr.ecp.IS1220.group5.project.GUI.RestaurantDashboard;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
+import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.menu.Item;
 import fr.ecp.IS1220.group5.project.menu.ItemCategory;
 import fr.ecp.IS1220.group5.project.menu.ItemType;
@@ -161,17 +163,25 @@ public class AddItemTabPanel extends JPanel implements ActionListener {
                 itemType = ItemType.GlutenFree;
             }
 
-        myFoodoraSystem.createItem(nameTextField.getText(), new BigDecimal(priceTextField.getText()), itemCategory, itemType);
+        try {
 
-        myFoodoraSystem.saveMenu();
-        restaurantDashboard.update();
-        nameTextField.setText("");
-        priceTextField.setText("");
-        categoryGroup.clearSelection();
-        mainDishButton.setSelected(true);
-        typeGroup.clearSelection();
-        standardButton.setSelected(true);
-        JOptionPane.showMessageDialog(new JFrame(), "This item was successfully created!","Success",JOptionPane.INFORMATION_MESSAGE);
+            myFoodoraSystem.createItemGUI(nameTextField.getText(), new BigDecimal(priceTextField.getText()), itemCategory, itemType);
+            myFoodoraSystem.saveMenu();
+            restaurantDashboard.update();
+            nameTextField.setText("");
+            priceTextField.setText("");
+            categoryGroup.clearSelection();
+            mainDishButton.setSelected(true);
+            typeGroup.clearSelection();
+            standardButton.setSelected(true);
+            JOptionPane.showMessageDialog(new JFrame(), "This item was successfully created!","Success", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (EmptyNameException e) {
+            JOptionPane.showMessageDialog(new JFrame(),"The item's name must not be empty.","Error", JOptionPane.ERROR_MESSAGE);
+        } catch (DuplicateNameException e) {
+            JOptionPane.showMessageDialog(new JFrame(),"This item's name already exists.","Error", JOptionPane.ERROR_MESSAGE);
+        }
+
 
     }
 

@@ -1,6 +1,7 @@
 package fr.ecp.IS1220.group5.project.test;
 
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.Courier;
@@ -316,9 +317,19 @@ public class MyFoodoraSystemTest {
 
         Restaurant restaurant = new Restaurant("Pizzeria", "pizzeria", "123456", new Coordinate(1,3));
 
-        Item pizza = new Item("pizza", new BigDecimal(5), ItemCategory.MainDish, ItemType.Standard);
+        Item pizza = null;
+        try {
+            pizza = new Item("pizza", new BigDecimal(5), ItemCategory.MainDish, ItemType.Standard);
+        } catch (EmptyNameException e) {
+            e.printStackTrace();
+        }
 
-        Meal meal = new Meal("meal", restaurant, MealCategory.HalfMeals, MealType.Standard);
+        Meal meal = null;
+        try {
+            meal = new Meal("meal", restaurant, MealCategory.HalfMeals, MealType.Standard);
+        } catch (EmptyNameException e) {
+            e.printStackTrace();
+        }
         meal.addItem(pizza);
 
         myFoodoraSystem.registerRestaurant("Pizzeria","pizzeria",new Coordinate(1,3),"123456");
@@ -394,14 +405,20 @@ public class MyFoodoraSystemTest {
         order2.addMeal(meal2);
         order2.addMeal(meal2);
 
-        Item item1 = new Item ("Onion",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-        Item item2 = new Item ("Chicken",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-        Item item3 = new Item ("Burger",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
-        order1.addItem(item1);
-        order1.addItem(item1);
-        order1.addItem(item2);
-        order1.addItem(item3);
-        order2.addItem(item3);
+        Item item1 = null;
+        try {
+            item1 = new Item("Onion",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+            Item item2 = new Item ("Chicken",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+            Item item3 = new Item ("Burger",new BigDecimal(1), ItemCategory.Dessert, ItemType.Standard);
+            order1.addItem(item1);
+            order1.addItem(item1);
+            order1.addItem(item2);
+            order1.addItem(item3);
+            order2.addItem(item3);
+        } catch (EmptyNameException e) {
+            e.printStackTrace();
+        }
+
 
 
         ArrayList<Order> orders = new ArrayList<>();
