@@ -18,14 +18,6 @@ public class CourierInfoPanel extends JPanel {
     JPanel leftPanel;
     JPanel rightPanel;
 
-    JLabel firstname;
-    JLabel lastname;
-    JLabel username;
-    JLabel ID;
-    JLabel address;
-    JLabel email;
-    JLabel phone;
-
     JButton status;
     MyFoodoraSystemGUI myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
 

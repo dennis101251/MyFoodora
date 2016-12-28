@@ -20,14 +20,6 @@ public class RestaurantInfoPanel extends JPanel {
     JPanel leftPanel;
     JPanel rightPanel;
 
-    JLabel firstname;
-    JLabel lastname;
-    JLabel username;
-    JLabel ID;
-    JLabel address;
-    JLabel email;
-    JLabel phone;
-
     JButton status;
 
     private UserInfoPanel userInfoPanel;

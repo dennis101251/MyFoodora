@@ -66,7 +66,7 @@ public class MyFoodoraSystem {
      */
     public BigDecimal delivery_cost_price = new BigDecimal("1.0");
 
-//User
+    //User
     /**
      * The user which has been logged in
      */
@@ -87,6 +87,7 @@ public class MyFoodoraSystem {
     protected BigDecimal total_delivery_cost = new BigDecimal("0");
     protected BigDecimal total_profit = new BigDecimal("0");
     protected BigDecimal target_profit = new BigDecimal("0");
+    protected BigDecimal averageIncomePerCustomer = new BigDecimal(0);
 
     private static MyFoodoraSystem onlySystem;
 
@@ -100,6 +101,11 @@ public class MyFoodoraSystem {
      *
      */
     protected String deliveryPolicy = "fastDelivery";
+
+    /**
+     * target profit policy
+     */
+    protected int profitPolicy = 0;
 
     /**
      * The constructor of the system
@@ -891,6 +897,7 @@ public class MyFoodoraSystem {
                     }
                 }
                 if (numberOfCustomer > 0){
+                    averageIncomePerCustomer = total_income.divide(BigDecimal.valueOf(numberOfCustomer));
                     System.out.println(Money.display(total_income.divide(BigDecimal.valueOf(numberOfCustomer))));
                 }
                 else {
@@ -918,6 +925,75 @@ public class MyFoodoraSystem {
         }
         else {
             System.out.println("You must log in first");
+        }
+    }
+
+    /**
+     * set the policy
+     * @param policy 0:Service fee
+     *               1:markup percentage
+     *               2:delivery cost
+     */
+    public void setProfitPolicy(int policy){
+        if (currentUser instanceof Manager){
+            if (policy == 0|| policy== 1|| policy== 2){
+                profitPolicy = policy;
+            }
+            else {
+                System.out.println("invalid input");
+            }
+        }
+        else {
+            System.out.println("you must log in first");
+        }
+    }
+
+    public String getProfitPolicy(){
+        if (currentUser instanceof Manager){
+            switch (profitPolicy){
+                case 0:
+                    System.out.println("by Service fee");
+                    return "by Service fee";
+//                    break;
+                case 1:
+                    System.out.println("by Markup Percentage");
+                    return "by Markup Percentage";
+//                    break;
+                case 2:
+                    System.out.println("by Delivery Cost");
+                    return "by Delivery Cost";
+//                    break;
+                default:
+                    System.out.println("error");
+            }
+        }
+        else {
+            System.out.println("you must log in first");
+        }
+        return "error";
+    }
+
+    /**
+     * get the parameter according the chosen profit policy
+     */
+    public void getParameter(){
+        if (currentUser instanceof Manager){
+            switch (profitPolicy){
+                case 0:
+                    determineService_fee();
+                    break;
+                case 1:
+                    determineMarkup_Percentage();
+                    break;
+                case 2:
+                    determineDelivery_Cost();
+                    break;
+                default:
+                    System.out.println("error");
+            }
+        }
+        else {
+            System.out.println("you must log in first");
         }
     }
 
@@ -2422,5 +2498,32 @@ public class MyFoodoraSystem {
 
     }
 
+    public BigDecimal getTotal_income() {
+        calculateFinancial();
+        return total_income;
+    }
+
+    public BigDecimal getTotal_delivery_cost() {
+        calculateFinancial();
+        return total_delivery_cost;
+    }
+
+    public BigDecimal getTotal_profit() {
+        calculateFinancial();
+        return total_profit;
+    }
+
+    public BigDecimal getTarget_profit() {
+        return target_profit;
+    }
+
+    public String getDeliveryPolicy() {
+        return deliveryPolicy;
+    }
+
+    public BigDecimal getAverageIncomePerCustomer() {
+        averageIncomePerCustomer();
+        return averageIncomePerCustomer;
+    }
 }
 
