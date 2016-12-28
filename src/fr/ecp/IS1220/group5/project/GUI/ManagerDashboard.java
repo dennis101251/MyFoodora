@@ -1,11 +1,8 @@
 package fr.ecp.IS1220.group5.project.GUI;
 
-import fr.ecp.IS1220.group5.project.GUI.managerDashboard.userTabPanel;
+import fr.ecp.IS1220.group5.project.GUI.managerDashboard.FinancialTabPanel;
+import fr.ecp.IS1220.group5.project.GUI.managerDashboard.UserTabPanel;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
-import fr.ecp.IS1220.group5.project.user.Courier;
-import fr.ecp.IS1220.group5.project.user.Customer;
-import fr.ecp.IS1220.group5.project.user.Restaurant;
-import fr.ecp.IS1220.group5.project.user.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,9 +16,6 @@ import java.awt.event.ActionListener;
 public class ManagerDashboard extends JFrame{
 
     MyFoodoraSystemGUI myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
-    Customer[] customers;
-    Restaurant[] restaurants;
-    Courier[] couriers;
 
     JPanel mainPanel;
     JPanel headerPanel;
@@ -29,9 +23,6 @@ public class ManagerDashboard extends JFrame{
 
     JTabbedPane tabbedPane;
     JPanel userTabPanel;
-        JPanel customersPanel;
-        JPanel restaurantsPanel;
-        JPanel couriersPanel;
     JPanel financialTabPanel;
     JPanel deliveryTabPanel;
 
@@ -49,7 +40,7 @@ public class ManagerDashboard extends JFrame{
         super();
         myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
 
-        this.setSize(600, 450);
+        this.setSize(900, 600);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -100,8 +91,9 @@ public class ManagerDashboard extends JFrame{
 
         tabbedPane = new JTabbedPane();
 
-        userTabPanel = new userTabPanel();
-        financialTabPanel = new JPanel();
+        userTabPanel = new UserTabPanel();
+        userTabPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        financialTabPanel = new FinancialTabPanel();
         deliveryTabPanel = new JPanel();
         tabbedPane.addTab("User", userTabPanel);
         tabbedPane.addTab("Financial", financialTabPanel);
@@ -117,20 +109,6 @@ public class ManagerDashboard extends JFrame{
 
         this.setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    public DefaultListModel<String> listUser(User[] users){
-        DefaultListModel<String> nameModel = new DefaultListModel<>();
-        for (User user: users
-                ) {
-            if (!user.getStatus()){
-                nameModel.addElement(user.getUsername() + "(disabled)");
-            }
-            else {
-                nameModel.addElement(user.getUsername());
-            }
-        }
-        return nameModel;
     }
 
     public static void main(String[] args) {

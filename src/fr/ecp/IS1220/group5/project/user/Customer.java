@@ -7,6 +7,7 @@ import fr.ecp.IS1220.group5.project.fidelity.PointFidelityCard;
 import fr.ecp.IS1220.group5.project.menu.Order;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 /**
  * <b>The class that represents a Customer</b>
@@ -136,5 +137,21 @@ public class Customer extends User {
 				", address=" + address +
 //				", fidelityCard=" + fidelityCard +
 				'}';
+	}
+
+	public String getSurname(){return surname;}
+
+	public String getEmail(){return infoBoard.getEmail();}
+
+	public String getPhone(){return infoBoard.getPhone();}
+
+	public int getNumOfOrder(){return historyOfOrder.size();}
+
+	public BigDecimal getTotalExpense(){
+		BigDecimal total = new BigDecimal("0");
+		for (Order order: historyOfOrder) {
+			total = total.add(order.getTotal_price());
+		}
+		return total;
 	}
 }

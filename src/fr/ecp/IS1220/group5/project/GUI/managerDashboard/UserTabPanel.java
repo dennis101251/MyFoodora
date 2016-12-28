@@ -1,7 +1,6 @@
 package fr.ecp.IS1220.group5.project.GUI.managerDashboard;
 
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
-import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.user.Courier;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
@@ -15,7 +14,7 @@ import java.awt.event.MouseEvent;
 /**
  * Created by dennis101251 on 2016/12/27.
  */
-public class userTabPanel extends JPanel {
+public class UserTabPanel extends JPanel{
     MyFoodoraSystemGUI myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
     Customer[] customers;
     Restaurant[] restaurants;
@@ -34,8 +33,10 @@ public class userTabPanel extends JPanel {
     DefaultListModel<String> customersNames;
     DefaultListModel<String> restaurantsName;
     DefaultListModel<String> couriersName;
+    UserInfoPanel userInfoPanal;
+    int[] size = {5,20,200};
 
-    public userTabPanel(){
+    public UserTabPanel(){
         super();
         this.setLayout(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
@@ -45,14 +46,23 @@ public class userTabPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
-        c.weightx = 0;
+        c.weightx = 1;
         c.weighty = 0;
-        headerPanel.add(new JLabel("Double click to edit the USER"),c);
+//        c.anchor = GridBagConstraints.WEST;
+        headerPanel.add(new JLabel("Double-click to select a user"),c);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+        c.weighty = 0;
+//        c.anchor = GridBagConstraints.EAST;
+        headerPanel.add(new JLabel("        Total Client: " + myFoodoraSystem.getNumOfAllCLients()),c);
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
         c.weighty = 0.1;
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
         this.add(headerPanel,c);
 
         workingPanel = new JPanel();
@@ -64,9 +74,9 @@ public class userTabPanel extends JPanel {
         customers = myFoodoraSystem.getCustomers();
         customersList = new JList<>();
         customersList.setModel(listUser(customers));
-        customersList.setVisibleRowCount(10);
-        customersList.setFixedCellHeight(25);
-        customersList.setFixedCellWidth(150);
+        customersList.setVisibleRowCount(size[0]);
+        customersList.setFixedCellHeight(size[1]);
+        customersList.setFixedCellWidth(size[2]);
         customersList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         customersList.isSelectedIndex(0);
         customersList.addMouseListener(new MouseAdapter() {
@@ -74,24 +84,7 @@ public class userTabPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 Customer customer = customers[customersList.getSelectedIndex()];
                 if(e.getClickCount() == 2){
-                    if (customer.getStatus()){
-                        try {
-                            myFoodoraSystem.disactivateUser(customer.getUsername());
-                            System.out.println(customer.getName() + " " + customer.getStatus()) ;
-                            customersList.setModel(listUser(customers));
-                        } catch (UserNotFoundException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    else {
-                        try {
-                            myFoodoraSystem.activateUser(customer.getUsername());
-                            System.out.println(customer.getName() + " " + customer.getStatus()) ;
-                            customersList.setModel(listUser(customers));
-                        } catch (UserNotFoundException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
+                    userInfoPanal.showInfo(customer);
                 }
             }
         });
@@ -125,9 +118,9 @@ public class userTabPanel extends JPanel {
         restaurants = myFoodoraSystem.getRestaurants();
         restaurantList = new JList<>();
         restaurantList.setModel(listUser(restaurants));
-        restaurantList.setVisibleRowCount(10);
-        restaurantList.setFixedCellHeight(25);
-        restaurantList.setFixedCellWidth(150);
+        restaurantList.setVisibleRowCount(size[0]);
+        restaurantList.setFixedCellHeight(size[1]);
+        restaurantList.setFixedCellWidth(size[2]);
         restaurantList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         restaurantList.isSelectedIndex(0);
         restaurantList.addMouseListener(new MouseAdapter() {
@@ -135,24 +128,7 @@ public class userTabPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 Restaurant restaurant = restaurants[restaurantList.getSelectedIndex()];
                 if(e.getClickCount() == 2){
-                    if (restaurant.getStatus()){
-                        try {
-                            myFoodoraSystem.disactivateUser(restaurant.getUsername());
-                            System.out.println(restaurant.getName() + " " + restaurant.getStatus()) ;
-                            restaurantList.setModel(listUser(restaurants));
-                        } catch (UserNotFoundException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    else {
-                        try {
-                            myFoodoraSystem.activateUser(restaurant.getUsername());
-                            System.out.println(restaurant.getName() + " " + restaurant.getStatus()) ;
-                            restaurantList.setModel(listUser(restaurants));
-                        } catch (UserNotFoundException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
+                    userInfoPanal.showInfo(restaurant);
                 }
             }
         });
@@ -185,9 +161,9 @@ public class userTabPanel extends JPanel {
         couriers = myFoodoraSystem.getCouriers();
         courierList = new JList<>();
         courierList.setModel(listUser(couriers));
-        courierList.setVisibleRowCount(10);
-        courierList.setFixedCellHeight(25);
-        courierList.setFixedCellWidth(150);
+        courierList.setVisibleRowCount(size[0]);
+        courierList.setFixedCellHeight(size[1]);
+        courierList.setFixedCellWidth(size[2]);
         courierList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         courierList.isSelectedIndex(0);
         courierList.addMouseListener(new MouseAdapter() {
@@ -195,24 +171,7 @@ public class userTabPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 Courier courier = couriers[courierList.getSelectedIndex()];
                 if(e.getClickCount() == 2){
-                    if (courier.getStatus()){
-                        try {
-                            myFoodoraSystem.disactivateUser(courier.getUsername());
-                            System.out.println(courier.getName() + " " + courier.getStatus()) ;
-                            courierList.setModel(listUser(couriers));
-                        } catch (UserNotFoundException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                    else {
-                        try {
-                            myFoodoraSystem.activateUser(courier.getUsername());
-                            System.out.println(courier.getName() + " " + courier.getStatus()) ;
-                            courierList.setModel(listUser(couriers));
-                        } catch (UserNotFoundException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
+                    userInfoPanal.showInfo(courier);
                 }
             }
         });
@@ -244,19 +203,34 @@ public class userTabPanel extends JPanel {
         c.weightx = 0;
         c.weighty = 1;
         this.add(workingPanel,c);
+
+        userInfoPanal = new UserInfoPanel();
+        userInfoPanal.addObserver(this);
+        c.gridx = 0;
+        c.gridy = 2;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0;
+        c.weighty = 1;
+        this.add(userInfoPanal,c);
     }
 
-    public DefaultListModel<String> listUser(User[] users){
+    public static DefaultListModel<String> listUser(User[] users){
         DefaultListModel<String> nameModel = new DefaultListModel<>();
         for (User user: users
                 ) {
             if (!user.getStatus()){
-                nameModel.addElement(user.getUsername() + "(disabled)");
+                nameModel.addElement(user.getUsername() + "(disable)");
             }
             else {
                 nameModel.addElement(user.getUsername());
             }
         }
         return nameModel;
+    }
+
+    public void updateInfo(){
+        customersList.setModel(listUser(customers));
+        restaurantList.setModel(listUser(restaurants));
+        courierList.setModel(listUser(couriers));
     }
 }

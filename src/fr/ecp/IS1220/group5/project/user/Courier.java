@@ -4,6 +4,7 @@ import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 import fr.ecp.IS1220.group5.project.menu.Order;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -42,6 +43,11 @@ public class Courier extends User {
 	 * the order waiting to be deliver
 	 */
 	private Order newOrder = null;
+
+	/**
+	 * the total income of delivery
+	 */
+	private BigDecimal totalIncome = new BigDecimal(0);
 
 	/**
 	 * the list of orders which has been refused by this courier
@@ -186,5 +192,19 @@ public class Courier extends User {
 				", deliveredOrdersCounter=" + deliveredOrdersCounter +
 				", workingState=" + workingState +
 				'}';
+	}
+
+	public String getSurname(){return surname;}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void addDeliveryIncome(BigDecimal deliveryCost){
+		totalIncome = totalIncome.add(deliveryCost);
+	}
+
+	public BigDecimal getTotalIncome() {
+		return totalIncome;
 	}
 }
