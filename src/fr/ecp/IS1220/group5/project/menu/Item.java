@@ -42,9 +42,9 @@ public class Item  implements Serializable, Food {
 	 * @param name the name of this item.
 	 * @param price the price of this item.
 	 * @param itemCategory the item category of this item.
-	 * @param itemtype the item type of this item.
+	 * @param itemType the item type of this item.
 	 */
-	public Item(String name, BigDecimal price, ItemCategory itemCategory, ItemType itemtype) {
+	public Item(String name, BigDecimal price, ItemCategory itemCategory, ItemType itemType) {
 		this.itemCategory = itemCategory;
 		this.price = price;
 		this.name = name;

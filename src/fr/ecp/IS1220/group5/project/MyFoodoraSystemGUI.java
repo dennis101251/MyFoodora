@@ -1,10 +1,7 @@
 package fr.ecp.IS1220.group5.project;
 
 import fr.ecp.IS1220.group5.project.GUI.*;
-import fr.ecp.IS1220.group5.project.menu.Food;
-import fr.ecp.IS1220.group5.project.menu.Item;
-import fr.ecp.IS1220.group5.project.menu.ItemCategory;
-import fr.ecp.IS1220.group5.project.menu.Meal;
+import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.*;
 import fr.ecp.IS1220.group5.project.util.PasswordHash;
 
@@ -270,36 +267,22 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
 
     }
 
-    public Item[] getItemsOfCategory(ItemCategory itemCategory) {
+    public String[] getItems(ItemCategory itemCategory, ItemType itemType) {
 
        ArrayList<Item> items = ((Restaurant) currentUser).getItems();
-       ArrayList<Item> itemsOfCategory = new ArrayList<>();
+       ArrayList<String> itemsOfCategoryAndType = new ArrayList<>();
 
        for (Item item : items){
 
-           if (item.getItemCategory() == itemCategory){
+           if ((item.getItemCategory() == itemCategory) && (item.getItemType() == itemType)){
 
-               itemsOfCategory.add(item);
+               itemsOfCategoryAndType.add(item.getName());
 
            }
 
        }
 
-       return itemsOfCategory.toArray(new Item[itemsOfCategory.size()]);
+       return itemsOfCategoryAndType.toArray(new String[itemsOfCategoryAndType.size()]);
 
-    }
-
-    public String[] getItemStringsOfCategory(ItemCategory itemCategory) {
-
-        Item[] itemsOfCategory = getItemsOfCategory(itemCategory);
-        String[] itemStringsOfCategory = new String[itemsOfCategory.length];
-
-        for (int i = 0; i< itemsOfCategory.length; i++){
-
-            itemStringsOfCategory[i] = itemsOfCategory[i].getName();
-
-        }
-
-        return itemStringsOfCategory;
     }
 }

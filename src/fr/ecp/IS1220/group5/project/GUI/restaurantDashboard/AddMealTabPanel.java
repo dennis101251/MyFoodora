@@ -29,6 +29,7 @@ public class AddMealTabPanel extends JPanel {
     JRadioButton starterAndMainDishButton;
     JRadioButton mainDishAndDessertButton;
 
+    private ItemType itemType = ItemType.Standard;
     JRadioButton standardButton;
     JRadioButton vegetarianButton;
     JRadioButton glutenFreeButton;
@@ -37,9 +38,9 @@ public class AddMealTabPanel extends JPanel {
     JPanel mainDishPanel;
     JPanel dessertPanel;
 
-    String[] starterStrings;
-    String[] mainDishStrings;
-    String[] dessertStrings;
+    String[] starters;
+    String[] mainDishes;
+    String[] desserts;
 
     JComboBox<String> startersComboBox;
     JComboBox<String> mainDishesComboBox;
@@ -146,11 +147,32 @@ public class AddMealTabPanel extends JPanel {
         JPanel typeRadioPanel = new JPanel();
 
         standardButton = new JRadioButton("Standard");
+        standardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddMealTabPanel.this.itemType = ItemType.Standard;
+                update();
+            }
+        });
         standardButton.setSelected(true);
 
         vegetarianButton = new JRadioButton("Vegetarian");
+        vegetarianButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddMealTabPanel.this.itemType = ItemType.Vegetarian;
+                update();
+            }
+        });
 
         glutenFreeButton  = new JRadioButton("Gluten Free");
+        glutenFreeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddMealTabPanel.this.itemType = ItemType.GlutenFree;
+                update();
+            }
+        });
 
         ButtonGroup typeGroup = new ButtonGroup();
         typeGroup.add(standardButton);
@@ -168,40 +190,40 @@ public class AddMealTabPanel extends JPanel {
 
 
         //Starter
-        starterStrings = myFoodoraSystem.getItemStringsOfCategory(ItemCategory.Starter);
+        starters = myFoodoraSystem.getItems(ItemCategory.Starter, itemType);
 
         starterPanel = new JPanel();
         starterPanel.setLayout(new BoxLayout(starterPanel,BoxLayout.X_AXIS));
 
         starterPanel.add(new JLabel("Starter"));
 
-        startersComboBox = new JComboBox<>(starterStrings);
+        startersComboBox = new JComboBox<>(starters);
         starterPanel.add(startersComboBox);
 
         this.add(starterPanel);
 
         //Main Dish
-        mainDishStrings = myFoodoraSystem.getItemStringsOfCategory(ItemCategory.MainDish);
+        mainDishes = myFoodoraSystem.getItems(ItemCategory.MainDish, itemType);
 
         mainDishPanel = new JPanel();
         mainDishPanel.setLayout(new BoxLayout(mainDishPanel,BoxLayout.X_AXIS));
 
         mainDishPanel.add(new JLabel("Main Dish"));
 
-        mainDishesComboBox = new JComboBox<>(mainDishStrings);
+        mainDishesComboBox = new JComboBox<>(mainDishes);
         mainDishPanel.add(mainDishesComboBox);
 
         this.add(mainDishPanel);
 
         //Dessert
-        dessertStrings = myFoodoraSystem.getItemStringsOfCategory(ItemCategory.Dessert);
+        desserts = myFoodoraSystem.getItems(ItemCategory.Dessert, itemType);
 
         dessertPanel = new JPanel();
         dessertPanel.setLayout(new BoxLayout(dessertPanel,BoxLayout.X_AXIS));
 
         dessertPanel.add(new JLabel("Dessert"));
 
-        dessertsComboBox =  new JComboBox<>(dessertStrings);
+        dessertsComboBox =  new JComboBox<>(desserts);
         dessertPanel.add(dessertsComboBox);
 
         this.add(dessertPanel);
@@ -276,9 +298,9 @@ public class AddMealTabPanel extends JPanel {
                 mealType = MealType.GlutenFree;
             }
 
-        String starter = (startersComboBox.getSelectedIndex() >= 0) ? starterStrings[startersComboBox.getSelectedIndex()] : null;
-        String mainDish = (mainDishesComboBox.getSelectedIndex() >= 0) ? mainDishStrings[mainDishesComboBox.getSelectedIndex()] : null;
-        String dessert = (dessertsComboBox.getSelectedIndex()>= 0) ? dessertStrings[dessertsComboBox.getSelectedIndex()]: null;
+        String starter = (startersComboBox.getSelectedIndex() >= 0) ? starters[startersComboBox.getSelectedIndex()] : null;
+        String mainDish = (mainDishesComboBox.getSelectedIndex() >= 0) ? mainDishes[mainDishesComboBox.getSelectedIndex()] : null;
+        String dessert = (dessertsComboBox.getSelectedIndex()>= 0) ? desserts[dessertsComboBox.getSelectedIndex()]: null;
 
         if (mealCategory == MealCategory.FullMeals){
             if ((starter == null) || (mainDish == null) || (dessert == null)){
@@ -336,13 +358,13 @@ public class AddMealTabPanel extends JPanel {
 
     public void update() {
 
-        starterStrings = myFoodoraSystem.getItemStringsOfCategory(ItemCategory.Starter);
-        mainDishStrings = myFoodoraSystem.getItemStringsOfCategory(ItemCategory.MainDish);
-        dessertStrings = myFoodoraSystem.getItemStringsOfCategory(ItemCategory.Dessert);
+        starters = myFoodoraSystem.getItems(ItemCategory.Starter, itemType);
+        mainDishes = myFoodoraSystem.getItems(ItemCategory.MainDish, itemType);
+        desserts = myFoodoraSystem.getItems(ItemCategory.Dessert, itemType);
 
-        startersComboBox.setModel(new DefaultComboBoxModel<>(starterStrings));
-        mainDishesComboBox.setModel(new DefaultComboBoxModel<>(mainDishStrings));
-        dessertsComboBox.setModel(new DefaultComboBoxModel<>(dessertStrings));
+        startersComboBox.setModel(new DefaultComboBoxModel<>(starters));
+        mainDishesComboBox.setModel(new DefaultComboBoxModel<>(mainDishes));
+        dessertsComboBox.setModel(new DefaultComboBoxModel<>(desserts));
 
     }
 

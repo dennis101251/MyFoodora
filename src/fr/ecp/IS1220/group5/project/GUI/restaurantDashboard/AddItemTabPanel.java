@@ -157,7 +157,7 @@ public class AddItemTabPanel extends JPanel implements ActionListener {
                 itemType = ItemType.Standard;
             } else if (vegetarianButton.isSelected()){
                 itemType = ItemType.Vegetarian;
-            } else {
+            } else { //glutenFreeButton.isSelected()
                 itemType = ItemType.GlutenFree;
             }
 
