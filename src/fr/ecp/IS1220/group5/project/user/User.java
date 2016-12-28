@@ -6,6 +6,7 @@ import fr.ecp.IS1220.group5.project.util.PasswordHash;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Observable;
 
 /**
  * <b>The class which represents the users of MyFoodora</b>

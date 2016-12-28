@@ -1931,6 +1931,22 @@ public class MyFoodoraSystem {
         }
     }
 
+    public void createItem(String itemName, BigDecimal price, ItemCategory itemCategory, ItemType itemType){
+        if (currentUser instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) currentUser;
+            Item item = new Item(itemName, price, itemCategory, itemType);
+            restaurant.addItem(item);
+
+            System.out.println(item + " was successfully created!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a item.");
+
+        }
+    }
+
     /**
      *
      * <b>Creates a new meal to the Restaurant's menu.</b>
@@ -1943,6 +1959,22 @@ public class MyFoodoraSystem {
 
             Restaurant restaurant = (Restaurant) currentUser;
             Meal meal = new Meal(mealName, (Restaurant) currentUser);
+            restaurant.addMeal(meal);
+
+            System.out.println(meal + " was successfully created!");
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a meal.");
+
+        }
+    }
+
+    public void createMeal(String mealName, MealCategory mealCategory, MealType mealType) {
+        if (currentUser instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) currentUser;
+            Meal meal = new Meal(mealName, (Restaurant) currentUser, mealCategory, mealType);
             restaurant.addMeal(meal);
 
             System.out.println(meal + " was successfully created!");
