@@ -5,12 +5,13 @@ import fr.ecp.IS1220.group5.project.menu.Food;
 import fr.ecp.IS1220.group5.project.menu.Item;
 import fr.ecp.IS1220.group5.project.menu.Meal;
 import fr.ecp.IS1220.group5.project.user.*;
-import fr.ecp.IS1220.group5.project.util.PasswordHash;
+import fr.ecp.IS1220.group5.project.util.*;
 
 import javax.swing.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -117,6 +118,26 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         return new Restaurant[0];
     }
 
+    public Restaurant[] getRestaurantsUp(){
+        Restaurant[] a = new Restaurant[getRestaurants().length];
+        ArrayList<Restaurant> tmp = new ArrayList<>();
+        for (Restaurant restaurant: getRestaurants()){
+            tmp.add(restaurant);
+        }
+        Collections.sort(tmp,new SortByIncomeUp());
+        return tmp.toArray(a);
+    }
+
+    public Restaurant[] getRestaurantsDown(){
+        Restaurant[] a = new Restaurant[getRestaurants().length];
+        ArrayList<Restaurant> tmp = new ArrayList<>();
+        for (Restaurant restaurant: getRestaurants()){
+            tmp.add(restaurant);
+        }
+        Collections.sort(tmp,new SortByIncomeDown());
+        return tmp.toArray(a);
+    }
+
     public Customer[] getCustomers(){
         if (currentUser instanceof Manager){
             ArrayList<Customer> allCustomers= new ArrayList<>();
@@ -133,6 +154,26 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         return new Customer[0];
     }
 
+    public Customer[] getCustomersUp(){
+        Customer[] a = new Customer[getCustomers().length];
+        ArrayList<Customer> tmp = new ArrayList<>();
+        for (Customer customer: getCustomers()){
+            tmp.add(customer);
+        }
+        Collections.sort(tmp,new SortByExpenseUp());
+        return tmp.toArray(a);
+    }
+
+    public Customer[] getCustomersDown(){
+        Customer[] a = new Customer[getCustomers().length];
+        ArrayList<Customer> tmp = new ArrayList<>();
+        for (Customer customer: getCustomers()){
+            tmp.add(customer);
+        }
+        Collections.sort(tmp,new SortByExpenseDown());
+        return tmp.toArray(a);
+    }
+
     public Courier[] getCouriers(){
         if (currentUser instanceof Manager){
             ArrayList<Courier> allCouriers= new ArrayList<>();
@@ -147,6 +188,26 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         }
 
         return new Courier[0];
+    }
+
+    public Courier[] getCouriersUp(){
+        Courier[] a = new Courier[getCouriers().length];
+        ArrayList<Courier> tmp = new ArrayList<>();
+        for (Courier courier: getCouriers()){
+            tmp.add(courier);
+        }
+        Collections.sort(tmp,new SortByOrderUp());
+        return tmp.toArray(a);
+    }
+
+    public Courier[] getCouriersDown(){
+        Courier[] a = new Courier[getCouriers().length];
+        ArrayList<Courier> tmp = new ArrayList<>();
+        for (Courier courier: getCouriers()){
+            tmp.add(courier);
+        }
+        Collections.sort(tmp,new SortByOrderDown());
+        return tmp.toArray(a);
     }
 
     public String[] getRestaurantsNames(){
@@ -241,7 +302,6 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
             return new String[0];
         }
     }
-
 
     @Override
     public void disconnectUser() {

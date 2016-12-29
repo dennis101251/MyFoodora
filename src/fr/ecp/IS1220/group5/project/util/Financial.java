@@ -21,5 +21,9 @@ public class Financial implements Serializable {
 	 * The delivery cost of MyFoodora's system.
 	 */
 	public BigDecimal delivery_cost;
-	
+
+	/**
+	 * the profit policy
+	 */
+	public int profitPolicy;
 }

@@ -5,9 +5,13 @@ import fr.ecp.IS1220.group5.project.user.Courier;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
 import fr.ecp.IS1220.group5.project.user.User;
+import fr.ecp.IS1220.group5.project.util.Money;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -40,6 +44,7 @@ public class UserTabPanel extends JPanel{
         super();
         this.setLayout(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
+        Border border = BorderFactory.createEmptyBorder(0,5,0,5);
 
         headerPanel = new JPanel();
         headerPanel.setLayout(new GridBagLayout());
@@ -90,19 +95,48 @@ public class UserTabPanel extends JPanel{
         });
 
         JScrollPane scrollPane1 = new JScrollPane(customersList);
-        JLabel customersPanelLabel = new JLabel("Customer");
+        JLabel customersPanelLabel = new JLabel("Customer - total expense");
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
-        c.weighty = 0.2;
+        c.weighty = 0;
         customersPanel.add(customersPanelLabel,c);
+
+        JPanel orderPanel = new JPanel(new GridLayout(1,2));
+        JButton customerUp = new JButton(("Up"));
+        customerUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                customersList.setModel(listUser(myFoodoraSystem.getCustomersUp()));
+            }
+        });
+        orderPanel.add(customerUp);
+
+        JButton customerDown = new JButton(("Down"));
+        customerDown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                customersList.setModel(listUser(myFoodoraSystem.getCustomersDown()));
+            }
+        });
+        orderPanel.add(customerDown);
         c.gridx = 0;
         c.gridy = 1;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
+        c.weighty = 0;
+        customersPanel.add(orderPanel,c);
+
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0;
         c.weighty = 1;
         customersPanel.add(scrollPane1,c);
+
+        customersPanel.setBorder(border);
 
         c.gridx = 0;
         c.gridy = 0;
@@ -133,19 +167,47 @@ public class UserTabPanel extends JPanel{
             }
         });
         JScrollPane scrollPane2 = new JScrollPane(restaurantList);
-        JLabel restaurantsPanelLabel = new JLabel("Restaurant");
+        JLabel restaurantsPanelLabel = new JLabel("Restaurant - income");
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
         c.weighty = 0.2;
         restaurantsPanel.add(restaurantsPanelLabel,c);
+
+        JPanel orderPanel1 = new JPanel(new GridLayout(1,2));
+        JButton restaurantUp = new JButton(("Up"));
+        restaurantUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                restaurantList.setModel(listUser(myFoodoraSystem.getRestaurantsUp()));
+            }
+        });
+        orderPanel1.add(restaurantUp);
+
+        JButton restaurantDown = new JButton(("Down"));
+        restaurantDown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                restaurantList.setModel(listUser(myFoodoraSystem.getRestaurantsDown()));
+            }
+        });
+        orderPanel1.add(restaurantDown);
         c.gridx = 0;
         c.gridy = 1;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
+        c.weighty = 0;
+        restaurantsPanel.add(orderPanel1,c);
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0;
         c.weighty = 1;
         restaurantsPanel.add(scrollPane2,c);
+
+        restaurantsPanel.setBorder(border);
 
         c.gridx = 1;
         c.gridy = 0;
@@ -176,19 +238,47 @@ public class UserTabPanel extends JPanel{
             }
         });
         JScrollPane scrollPane3 = new JScrollPane(courierList);
-        JLabel couriersPanelLabel = new JLabel("Courier");
+        JLabel couriersPanelLabel = new JLabel("Courier - number of delivery");
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
         c.weighty = 0.2;
         couriersPanel.add(couriersPanelLabel,c);
+
+        JPanel orderPanel2 = new JPanel(new GridLayout(1,2));
+        JButton courierUp = new JButton(("Up"));
+        courierUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                courierList.setModel(listUser(myFoodoraSystem.getCouriersUp()));
+            }
+        });
+        orderPanel2.add(courierUp);
+
+        JButton courierDown = new JButton(("Down"));
+        courierDown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                courierList.setModel(listUser(myFoodoraSystem.getCouriersDown()));
+            }
+        });
+        orderPanel2.add(courierDown);
         c.gridx = 0;
         c.gridy = 1;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
+        c.weighty = 0;
+        couriersPanel.add(orderPanel2,c);
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0;
         c.weighty = 1;
         couriersPanel.add(scrollPane3,c);
+
+        couriersPanel.setBorder(border);
 
         c.gridx = 2;
         c.gridy = 0;
@@ -216,13 +306,23 @@ public class UserTabPanel extends JPanel{
 
     public static DefaultListModel<String> listUser(User[] users){
         DefaultListModel<String> nameModel = new DefaultListModel<>();
+        int i = 0;
         for (User user: users
                 ) {
+            i++;
             if (!user.getStatus()){
-                nameModel.addElement(user.getUsername() + "(disable)");
+                nameModel.addElement(i + ") " + user.getUsername() + "(disable)");
             }
             else {
-                nameModel.addElement(user.getUsername());
+                if (user instanceof Customer){
+                    nameModel.addElement(i + ") " + user.getUsername() + " - " + Money.display(((Customer) user).getTotalExpense()));
+                }
+                else if (user instanceof Restaurant){
+                    nameModel.addElement(i + ") " + user.getUsername() + " - " + Money.display(((Restaurant) user).getIncome()));
+                }
+                else if (user instanceof Courier){
+                    nameModel.addElement(i + ") " + user.getUsername() + " - " + ((Courier) user).getDeliveredOrdersCounter());
+                }
             }
         }
         return nameModel;

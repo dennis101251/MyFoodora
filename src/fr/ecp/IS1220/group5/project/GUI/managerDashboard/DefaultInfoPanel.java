@@ -8,6 +8,15 @@ import javax.swing.*;
 public class DefaultInfoPanel extends JPanel {
     public DefaultInfoPanel(){
         super();
-        this.add(new JLabel("No user has been selected"));
+        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        JLabel text = new JLabel("No user has been selected");
+        this.add(text);
+        this.add(new JLabel(" "));
+        this.add(new JLabel(" "));
+        this.add(new JLabel(" "));
+        this.add(new JLabel(" "));
+        this.add(new JLabel(" "));
+        this.add(new JLabel(" "));
+        this.add(new JLabel(" "));
     }
 }

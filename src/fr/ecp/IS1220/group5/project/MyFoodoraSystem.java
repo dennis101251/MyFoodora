@@ -88,6 +88,9 @@ public class MyFoodoraSystem {
     protected BigDecimal total_profit = new BigDecimal("0");
     protected BigDecimal target_profit = new BigDecimal("0");
     protected BigDecimal averageIncomePerCustomer = new BigDecimal(0);
+    protected BigDecimal tmpService_fee = new BigDecimal("0");
+    protected BigDecimal tmpMarkup_percentage = new BigDecimal("0");
+    protected BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
 
     private static MyFoodoraSystem onlySystem;
 
@@ -381,8 +384,33 @@ public class MyFoodoraSystem {
             service_fee = financial.service_fee;
             markup_percentage = financial.markup_percentage;
             delivery_cost_price = financial.delivery_cost;
+            profitPolicy = financial.profitPolicy;
         } else {
             System.out.println(">> There is no Financial in system");
+        }
+    }
+
+    /**
+     * save the financial parameter
+     */
+    public void saveFinancial(){
+        try {
+            FileOutputStream fileOut = new FileOutputStream("tmp/financial.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+            Financial financial = new Financial();
+            financial.service_fee = this.service_fee;
+            financial.delivery_cost = this.delivery_cost_price;
+            financial.markup_percentage = this.markup_percentage;
+            financial.profitPolicy = this.profitPolicy;
+
+            out.writeObject(financial);
+
+            out.close();
+            fileOut.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -781,7 +809,8 @@ public class MyFoodoraSystem {
      */
     public void setMarkup_percentage(BigDecimal markup_percentage){
         if (currentUser instanceof Manager){
-            if (markup_percentage.compareTo(new BigDecimal("1")) == 1){ //if markup_percentage > 1
+            if (markup_percentage.compareTo(new BigDecimal("1")) == -1){ //if markup_percentage > 1
+
                 this.markup_percentage = markup_percentage;
                 System.out.println(">> Current markup percentage: " + markup_percentage);
             }
@@ -948,6 +977,10 @@ public class MyFoodoraSystem {
         }
     }
 
+    /**
+     * get the current profit policy
+     * @return the name of policy
+     */
     public String getProfitPolicy(){
         if (currentUser instanceof Manager){
             switch (profitPolicy){
@@ -961,7 +994,7 @@ public class MyFoodoraSystem {
 //                    break;
                 case 2:
                     System.out.println("by Delivery Cost");
-                    return "by Delivery Cost";
+                    return "by Delivery Price";
 //                    break;
                 default:
                     System.out.println("error");
@@ -976,8 +1009,9 @@ public class MyFoodoraSystem {
     /**
      * get the parameter according the chosen profit policy
      */
-    public void getParameter(){
+    public String[] getParameter(){
         if (currentUser instanceof Manager){
+            String[] para = new String[3];
             switch (profitPolicy){
                 case 0:
                     determineService_fee();
@@ -991,10 +1025,15 @@ public class MyFoodoraSystem {
                 default:
                     System.out.println("error");
             }
+            para[0] = tmpService_fee.toString();
+            para[1] = tmpMarkup_percentage.toString();
+            para[2] = tmpDelivery_cost_price.toString();
+            return para;
         }
         else {
             System.out.println("you must log in first");
         }
+        return null;
     }
 
     /**
@@ -1017,9 +1056,6 @@ public class MyFoodoraSystem {
                         sumDeliveryDistance = sumDeliveryDistance.add(order.getDelivery_distance());
                     }
 
-                    BigDecimal tmpService_fee = new BigDecimal("0");
-                    BigDecimal tmpMarkup_percentage = new BigDecimal("0");
-                    BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
 
                     tmpDelivery_cost_price = delivery_cost_price;
                     tmpMarkup_percentage = markup_percentage;
@@ -1072,10 +1108,6 @@ public class MyFoodoraSystem {
                             ) {
                         sumDeliveryDistance = sumDeliveryDistance.add(order.getDelivery_distance());
                     }
-
-                    BigDecimal tmpService_fee = new BigDecimal("0");
-                    BigDecimal tmpMarkup_percentage = new BigDecimal("0");
-                    BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
 
                     tmpDelivery_cost_price = delivery_cost_price;
                     tmpService_fee = service_fee;
@@ -1136,10 +1168,6 @@ public class MyFoodoraSystem {
                                 ) {
                             sumDeliveryDistance = sumDeliveryDistance.add(order.getDelivery_distance());
                         }
-
-                        BigDecimal tmpService_fee = new BigDecimal("0");
-                        BigDecimal tmpMarkup_percentage = new BigDecimal("0");
-                        BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
 
                         tmpService_fee = service_fee;
                         tmpMarkup_percentage = markup_percentage;
@@ -1545,7 +1573,6 @@ public class MyFoodoraSystem {
      *
      * reuse the method delegateOrder2Courier(Order order)
      */
-
     public void findDeliverer(int orderID) {
         if(currentUser instanceof Restaurant){
             //Find the order instance by the name
@@ -2525,5 +2552,7 @@ public class MyFoodoraSystem {
         averageIncomePerCustomer();
         return averageIncomePerCustomer;
     }
+
+
 }
 
