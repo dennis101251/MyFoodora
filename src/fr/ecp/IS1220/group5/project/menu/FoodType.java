@@ -12,4 +12,4 @@ package fr.ecp.IS1220.group5.project.menu;
  *     </ul>
  *
  */
-public enum ItemType {Standard, Vegetarian, GlutenFree}
+public enum FoodType {Standard, Vegetarian, GlutenFree}

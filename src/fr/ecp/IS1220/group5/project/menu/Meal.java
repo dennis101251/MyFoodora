@@ -1,5 +1,8 @@
 package fr.ecp.IS1220.group5.project.menu;
 
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
+import fr.ecp.IS1220.group5.project.exception.IncompatibleFoodTypeException;
+import fr.ecp.IS1220.group5.project.exception.TooManyItemsException;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
 
@@ -35,9 +38,9 @@ public class Meal  implements Serializable, Food {
 	/**
 	 * The meal type of this meal.
 	 *
-	 * @see MealType
+	 * @see FoodType
 	 */
-	private MealType mealType;
+	private FoodType foodType;
 	/**
 	 * The items contained in this meal.
 	 */
@@ -51,18 +54,29 @@ public class Meal  implements Serializable, Food {
 	 */
 	private boolean isMealOfTheWeek = false;
 
+	private int nbItems = 0;
+		private int nbStarters = 0;
+		private int nbMainDishes = 0;
+		private int nbDesserts = 0;
+
 	/**
 	 * The constructor of this meal.
 	 * @param name the name of this meal.
 	 * @param restaurant the restaurant that has created this meal.
 	 * @param mealCategory the meal category.
-	 * @param mealType the meal type.
+	 * @param foodType the meal type.
 	 */
-	public Meal(String name, Restaurant restaurant, MealCategory mealCategory, MealType mealType) {
-		this.name = name;
+	public Meal(String name, Restaurant restaurant, MealCategory mealCategory, FoodType foodType) throws EmptyNameException {
+
+		if (name.equals("")) {
+			throw new EmptyNameException();
+		} else {
+			this.name = name;
+		}
+
 		this.restaurant = restaurant;
 		this.mealCategory = mealCategory;
-		this.mealType = mealType;
+		this.foodType = foodType;
 	}
 
 	/**
@@ -151,26 +165,60 @@ public class Meal  implements Serializable, Food {
 	 * Returns the meal type of this meal.
 	 * @return the meal type of this meal.
 	 */
-	public MealType getMealType() {
-		return mealType;
+	public FoodType getFoodType() {
+		return foodType;
 	}
 
 	/**
 	 * Sets the meal type
-	 * @param mealType the new meal type.
+	 * @param foodType the new meal type.
 	 */
-	public void setMealType(MealType mealType) {
-		this.mealType = mealType;
+	public void setFoodType(FoodType foodType) {
+		this.foodType = foodType;
 	}
 
 	/**
 	 * Adds an item to this meal.
 	 * @param item the item to be added to this meal.
 	 */
-	public void addItem(Item item){
-		this.items.add(item);
-		this.updatePrice();
+	public void addItem(Item item) throws IncompatibleFoodTypeException, TooManyItemsException {
+
+		if (item.getFoodType() != this.foodType) {
+
+			throw new IncompatibleFoodTypeException();
+
+		} else {
+
+			if ((nbItems == 2 && this.mealCategory == MealCategory.HalfMeals) || (nbItems == 3 && this.mealCategory == MealCategory.FullMeals)){
+				throw new TooManyItemsException();
+			} else if ((nbStarters == 1 && item.getItemCategory() == ItemCategory.Starter) || (nbMainDishes == 1 && item.getItemCategory() == ItemCategory.MainDish) || (nbDesserts == 1 && item.getItemCategory() == ItemCategory.Dessert)){
+				throw new TooManyItemsException();
+			} else {
+
+				nbItems++;
+				switch (item.getItemCategory()){
+					case Starter:
+						nbStarters++;
+						break;
+					case MainDish:
+						nbMainDishes++;
+						break;
+					case Dessert:
+						nbDesserts++;
+						break;
+				}
+
+				this.items.add(item);
+				this.updatePrice();
+
+			}
+
+		}
+
+
 	}
+
+
 
 	/**
 	 * Returns the list of items contained in this meal.
@@ -189,7 +237,7 @@ public class Meal  implements Serializable, Food {
 				", price=" + price +
 				", items=" + items +
 				", mealCategory=" + mealCategory +
-				", mealType=" + mealType +
+				", foodType=" + foodType +
 				'}';
 	}
 }

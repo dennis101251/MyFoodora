@@ -6,10 +6,7 @@ import fr.ecp.IS1220.group5.project.util.Coordinate;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
 import java.math.BigDecimal;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by dennis101251 on 2016/12/11.
@@ -20,15 +17,15 @@ public class RestaurantTest {
 
         Restaurant restaurant = new Restaurant("Pizzeria", "pizzeria", "123456", new Coordinate(1,3));
 
-        Item pizza = new Item("pizza", new BigDecimal(5), ItemCategory.MainDish, ItemType.Standard);
+        Item pizza = new Item("pizza", new BigDecimal(5), ItemCategory.MainDish, FoodType.Standard);
 
-        Meal meal = new Meal("meal", restaurant, MealCategory.HalfMeals, MealType.Standard);
+        Meal meal = new Meal("meal", restaurant, MealCategory.HalfMeals, FoodType.Standard);
         meal.addItem(pizza);
         restaurant.addMeal(meal);
 
         Assert.assertTrue(restaurant.getMeal("meal").getItems().size() == 1);
 
-        Item jiaozi = new Item("jiaozi", new BigDecimal(2), ItemCategory.MainDish, ItemType.Standard);
+        Item jiaozi = new Item("jiaozi", new BigDecimal(2), ItemCategory.MainDish, FoodType.Standard);
 
         meal.addItem(jiaozi);
         restaurant.updateMeal(meal);

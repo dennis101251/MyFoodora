@@ -211,4 +211,16 @@ public class Restaurant extends User {
 	public Coordinate getAddress(){
 		return address;
 	}
+
+	public void removeItemAtIndex(int selectedIndex) {
+
+		this.items.remove(selectedIndex);
+
+	}
+
+	public void removeMealAtIndex(int selectedIndex) {
+
+		this.meals.remove(selectedIndex);
+
+	}
 }

@@ -1,13 +1,16 @@
 package fr.ecp.IS1220.group5.project;
 
 import fr.ecp.IS1220.group5.project.GUI.*;
-import fr.ecp.IS1220.group5.project.menu.Food;
-import fr.ecp.IS1220.group5.project.menu.Item;
-import fr.ecp.IS1220.group5.project.menu.Meal;
+import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
+import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
+import fr.ecp.IS1220.group5.project.exception.IncompatibleFoodTypeException;
+import fr.ecp.IS1220.group5.project.exception.TooManyItemsException;
+import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.*;
 import fr.ecp.IS1220.group5.project.util.*;
 
 import javax.swing.*;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
@@ -313,6 +316,108 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         else {
             System.out.println("there is no user connected in system");
             JOptionPane.showMessageDialog(new JFrame(),"there is no user connected in system","Disconnect",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public Item[] getItems() {
+        ArrayList<Item> items = ((Restaurant) currentUser).getItems();
+        return items.toArray(new Item[items.size()]);
+
+    }
+
+    public Meal[] getMeals() {
+
+        ArrayList<Meal> meals = ((Restaurant) currentUser).getMeals();
+        return meals.toArray(new Meal[meals.size()]);
+
+    }
+
+    public String[] getItems(ItemCategory itemCategory, FoodType foodType) {
+
+       ArrayList<Item> items = ((Restaurant) currentUser).getItems();
+       ArrayList<String> itemsOfCategoryAndType = new ArrayList<>();
+
+       for (Item item : items){
+
+           if ((item.getItemCategory() == itemCategory) && (item.getFoodType() == foodType)){
+
+               itemsOfCategoryAndType.add(item.getName());
+
+           }
+
+       }
+
+       return itemsOfCategoryAndType.toArray(new String[itemsOfCategoryAndType.size()]);
+
+    }
+
+    public void createItemGUI(String itemName, BigDecimal price, ItemCategory itemCategory, FoodType foodType) throws EmptyNameException, DuplicateNameException {
+        if (currentUser instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) currentUser;
+
+            if (restaurant.getItem(itemName) != null){ //This item already exists
+
+                throw new DuplicateNameException();
+
+            } else {
+
+                Item item = new Item(itemName, price, itemCategory, foodType);
+                restaurant.addItem(item);
+
+                System.out.println(item + " was successfully created!");
+
+            }
+
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a item.");
+
+        }
+    }
+
+    public void createMealGUI(String mealName, MealCategory mealCategory, FoodType foodType) throws DuplicateNameException, EmptyNameException {
+        if (currentUser instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) currentUser;
+
+            if (restaurant.getMeal(mealName) != null){ //This meal already exists
+
+                throw new DuplicateNameException();
+
+            } else {
+
+                Meal meal = null;
+
+                meal = new Meal(mealName, (Restaurant) currentUser, mealCategory, foodType);
+
+                restaurant.addMeal(meal);
+
+                System.out.println(meal + " was successfully created!");
+
+            }
+
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to create a meal.");
+
+        }
+    }
+
+    public void addDish2MealGUI(String itemName, String mealName) throws IncompatibleFoodTypeException, TooManyItemsException {
+        if (currentUser instanceof Restaurant){
+
+            Restaurant restaurant = (Restaurant) currentUser;
+            Meal meal = restaurant.getMeal(mealName);
+            Item item = restaurant.getItem(itemName);
+            meal.addItem(item);
+
+        } else {
+
+            System.out.println("Your restaurant must be logged in to add a dish to a meal.");
+
         }
     }
 }
