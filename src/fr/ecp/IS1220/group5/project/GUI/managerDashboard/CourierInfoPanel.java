@@ -8,6 +8,7 @@ import fr.ecp.IS1220.group5.project.util.Money;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by dennis101251 on 2016/12/27.
@@ -55,7 +56,7 @@ public class CourierInfoPanel extends JPanel {
         infoPanel.add(leftPanel,c);
 
         rightPanel = new JPanel();
-        rightPanel.setLayout(new GridLayout(5,1));
+        rightPanel.setLayout(new GridLayout(6,1));
         rightPanel.add(new JLabel("Current Address: " + courier.getPosition().toString()));
         rightPanel.add(new JLabel("Working state: " + courier.getWorkingState()));
         rightPanel.add(new JLabel("Delivery number: " + courier.getDeliveredOrdersCounter()));
@@ -98,6 +99,29 @@ public class CourierInfoPanel extends JPanel {
 
         statusPanel.add(status);
         rightPanel.add(statusPanel);
+        JButton removeButton = new JButton("Delete this user");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int userChoice = JOptionPane.showOptionDialog(new JFrame(),"You want to delete this user?","Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new String[]{"Cancel","Yes"},null);
+                if (userChoice == 1){
+                    //Confirm
+                    try {
+                        myFoodoraSystem.removeUser(courier.getUsername());
+                        notifyObserver();
+                        userInfoPanel.showDefaultPanel();
+                    } catch (UserNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
+                    notifyObserver();
+                }
+                else if (userChoice == 0){
+                    //Cancel
+
+                }
+            }
+        });
+        rightPanel.add(removeButton);
         rightPanel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
 
         c.gridx = 1;

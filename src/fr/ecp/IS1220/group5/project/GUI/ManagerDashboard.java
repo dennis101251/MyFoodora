@@ -33,7 +33,6 @@ public class ManagerDashboard extends JFrame{
     DefaultListModel<String> restaurantsName;
     DefaultListModel<String> couriersName;
 
-
     JLabel name;
 
     public ManagerDashboard(){
@@ -54,7 +53,7 @@ public class ManagerDashboard extends JFrame{
         headerPanel = new JPanel();
         headerPanel.setLayout(new GridBagLayout());
 
-        JLabel welcomeLabel = new JLabel("Welcome " + myFoodoraSystem.getCurrentUser().getName() + " !");
+        JLabel welcomeLabel = new JLabel("Welcome " + " " + myFoodoraSystem.getCurrentUser().getType() + " "+ myFoodoraSystem.getCurrentUser().getName() + " !");
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
@@ -92,7 +91,7 @@ public class ManagerDashboard extends JFrame{
         tabbedPane = new JTabbedPane();
 
         userTabPanel = new UserTabPanel();
-        userTabPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+//        userTabPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
         financialTabPanel = new FinancialTabPanel();
         deliveryTabPanel = new JPanel();
         tabbedPane.addTab("User", userTabPanel);

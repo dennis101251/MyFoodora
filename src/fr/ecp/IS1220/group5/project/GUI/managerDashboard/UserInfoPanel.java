@@ -70,4 +70,8 @@ public class UserInfoPanel extends JPanel{
     public void notifyObserver(){
         userTabPanel.updateInfo();
     }
+
+    public void showDefaultPanel(){
+        card.show(this,"DefaultInfoPanel");
+    }
 }

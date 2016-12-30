@@ -34,6 +34,7 @@ public class UserTabPanel extends JPanel{
     JList<String> customersList;
     JList<String> courierList;
     JList<String> restaurantList;
+    JLabel clientsLabel;
     DefaultListModel<String> customersNames;
     DefaultListModel<String> restaurantsName;
     DefaultListModel<String> couriersName;
@@ -61,7 +62,8 @@ public class UserTabPanel extends JPanel{
         c.weightx = 1;
         c.weighty = 0;
 //        c.anchor = GridBagConstraints.EAST;
-        headerPanel.add(new JLabel("        Total Client: " + myFoodoraSystem.getNumOfAllCLients()),c);
+        clientsLabel = new JLabel("        Total Client: " + myFoodoraSystem.getNumOfAllCLients());
+        headerPanel.add(clientsLabel,c);
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
@@ -108,6 +110,7 @@ public class UserTabPanel extends JPanel{
         customerUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                customers = myFoodoraSystem.getCustomersUp();
                 customersList.setModel(listUser(myFoodoraSystem.getCustomersUp()));
             }
         });
@@ -117,6 +120,7 @@ public class UserTabPanel extends JPanel{
         customerDown.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                customers = myFoodoraSystem.getCustomersDown();
                 customersList.setModel(listUser(myFoodoraSystem.getCustomersDown()));
             }
         });
@@ -180,6 +184,7 @@ public class UserTabPanel extends JPanel{
         restaurantUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                restaurants = myFoodoraSystem.getRestaurantsUp();
                 restaurantList.setModel(listUser(myFoodoraSystem.getRestaurantsUp()));
             }
         });
@@ -189,6 +194,7 @@ public class UserTabPanel extends JPanel{
         restaurantDown.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                restaurants = myFoodoraSystem.getRestaurantsDown();
                 restaurantList.setModel(listUser(myFoodoraSystem.getRestaurantsDown()));
             }
         });
@@ -251,6 +257,7 @@ public class UserTabPanel extends JPanel{
         courierUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                couriers = myFoodoraSystem.getCouriersUp();
                 courierList.setModel(listUser(myFoodoraSystem.getCouriersUp()));
             }
         });
@@ -260,6 +267,7 @@ public class UserTabPanel extends JPanel{
         courierDown.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                couriers = myFoodoraSystem.getCouriersDown();
                 courierList.setModel(listUser(myFoodoraSystem.getCouriersDown()));
             }
         });
@@ -329,8 +337,9 @@ public class UserTabPanel extends JPanel{
     }
 
     public void updateInfo(){
-        customersList.setModel(listUser(customers));
-        restaurantList.setModel(listUser(restaurants));
-        courierList.setModel(listUser(couriers));
+        clientsLabel.setText("        Total Client: " + myFoodoraSystem.getNumOfAllCLients());
+        customersList.setModel(listUser(myFoodoraSystem.getCustomers()));
+        restaurantList.setModel(listUser(myFoodoraSystem.getRestaurants()));
+        courierList.setModel(listUser(myFoodoraSystem.getCouriers()));
     }
 }
