@@ -23,7 +23,7 @@ import java.util.Observable;
  * @see Item
  * @see Meal
  */
-public class Order  extends Observable implements Serializable{
+public class Order extends Observable implements Serializable{
 
 	private static final long serialVersionUID = -4389016276908172461L;
 	/**

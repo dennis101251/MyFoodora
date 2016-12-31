@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -419,5 +420,71 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
             System.out.println("Your restaurant must be logged in to add a dish to a meal.");
 
         }
+    }
+
+    public void setGenericDiscountFactor(BigDecimal GenericDiscountFactor){
+        if (currentUser instanceof Restaurant){
+            if (GenericDiscountFactor.doubleValue() < 1 && GenericDiscountFactor.doubleValue() > 0){
+                ((Restaurant) currentUser).setGenericDiscountFactor(GenericDiscountFactor);
+                JOptionPane.showMessageDialog(new JFrame(), "The discount factor has been applied successfully!","Success", JOptionPane.INFORMATION_MESSAGE);
+                saveMenu();
+            }
+            else {
+                JOptionPane.showMessageDialog(new JFrame(),"The discount factor must be > 0 and < 1.","Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            System.out.println("Your restaurant must log in.");
+        }
+    }
+
+    public void setSpecialDiscountFactor(BigDecimal specialDiscountFactor){
+        if (currentUser instanceof Restaurant){
+            if (specialDiscountFactor.doubleValue() < 1 && specialDiscountFactor.doubleValue() > 0){
+                ((Restaurant) currentUser).setSpecialDiscountFactor(specialDiscountFactor);
+                JOptionPane.showMessageDialog(new JFrame(), "The discount factor has been applied successfully!","Success", JOptionPane.INFORMATION_MESSAGE);
+                saveMenu();
+            }
+            else {
+                JOptionPane.showMessageDialog(new JFrame(),"The discount factor must be > 0 and < 1.","Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            System.out.println("Your restaurant must log in.");
+        }
+    }
+
+
+    /**
+     * sort ordered items in a sequence given by the value of comparator
+     */
+    public DefaultListModel<String> sortMeals(Comparator comparator){
+
+        DefaultListModel<String> mealsListModel = new DefaultListModel<>();
+
+        ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllMeals(((Restaurant) currentUser).getOrders()));
+        Collections.sort(sortMeal, comparator);
+        for (Sort sortmeal: sortMeal) {
+            mealsListModel.addElement((sortmeal.getType()).getName() + "     Qty: " + sortmeal.getQuantity());
+        }
+
+        return mealsListModel;
+
+    }
+
+
+    /**
+     * sort ordered items in a sequence given by the value of comparator
+     */
+    public DefaultListModel<String> sortItems(Comparator comparator){
+
+        DefaultListModel<String> itemsListModel = new DefaultListModel<>();
+
+        ArrayList<Sort> sortMeal = getQuantityOfFoods(getAllItems(((Restaurant) currentUser).getOrders()));
+        Collections.sort(sortMeal, comparator);
+        for (Sort sortmeal: sortMeal) {
+            itemsListModel.addElement((sortmeal.getType()).getName() + "     Qty: " + sortmeal.getQuantity());
+        }
+
+        return itemsListModel;
+
     }
 }

@@ -88,6 +88,10 @@ public class Meal  implements Serializable, Food {
 		this.updatePrice();
 	}
 
+	public boolean isMealOfTheWeek(){
+		return isMealOfTheWeek;
+	}
+
 	/**
 	 * Updates the total price of the meal, by applying the discount_factor of the restaurant.
 	 *	If this meal is the meal of the week, the discount factor is special_discout_factor
