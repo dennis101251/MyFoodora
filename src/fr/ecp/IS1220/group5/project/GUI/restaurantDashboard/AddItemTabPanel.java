@@ -125,7 +125,7 @@ public class AddItemTabPanel extends JPanel implements ActionListener {
         this.add(typePanel);
 
         JPanel createPanel = new JPanel();
-        JButton createButton = new JButton("Create");
+        JButton createButton = new JButton("Create Item");
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,7 +162,9 @@ public class AddItemTabPanel extends JPanel implements ActionListener {
 
         try {
 
-            myFoodoraSystem.createItemGUI(nameTextField.getText(), new BigDecimal(priceTextField.getText()), itemCategory, foodType);
+            BigDecimal price = new BigDecimal(priceTextField.getText());
+
+            myFoodoraSystem.createItemGUI(nameTextField.getText(), price, itemCategory, foodType);
             myFoodoraSystem.saveMenu();
             restaurantDashboard.update();
             nameTextField.setText("");
@@ -177,6 +179,8 @@ public class AddItemTabPanel extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(new JFrame(),"The item's name must not be empty.","Error", JOptionPane.ERROR_MESSAGE);
         } catch (DuplicateNameException e) {
             JOptionPane.showMessageDialog(new JFrame(),"This item's name already exists.","Error", JOptionPane.ERROR_MESSAGE);
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(new JFrame(),"Invalid price format \nIt must not be empty and contain only digits and a dot.","Error", JOptionPane.ERROR_MESSAGE);
         }
 
 

@@ -232,7 +232,7 @@ public class AddMealTabPanel extends JPanel {
 
         //Create
         JPanel createPanel = new JPanel();
-        JButton createButton = new JButton("Create");
+        JButton createButton = new JButton("Create Meal");
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

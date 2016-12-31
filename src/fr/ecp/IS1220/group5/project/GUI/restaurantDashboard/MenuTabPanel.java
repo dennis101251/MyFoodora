@@ -14,9 +14,7 @@ import fr.ecp.IS1220.group5.project.util.Money;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -54,7 +52,7 @@ public class MenuTabPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
         c.weighty = 0;
-        headerPanel.add(new JLabel("Double-click to remove"), c);
+        headerPanel.add(new JLabel("The Menu"), c);
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
@@ -65,6 +63,8 @@ public class MenuTabPanel extends JPanel {
         workingPanel = new JPanel();
         workingPanel.setLayout(new GridBagLayout());
 
+
+        //Items panel
         itemsPanel = new JPanel();
         itemsPanel.setLayout(new GridBagLayout());
 
@@ -75,18 +75,6 @@ public class MenuTabPanel extends JPanel {
         itemsList.setFixedCellHeight(25);
         itemsList.setFixedCellWidth(150);
         itemsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        itemsList.isSelectedIndex(0);
-        itemsList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    removeItemFromMenu();
-                }
-
-            }
-
-        });
-
 
         JScrollPane scrollPane1 = new JScrollPane(itemsList);
         JLabel customersPanelLabel = new JLabel("Items");
@@ -110,7 +98,7 @@ public class MenuTabPanel extends JPanel {
         c.weighty = 0;
         workingPanel.add(itemsPanel,c);
 
-        //Middle Panel
+        //Meals Panel
         mealsPanel = new JPanel();
         mealsPanel.setLayout(new GridBagLayout());
 
@@ -121,17 +109,6 @@ public class MenuTabPanel extends JPanel {
         mealsList.setFixedCellHeight(25);
         mealsList.setFixedCellWidth(150);
         mealsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        mealsList.isSelectedIndex(0);
-        mealsList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    removeMealFromMenu();
-                }
-
-            }
-
-        });
 
         JScrollPane scrollPane2 = new JScrollPane(mealsList);
         JLabel restaurantsPanelLabel = new JLabel("Meals");
@@ -161,20 +138,92 @@ public class MenuTabPanel extends JPanel {
         c.weightx = 0;
         c.weighty = 1;
         this.add(workingPanel,c);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new GridBagLayout());
+
+        JButton removeItemButton = new JButton("Remove item");
+        removeItemButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeItemFromMenu();
+            }
+        });
+        c.gridx = 0;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0;
+        c.weighty = 0;
+        buttonsPanel.add(removeItemButton, c);
+
+        JButton removeMealButton = new JButton("Remove meal");
+        removeMealButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeMealFromMenu();
+            }
+        });
+        c.gridx = 1;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0;
+        c.weighty = 0;
+        buttonsPanel.add(removeMealButton, c);
+
+        JButton setMealOfTheWeekButton = new JButton("Set meal-of-the-week (MOTW)");
+        setMealOfTheWeekButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setMealOfTheWeek();
+            }
+        });
+        c.gridx = 1;
+        c.gridy = 1;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0;
+        c.weighty = 0;
+        buttonsPanel.add(setMealOfTheWeekButton, c);
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+        c.weighty = 0;
+        this.add(buttonsPanel, c);
     }
 
     private void removeItemFromMenu() {
-
-        ((Restaurant) myFoodoraSystem.getCurrentUser()).removeItemAtIndex(itemsList.getSelectedIndex());
-        myFoodoraSystem.saveMenu();
-        restaurantDashboard.update();
+        if (itemsList.getSelectedIndex() != -1) {
+            ((Restaurant) myFoodoraSystem.getCurrentUser()).removeItemAtIndex(itemsList.getSelectedIndex());
+            myFoodoraSystem.saveMenu();
+            restaurantDashboard.update();
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(),"You must select an item","Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void removeMealFromMenu() {
+        if (mealsList.getSelectedIndex() != -1) {
+            ((Restaurant) myFoodoraSystem.getCurrentUser()).removeMealAtIndex(mealsList.getSelectedIndex());
+            myFoodoraSystem.saveMenu();
+            restaurantDashboard.update();
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(),"You must select a meal","Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-        ((Restaurant) myFoodoraSystem.getCurrentUser()).removeMealAtIndex(mealsList.getSelectedIndex());
-        myFoodoraSystem.saveMenu();
-        restaurantDashboard.update();
+    private void setMealOfTheWeek(){
+        if (mealsList.getSelectedIndex() != -1) {
+            for (int i = 0; i < meals.length; i++) {
+                meals[i].setMealOfTheWeek(i == mealsList.getSelectedIndex());
+            }
+
+            myFoodoraSystem.saveMenu();
+            restaurantDashboard.update();
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(),"You must select a meal","Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
 
@@ -182,7 +231,7 @@ public class MenuTabPanel extends JPanel {
         DefaultListModel<String> nameModel = new DefaultListModel<>();
         for (Food food: dishes){
 
-            nameModel.addElement(food.getName() + " : " + Money.display(food.getPrice()));
+            nameModel.addElement(food.getName() + " : " + Money.display(food.getPrice()) + ((food instanceof Meal && ((Meal) food).isMealOfTheWeek()) ? " (MOTW)" : ""));
         }
         return nameModel;
     }
@@ -193,6 +242,9 @@ public class MenuTabPanel extends JPanel {
         itemsList.setModel(listFood(items));
 
         meals = myFoodoraSystem.getMeals();
+        for (Meal meal : meals){
+            meal.updatePrice();
+        }
         mealsList.setModel(listFood(meals));
 
     }

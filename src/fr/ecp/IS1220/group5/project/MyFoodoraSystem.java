@@ -2326,6 +2326,7 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Restaurant){
             if (specialDiscountFactor.doubleValue() < 1 && specialDiscountFactor.doubleValue() > 0){
                 ((Restaurant) currentUser).setSpecialDiscountFactor(specialDiscountFactor);
+
             }
             else {
                 System.out.println("invalid input");

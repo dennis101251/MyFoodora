@@ -3,7 +3,7 @@ package fr.ecp.IS1220.group5.project.GUI;
 import fr.ecp.IS1220.group5.project.GUI.restaurantDashboard.AddItemTabPanel;
 import fr.ecp.IS1220.group5.project.GUI.restaurantDashboard.AddMealTabPanel;
 import fr.ecp.IS1220.group5.project.GUI.restaurantDashboard.MenuTabPanel;
-import fr.ecp.IS1220.group5.project.GUI.restaurantDashboard.StatisticsTabPanel;
+import fr.ecp.IS1220.group5.project.GUI.restaurantDashboard.ManageTabPanel;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 import fr.ecp.IS1220.group5.project.user.Courier;
 import fr.ecp.IS1220.group5.project.user.Customer;
@@ -35,7 +35,7 @@ public class RestaurantDashboard extends JFrame{
     MenuTabPanel menuTabPanel;
     AddItemTabPanel addItemTabPanel;
     AddMealTabPanel addMealTabPanel;
-    StatisticsTabPanel statisticsTabPanel;
+    ManageTabPanel statisticsTabPanel;
 
     JList<String> customersList;
     JList<String> courierList;
@@ -51,7 +51,7 @@ public class RestaurantDashboard extends JFrame{
         super();
         myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
 
-        this.setSize(700, 450);
+        this.setSize(700, 550);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -105,11 +105,11 @@ public class RestaurantDashboard extends JFrame{
         menuTabPanel = new MenuTabPanel(this);
         addItemTabPanel = new AddItemTabPanel(this);
         addMealTabPanel = new AddMealTabPanel(this);
-        statisticsTabPanel = new StatisticsTabPanel();
+        statisticsTabPanel = new ManageTabPanel(this);
         tabbedPane.addTab("Menu", menuTabPanel);
         tabbedPane.addTab("Add Item", addItemTabPanel);
         tabbedPane.addTab("Add Meal", addMealTabPanel);
-        tabbedPane.addTab("Stats.", statisticsTabPanel);
+        tabbedPane.addTab("Manage", statisticsTabPanel);
         workingPanel.add(tabbedPane);
 
         c.gridx = 0;
