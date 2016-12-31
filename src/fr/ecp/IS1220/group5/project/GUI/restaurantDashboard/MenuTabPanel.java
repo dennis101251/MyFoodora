@@ -2,21 +2,16 @@ package fr.ecp.IS1220.group5.project.GUI.restaurantDashboard;
 
 import fr.ecp.IS1220.group5.project.GUI.RestaurantDashboard;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
-import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.Food;
 import fr.ecp.IS1220.group5.project.menu.Item;
 import fr.ecp.IS1220.group5.project.menu.Meal;
-import fr.ecp.IS1220.group5.project.user.Courier;
-import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
-import fr.ecp.IS1220.group5.project.user.User;
 import fr.ecp.IS1220.group5.project.util.Money;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.Observable;
-import java.util.Observer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by dennis101251 on 2016/12/27.
@@ -216,6 +211,7 @@ public class MenuTabPanel extends JPanel {
         if (mealsList.getSelectedIndex() != -1) {
             for (int i = 0; i < meals.length; i++) {
                 meals[i].setMealOfTheWeek(i == mealsList.getSelectedIndex());
+                myFoodoraSystem.setSpecialOffer(meals[i].getName());
             }
 
             myFoodoraSystem.saveMenu();

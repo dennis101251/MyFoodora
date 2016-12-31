@@ -7,16 +7,13 @@ import fr.ecp.IS1220.group5.project.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
  * Created by dennis101251 on 2016/12/31.
  */
-public class InfoBoardFrame extends JFrame {
+public class InfoBoardFrame extends JFrame implements WindowListener{
 
     private MyFoodoraSystemGUI myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
 
@@ -110,6 +107,7 @@ public class InfoBoardFrame extends JFrame {
         messageArea.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
         messageArea.setLineWrap(true);
         messageArea.setWrapStyleWord(true);
+        messageArea.setEditable(false);
         messageArea.setFont(new Font("Helvetica",Font.PLAIN,14));
         contentPanel.add(messageArea,new GBC(0,0,2,1));
         star = new JButton("Star");
@@ -208,6 +206,9 @@ public class InfoBoardFrame extends JFrame {
         this.pack();
         setVisible(true);
         this.setLocationRelativeTo(null);
+
+        this.addWindowListener(this);
+
     }
 
     public DefaultListModel<String> listTitle(ArrayList<Message> messages){
@@ -235,5 +236,41 @@ public class InfoBoardFrame extends JFrame {
     public void enableButton(boolean state){
         star.setEnabled(state);
         delete.setEnabled(state);
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        infoBoardFrame = null;
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }
