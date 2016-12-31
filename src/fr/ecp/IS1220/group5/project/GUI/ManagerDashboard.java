@@ -107,6 +107,7 @@ public class ManagerDashboard extends JFrame{
         mainPanel.add(workingPanel,c);
 
         this.setLocationRelativeTo(null);
+        this.pack();
         setVisible(true);
     }
 

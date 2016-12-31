@@ -6,6 +6,7 @@ import fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard;
 import fr.ecp.IS1220.group5.project.fidelity.PointFidelityCard;
 import fr.ecp.IS1220.group5.project.menu.Order;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
+import fr.ecp.IS1220.group5.project.util.Message;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -153,5 +154,9 @@ public class Customer extends User {
 			total = total.add(order.getTotal_price());
 		}
 		return total;
+	}
+
+	public void	updateMessage(Message message){
+		infoBoard.updateMessage(message);
 	}
 }

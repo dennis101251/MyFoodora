@@ -1,5 +1,6 @@
 package fr.ecp.IS1220.group5.project.GUI;
 
+import fr.ecp.IS1220.group5.project.GUI.customerDashboard.InfoBoardFrame;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.Food;
@@ -74,6 +75,20 @@ public class CustomerDashboard extends JFrame implements Observer{
         c.weighty = 0;
         headerPanel.add(welcomeLabel, c);
 
+        JButton infoBoardButton = new JButton("Check Infoboard");
+        infoBoardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InfoBoardFrame.getIntance();
+            }
+        });
+        c.gridx = 1;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0;
+        c.weighty = 0;
+        headerPanel.add(infoBoardButton, c);
+
         JButton logoutButton = new JButton("Log out");
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -83,7 +98,7 @@ public class CustomerDashboard extends JFrame implements Observer{
                 new Login();
             }
         });
-        c.gridx = 1;
+        c.gridx = 2;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;

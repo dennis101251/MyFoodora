@@ -91,6 +91,8 @@ public class MyFoodoraSystem {
     protected BigDecimal total_profit = new BigDecimal("0");
     protected BigDecimal target_profit = new BigDecimal("0");
     protected BigDecimal averageIncomePerCustomer = new BigDecimal(0);
+
+    //Only used for the ManagerDashboard
     protected BigDecimal tmpService_fee = new BigDecimal("0");
     protected BigDecimal tmpMarkup_percentage = new BigDecimal("0");
     protected BigDecimal tmpDelivery_cost_price = new BigDecimal("0");
@@ -278,6 +280,13 @@ public class MyFoodoraSystem {
             System.out.println("You must log in first");
         }
 
+    }
+
+    /**
+     * save the user
+     */
+    public void saveUser(){
+        users.saveUsers();
     }
 
     /**
@@ -1995,7 +2004,7 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Customer) {
             if (((Customer) currentUser).infoBoard.isNotified()){
                 Integer num = ((Customer) currentUser).infoBoard.getNumberOfNewMeassages();
-                ArrayList<String> messages = ((Customer) currentUser).infoBoard.getMessages();
+                ArrayList<Message> messages = ((Customer) currentUser).infoBoard.getMessages();
                 if (messages.isEmpty()){
                     System.out.println("You have no message");
                 }
@@ -2008,10 +2017,10 @@ public class MyFoodoraSystem {
                     }
                     for (int i = 0; i < messages.size(); i++) {
                         if (i < num ){
-                            System.out.println(">> new message: " + messages.get(i));
+                            System.out.println(">> new message: " + messages.get(i).showMessage());
                         }
                         else {
-                            System.out.println(">> " + messages.get(i));
+                            System.out.println(">> " + messages.get(i).showMessage());
                         }
                     }
                 }
@@ -2021,6 +2030,30 @@ public class MyFoodoraSystem {
                 System.out.println("Please set infoBoard notified on");
             }
         }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    public void deleteMessage(int index){
+        if (currentUser instanceof Customer){
+            if (((Customer) currentUser).infoBoard.isNotified()){
+                ArrayList<Message> messages = ((Customer) currentUser).infoBoard.getMessages();
+                if (messages.isEmpty()){
+                    System.out.println("You have no message");
+                }
+                else if (index > messages.size()){
+                    System.out.println("invalid input(out of bound)");
+                }
+                else {
+                    ((Customer) currentUser).infoBoard.deleteMessage(index);
+                    users.saveUsers();
+                }
+            }
+            else {
+                System.out.println("You can't receive message from myFoodora");
+                System.out.println("Please set infoBoard notified on");
+            }        }
         else {
             System.out.println("You must log in first");
         }
@@ -2229,18 +2262,21 @@ public class MyFoodoraSystem {
      * Enables a restaurant to send a message to customers who have set notifications "on".
      * Only for restaurants.
      *
-     * @param string
+     * @param title the title of the message
+     * @param message the content of the message
      */
-    public void sendMessage(String string){
+    public void sendMessage(String title, String message){
         if (currentUser instanceof Restaurant){
             for (User user: users.getUsers()
                  ) {
                 if (user instanceof Customer) {
                     if (((Customer) user).infoBoard.isNotified()){
-                        ((Customer) user).infoBoard.addMessage(string);
+                        Message newMessage = new Message(title, currentUser.getName(), message);
+                        ((Customer) user).infoBoard.addMessage(newMessage);
                     }
                 }
             }
+            users.saveUsers();
         } else {
             System.out.println("You have to log in");
         }
@@ -2307,10 +2343,16 @@ public class MyFoodoraSystem {
     public void setSpecialOffer(String mealName){
         if (currentUser instanceof Restaurant){
             Meal meal = ((Restaurant) currentUser).getMeal(mealName);
-            meal.setMealOfTheWeek(true);
-            ((Restaurant) currentUser).updateMeal(meal);
-            sendMessage("Meal of week || " + currentUser.getName() + " << " + mealName + " >>" );
-        } else {
+            if (meal != null){
+                meal.setMealOfTheWeek(true);
+                ((Restaurant) currentUser).updateMeal(meal);
+                sendMessage("Meal of week", " << " + mealName + " >> has been set as the meal of week");
+            }
+            else {
+                System.out.println("didn't find >> " + mealName);
+            }
+        }
+        else {
             System.out.println("Your restaurant must log in.");
         }
     }

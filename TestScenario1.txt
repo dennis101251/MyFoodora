@@ -41,3 +41,11 @@ disconnect
 login jz 123456
 accept
 disconnect
+login mcdonalds 123456
+setSpecialOffer BestOf
+sendMessage title thisIsTheMessage
+disconnect
+login ly 873433
+deleteMessage 1
+checkInfoBoard
+disconnect

@@ -1,6 +1,5 @@
 package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.menu.Order;
 import fr.ecp.IS1220.group5.project.user.Userlist;
@@ -154,7 +153,11 @@ public class CommandLine {
                 }
                 break;
             case "sendMessage":
-                myFoodoraSystem.sendMessage(commands[1]);
+                if (commands.length == 3) {
+                    myFoodoraSystem.sendMessage(commands[1],commands[2]);
+                } else {
+                    System.out.println("not enough input");
+                }
                 break;
             case "showOrdersOfRestaurant":
                 myFoodoraSystem.showOrdersOfRestaurant();
@@ -231,7 +234,9 @@ public class CommandLine {
                     System.out.println("not enough input");
                 }
                 break;
-
+            case "deleteMessage":
+                myFoodoraSystem.deleteMessage(Integer.parseInt(commands[1]));
+                break;
             //Manager
             case "showAllCustomers":
                 myFoodoraSystem.showAllCustomers();

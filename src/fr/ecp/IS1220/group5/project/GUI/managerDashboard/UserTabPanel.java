@@ -310,6 +310,7 @@ public class UserTabPanel extends JPanel{
         c.weightx = 0;
         c.weighty = 1;
         this.add(userInfoPanal,c);
+
     }
 
     public static DefaultListModel<String> listUser(User[] users){

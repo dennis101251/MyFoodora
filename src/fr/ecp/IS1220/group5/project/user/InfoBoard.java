@@ -1,5 +1,7 @@
 package fr.ecp.IS1220.group5.project.user;
 
+import fr.ecp.IS1220.group5.project.util.Message;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,29 +11,36 @@ import java.util.ArrayList;
  * @see Customer
  */
 public class InfoBoard implements Serializable{
+
     /**
      * The stored message of the info-board.
      */
-    private ArrayList<String> messages = new ArrayList<>();
+    protected ArrayList<Message> messages = new ArrayList<>();
 
     /**
      * where the Customer will receive his notification ("email" ord "phone").
      */
-    private String contactType = "email";
+    protected String contactType = "email";
+
     /**
      * the email of the Customer/
      */
-    private String email;
+    protected String email;
+
     /**
      * the phone number of the Customer.
      */
-    private String phone;
+    protected String phone;
+
     /**
      * the number of new messages. 0 if there isn't any new message.
      */
-    private Integer numberOfNewMeassages = 0;
+    protected Integer numberOfNewMeassages = 0;
 
-    private Boolean isNotified = true;
+    /**
+     * the attribute to show whether this infobaord can be notified by restaurant
+     */
+    protected Boolean isNotified = true;
 
     /**
      * Returns the email of the Customer.
@@ -77,7 +86,7 @@ public class InfoBoard implements Serializable{
      * Returns the list of all stored messages.
      * @return the list of all sored messages.
      */
-    public ArrayList<String> getMessages() {
+    public ArrayList<Message> getMessages() {
         numberOfNewMeassages = 0;
         return messages;
     }
@@ -86,7 +95,7 @@ public class InfoBoard implements Serializable{
      * Adds a message to the info-board.
      * @param message the message to add to the info-board.
      */
-    public void addMessage(String message){
+    public void addMessage(Message message){
         numberOfNewMeassages = numberOfNewMeassages + 1;
         this.messages.add(message);
     }
@@ -128,5 +137,28 @@ public class InfoBoard implements Serializable{
      */
     public Boolean isNotified(){
         return isNotified;
+    }
+
+    /**
+     * delete the message
+     */
+    public void deleteMessage(int index){
+        messages.remove(index - 1);
+//        System.out.println(messages.size());
+    }
+
+    /**
+     * update the message
+     */
+    public void updateMessage(Message newMessage){
+        messages.remove(newMessage);
+        messages.add(newMessage);
+    }
+
+    /**
+     * delete a message
+     */
+    public void deleteMessage(Message message){
+        messages.remove(message);
     }
 }

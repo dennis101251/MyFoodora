@@ -1,6 +1,7 @@
 package fr.ecp.IS1220.group5.project;
 
 import fr.ecp.IS1220.group5.project.GUI.*;
+import fr.ecp.IS1220.group5.project.GUI.customerDashboard.InfoBoardFrame;
 import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
 import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
 import fr.ecp.IS1220.group5.project.exception.IncompatibleFoodTypeException;
@@ -63,11 +64,9 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
                             this.currentUser = myUser;
                             System.out.println( myUser.getName() + ": welcome to myFoodora!");
                             System.out.println("==============================================");
-//                            loginInformation();
                             login.dispose();
-                            JOptionPane.showMessageDialog(new JFrame(),"Welcome: "+myFoodoraSystemGUI.getCurrentUser().getName(),"Login",JOptionPane.INFORMATION_MESSAGE);
-
-
+                            //show the login hint info
+                            loginInformation();
 
                             creatDashboard(myUser);
                         }
@@ -98,6 +97,114 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
             //Forget to disconnect
             System.out.println("you have to disconnect first");
             JOptionPane.showMessageDialog(new JFrame(),"you have to disconnect first","Login",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void loginInformation(){
+//        System.out.println("login information");
+        String message = "Welcome: "+ myFoodoraSystemGUI.getCurrentUser().getName() + "\n";
+
+        if (currentUser instanceof Customer){
+            if (((Customer) currentUser).infoBoard.isNotified()){
+                Integer num = ((Customer) currentUser).infoBoard.getNumberOfNewMeassages();
+                ArrayList<Message> messages = ((Customer) currentUser).infoBoard.getMessages();
+                if (messages.isEmpty()){
+                    message += "You have no message";
+                    System.out.println("You have no message");
+                }
+                else {
+                    if ( num > 1){
+                        message += "You have " + num + " new messages";
+//                        JOptionPane.showMessageDialog(new JFrame(), "You have " + num + " new messages", "NEW Message",JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println("You have " + num + " new messages");
+                    }
+                    else {
+                        message += "You have " + num + " new message";
+//                        JOptionPane.showMessageDialog(new JFrame(), "You have " + num + " new message", "NEW Message",JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println("You have " + num + " new message");
+                    }
+                    message += "\n\n"+ "Do you want to show the message?";
+                    int userChoice = JOptionPane.showOptionDialog(new JFrame(),message,"Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new String[]{"Cancel","Show the message"},null);
+                    switch (userChoice){
+                        case 1:
+                            //show the information
+                            InfoBoardFrame.getIntance();
+                            break;
+                        case 0:
+                            //cancel
+                            break;
+                        default:
+                            System.out.println("error");
+                    }
+                }
+            }
+            else {
+                String str1 = "You can't receive message from myFoodora";
+                String str2 = "Please set infoBoard notified on";
+                message = message + str1 + "\n" + str2;
+                System.out.println("You can't receive message from myFoodora");
+                System.out.println("Please set infoBoard notified on");
+                JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
+
+            }
+        }
+        else if (currentUser instanceof Restaurant){
+            message += "2";
+            JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (currentUser instanceof Manager){
+            message += "3";
+            JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (currentUser instanceof Courier){
+            message += "4";
+            JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            message = "error";
+            JOptionPane.showMessageDialog(new JFrame(),message,"Login",JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    /**
+     * show the info board every time the customer login
+     * customer can also check the info board later
+     */
+    public void checkInfoBoard(){
+        if (currentUser instanceof Customer) {
+            if (((Customer) currentUser).infoBoard.isNotified()){
+                Integer num = ((Customer) currentUser).infoBoard.getNumberOfNewMeassages();
+                ArrayList<Message> messages = ((Customer) currentUser).infoBoard.getMessages();
+                if (messages.isEmpty()){
+                    System.out.println("You have no message");
+                }
+                else {
+                    if ( num > 1){
+                        JOptionPane.showMessageDialog(new JFrame(), "You have " + num + " new messages", "NEW Message",JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println("You have " + num + " new messages");
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(new JFrame(), "You have " + num + " new message", "NEW Message",JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println("You have " + num + " new message");
+                    }
+                    for (int i = 0; i < messages.size(); i++) {
+                        if (i < num ){
+                            System.out.println(">> new message: " + messages.get(i));
+                        }
+                        else {
+                            System.out.println(">> " + messages.get(i));
+                        }
+                    }
+                }
+            }
+            else {
+                System.out.println("You can't receive message from myFoodora");
+                System.out.println("Please set infoBoard notified on");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
         }
     }
 
