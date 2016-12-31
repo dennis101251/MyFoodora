@@ -19,16 +19,16 @@ public class InfoBoardFrame extends JFrame implements WindowListener{
 
     protected ArrayList<Message> messages;
 
-    private JFrame self = this;
+    private InfoBoardFrame self = this;
 
     JPanel mainPanel;
 
+    JTabbedPane allInfoPanel;
     JPanel basicInfoPanel;
         JLabel name;
         JLabel numOfMessage;
     JPanel listPanel;
         JList<String> titleList;
-//        DefaultListModel<String> messageTitles;
     JPanel contentPanel;
         JTextArea messageArea;
         JButton star;
@@ -41,6 +41,9 @@ public class InfoBoardFrame extends JFrame implements WindowListener{
         JRadioButton phoneButton = new JRadioButton("Phone");
         JRadioButton emailButton = new JRadioButton("Email");
         ActionListener listener;
+        JLabel phoneLabel;
+        JLabel emailLabel;
+        JButton newContact;
     int[] size = {5,20,230};
 
     Message message;
@@ -99,7 +102,7 @@ public class InfoBoardFrame extends JFrame implements WindowListener{
         });
         JScrollPane scrollPane = new JScrollPane(titleList);
         listPanel.add(scrollPane);
-        mainPanel.add(listPanel,new GBC(0,1));
+//        mainPanel.add(listPanel,new GBC(0,1));
 
         //Content Panel
         contentPanel = new JPanel(new GridBagLayout());
@@ -136,7 +139,7 @@ public class InfoBoardFrame extends JFrame implements WindowListener{
         enableButton(false);
         contentPanel.add(star,new GBC(0,1,1,1).setFill(GridBagConstraints.BOTH).setWeight(1,0));
         contentPanel.add(delete,new GBC(1,1,1,1).setFill(GridBagConstraints.BOTH).setWeight(1,0));
-        mainPanel.add(contentPanel,new GBC(0,2));
+//        mainPanel.add(contentPanel,new GBC(0,2));
 
         //Notify panel
         notifyPanel = new JPanel(new GridBagLayout());
@@ -161,7 +164,7 @@ public class InfoBoardFrame extends JFrame implements WindowListener{
         });
         notifyPanel.add(notifiedButton,new GBC(1,0).setFill(GridBagConstraints.BOTH));
 
-        mainPanel.add(notifyPanel,new GBC(0,3));
+//        mainPanel.add(notifyPanel,new GBC(0,3));
 
         listener = new ActionListener() {
             @Override
@@ -184,7 +187,7 @@ public class InfoBoardFrame extends JFrame implements WindowListener{
 
         contactPanel = new JPanel(new GridBagLayout());
         contactTypeLabel = new JLabel("Contact type: ");
-        contactPanel.add(contactTypeLabel,new GBC(0,0).setFill(GridBagConstraints.BOTH));
+        contactPanel.add(contactTypeLabel,new GBC(0,0));
         phoneButton.addActionListener(listener);
         emailButton.addActionListener(listener);
         String type = ((Customer) myFoodoraSystem.getCurrentUser()).infoBoard.getContactType();
@@ -199,9 +202,45 @@ public class InfoBoardFrame extends JFrame implements WindowListener{
         ButtonGroup group = new ButtonGroup();
         group.add(phoneButton);
         group.add(emailButton);
-        contactPanel.add(phoneButton,new GBC(1,0));
-        contactPanel.add(emailButton,new GBC(2,0));
-        mainPanel.add(contactPanel, new GBC(0,4));
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        buttonPanel.add(phoneButton,new GBC(0,0).setFill(GridBagConstraints.BOTH));
+        buttonPanel.add(emailButton,new GBC(1,0).setFill(GridBagConstraints.BOTH));
+
+        contactPanel.add(buttonPanel,new GBC(0,1));
+
+        phoneLabel = new JLabel("Phone: " + ((Customer) myFoodoraSystem.getCurrentUser()).infoBoard.getPhone());
+        phoneLabel.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
+        contactPanel.add(phoneLabel, new GBC(0,2));
+
+        emailLabel = new JLabel("Email: " + ((Customer) myFoodoraSystem.getCurrentUser()).infoBoard.getEmail());
+        emailLabel.setBorder(BorderFactory.createEmptyBorder(0,0,30,0));
+        contactPanel.add(emailLabel, new GBC(0,3));
+
+
+
+        newContact = new JButton("New Contact");
+        newContact.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                NewContactFrame newContactFrame = NewContactFrame.getInstance();
+                newContactFrame.addObserver(self);
+//                System.out.println("Phone: " + ((Customer) myFoodoraSystem.getCurrentUser()).infoBoard.getPhone());
+            }
+        });
+        contactPanel.add(newContact,new GBC(0,4));
+
+        allInfoPanel = new JTabbedPane();
+        JPanel messageTabPanel = new JPanel(new GridBagLayout());
+        messageTabPanel.add(listPanel,new GBC(0,0));
+        messageTabPanel.add(contentPanel,new GBC(0,1));
+        JPanel contactTabPanel = new JPanel(new GridBagLayout());
+        contactTabPanel.add(notifyPanel,new GBC(0,0));
+        contactTabPanel.add(contactPanel,new GBC(0,1));
+
+        allInfoPanel.add("Message", messageTabPanel);
+        allInfoPanel.add("Contact",contactTabPanel);
+
+        mainPanel.add(allInfoPanel, new GBC(0,1));
 
         this.pack();
         setVisible(true);
@@ -272,5 +311,10 @@ public class InfoBoardFrame extends JFrame implements WindowListener{
     @Override
     public void windowDeactivated(WindowEvent e) {
 
+    }
+
+    public void updateInfo(){
+        phoneLabel.setText("Phone: " + ((Customer) myFoodoraSystem.getCurrentUser()).infoBoard.getPhone());
+        emailLabel.setText("Email: " + ((Customer) myFoodoraSystem.getCurrentUser()).infoBoard.getEmail());
     }
 }
