@@ -1,7 +1,5 @@
-package fr.ecp.IS1220.group5.project.GUI;
+package fr.ecp.IS1220.group5.project.GUI.managerDashboard;
 
-import fr.ecp.IS1220.group5.project.GUI.managerDashboard.FinancialTabPanel;
-import fr.ecp.IS1220.group5.project.GUI.managerDashboard.UserTabPanel;
 import fr.ecp.IS1220.group5.project.Login;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 

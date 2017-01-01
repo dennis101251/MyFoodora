@@ -1,4 +1,4 @@
-package fr.ecp.IS1220.group5.project.GUI;
+package fr.ecp.IS1220.group5.project.old_classes;
 
 import fr.ecp.IS1220.group5.project.MyFoodoraSystem;
 

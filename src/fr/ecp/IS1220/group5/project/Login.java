@@ -1,6 +1,6 @@
 package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.GUI.Register;
+import fr.ecp.IS1220.group5.project.GUI.register.Register;
 
 import javax.swing.*;
 import java.awt.*;

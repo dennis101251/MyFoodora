@@ -1,9 +1,6 @@
 package fr.ecp.IS1220.group5.project.GUI.restaurantDashboard;
 
-import fr.ecp.IS1220.group5.project.GUI.RestaurantDashboard;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
-import fr.ecp.IS1220.group5.project.menu.Item;
-import fr.ecp.IS1220.group5.project.menu.Meal;
 import fr.ecp.IS1220.group5.project.user.Restaurant;
 import fr.ecp.IS1220.group5.project.util.SortByQuantityDown;
 import fr.ecp.IS1220.group5.project.util.SortByQuantityUp;

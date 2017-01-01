@@ -171,6 +171,10 @@ public class MyFoodoraSystem {
         return currentRestaurant;
     }
 
+    public Order getCurrentOrder() {
+        return currentOrder;
+    }
+
     public BigDecimal getService_fee() {
         return service_fee;
     }
@@ -632,7 +636,7 @@ public class MyFoodoraSystem {
      *     <li>The total profit</li>
      * </ul>
      */
-    private void calculateFinancial(){
+    protected void calculateFinancial(){
         //Total income
         BigDecimal money =new BigDecimal("0");
         for (Order order: orders
@@ -1661,8 +1665,7 @@ public class MyFoodoraSystem {
     public void chooseRestaurant(String restaurant){
         if (currentUser instanceof Customer){
             boolean isFound = false;
-            for (User user: users.getUsers()
-                 ) {
+            for (User user: users.getUsers()) {
                 if (user.getName().equalsIgnoreCase(restaurant) && user instanceof Restaurant){
                     isFound = true;
                     currentRestaurant = (Restaurant) user;
@@ -1839,7 +1842,6 @@ public class MyFoodoraSystem {
 
                     //apply Fidelity discount
                     currentOrder.applyFidelityDiscount();
-                    ((Customer) currentUser).getFidelityCard().addPoints(currentOrder.getTotal_price().intValue());
                     System.out.println("Total (after Fidelity discount): " + Money.display(currentOrder.getTotal_price()));
 
                     //send the order to the restaurant

@@ -1,6 +1,5 @@
-package fr.ecp.IS1220.group5.project.GUI;
+package fr.ecp.IS1220.group5.project.GUI.register;
 
-import fr.ecp.IS1220.group5.project.GUI.register.*;
 import fr.ecp.IS1220.group5.project.Login;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 

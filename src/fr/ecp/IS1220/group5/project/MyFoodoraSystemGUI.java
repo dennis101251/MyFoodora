@@ -1,11 +1,11 @@
 package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.GUI.*;
+import fr.ecp.IS1220.group5.project.GUI.courierDashboard.CourierDashboard;
+import fr.ecp.IS1220.group5.project.GUI.customerDashboard.CustomerDashboard;
 import fr.ecp.IS1220.group5.project.GUI.customerDashboard.InfoBoardFrame;
-import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
-import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
-import fr.ecp.IS1220.group5.project.exception.IncompatibleFoodTypeException;
-import fr.ecp.IS1220.group5.project.exception.TooManyItemsException;
+import fr.ecp.IS1220.group5.project.GUI.managerDashboard.ManagerDashboard;
+import fr.ecp.IS1220.group5.project.GUI.restaurantDashboard.RestaurantDashboard;
+import fr.ecp.IS1220.group5.project.exception.*;
 import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.*;
 import fr.ecp.IS1220.group5.project.util.*;
@@ -340,6 +340,29 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         }
     }
 
+    public void chooseRestaurant(String restaurant){
+        if (currentUser instanceof Customer){
+            boolean isFound = false;
+            for (User user: users.getUsers()) {
+                if (user.getName().equalsIgnoreCase(restaurant) && user instanceof Restaurant){
+                    isFound = true;
+                    currentRestaurant = (Restaurant) user;
+                    currentOrder = new Order(currentRestaurant,(Customer) currentUser, delivery_cost_price, markup_percentage, service_fee);
+                    System.out.println("you have entered: " + restaurant);
+                    break;
+                }
+            }
+            if (!isFound){
+                System.out.println(restaurant + " is not found");
+            }
+        }
+        else {
+
+            System.out.println("You must log in first");
+
+        }
+    }
+
     public void creatDashboard(User user){
         if (user instanceof Customer){
             new CustomerDashboard();
@@ -411,6 +434,59 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
         }
         else {
             return new String[0];
+        }
+    }
+
+    public void endOrder(){
+        if (currentUser instanceof Customer){
+            if (currentOrder != null){
+                if (!currentOrder.isEmpty()){
+
+                    //Show the detail of order first
+                    currentOrder.showOrder();
+                    System.out.println("Total: " + Money.display(currentOrder.getTotal_price()));
+
+                    //apply Fidelity discount
+                    currentOrder.applyFidelityDiscount();
+                    System.out.println("Total (after Fidelity discount): " + Money.display(currentOrder.getTotal_price()));
+
+                    //send the order to the restaurant
+                    currentRestaurant.addOrder(currentOrder);
+
+                    //save the order to the history of system
+                    this.orders.add(currentOrder);
+                    calculateFinancial();
+                    saveOrders();
+
+                    //distribute the order to courier
+//                    System.out.println(getAvailableCourier(currentOrder).toString());
+                    try {
+
+                        delegateOrder2Courier(currentOrder);
+
+                    } catch (UserNotFoundException e) {
+                        System.out.println("User not found");
+                    }
+
+                    //save the order to the history of customer
+                    ((Customer) currentUser).addOrderToHistory(currentOrder);
+                    users.saveUsers();
+
+                    JOptionPane.showMessageDialog(new JFrame(), "Your order of " + Money.display(currentOrder.getTotal_price()) + " (after Fidelity discount) was successfully sent to " + currentRestaurant.getName() + "!","Success", JOptionPane.INFORMATION_MESSAGE);
+
+
+                    //clean current order
+                    currentOrder = null;
+                }
+                else {
+                    JOptionPane.showMessageDialog(new JFrame(),"You have to choose a dish first.","Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }else {
+                JOptionPane.showMessageDialog(new JFrame(),"You have to choose a restaurant first.","Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else {
+            System.out.println("You must log in first");
         }
     }
 
