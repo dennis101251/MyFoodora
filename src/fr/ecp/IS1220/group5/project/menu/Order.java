@@ -366,12 +366,32 @@ public class Order extends Observable implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Order{" +
-				"items=" + items +
-				", meals=" + meals +
-				", restaurant=" + restaurant +
-				", total_price=" + order_price +
-				'}';
+		String string;
+		string = "Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName() + "\n";
+//		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
+		if (deliveryStateIsFinished){
+			string += "Courier: " + courier.getName() + "\n";
+//			System.out.println("Courier: " + courier.getName());
+		}
+		else {
+			string += "waiting to be delivered" + "\n";
+//			System.out.println("waiting to be delivered");
+		}
+		for (Item item: items
+				) {
+			string += item.getName() + " " + Money.display(item.getPrice()) + "\n";
+//			System.out.println(item.getName() + " " + Money.display(item.getPrice()));
+		}
+		for (Meal meal: meals){
+			string += meal.getName() + " " + Money.display(meal.getPrice()) + "\n";
+//			System.out.println(meal.getName() + " " + Money.display(meal.getPrice()));
+		}
+		string += ">>order price: " + Money.display(order_price) + "\n";
+		string += ">>total price: " + Money.display(total_price) + "\n";
+
+//		System.out.println(">>order price: " + Money.display(order_price));
+//		System.out.println(">>total price: " + Money.display(total_price));
+		return string;
 	}
 
 	/**

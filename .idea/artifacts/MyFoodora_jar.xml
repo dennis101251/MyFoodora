@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MyFoodora:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/MyFoodora_jar</output-path>
+    <root id="archive" name="MyFoodora.jar">
+      <element id="module-output" name="MyFoodora" />
+      <element id="library" level="project" name="hamcrest-all-1.3" />
+      <element id="library" level="project" name="JGoodies Forms" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/jcommon-1.0.23/jcommon-1.0.23.jar" path-in-jar="/" />
+      <element id="library" level="module" name="JFreeChart" module-name="MyFoodora" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/junit-4.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/hamcrest-core-1.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

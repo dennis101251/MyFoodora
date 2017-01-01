@@ -1,6 +1,7 @@
 package fr.ecp.IS1220.group5.project.GUI;
 
 import fr.ecp.IS1220.group5.project.GUI.register.*;
+import fr.ecp.IS1220.group5.project.Login;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 
 import javax.swing.*;
@@ -28,6 +29,7 @@ public class Register extends JFrame {
     ManagerRegisterPanel panelManager;
     RegisterPanel currentCard;
     ActionListener listener;
+    Register self = this;
 
     public Register(){
         super("Register");
@@ -124,7 +126,7 @@ public class Register extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Register.this.dispose();
+                self.dispose();
                 new Login();
             }
         });
@@ -132,7 +134,80 @@ public class Register extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                registerUser();
+                switch (currentCard.getUserType()){
+                    case "Customer":
+                        if (panelCustomer.getFirstName().isEmpty()||panelCustomer.getLastName().isEmpty()||panelCustomer.getUserame().isEmpty()||panelCustomer.getPassword().isEmpty()||panelCustomer.getAddress() == null||panelCustomer.getMail().isEmpty()||panelCustomer.getPhone().isEmpty()){
+                            JOptionPane.showMessageDialog(new JFrame(),"Lack of information",null,JOptionPane.ERROR_MESSAGE);
+                        }
+                        else{
+                            int reasult = myFoodoraSystem.registerCustomer(panelCustomer.getFirstName(), panelCustomer.getLastName(), panelCustomer.getUserame(),panelCustomer.getPassword() ,panelCustomer.getAddress() ,panelCustomer.getMail(), panelCustomer.getPhone());
+                            switch (reasult){
+                                case 0:
+                                    JOptionPane.showMessageDialog(new JFrame(),"Congratulation! You have registered successfully! ",null,JOptionPane.PLAIN_MESSAGE);
+                                    new Login();
+                                    self.dispose();
+                                    break;
+                                case 1:
+                                    JOptionPane.showMessageDialog(new JFrame(),"this username is not valid",null,JOptionPane.ERROR_MESSAGE);
+                                    break;
+                            }
+                        }
+                        break;
+                    case "Restaurant":
+                        if (panelRestaurant.getName().isEmpty()||panelRestaurant.getUserame().isEmpty()||panelRestaurant.getAddress() == null||panelRestaurant.getPassword().isEmpty()){
+                            JOptionPane.showMessageDialog(new JFrame(),"Lack of information",null,JOptionPane.ERROR_MESSAGE);
+                        }
+                        else {
+                            int reasult = myFoodoraSystem.registerRestaurant(panelRestaurant.getName(), panelRestaurant.getUserame(), panelRestaurant.getAddress(), panelRestaurant.getPassword());
+                            switch (reasult){
+                                case 0:
+                                    JOptionPane.showMessageDialog(new JFrame(),"Congratulation! You have registered successfully! ",null,JOptionPane.PLAIN_MESSAGE);
+                                    new Login();
+                                    self.dispose();
+                                    break;
+                                case 1:
+                                    JOptionPane.showMessageDialog(new JFrame(),"this username is not valid",null,JOptionPane.ERROR_MESSAGE);
+                                    break;
+                            }
+                        }
+                        break;
+                    case "Courier":
+                        if (panelCourier.getFirstName().isEmpty() || panelCourier.getLastName().isEmpty() || panelCourier.getUserame().isEmpty() || panelCourier.getPassword().isEmpty()||panelCourier.getAddress() == null||panelCourier.getPhone().isEmpty()){
+                            JOptionPane.showMessageDialog(new JFrame(),"Lack of information",null,JOptionPane.ERROR_MESSAGE);
+                        }
+                        else {
+                            int reasult = myFoodoraSystem.registerCourier(panelCourier.getFirstName(), panelCourier.getLastName(), panelCourier.getUserame(), panelCourier.getPassword(), panelCourier.getAddress(), panelCourier.getPhone());
+                            switch (reasult){
+                                case 0:
+                                    JOptionPane.showMessageDialog(new JFrame(),"Congratulation! You have registered successfully! ",null,JOptionPane.PLAIN_MESSAGE);
+                                    new Login();
+                                    self.dispose();
+                                    break;
+                                case 1:
+                                    JOptionPane.showMessageDialog(new JFrame(),"this username is not valid",null,JOptionPane.ERROR_MESSAGE);
+                                    break;
+                            }
+                        }
+                        break;
+                    case "Manager":
+                        if (panelManager.getName().isEmpty()||panelManager.getLastName().isEmpty()||panelManager.getPassword().isEmpty()||panelManager.getUserame().isEmpty()){
+                            JOptionPane.showMessageDialog(new JFrame(),"Lack of information",null,JOptionPane.ERROR_MESSAGE);
+                        }
+                        else {
+                            int reasult = myFoodoraSystem.registerManager(panelManager.getName(),panelManager.getLastName(),panelManager.getUserame(),panelManager.getPassword());
+                            switch (reasult){
+                                case 0:
+                                    JOptionPane.showMessageDialog(new JFrame(),"Congratulation! You have registered successfully! ",null,JOptionPane.PLAIN_MESSAGE);
+                                    new Login();
+                                    self.dispose();
+                                    break;
+                                case 1:
+                                    JOptionPane.showMessageDialog(new JFrame(),"this username is not valid",null,JOptionPane.ERROR_MESSAGE);
+                                    break;
+                            }
+                        }
+                        break;
+                }
             }
         });
         registerPanel.add(loginButton);

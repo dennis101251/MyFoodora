@@ -1,6 +1,6 @@
-package fr.ecp.IS1220.group5.project.GUI;
+package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
+import fr.ecp.IS1220.group5.project.GUI.Register;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +34,8 @@ public class Login extends JFrame implements ActionListener{
      * Label of "Welcome"
      */
     JLabel welcomeLabel;
+
+    Login self = this;
 
     Dimension buttonDimension = new Dimension(100,35);
     Dimension labelDimension = new Dimension(80, 35);
@@ -134,7 +136,7 @@ public class Login extends JFrame implements ActionListener{
             String password = passwordField.getText();
             System.out.println(username);
             System.out.println(password);
-            myFoodoraSystemGUI.loginUser(username,password, Login.this);
+            myFoodoraSystemGUI.loginUser(username,password, self);
         }
         else if (e.getSource() == registerButton){
             System.out.println("register");

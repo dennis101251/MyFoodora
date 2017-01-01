@@ -4,6 +4,8 @@ import fr.ecp.IS1220.group5.project.util.Coordinate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by alexandre_carlier on 19/12/2016.
@@ -58,6 +60,30 @@ public class RestaurantRegisterPanel extends RegisterPanel{
         addressPanel.add(yLabel);
         addressPanel.add(Box.createHorizontalGlue());
         addressPanel.add(addressYTextField);
+        addressXTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int keyChar = e.getKeyChar();
+
+                if((keyChar >= KeyEvent.VK_0 && keyChar <= KeyEvent.VK_9)){
+
+                }else{
+                    e.consume();
+                }
+            }
+        });
+        addressYTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int keyChar = e.getKeyChar();
+
+                if((keyChar >= KeyEvent.VK_0 && keyChar <= KeyEvent.VK_9)){
+
+                }else{
+                    e.consume();
+                }
+            }
+        });
         this.add(addressPanel);
 
         JPanel passwordPanel = new JPanel();
@@ -85,7 +111,12 @@ public class RestaurantRegisterPanel extends RegisterPanel{
     }
 
     public Coordinate getAddress(){
-        return new Coordinate(Double.parseDouble(addressXTextField.getText()), Double.parseDouble(addressYTextField.getText()));
+        if (addressXTextField.getText().isEmpty()||addressYTextField.getText().isEmpty()){
+            return null;
+        }
+        else {
+            return new Coordinate(Double.parseDouble(addressXTextField.getText()), Double.parseDouble(addressYTextField.getText()));
+        }
     }
 
 

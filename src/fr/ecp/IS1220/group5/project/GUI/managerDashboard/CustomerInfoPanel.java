@@ -27,6 +27,7 @@ public class CustomerInfoPanel extends JPanel {
     JLabel email;
     JLabel phone;
 
+    JLabel fidelity;
     JButton status;
 
     MyFoodoraSystemGUI myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
@@ -74,9 +75,47 @@ public class CustomerInfoPanel extends JPanel {
         infoPanel.add(leftPanel,c);
 
         rightPanel = new JPanel();
-        rightPanel.setLayout(new GridLayout(6,1));
+        rightPanel.setLayout(new GridLayout(7,1));
         rightPanel.add(new JLabel("Notification: " + customer.infoBoard.isNotified().toString()));
-        rightPanel.add(new JLabel("Fidelity Card: " + customer.getFidelityCard().getFidelityCardName()));
+        fidelity = new JLabel("Fidelity Card: " + customer.getFidelityCard().getFidelityCardName());
+        rightPanel.add(fidelity);
+        JButton changeFidelityButton = new JButton("Associate fidelity card");
+        changeFidelityButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int userChoice = JOptionPane.showOptionDialog(new Frame(), "Which kind of fidelity card you want choose","Fidelity card",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new String[]{"Basic","Lottery","Point"},null);
+                switch (userChoice){
+                    case 2:
+                        //Point
+                        try {
+                            myFoodoraSystem.associateCard(customer.getUsername(),"PointFidelityCard");
+                        } catch (UserNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    case 1:
+                        //Lottery
+                        try {
+                            myFoodoraSystem.associateCard(customer.getUsername(),"LotteryFidelityCard");
+                        } catch (UserNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    case 0:
+                        //Basic
+                        try {
+                            myFoodoraSystem.associateCard(customer.getUsername(),"basicFidelityCard");
+                        } catch (UserNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    default:
+                }
+                fidelity.setText("Fidelity Card: " + customer.getFidelityCard().getFidelityCardName());
+
+            }
+        });
+        rightPanel.add(changeFidelityButton);
         rightPanel.add(new JLabel("Order: " + customer.getNumOfOrder()));
         rightPanel.add(new JLabel("Total Expense: " + Money.display(customer.getTotalExpense())));
 

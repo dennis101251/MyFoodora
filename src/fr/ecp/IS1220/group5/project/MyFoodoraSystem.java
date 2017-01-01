@@ -538,15 +538,17 @@ public class MyFoodoraSystem {
      * @param address the address of the Restaurant.
      * @param password the password of the Restaurant.
      */
-    public void registerRestaurant(String name, String username, Coordinate address, String password) {
+    public int registerRestaurant(String name, String username, Coordinate address, String password) {
         if (getUser(username) == null){
             User newRestaurant = new Restaurant(name, username, password, address);
             this.users.addUser(newRestaurant);
             System.out.println("You have been registered successfully!");
             System.out.println("======================================");
+            return 0;
         }
         else{
             System.out.println("this username is not valid");
+            return 1;
         }
     }
 
@@ -561,15 +563,17 @@ public class MyFoodoraSystem {
      * @param mail the email of the Customer.
      * @param phone the phone nulmber of the Customer.
      */
-    public void registerCustomer(String firstName, String lastName, String username, String password, Coordinate address, String mail, String phone) {
+    public int registerCustomer(String firstName, String lastName, String username, String password, Coordinate address, String mail, String phone) {
         if (getUser(username) == null){
             User newCustomer = new Customer(firstName, lastName, username, password, address, mail, phone);
             this.users.addUser(newCustomer);
             System.out.println("You have been registered successfully!");
             System.out.println("======================================");
+            return 0;
         }
         else{
             System.out.println("this username is not valid");
+            return 1;
         }
     }
 
@@ -581,15 +585,17 @@ public class MyFoodoraSystem {
      * @param username the username of the Manager.
      * @param password the password of the Manager.
      */
-    public void registerManager(String name, String lastName, String username, String password){
+    public int registerManager(String name, String lastName, String username, String password){
         if (getUser(username) == null){
             User newManager = new Manager(name, username, password, lastName);
             this.users.addUser(newManager);
             System.out.println("You have been registered successfully!");
             System.out.println("======================================");
+            return 0;
         }
         else{
             System.out.println("this username is not valid");
+            return 1;
         }
 
     }
@@ -604,15 +610,17 @@ public class MyFoodoraSystem {
      * @param address the current position of the Courier
      * @param phone the phone number of the Courier
      */
-    public void registerCourier(String firstname, String lastname, String username, String password, Coordinate address, String phone){
+    public int registerCourier(String firstname, String lastname, String username, String password, Coordinate address, String phone){
         if (getUser(username) == null){
             User newCourier = new Courier(firstname,username,password,lastname,address,phone);
             this.users.addUser(newCourier);
             System.out.println("You have been registered successfully!");
             System.out.println("======================================");
+            return 0;
         }
         else{
             System.out.println("this username is not valid");
+            return 1;
         }
     }
 

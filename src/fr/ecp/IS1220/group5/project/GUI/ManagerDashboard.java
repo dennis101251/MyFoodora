@@ -2,6 +2,7 @@ package fr.ecp.IS1220.group5.project.GUI;
 
 import fr.ecp.IS1220.group5.project.GUI.managerDashboard.FinancialTabPanel;
 import fr.ecp.IS1220.group5.project.GUI.managerDashboard.UserTabPanel;
+import fr.ecp.IS1220.group5.project.Login;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 
 import javax.swing.*;
@@ -107,7 +108,7 @@ public class ManagerDashboard extends JFrame{
         mainPanel.add(workingPanel,c);
 
         this.setLocationRelativeTo(null);
-        this.pack();
+//        this.pack();
         setVisible(true);
     }
 

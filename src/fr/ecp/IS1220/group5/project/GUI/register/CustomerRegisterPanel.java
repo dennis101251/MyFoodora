@@ -4,6 +4,8 @@ import fr.ecp.IS1220.group5.project.util.Coordinate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by alexandre_carlier on 19/12/2016.
@@ -68,10 +70,34 @@ public class CustomerRegisterPanel extends RegisterPanel{
         JLabel addressLabel = new JLabel("Address:");
         JLabel xLabel = new JLabel("X:");
         addressXTextField = new JTextField(5);
+        addressXTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int keyChar = e.getKeyChar();
+
+                if((keyChar >= KeyEvent.VK_0 && keyChar <= KeyEvent.VK_9)){
+
+                }else{
+                    e.consume();
+                }
+            }
+        });
         addressXTextField.setMaximumSize(addressXTextField.getPreferredSize());
         JLabel yLabel = new JLabel("Y:");
         addressYTextField = new JTextField(5);
         addressYTextField.setMaximumSize(addressYTextField.getPreferredSize());
+        addressYTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int keyChar = e.getKeyChar();
+
+                if((keyChar >= KeyEvent.VK_0 && keyChar <= KeyEvent.VK_9)){
+
+                }else{
+                    e.consume();
+                }
+            }
+        });
         addressPanel.add(addressLabel);
         addressPanel.add(Box.createHorizontalGlue());
         addressPanel.add(xLabel);
@@ -98,6 +124,18 @@ public class CustomerRegisterPanel extends RegisterPanel{
         JLabel phoneLabel = new JLabel("Phone:");
         phoneTextField = new JTextField(30);
         phoneTextField.setMaximumSize(phoneTextField.getPreferredSize());
+        phoneTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int keyChar = e.getKeyChar();
+
+                if((keyChar >= KeyEvent.VK_0 && keyChar <= KeyEvent.VK_9)){
+
+                }else{
+                    e.consume();
+                }
+            }
+        });
         phonePanel.add(phoneLabel);
         phonePanel.add(Box.createHorizontalGlue());
         phonePanel.add(phoneTextField);
@@ -122,7 +160,12 @@ public class CustomerRegisterPanel extends RegisterPanel{
     }
 
     public Coordinate getAddress(){
-        return new Coordinate(Double.parseDouble(addressXTextField.getText()), Double.parseDouble(addressYTextField.getText()));
+        if (addressXTextField.getText().isEmpty()||addressYTextField.getText().isEmpty()){
+            return null;
+        }
+        else {
+            return new Coordinate(Double.parseDouble(addressXTextField.getText()), Double.parseDouble(addressYTextField.getText()));
+        }
     }
 
     public String getMail(){
