@@ -1,7 +1,5 @@
-package fr.ecp.IS1220.group5.project.GUI;
+package fr.ecp.IS1220.group5.project.GUI.customerDashboard;
 
-import fr.ecp.IS1220.group5.project.GUI.customerDashboard.HistoryFrame;
-import fr.ecp.IS1220.group5.project.GUI.customerDashboard.InfoBoardFrame;
 import fr.ecp.IS1220.group5.project.Login;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 import fr.ecp.IS1220.group5.project.menu.Food;

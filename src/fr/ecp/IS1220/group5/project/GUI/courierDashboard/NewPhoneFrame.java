@@ -1,6 +1,5 @@
 package fr.ecp.IS1220.group5.project.GUI.courierDashboard;
 
-import fr.ecp.IS1220.group5.project.GUI.CourierDashboard;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.user.Courier;
