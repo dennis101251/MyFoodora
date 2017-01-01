@@ -164,8 +164,6 @@ public class InfoBoardFrame extends JFrame implements WindowListener{
         });
         notifyPanel.add(notifiedButton,new GBC(1,0).setFill(GridBagConstraints.BOTH));
 
-//        mainPanel.add(notifyPanel,new GBC(0,3));
-
         listener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -419,4 +419,12 @@ public class Order extends Observable implements Serializable{
 	public Customer getCustomer() {
 		return customer;
 	}
+
+	public String infoForCourier(){
+		String string;
+		string = "From: " + restaurant.getName() +" " +restaurant.getAddress().toString() + "\n";
+		string += "To: " + customer.getName() +" " + customer.getAddress().toString();
+
+		return string;
+	}
 }

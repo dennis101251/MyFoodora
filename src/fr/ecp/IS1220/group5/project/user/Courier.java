@@ -82,6 +82,7 @@ public class Courier extends User {
 	public String getType(){
 		return "Courier";
 	}
+
 	/**
 	 * Sets the working-state of the Courier to "on-duty".
 	 */
@@ -206,5 +207,13 @@ public class Courier extends User {
 
 	public BigDecimal getTotalIncome() {
 		return totalIncome;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public ArrayList<Order> getHistoryOfOrders() {
+		return historyOfOrders;
 	}
 }

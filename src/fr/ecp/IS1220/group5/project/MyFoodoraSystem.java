@@ -312,11 +312,11 @@ public class MyFoodoraSystem {
 
         //Verify whether the Order file exists
 
-        File file = new File("tmp/orders.ser");
+        File file = new File("src/tmp/orders.ser");
 
         if (file.exists()) {
             try {
-                FileInputStream fileIn = new FileInputStream("tmp/orders.ser");
+                FileInputStream fileIn = new FileInputStream("src/tmp/orders.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
 
                 orders = (ArrayList<Order>) in.readObject();
@@ -342,7 +342,7 @@ public class MyFoodoraSystem {
      */
     public void saveOrders(){
         try {
-            FileOutputStream fileOut = new FileOutputStream("tmp/orders.ser");
+            FileOutputStream fileOut = new FileOutputStream("src/tmp/orders.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
             out.writeObject(orders);
@@ -376,10 +376,10 @@ public class MyFoodoraSystem {
 
         Financial financial = null;
 
-        File file = new File("tmp/financial.ser");
+        File file = new File("src/tmp/financial.ser");
         if (file.exists()) {
             try {
-                FileInputStream fileIn = new FileInputStream("tmp/financial.ser");
+                FileInputStream fileIn = new FileInputStream("src/tmp/financial.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
 
                 financial = (Financial) in.readObject();
@@ -407,7 +407,7 @@ public class MyFoodoraSystem {
      */
     public void saveFinancial(){
         try {
-            FileOutputStream fileOut = new FileOutputStream("tmp/financial.ser");
+            FileOutputStream fileOut = new FileOutputStream("src/tmp/financial.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
             Financial financial = new Financial();
@@ -2629,6 +2629,7 @@ public class MyFoodoraSystem {
 
                 ((Courier) currentUser).addOrder2RefuseList(order);
                 ((Courier) currentUser).removeNewOrder();
+                updateUser(currentUser);
                 System.out.println("Order" + order.getId() + " has been refused by "+ currentUser.getName());
             }
             else {

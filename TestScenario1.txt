@@ -32,15 +32,6 @@ addItem2Order FrenchFries 1
 showOrder
 endOrder
 disconnect
-login BG 123456
-accept
-disconnect
-login sj 123456
-accept
-disconnect
-login jz 123456
-accept
-disconnect
 login mcdonalds 123456
 setSpecialOffer BestOf
 sendMessage title thisIsTheMessage
