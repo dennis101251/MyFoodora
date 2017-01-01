@@ -1,5 +1,6 @@
 package fr.ecp.IS1220.group5.project.GUI;
 
+import fr.ecp.IS1220.group5.project.GUI.managerDashboard.DeliveryTabPanel;
 import fr.ecp.IS1220.group5.project.GUI.managerDashboard.FinancialTabPanel;
 import fr.ecp.IS1220.group5.project.GUI.managerDashboard.UserTabPanel;
 import fr.ecp.IS1220.group5.project.Login;
@@ -40,8 +41,8 @@ public class ManagerDashboard extends JFrame{
         super();
         myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
 
-        this.setSize(900, 600);
-        this.setResizable(false);
+        this.setSize(900, 800);
+//        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainPanel = new JPanel();
@@ -94,7 +95,7 @@ public class ManagerDashboard extends JFrame{
         userTabPanel = new UserTabPanel();
 //        userTabPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
         financialTabPanel = new FinancialTabPanel();
-        deliveryTabPanel = new JPanel();
+        deliveryTabPanel = new DeliveryTabPanel();
         tabbedPane.addTab("User", userTabPanel);
         tabbedPane.addTab("Financial", financialTabPanel);
         tabbedPane.addTab("Delivery",deliveryTabPanel);
@@ -108,7 +109,7 @@ public class ManagerDashboard extends JFrame{
         mainPanel.add(workingPanel,c);
 
         this.setLocationRelativeTo(null);
-//        this.pack();
+        this.pack();
         setVisible(true);
     }
 

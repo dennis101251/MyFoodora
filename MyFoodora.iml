@@ -23,15 +23,12 @@
     <orderEntry type="library" name="JGoodies Forms" level="project" />
     <orderEntry type="library" name="jcommon-1.0.23" level="project" />
     <orderEntry type="module-library">
-      <library name="JFreeChart">
-        <CLASSES />
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/jfreechart-1.0-2.19/lib/jfreechart-1.0.19.jar!/" />
+        </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="jar://$USER_HOME$/Downloads/jfreechart-1.0.19.zip!/jfreechart-1.0.19/experimental" />
-          <root url="jar://$USER_HOME$/Downloads/jfreechart-1.0.19.zip!/jfreechart-1.0.19/source" />
-          <root url="jar://$USER_HOME$/Downloads/jfreechart-1.0.19.zip!/jfreechart-1.0.19/swt" />
-          <root url="jar://$USER_HOME$/Downloads/jfreechart-1.0.19.zip!/jfreechart-1.0.19/tests" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
   </component>

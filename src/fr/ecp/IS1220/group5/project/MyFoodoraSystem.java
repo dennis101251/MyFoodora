@@ -196,6 +196,20 @@ public class MyFoodoraSystem {
     }
 
     /**
+     * get all clients(Customer Restaurant Courier)
+     */
+    public ArrayList<User> getAllClients(){
+
+        ArrayList<User> userArrayList = new ArrayList<>();
+        for (User user: this.users.getUsers()){
+            if (!(user instanceof Manager)){
+                userArrayList.add(user);
+            }
+        }
+        return userArrayList;
+    }
+
+    /**
      * get the current User
      */
     public User getCurrentUser(){
