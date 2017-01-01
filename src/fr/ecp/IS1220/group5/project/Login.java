@@ -127,15 +127,13 @@ public class Login extends JFrame implements ActionListener{
         setVisible(true);
     }
 
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton){
             String username = usernameTextField.getText();
             String password = passwordField.getText();
-            System.out.println(username);
-            System.out.println(password);
+//            System.out.println(username);
+//            System.out.println(password);
             myFoodoraSystemGUI.loginUser(username,password, self);
         }
         else if (e.getSource() == registerButton){

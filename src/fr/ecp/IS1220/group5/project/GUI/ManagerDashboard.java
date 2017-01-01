@@ -40,6 +40,7 @@ public class ManagerDashboard extends JFrame{
     public ManagerDashboard(){
         super();
         myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
+        JOptionPane.showMessageDialog(new JFrame(),"Test");
 
         this.setSize(900, 800);
 //        this.setResizable(false);

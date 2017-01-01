@@ -1,6 +1,9 @@
 package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.GUI.*;
+import fr.ecp.IS1220.group5.project.GUI.CourierDashboard;
+import fr.ecp.IS1220.group5.project.GUI.CustomerDashboard;
+import fr.ecp.IS1220.group5.project.GUI.ManagerDashboard;
+import fr.ecp.IS1220.group5.project.GUI.RestaurantDashboard;
 import fr.ecp.IS1220.group5.project.GUI.customerDashboard.InfoBoardFrame;
 import fr.ecp.IS1220.group5.project.exception.DuplicateNameException;
 import fr.ecp.IS1220.group5.project.exception.EmptyNameException;
@@ -68,7 +71,6 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
                             login.dispose();
                             //show the login hint info
                             loginInformation();
-
                             creatDashboard(myUser);
                         }
                         else {
@@ -150,21 +152,25 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
             }
         }
         else if (currentUser instanceof Restaurant){
-            message += "2";
+            message += "You have " + ((Restaurant)currentUser).getOrders().size() + " orders";
             JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
         }
         else if (currentUser instanceof Manager){
-            message += "3";
+            message += "MyFoodora has " + myFoodoraSystemGUI.orders.size() + " orders";
             JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
         }
         else if (currentUser instanceof Courier){
-            message += "4";
+            if (((Courier) currentUser).getNewOrderCondition()){
+                message += "You have a NEW order to deliver";
+            }
+            else {
+                message += "There is no order to deliver";
+            }
             JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
         }
         else {
             message = "error";
             JOptionPane.showMessageDialog(new JFrame(),message,"Login",JOptionPane.ERROR_MESSAGE);
-
         }
     }
 
