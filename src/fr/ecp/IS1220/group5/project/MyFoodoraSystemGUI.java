@@ -1,7 +1,7 @@
 package fr.ecp.IS1220.group5.project;
 
-import fr.ecp.IS1220.group5.project.GUI.courierDashboard.CourierDashboard;
-import fr.ecp.IS1220.group5.project.GUI.customerDashboard.CustomerDashboard;
+import fr.ecp.IS1220.group5.project.GUI.CourierDashboard;
+import fr.ecp.IS1220.group5.project.GUI.CustomerDashboard;
 import fr.ecp.IS1220.group5.project.GUI.customerDashboard.InfoBoardFrame;
 import fr.ecp.IS1220.group5.project.GUI.managerDashboard.ManagerDashboard;
 import fr.ecp.IS1220.group5.project.GUI.restaurantDashboard.RestaurantDashboard;
