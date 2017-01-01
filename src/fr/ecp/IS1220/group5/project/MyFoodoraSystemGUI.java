@@ -150,15 +150,20 @@ public class MyFoodoraSystemGUI extends MyFoodoraSystem{
             }
         }
         else if (currentUser instanceof Restaurant){
-            message += "2";
+            message += "You have " + ((Restaurant)currentUser).getOrders().size() + " orders";
             JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
         }
         else if (currentUser instanceof Manager){
-            message += "3";
+            message += "MyFoodora has " + myFoodoraSystemGUI.orders.size() + " orders";
             JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
         }
         else if (currentUser instanceof Courier){
-            message += "4";
+            if (((Courier) currentUser).getNewOrderCondition()){
+                message += "You have a NEW order to deliver";
+            }
+            else {
+                message += "There is no order to deliver";
+            }
             JOptionPane.showMessageDialog(new JFrame(), message,"Login",JOptionPane.INFORMATION_MESSAGE);
         }
         else {
