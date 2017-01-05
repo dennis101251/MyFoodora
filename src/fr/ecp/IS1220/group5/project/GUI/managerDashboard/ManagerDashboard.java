@@ -1,8 +1,5 @@
 package fr.ecp.IS1220.group5.project.GUI.managerDashboard;
 
-import fr.ecp.IS1220.group5.project.GUI.managerDashboard.DeliveryTabPanel;
-import fr.ecp.IS1220.group5.project.GUI.managerDashboard.FinancialTabPanel;
-import fr.ecp.IS1220.group5.project.GUI.managerDashboard.UserTabPanel;
 import fr.ecp.IS1220.group5.project.Login;
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
 
@@ -40,7 +37,6 @@ public class ManagerDashboard extends JFrame{
     public ManagerDashboard(){
         super();
         myFoodoraSystem = MyFoodoraSystemGUI.getInstance();
-        JOptionPane.showMessageDialog(new JFrame(),"Test");
 
         this.setSize(900, 800);
 //        this.setResizable(false);
@@ -117,8 +113,8 @@ public class ManagerDashboard extends JFrame{
     public static void main(String[] args) {
         MyFoodoraSystemGUI myFoodoraSystemGUI = MyFoodoraSystemGUI.getInstance();
         myFoodoraSystemGUI.loginUser("dennis","101251");
+        System.out.println("Test");
         ManagerDashboard managerDashboard = new ManagerDashboard();
     }
-
 
 }
