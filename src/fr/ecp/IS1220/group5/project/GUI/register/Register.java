@@ -47,6 +47,18 @@ public class Register extends JFrame {
         mainPanel.setLayout(grid);
         this.setContentPane(mainPanel);
 
+        //Login CEO to register new users.
+        myFoodoraSystem.loginUser("ceo", "123456789");
+        JPanel remark = new JPanel();
+        remark.add(new JLabel("Remark: \"ceo\" is logged in."));
+        c.gridx = 0;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+        c.weighty = 0;
+        mainPanel.add(remark);
+
+
         listener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,7 +93,7 @@ public class Register extends JFrame {
         radioPanel.add(managerButton);
 
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = 1;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 0;
@@ -111,7 +123,7 @@ public class Register extends JFrame {
         userPanel.add(panelManager);
 
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 1;
@@ -125,6 +137,7 @@ public class Register extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                myFoodoraSystem.disconnectUser();
                 self.dispose();
                 new Login();
             }
@@ -143,6 +156,7 @@ public class Register extends JFrame {
                             switch (reasult){
                                 case 0:
                                     JOptionPane.showMessageDialog(new JFrame(),"Congratulation! You have registered successfully! ",null,JOptionPane.PLAIN_MESSAGE);
+                                    myFoodoraSystem.disconnectUser();
                                     new Login();
                                     self.dispose();
                                     break;
@@ -161,6 +175,7 @@ public class Register extends JFrame {
                             switch (reasult){
                                 case 0:
                                     JOptionPane.showMessageDialog(new JFrame(),"Congratulation! You have registered successfully! ",null,JOptionPane.PLAIN_MESSAGE);
+                                    myFoodoraSystem.disconnectUser();
                                     new Login();
                                     self.dispose();
                                     break;
@@ -179,6 +194,7 @@ public class Register extends JFrame {
                             switch (reasult){
                                 case 0:
                                     JOptionPane.showMessageDialog(new JFrame(),"Congratulation! You have registered successfully! ",null,JOptionPane.PLAIN_MESSAGE);
+                                    myFoodoraSystem.disconnectUser();
                                     new Login();
                                     self.dispose();
                                     break;
@@ -197,6 +213,7 @@ public class Register extends JFrame {
                             switch (reasult){
                                 case 0:
                                     JOptionPane.showMessageDialog(new JFrame(),"Congratulation! You have registered successfully! ",null,JOptionPane.PLAIN_MESSAGE);
+                                    myFoodoraSystem.disconnectUser();
                                     new Login();
                                     self.dispose();
                                     break;
@@ -214,7 +231,7 @@ public class Register extends JFrame {
         registerPanel.add(registerButton);
 
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 0;

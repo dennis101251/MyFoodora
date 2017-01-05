@@ -1,42 +1,64 @@
-registerRestaurant McDonalds mcdonalds 0:0 123456
-registerRestaurant KFC kfc 10:0 123456
-registerRestaurant BurgerKing bk 0:20 123456
-registerCustomer Marco Merlotti MM 123456 30:30 marco.merlotti@student.ecp.fr 0611041568 
-registerCustomer Danyi Wu WDY 501 30:20 danyi.wu@student.ecp.fr 0650102722
-registerCustomer Lin Yu ly 873433 10:10 yu.lin@student.ecp.fr 0611041568
-registerCourier Steve Jobs sj 123456 10:10 87654562
-registerCourier Bill Gates BG 123456 20:28 87654562
-registerCourier Zemin Jiang jz 123456 8:9 87654562
-registerManager Zexi DENG dennis 101251
-login dennis 101251
+login "ceo" "123456789"
+registerRestaurant "McDonalds" "mcdonalds" "0,0" "123456"
+registerRestaurant "Pizzeria" "pizzeria" "4,5" "123456"
+registerRestaurant "SushiShop" "sushi" "8,9" "123456"
+registerCustomer "Marco" "Merlotti" "marco" "123456" "30,30" "marco.merlotti@student.ecp.fr" "0611041568"
+registerCustomer "Danyi" "Wu" "WDY" "501" "30,20" "danyi.wu@student.ecp.fr" "0650102722"
+registerCustomer "Lin" "Yu" "ly" "873433" "10,10" "yu.lin@student.ecp.fr" "0611041568"
+registerCourier "Steve" "Jobs" "steve" "123456" "10,10" "87654562"
+registerCourier "Bill" "Gates" "bill" "123456" "20,28" "87654562"
+registerCourier "Zemin" "Jiang" "jz" "123456" "8,9" "87654562"
+registerManager "Zexi" "DENG" "dennis" "101251"
+registerManager "Alexandre" "Carlier" "alex" "010795"
 showAllCustomers
 showAllRestaurants
 showAllCouriers
 disconnect
-login mcdonalds 123456
-createItem FrenchFries 2
-createItem BigMac 4
-createItem CocaCola 2
-createMeal BestOf
-addDish2Meal FrenchFries BestOf
-addDish2Meal BigMac BestOf
-addDish2Meal CocaCola BestOf
+login "mcdonalds" "123456"
+createItem "French Fries Small" "1.5" "Starter" "Standard"
+createItem "French Fries Medium" "2" "Starter" "Standard"
+createItem "French Fries Maxi" "3" "Starter" "Standard"
+createItem "Big Mac" "4" "MainDish" "Standard"
+createItem "Muffin" "2" "Dessert" "Standard"
+createItem "Salad" "1.5" "Starter" "Vegetarian"
+createItem "Vegan Burger" "4" "MainDish" "Vegetarian"
+createMeal "Best Of" "FullMeal" "Standard"
+addDish2Meal "French Fries Medium" "Best Of"
+addDish2Meal "Big Mac" "Best Of"
+addDish2Meal "Muffin" "Best Of"
+saveMenu
+createMeal "Vegan Meal" "HalfMeal" "Vegetarian"
+addDish2Meal "Salad" "Vegan Meal"
+addDish2Meal "Vegan Burger" "Vegan Meal"
 saveMenu
 disconnect
-login MM 123456
+login "pizzeria" "123456"
+createItem "Mozzarella" "1.5" "Starter" "Standard"
+createItem "Margarita" "6" "MainDish" "Standard"
+createItem "Regina" "9" "MainDish" "Standard"
+createItem "Quattro Stagione" "9.5" "MainDish" "Standard"
+createItem "Tiramisu" "2" "Dessert" "Standard"
+disconnect
+login "sushi" "123456
+createItem "Soya Soup" "1.5" "Starter" "Standard"
+createItem "Sushis" "4" "MainDish" "Standard"
+createItem "Yakitori" "4" "MainDish" "Standard"
+createItem "Mochi Ice Cream" "2" "Dessert" "Standard"
+disconnect
+login "marco" "123456"
 showRestaurant
-chooseRestaurant McDonalds
+chooseRestaurant "McDonalds"
 showMenu
-addMeal2Order BestOf 2
-addItem2Order FrenchFries 1
+addMeal2Order "Best Of" "2"
+addItem2Order "French Fries Maxi" "1"
 showOrder
 endOrder
 disconnect
-login mcdonalds 123456
-setSpecialOffer BestOf
-sendMessage title thisIsTheMessage
+login "mcdonalds" "123456"
+setSpecialOffer "Vegan Meal"
+sendMessage "Vegan Meal" "Vegan Meal is the Meal of the week!"
 disconnect
-login ly 873433
-deleteMessage 1
+login "ly" "873433"
+deleteMessage "1"
 checkInfoBoard
 disconnect

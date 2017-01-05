@@ -128,6 +128,14 @@ public class MyFoodoraSystem {
         retrieveUsers();
         retrieveOrders();
         retrieveFinancial();
+
+        //Create the initial manager (if not already exists)
+        if (getUser("ceo") == null) {
+            User initialManager = new Manager("Mark", "ceo", "123456789", "Zuckerberg");
+            this.users.addUser(initialManager);
+            this.users.saveUsers();
+        }
+
 //        System.out.println(orders.toString());
 //        System.out.println(users.toString());
         System.out.println("=================================");
@@ -557,15 +565,21 @@ public class MyFoodoraSystem {
      * @param password the password of the Restaurant.
      */
     public int registerRestaurant(String name, String username, Coordinate address, String password) {
-        if (getUser(username) == null){
-            User newRestaurant = new Restaurant(name, username, password, address);
-            this.users.addUser(newRestaurant);
-            System.out.println("You have been registered successfully!");
-            System.out.println("======================================");
-            return 0;
+        if (currentUser instanceof Manager){
+            if (getUser(username) == null){
+                User newRestaurant = new Restaurant(name, username, password, address);
+                this.users.addUser(newRestaurant);
+                System.out.println("You have been registered successfully!");
+                System.out.println("======================================");
+                return 0;
+            }
+            else{
+                System.out.println("this username is not valid");
+                return 1;
+            }
         }
-        else{
-            System.out.println("this username is not valid");
+        else {
+            System.out.println("Only a logged-in manager can register new users.");
             return 1;
         }
     }
@@ -582,15 +596,21 @@ public class MyFoodoraSystem {
      * @param phone the phone nulmber of the Customer.
      */
     public int registerCustomer(String firstName, String lastName, String username, String password, Coordinate address, String mail, String phone) {
-        if (getUser(username) == null){
-            User newCustomer = new Customer(firstName, lastName, username, password, address, mail, phone);
-            this.users.addUser(newCustomer);
-            System.out.println("You have been registered successfully!");
-            System.out.println("======================================");
-            return 0;
+        if (currentUser instanceof Manager){
+            if (getUser(username) == null){
+                User newCustomer = new Customer(firstName, lastName, username, password, address, mail, phone);
+                this.users.addUser(newCustomer);
+                System.out.println("You have been registered successfully!");
+                System.out.println("======================================");
+                return 0;
+            }
+            else{
+                System.out.println("this username is not valid");
+                return 1;
+            }
         }
-        else{
-            System.out.println("this username is not valid");
+        else {
+            System.out.println("Only a logged-in manager can register new users.");
             return 1;
         }
     }
@@ -604,15 +624,21 @@ public class MyFoodoraSystem {
      * @param password the password of the Manager.
      */
     public int registerManager(String name, String lastName, String username, String password){
-        if (getUser(username) == null){
-            User newManager = new Manager(name, username, password, lastName);
-            this.users.addUser(newManager);
-            System.out.println("You have been registered successfully!");
-            System.out.println("======================================");
-            return 0;
+        if (currentUser instanceof Manager){
+            if (getUser(username) == null){
+                User newManager = new Manager(name, username, password, lastName);
+                this.users.addUser(newManager);
+                System.out.println("You have been registered successfully!");
+                System.out.println("======================================");
+                return 0;
+            }
+            else{
+                System.out.println("this username is not valid");
+                return 1;
+            }
         }
-        else{
-            System.out.println("this username is not valid");
+        else {
+            System.out.println("Only a logged-in manager can register new users.");
             return 1;
         }
 
@@ -629,15 +655,21 @@ public class MyFoodoraSystem {
      * @param phone the phone number of the Courier
      */
     public int registerCourier(String firstname, String lastname, String username, String password, Coordinate address, String phone){
-        if (getUser(username) == null){
-            User newCourier = new Courier(firstname,username,password,lastname,address,phone);
-            this.users.addUser(newCourier);
-            System.out.println("You have been registered successfully!");
-            System.out.println("======================================");
-            return 0;
+        if (currentUser instanceof Manager){
+            if (getUser(username) == null){
+                User newCourier = new Courier(firstname,username,password,lastname,address,phone);
+                this.users.addUser(newCourier);
+                System.out.println("You have been registered successfully!");
+                System.out.println("======================================");
+                return 0;
+            }
+            else{
+                System.out.println("this username is not valid");
+                return 1;
+            }
         }
-        else{
-            System.out.println("this username is not valid");
+        else {
+            System.out.println("Only a logged-in manager can register new users.");
             return 1;
         }
     }
@@ -1494,6 +1526,32 @@ public class MyFoodoraSystem {
     }
 
     /**
+     * set the profit policy
+     */
+    public void setProfitPolicy(String policy){
+        if (currentUser instanceof Manager){
+            if (policy.equalsIgnoreCase("serviceFee")){
+                this.profitPolicy = 0;
+                System.out.println("You have changed the profit policy as: serviceFee");
+            }
+            else if ((policy.equalsIgnoreCase("markupPercentage"))){
+                this.profitPolicy = 1;
+                System.out.println("You have changed the profit policy as: markupPercentage");
+            }
+            else if ((policy.equalsIgnoreCase("deliveryCost"))){
+                this.profitPolicy = 2;
+                System.out.println("You have changed the profit policy as: deliveryCost");
+            }
+            else {
+                System.out.println("invalid input argument");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
      * private method
      *
      * Get the list of available courier
@@ -1931,7 +1989,7 @@ public class MyFoodoraSystem {
      */
     public void registerFidelityCard(String cardType) throws UserNotFoundException {
         if (currentUser instanceof Customer){
-            if (cardType.equalsIgnoreCase("basicFidelityCard") ){
+            if (cardType.equalsIgnoreCase("BasicFidelityCard") ){
                 ((Customer) currentUser).setFidelityCard(new BasicFidelityCard());
                 System.out.println("you have registered << BasicFidelityCard>> ");
                 updateUser(currentUser);
