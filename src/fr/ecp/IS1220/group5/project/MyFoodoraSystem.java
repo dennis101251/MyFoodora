@@ -88,6 +88,7 @@ public class MyFoodoraSystem {
     //Current financial
     protected BigDecimal total_income = new BigDecimal("0");
     protected BigDecimal total_delivery_cost = new BigDecimal("0");
+    protected BigDecimal total_orderPrice = new BigDecimal(0);
     protected BigDecimal total_profit = new BigDecimal("0");
     protected BigDecimal target_profit = new BigDecimal("0");
     protected BigDecimal averageIncomePerCustomer = new BigDecimal(0);
@@ -691,6 +692,8 @@ public class MyFoodoraSystem {
         }
         this.total_income = money;
 
+        money = new BigDecimal(0);
+
         //Total delivery cost
         money = BigDecimal.valueOf(0);
         for (Order order: orders
@@ -699,7 +702,15 @@ public class MyFoodoraSystem {
         }
         this.total_delivery_cost = money;
 
-        total_profit = total_income.subtract(total_delivery_cost);
+        //Total profit
+        money = BigDecimal.valueOf(0);
+        for (Order order: orders
+                ) {
+
+            System.out.println(order.getProfit() + String.valueOf(order.getId()));
+            money = money.add(order.getProfit());
+        }
+        this.total_profit = money;
     }
 
     /**
@@ -1132,7 +1143,7 @@ public class MyFoodoraSystem {
 
                     BigDecimal tmp = new BigDecimal("0");
                     tmp = target_profit.add(sumDeliveryDistance.multiply(tmpDelivery_cost_price));
-                    tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage.add(BigDecimal.valueOf(1))));
+                    tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage));
                     tmpService_fee = tmp.divide(BigDecimal.valueOf(orders.size()), 3, RoundingMode.HALF_UP);
 
                     System.out.println("========================================");
@@ -1185,7 +1196,7 @@ public class MyFoodoraSystem {
                     BigDecimal tmp = new BigDecimal("0");
                     tmp = target_profit.add(sumDeliveryDistance.multiply(tmpDelivery_cost_price));
                     tmp = tmp.subtract(tmpService_fee.multiply(BigDecimal.valueOf(orders.size())));
-                    tmpMarkup_percentage = tmp.divide(sumOrderPrice, 6, RoundingMode.HALF_UP).subtract(BigDecimal.valueOf(1));
+                    tmpMarkup_percentage = tmp.divide(sumOrderPrice, 6, RoundingMode.HALF_UP);
 
                     NumberFormat percent = NumberFormat.getPercentInstance();
                     percent.setMaximumFractionDigits(3);
@@ -1244,7 +1255,7 @@ public class MyFoodoraSystem {
 
                         BigDecimal tmp = new BigDecimal("0");
                         tmp = target_profit.subtract(tmpService_fee.multiply(BigDecimal.valueOf(orders.size())));
-                        tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage.add(BigDecimal.valueOf(1))));
+                        tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage));
                         tmp = tmp.divide(sumDeliveryDistance, 6, RoundingMode.HALF_UP);
                         tmpDelivery_cost_price = tmp.abs();
 
@@ -1658,6 +1669,7 @@ public class MyFoodoraSystem {
             updateUser(courier);
             order.addCourier2DemandeHistory(courier);
             updateOrder(order);
+            calculateFinancial();
         }
         else {
             System.out.println("there is no available courier in myFoodora");
