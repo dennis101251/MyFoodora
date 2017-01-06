@@ -1005,7 +1005,7 @@ public class MyFoodoraSystem {
                 }
                 if (numberOfCustomer > 0){
                     averageIncomePerCustomer = total_income.divide(BigDecimal.valueOf(numberOfCustomer));
-                    System.out.println(Money.display(total_income.divide(BigDecimal.valueOf(numberOfCustomer))));
+//                    System.out.println(Money.display(total_income.divide(BigDecimal.valueOf(numberOfCustomer))));
                 }
                 else {
                     System.out.println("there is no customer in the system");
@@ -1063,15 +1063,15 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Manager){
             switch (profitPolicy){
                 case 0:
-                    System.out.println("by Service fee");
+//                    System.out.println("by Service fee");
                     return "by Service fee";
 //                    break;
                 case 1:
-                    System.out.println("by Markup Percentage");
+//                    System.out.println("by Markup Percentage");
                     return "by Markup Percentage";
 //                    break;
                 case 2:
-                    System.out.println("by Delivery Cost");
+//                    System.out.println("by Delivery Cost");
                     return "by Delivery Price";
 //                    break;
                 default:

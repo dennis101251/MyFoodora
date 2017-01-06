@@ -113,7 +113,6 @@ public class ManagerDashboard extends JFrame{
     public static void main(String[] args) {
         MyFoodoraSystemGUI myFoodoraSystemGUI = MyFoodoraSystemGUI.getInstance();
         myFoodoraSystemGUI.loginUser("dennis","101251");
-        System.out.println("Test");
         ManagerDashboard managerDashboard = new ManagerDashboard();
     }
 

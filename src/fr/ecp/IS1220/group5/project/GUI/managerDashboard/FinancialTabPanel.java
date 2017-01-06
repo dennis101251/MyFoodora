@@ -181,7 +181,7 @@ public class FinancialTabPanel extends JPanel {
         this.add(financialPanel,c);
 
         formulePanel = new JPanel(new GridBagLayout());
-        formule = new JLabel("Profit = Service fee + Order price * (markup + 1) - Distance * Delivery price");
+        formule = new JLabel("Profit = Service fee + Order price * markup  - Distance * Delivery price");
         formulePanel.add(formule,new GBC(0,0));
         this.add(formule,new GBC(0,2));
 
