@@ -1117,12 +1117,15 @@ public class MyFoodoraSystem {
                 switch (policy){
                     case 0:
 //                        determineService_fee();
+                        System.out.println("The policy is now by Service fee");
                         break;
                     case 1:
 //                        determineMarkup_Percentage();
+                        System.out.println("The policy is now by Markup percentage");
                         break;
                     case 2:
 //                        determineDelivery_Cost();
+                        System.out.println("The policy is now by Delivery cost");
                         break;
                 }
                 getProfitPolicy();

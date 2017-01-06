@@ -1,0 +1,10 @@
+login
+login "ceo"
+loggin
+login "unknown" "123456789"
+registerRestaurant "La Tour D'argent" "tourdargent" "4,9" "123456789"
+login "ceo" "123456789"
+setProfitPolicy "4"
+removeUser "unknown"
+setTarget_profit "99999"
+determineDelivery_Cost
