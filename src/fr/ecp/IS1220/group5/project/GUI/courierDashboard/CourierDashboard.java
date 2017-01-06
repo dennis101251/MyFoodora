@@ -177,7 +177,7 @@ public class CourierDashboard extends JFrame {
                     refuseButton.setEnabled(false);
                 }
                 orderArea.setText(getHistoryOrder());
-                orderLabel.setText("Order:  you have finish " + courier.getDeliveredOrdersCounter() + " order");
+                orderLabel.setText("Order:  you have finished " + courier.getDeliveredOrdersCounter() + " order");
             }
         });
 
@@ -255,7 +255,7 @@ public class CourierDashboard extends JFrame {
 
         orderPanel = new JPanel(new GridBagLayout());
         orderPanel.setBorder(BorderFactory.createEmptyBorder(10,10,0,10));
-        orderLabel = new JLabel("Order:  you have finish " + courier.getDeliveredOrdersCounter() + " order");
+        orderLabel = new JLabel("Order:  you have finished " + courier.getDeliveredOrdersCounter() + " order");
         orderPanel.add(orderLabel,new GBC(0,0).setFill(GridBagConstraints.BOTH));
         incomeLabel = new JLabel("Income:  " + Money.display(courier.getTotalIncome()));
         orderPanel.add(incomeLabel, new GBC(0,1).setFill(GridBagConstraints.BOTH));
@@ -320,7 +320,7 @@ public class CourierDashboard extends JFrame {
     public String getHistoryOrder(){
         String string = "";
         if (courier.getDeliveredOrdersCounter() == 0){
-            string = "You don't hav any order";
+            string = "You don't have any order";
         }
         else {
             int i = 0;

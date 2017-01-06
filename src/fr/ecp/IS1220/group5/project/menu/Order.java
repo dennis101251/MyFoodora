@@ -192,7 +192,6 @@ public class Order extends Observable implements Serializable{
 		total_price = total_price.add(service_fee);
 		System.out.println("Total (with fees): " + total_price);
 		this.profit = order_price.multiply(markup_percentage).add(service_fee).subtract(delivery_cost);
-		System.out.println(profit);
 		//Whenever something is changed in the order, it calls the updateTotalPrice method, so we can call the setChanged method and notify the observers.
 		setChanged();
 		notifyObservers();

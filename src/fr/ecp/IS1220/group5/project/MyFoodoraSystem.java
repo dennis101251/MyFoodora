@@ -88,7 +88,6 @@ public class MyFoodoraSystem {
     //Current financial
     protected BigDecimal total_income = new BigDecimal("0");
     protected BigDecimal total_delivery_cost = new BigDecimal("0");
-    protected BigDecimal total_orderPrice = new BigDecimal(0);
     protected BigDecimal total_profit = new BigDecimal("0");
     protected BigDecimal target_profit = new BigDecimal("0");
     protected BigDecimal averageIncomePerCustomer = new BigDecimal(0);
@@ -706,8 +705,6 @@ public class MyFoodoraSystem {
         money = BigDecimal.valueOf(0);
         for (Order order: orders
                 ) {
-
-            System.out.println(order.getProfit() + String.valueOf(order.getId()));
             money = money.add(order.getProfit());
         }
         this.total_profit = money;
@@ -2030,7 +2027,7 @@ public class MyFoodoraSystem {
      *
      */
     public void associateCard(String userName, String cardType) throws UserNotFoundException {
-        if (currentUser instanceof Manager){
+        if (currentUser instanceof Manager||currentUser instanceof Customer){
             User user = getUser(userName);
             if (user instanceof Customer){
                 if (cardType.equalsIgnoreCase("basicFidelityCard") ){

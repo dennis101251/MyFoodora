@@ -1,11 +1,14 @@
 package fr.ecp.IS1220.group5.project.GUI.customerDashboard;
 
 import fr.ecp.IS1220.group5.project.MyFoodoraSystemGUI;
+import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
 import fr.ecp.IS1220.group5.project.user.Customer;
 import fr.ecp.IS1220.group5.project.util.GBC;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.URL;
@@ -82,6 +85,59 @@ public class HistoryFrame extends JFrame implements WindowListener{
         fidelityPanel.add(nameLabel,new GBC(1,0,1,1).setFill(GridBagConstraints.BOTH));
         pointLabel = new JLabel( "Points: "+((Customer) myFoodoraSystem.getCurrentUser()).getFidelityCard().getPoints());
         fidelityPanel.add(pointLabel, new GBC(1,1,1,1).setFill(GridBagConstraints.BOTH));
+        JButton changeFidelityButton = new JButton("Change fidelity card!");
+        changeFidelityButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int userChoice = JOptionPane.showOptionDialog(new Frame(), "Which kind of fidelity card you want choose?","Fidelity card",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new String[]{"Basic card","Lottery card","Point card"},null);
+                switch (userChoice){
+                    case 2:
+                        //Point
+                        try {
+                            myFoodoraSystem.associateCard(myFoodoraSystem.getCurrentUser().getUsername(),"PointFidelityCard");
+                        } catch (UserNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    case 1:
+                        //Lottery
+                        try {
+                            myFoodoraSystem.associateCard(myFoodoraSystem.getCurrentUser().getUsername(),"LotteryFidelityCard");
+                        } catch (UserNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    case 0:
+                        //Basic
+                        try {
+                            myFoodoraSystem.associateCard(myFoodoraSystem.getCurrentUser().getUsername(),"basicFidelityCard");
+                        } catch (UserNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    default:
+                }
+                String fidelityString = ((Customer) myFoodoraSystem.getCurrentUser()).getFidelityCard().getFidelityCardName();
+                nameLabel.setText(myFoodoraSystem.getCurrentUser().getName() + ": " + fidelityString);
+                switch (fidelityString){
+                    case "BasicFidelityCard":
+                        icon = createImage("/images/Basic.png","Basic");
+                        break;
+                    case "LotteryFidelityCard":
+                        icon = createImage("/images/Lottery.png","Lottory");
+                        break;
+                    case "PointFidelityCard":
+                        icon = createImage("/images/Point.png","Point");
+                        break;
+                    default:
+                        icon = createImage("/images/Basic.png","Basic");
+                }
+                iconLabel.setIcon(icon);
+
+            }
+        });
+        fidelityPanel.add(changeFidelityButton, new GBC(1,2,1,1));
+
         mainPanel.add(fidelityPanel,new GBC(0,0));
 
         //History Panel
@@ -139,7 +195,7 @@ public class HistoryFrame extends JFrame implements WindowListener{
 
     public static void main(String[] args) {
         MyFoodoraSystemGUI myFoodoraSystemGUI = MyFoodoraSystemGUI.getInstance();
-        myFoodoraSystemGUI.loginUser("MM","123456");
+        myFoodoraSystemGUI.loginUser("marco","123456");
         HistoryFrame.getInstance();
     }
 
