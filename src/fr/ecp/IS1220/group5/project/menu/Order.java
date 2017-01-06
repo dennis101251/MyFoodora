@@ -70,7 +70,6 @@ public class Order extends Observable implements Serializable{
 	 * the markup percentage.
 	 */
 	private BigDecimal markup_percentage = new BigDecimal("0");
-
 	/**
 	 *
 	 */
@@ -82,6 +81,11 @@ public class Order extends Observable implements Serializable{
 	 * the total price of the order, by applying the markup percentage, the fee and the discount (fidelity program)
 	 */
 	private BigDecimal total_price = new BigDecimal("0");
+
+	/**
+	 * the profit of an order
+	 */
+	private BigDecimal profit = new BigDecimal(0);
 
 	/**
 	 * True if this order has been delegated
@@ -187,7 +191,7 @@ public class Order extends Observable implements Serializable{
 		System.out.println("Total (with markup percentage): " + total_price);
 		total_price = total_price.add(service_fee);
 		System.out.println("Total (with fees): " + total_price);
-
+		this.profit = order_price.multiply(markup_percentage).add(service_fee).subtract(delivery_cost);
 		//Whenever something is changed in the order, it calls the updateTotalPrice method, so we can call the setChanged method and notify the observers.
 		setChanged();
 		notifyObservers();
@@ -428,4 +432,7 @@ public class Order extends Observable implements Serializable{
 
 		return string;
 	}
+
+	public BigDecimal getProfit(){
+		return this.profit;}
 }

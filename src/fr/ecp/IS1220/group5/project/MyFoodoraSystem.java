@@ -691,6 +691,8 @@ public class MyFoodoraSystem {
         }
         this.total_income = money;
 
+        money = new BigDecimal(0);
+
         //Total delivery cost
         money = BigDecimal.valueOf(0);
         for (Order order: orders
@@ -699,7 +701,13 @@ public class MyFoodoraSystem {
         }
         this.total_delivery_cost = money;
 
-        total_profit = total_income.subtract(total_delivery_cost);
+        //Total profit
+        money = BigDecimal.valueOf(0);
+        for (Order order: orders
+                ) {
+            money = money.add(order.getProfit());
+        }
+        this.total_profit = money;
     }
 
     /**
@@ -997,7 +1005,7 @@ public class MyFoodoraSystem {
                 }
                 if (numberOfCustomer > 0){
                     averageIncomePerCustomer = total_income.divide(BigDecimal.valueOf(numberOfCustomer));
-                    System.out.println(Money.display(total_income.divide(BigDecimal.valueOf(numberOfCustomer))));
+//                    System.out.println(Money.display(total_income.divide(BigDecimal.valueOf(numberOfCustomer))));
                 }
                 else {
                     System.out.println("there is no customer in the system");
@@ -1055,15 +1063,15 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Manager){
             switch (profitPolicy){
                 case 0:
-                    System.out.println("by Service fee");
+//                    System.out.println("by Service fee");
                     return "by Service fee";
 //                    break;
                 case 1:
-                    System.out.println("by Markup Percentage");
+//                    System.out.println("by Markup Percentage");
                     return "by Markup Percentage";
 //                    break;
                 case 2:
-                    System.out.println("by Delivery Cost");
+//                    System.out.println("by Delivery Cost");
                     return "by Delivery Price";
 //                    break;
                 default:
@@ -1132,7 +1140,7 @@ public class MyFoodoraSystem {
 
                     BigDecimal tmp = new BigDecimal("0");
                     tmp = target_profit.add(sumDeliveryDistance.multiply(tmpDelivery_cost_price));
-                    tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage.add(BigDecimal.valueOf(1))));
+                    tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage));
                     tmpService_fee = tmp.divide(BigDecimal.valueOf(orders.size()), 3, RoundingMode.HALF_UP);
 
                     System.out.println("========================================");
@@ -1185,7 +1193,7 @@ public class MyFoodoraSystem {
                     BigDecimal tmp = new BigDecimal("0");
                     tmp = target_profit.add(sumDeliveryDistance.multiply(tmpDelivery_cost_price));
                     tmp = tmp.subtract(tmpService_fee.multiply(BigDecimal.valueOf(orders.size())));
-                    tmpMarkup_percentage = tmp.divide(sumOrderPrice, 6, RoundingMode.HALF_UP).subtract(BigDecimal.valueOf(1));
+                    tmpMarkup_percentage = tmp.divide(sumOrderPrice, 6, RoundingMode.HALF_UP);
 
                     NumberFormat percent = NumberFormat.getPercentInstance();
                     percent.setMaximumFractionDigits(3);
@@ -1244,7 +1252,7 @@ public class MyFoodoraSystem {
 
                         BigDecimal tmp = new BigDecimal("0");
                         tmp = target_profit.subtract(tmpService_fee.multiply(BigDecimal.valueOf(orders.size())));
-                        tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage.add(BigDecimal.valueOf(1))));
+                        tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage));
                         tmp = tmp.divide(sumDeliveryDistance, 6, RoundingMode.HALF_UP);
                         tmpDelivery_cost_price = tmp.abs();
 
@@ -1659,6 +1667,7 @@ public class MyFoodoraSystem {
             updateUser(courier);
             order.addCourier2DemandeHistory(courier);
             updateOrder(order);
+            calculateFinancial();
         }
         else {
             System.out.println("there is no available courier in myFoodora");
@@ -2017,7 +2026,7 @@ public class MyFoodoraSystem {
      *
      */
     public void associateCard(String userName, String cardType) throws UserNotFoundException {
-        if (currentUser instanceof Manager){
+        if (currentUser instanceof Manager||currentUser instanceof Customer){
             User user = getUser(userName);
             if (user instanceof Customer){
                 if (cardType.equalsIgnoreCase("basicFidelityCard") ){

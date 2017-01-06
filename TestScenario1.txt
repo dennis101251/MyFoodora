@@ -54,6 +54,7 @@ addMeal2Order "Best Of" "2"
 addItem2Order "French Fries Maxi" "1"
 showOrder
 endOrder
+showFidelityCard
 logout
 login "mcdonalds" "123456"
 findDeliverer "12"
@@ -66,7 +67,7 @@ deleteMessage "1"
 checkInfoBoard
 logout
 login "ceo" "123456789"
-
+logout
 login "jz" "123456"
 refuse
 offDuty

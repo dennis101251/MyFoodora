@@ -3,8 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="var" path="APPLICATION_HOME_DIR/lib/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jcommander-1.48"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hamcrest-all-1.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JGoodies Forms"/>
+	<classpathentry kind="lib" path="jfreechart-1.0.19/lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.19"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jcommon-1.0.23"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

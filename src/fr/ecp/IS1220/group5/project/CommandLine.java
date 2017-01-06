@@ -1,7 +1,10 @@
 package fr.ecp.IS1220.group5.project;
 
 import fr.ecp.IS1220.group5.project.exception.UserNotFoundException;
-import fr.ecp.IS1220.group5.project.menu.*;
+import fr.ecp.IS1220.group5.project.menu.FoodType;
+import fr.ecp.IS1220.group5.project.menu.ItemCategory;
+import fr.ecp.IS1220.group5.project.menu.MealCategory;
+import fr.ecp.IS1220.group5.project.menu.Order;
 import fr.ecp.IS1220.group5.project.user.Userlist;
 import fr.ecp.IS1220.group5.project.util.Coordinate;
 
@@ -10,7 +13,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -44,7 +46,6 @@ public class CommandLine {
         String[] commands = string.split(" \"");
         for(int i = 0;i<commands.length;i++)
             commands[i] = commands[i].replaceAll("\"", "");
-        //System.out.println(Arrays.toString(commands));
 
         switch (commands[0]) {
             //System
