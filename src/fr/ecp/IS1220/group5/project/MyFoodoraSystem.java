@@ -19,6 +19,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 
 /**
  * <b>MyFoodoraSystem is the class managing the whole system.</b>
@@ -813,6 +814,37 @@ public class MyFoodoraSystem {
     }
 
     /**
+     *showMenuItem <restaurant-name> for the currently logged on myFoodora manager to display the menu of a given restaurant
+     */
+    public void showMenuItem(String restaurant){
+        if (currentUser instanceof Manager){
+            boolean isFound = false;
+            for (User user: users.getUsers()) {
+                if (user.getName().equalsIgnoreCase(restaurant) && user instanceof Restaurant){
+                    isFound = true;
+                    Restaurant restaurant1 = (Restaurant) user;
+                    if (restaurant1 != null){
+                        System.out.println(">> items");
+                        for (Item item: restaurant1.getItems()){
+                            System.out.println(item.getName() +": "+ item.getPrice());
+                        }
+                        System.out.println(">> meals");
+                        for (Meal meal:restaurant1.getMeals()){
+                            System.out.println(meal.getName() +": "+ meal.getPrice());
+                        }
+                    }
+                    break;
+                }
+            }
+            if (!isFound){
+                System.out.println(restaurant + " is not found");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+    /**
      * Enables a manger to disactivate the account of a given user.
      * This user can not login but the account still remains in the system
      *
@@ -967,6 +999,33 @@ public class MyFoodoraSystem {
     }
 
     /**
+     * showTotalProfit <startDate> <endDate> for the currently logged on myFoodora manager
+     * to show the total profit of the system within a time interval
+     */
+    public void showTotalProfit(GregorianCalendar calendar1, GregorianCalendar calendar2){
+        if (currentUser instanceof Manager){
+            if (calendar1.getTime().before(calendar2.getTime())){
+                calculateFinancial();
+                BigDecimal profit = new BigDecimal(0);
+                for (Order order: orders){
+                    if (order.getDate().getTime().before(calendar2.getTime()) && order.getDate().getTime().after(calendar1.getTime())){
+                        profit = profit.add(order.getProfit());
+                    }
+                }
+                System.out.println("From: " + calendar1.getTime().toString() + " to: " + calendar2.getTime().toString());
+                System.out.println("The total profit: " + Money.display(profit));
+            }
+            else {
+                System.out.println("Invalid input");
+                System.out.println(calendar1.getTime().toString() + " is after " + calendar2.getTime().toString());
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+
+    /**
      * Displays the history of orders.
      * Only for managers.
      */
@@ -1041,13 +1100,28 @@ public class MyFoodoraSystem {
      *               1:markup percentage
      *               2:delivery cost
      */
-    public void setProfitPolicy(int policy){
+    public void setProfitPolicy(Integer policy){
         if (currentUser instanceof Manager){
             if (policy == 0|| policy== 1|| policy== 2){
                 profitPolicy = policy;
+                switch (policy){
+                    case 0:
+                        determineService_fee();
+                        break;
+                    case 1:
+                        determineMarkup_Percentage();
+                        break;
+                    case 2:
+                        determineDelivery_Cost();
+                        break;
+                }
             }
             else {
                 System.out.println("invalid input");
+                System.out.println("Type the code\n" +
+                        "0: by Service fee\n" +
+                        "1: by Markup Percentage\n" +
+                        "2: by Delivery Price");
             }
         }
         else {

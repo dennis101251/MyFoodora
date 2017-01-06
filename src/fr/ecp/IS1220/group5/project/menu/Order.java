@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Observable;
 
 /**
@@ -201,7 +202,6 @@ public class Order extends Observable implements Serializable{
 	 * Displays a user friendly representation of this order.
 	 */
 	public void showOrder(){
-		System.out.println("-------------Order ID: " + this.id + "-------------");
 		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
 		if (deliveryStateIsFinished){
 			System.out.println("Courier: " + courier.getName());
@@ -372,7 +372,8 @@ public class Order extends Observable implements Serializable{
 	@Override
 	public String toString() {
 		String string;
-		string = "Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName() + "\n";
+		string = "Date: " + calendar.getTime().toString();
+		string += "Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName() + "\n";
 //		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
 		if (deliveryStateIsFinished){
 			string += "Courier: " + courier.getName() + "\n";
@@ -435,4 +436,12 @@ public class Order extends Observable implements Serializable{
 
 	public BigDecimal getProfit(){
 		return this.profit;}
+
+	public String getDateString(){
+		return calendar.getTime().toString();
+	}
+
+	public GregorianCalendar getDate() {
+		return calendar;
+	}
 }

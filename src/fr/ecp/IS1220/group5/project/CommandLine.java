@@ -243,6 +243,9 @@ public class CommandLine {
             case "showAllRestaurants":
                 myFoodoraSystem.showAllRestaurants();
                 break;
+            case "showMenuItem":
+                myFoodoraSystem.showMenuItem(commands[1]);
+                break;
             case "showAllCouriers":
                 myFoodoraSystem.showAllCouriers();
                 break;
@@ -298,6 +301,14 @@ public class CommandLine {
             case "showTotalProfit":
                 myFoodoraSystem.totalProfit();
                 break;
+            case "showTotalProfit2":
+                if (commands.length == 3){
+                    myFoodoraSystem.showTotalProfit(fr.ecp.IS1220.group5.project.util.Date.date(commands[1]),
+                            fr.ecp.IS1220.group5.project.util.Date.date(commands[2]));
+                }
+                else {
+                    System.out.println("not enough input");
+                }
             case "averageIncomePerCustomer":
                 myFoodoraSystem.averageIncomePerCustomer();
                 break;
