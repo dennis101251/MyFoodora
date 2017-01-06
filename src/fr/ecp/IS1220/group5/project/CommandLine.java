@@ -126,13 +126,6 @@ public class CommandLine {
                     System.out.println("not enough input");
                 }
                 break;
-            case "showMeal":
-                if (commands.length == 3) {
-                    myFoodoraSystem.showMeal(commands[1], commands[2]);
-                } else {
-                    System.out.println("not enough input");
-                }
-                break;
             case "saveMenu":
                 myFoodoraSystem.saveMenu();
                 break;
@@ -169,7 +162,7 @@ public class CommandLine {
                 break;
 
             //Customer
-            case "showRestaurant":
+            case "showRestaurants":
                 myFoodoraSystem.showRestaurant();
                 break;
             case "chooseRestaurant":
@@ -377,23 +370,23 @@ public class CommandLine {
                 System.out.println("---------------------------");
                 System.out.println("login <username> <password> : to log in.");
                 System.out.println("logout : to log out.");
-
-                System.out.println("\n--------Restaurant--------");
                 System.out.println("registerRestaurant <name> <username> <address> <password> : (Manager) to add a new restaurant to the system.");
                 System.out.println("registerCustomer <firstName> <lastName> <username> <address> <password> : (Manager) to add a new customer to the system.");
                 System.out.println("registerCourier <firstName> <lastName> <username> <position> <password> : (Manager) to add a new courier to the system.");
                 System.out.println("registerManager <name> <lastName> <username> <password> : (Manager) to add a new manager to the system.");
+
+                System.out.println("\n--------Restaurant--------");
                 System.out.println("createItem <itemName> <price> <itemCategory> <foodType> : (Restaurant) to add a new item to the menu.");
                 System.out.println("createMeal <mealName> <mealCategory> <foodType> : (Restaurant) to add a new meal to the menu.");
                 System.out.println("addDish2Meal <itemName> <mealName> : (Restaurant) to add an item to a given meal.");
-                System.out.println("showMeal <mealName> : (Restaurant) to show the content of a given meal.");
-                System.out.println("saveMenu <mealName> : (Restaurant) to save the content of a given meal.");
+                System.out.println("saveMenu : (Restaurant) to save the content of the currently created meal.");
                 System.out.println("setSpecialOffer <mealName> : (Restaurant) to add a meal to the Meal-of-the-week special offer.");
                 System.out.println("removeFromSpecialOffer <mealName> : (Restaurant) to remove a meal from the meal-of-the-week special offer.");
                 System.out.println("sendMessage <title> <message> : (Restaurant) to send a message with a given title to all the customers.");
-                System.out.println("findDeliverer <orderID> : to allocate an order to a deliverer by application of the current delivery politic.");
+                System.out.println("findDeliverer <orderID> : (Restaurant) to allocate an order to a deliverer by application of the current delivery politic (you must know the ID-number of the order: use for instance \"showOrder\" from a logged in customer).");
 
                 System.out.println("\n--------Customer--------");
+                System.out.println("showRestaurants : (Customer) to show the list of available restaurants.");
                 System.out.println("chooseRestaurant : (Customer) to choose a restaurant with a given name and start the order.");
                 System.out.println("showMenu : (Customer) to show the menu of the currently chosen restaurant.");
                 System.out.println("addMeal2Order <mealName> : (Customer) to add a given meal to the order.");
@@ -404,6 +397,7 @@ public class CommandLine {
                 System.out.println("setNotified <on OR off> : (Customer) to enable or disable notification from MyFoodora.");
                 System.out.println("showFidelityCard : (Customer) to show the current fidelity program");
                 System.out.println("registerFidelityCard <BasicFidelityCard OR LotteryFidelityCard OR PointFidelityCard> : (Customer) to register to a given fidelity program.");
+                System.out.println("checkInfoBoard : (Customer) to check the new messages in the info-board.");
                 System.out.println("deleteMessage <index> : (Customer) to delete the the message n° <index> of the info-board.");
 
                 System.out.println("\n--------Manager--------");
@@ -437,7 +431,6 @@ public class CommandLine {
                 System.out.println("\n--------Courier--------");
                 System.out.println("onDuty : (Courier) to set the state of the courier to 'on'");
                 System.out.println("offDuty : (Courier) to set the state of the courier to 'off'");
-                System.out.println("addContactInfo <contactInfo>: (Courier) to add a contact-information to the currently logged-in courier.");
                 System.out.println("refuse : (Courier) to refuse the assigned order and delegate the order to other couriers");
                 System.out.println("accept : (Courier) to accept the assigned order ");
                 System.out.println("changePosition <position> : (Courier) to change the position to a given position");

@@ -52,8 +52,6 @@ public class Order extends Observable implements Serializable{
 	 */
 	private int id;
 
-	private GregorianCalendar calendar = new GregorianCalendar();
-
 	/**
 	 *	this price is the sum of the items' and meals' prices, without any fee, markup percentage or discount.
 	 */
@@ -112,7 +110,6 @@ public class Order extends Observable implements Serializable{
 		this.delivery_cost_per_km = delivery_cost_per_km;
 		this.markup_percentage = markup_percentage;
 		this.service_fee = service_fee;
-		this.calendar = new GregorianCalendar();
 		IDGenerator idGenerator = IDGenerator.getInstance();
 		this.id = idGenerator.getNextID();
 		computeDeliveryCost();
@@ -123,7 +120,7 @@ public class Order extends Observable implements Serializable{
 	 * delete the file of order when we do the test
 	 */
 	public static void delateOrders(){
-		File file = new File("src/tmp/orders.ser");
+		File file = new File("tmp/orders.ser");
 
 		if (file.exists()) {
 			file.delete();
@@ -205,7 +202,6 @@ public class Order extends Observable implements Serializable{
 	 * Displays a user friendly representation of this order.
 	 */
 	public void showOrder(){
-		System.out.println("Date: " + calendar.toString());
 		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
 		if (deliveryStateIsFinished){
 			System.out.println("Courier: " + courier.getName());
