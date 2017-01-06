@@ -337,7 +337,7 @@ public class CommandLine {
                 break;
             case "setProfitPolicy":
                 if (commands.length == 2) {
-                myFoodoraSystem.setProfitPolicy(commands[1]);
+                    myFoodoraSystem.setProfitPolicy(Integer.parseInt(commands[1]));
                 } else {
                     System.out.println("not enough input");
                 }
@@ -437,7 +437,7 @@ public class CommandLine {
 
                 System.out.println("\n--------Manager--------");
                 System.out.println("setDeliveryPolicy <fastDelivery OR fairOccupationDelivery>: (Manager) to set the delivery policy to the passed argument.");
-                System.out.println("setProfitPolicy <serviceFee OR markupPercentage OR deliveryCost>: (Manager) to set the profit policy to the passed argument.");
+                System.out.println("setProfitPolicy <0 : service fee OR 1 : markup percentage OR 2: delivery cost>: (Manager) to set the profit policy to the passed argument.");
                 System.out.println("associateCard <userName> <cardType> : (Manager) to associate a fidelity card to a user with given name.");
                 System.out.println("showAllCustomers : (Manager) to show all customers.");
                 System.out.println("showAllRestaurants : (Manager) to show all restaurants.");
