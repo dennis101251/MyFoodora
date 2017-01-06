@@ -2740,7 +2740,6 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Courier){
             ((Courier) currentUser).setState_OnDuty();
             System.out.println((Courier) currentUser + " is on duty.");
-
         }
         else {
             System.out.println("You must log in first");

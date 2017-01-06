@@ -71,6 +71,20 @@ public class RestaurantDashboard extends JFrame{
         c.weighty = 0;
         headerPanel.add(welcomeLabel, c);
 
+        JButton historyButton = new JButton("Order history");
+        historyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RestaurantHistoryFrame.getInstance();
+            }
+        });
+        c.gridx = 1;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0;
+        c.weighty = 0;
+        headerPanel.add(historyButton, c);
+
         JButton infoBoardButton = new JButton("Check Infoboard");
         infoBoardButton.addActionListener(new ActionListener() {
             @Override
@@ -78,7 +92,7 @@ public class RestaurantDashboard extends JFrame{
                 MessageFrame.getInstance();
             }
         });
-        c.gridx = 1;
+        c.gridx = 2;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;
@@ -94,7 +108,7 @@ public class RestaurantDashboard extends JFrame{
                 new Login();
             }
         });
-        c.gridx = 2;
+        c.gridx = 33;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0;

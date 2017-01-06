@@ -113,6 +113,7 @@ public class MessageFrame extends JFrame implements WindowListener{
         setVisible(true);
 
         this.setLocationRelativeTo(null);
+        this.addWindowListener(this);
     }
 
     public static void main(String[] args) {

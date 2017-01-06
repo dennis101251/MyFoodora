@@ -212,6 +212,7 @@ public class Order extends Observable implements Serializable{
 	 * Displays a user friendly representation of this order.
 	 */
 	public void showOrder(){
+
 		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
 		if (deliveryStateIsFinished){
 			System.out.println("Courier: " + courier.getName());
