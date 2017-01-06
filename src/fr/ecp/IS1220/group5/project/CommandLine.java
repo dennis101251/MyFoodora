@@ -243,6 +243,9 @@ public class CommandLine {
             case "showAllRestaurants":
                 myFoodoraSystem.showAllRestaurants();
                 break;
+            case "showMenuItem":
+                myFoodoraSystem.showMenuItem(commands[1]);
+                break;
             case "showAllCouriers":
                 myFoodoraSystem.showAllCouriers();
                 break;

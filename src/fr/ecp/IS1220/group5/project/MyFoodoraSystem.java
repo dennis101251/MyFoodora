@@ -814,6 +814,37 @@ public class MyFoodoraSystem {
     }
 
     /**
+     *showMenuItem <restaurant-name> for the currently logged on myFoodora manager to display the menu of a given restaurant
+     */
+    public void showMenuItem(String restaurant){
+        if (currentUser instanceof Manager){
+            boolean isFound = false;
+            for (User user: users.getUsers()) {
+                if (user.getName().equalsIgnoreCase(restaurant) && user instanceof Restaurant){
+                    isFound = true;
+                    Restaurant restaurant1 = (Restaurant) user;
+                    if (restaurant1 != null){
+                        System.out.println(">> items");
+                        for (Item item: restaurant1.getItems()){
+                            System.out.println(item.getName() +": "+ item.getPrice());
+                        }
+                        System.out.println(">> meals");
+                        for (Meal meal:restaurant1.getMeals()){
+                            System.out.println(meal.getName() +": "+ meal.getPrice());
+                        }
+                    }
+                    break;
+                }
+            }
+            if (!isFound){
+                System.out.println(restaurant + " is not found");
+            }
+        }
+        else {
+            System.out.println("You must log in first");
+        }
+    }
+    /**
      * Enables a manger to disactivate the account of a given user.
      * This user can not login but the account still remains in the system
      *
