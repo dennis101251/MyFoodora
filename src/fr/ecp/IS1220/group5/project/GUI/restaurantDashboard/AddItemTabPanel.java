@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 
 /**
@@ -52,6 +54,18 @@ public class AddItemTabPanel extends JPanel implements ActionListener {
         pricePanel.setLayout(new BoxLayout(pricePanel,BoxLayout.X_AXIS));
         JLabel priceLabel = new JLabel("Price:");
         priceTextField = new JTextField(15);
+        priceTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int keyChar = e.getKeyChar();
+
+                if((keyChar >= KeyEvent.VK_0 && keyChar <= KeyEvent.VK_9)){
+
+                }else{
+                    e.consume();
+                }
+            }
+        });
         priceTextField.setMaximumSize(priceTextField.getPreferredSize());
 
         pricePanel.add(priceLabel);
