@@ -1654,6 +1654,7 @@ public class MyFoodoraSystem {
             System.out.println("error");
         }
         if (courier != null){
+            System.out.println("The courier in charge is " + courier);
             courier.setNewOrder(order);
             updateUser(courier);
             order.addCourier2DemandeHistory(courier);
@@ -1667,11 +1668,12 @@ public class MyFoodoraSystem {
     /**
      * Adapt to the professor's new requirement
      *
-     * reuse the method delegateOrder2Courier(Order order)
+     * Find the courier in charge for delivering order with id: orderID
      */
     public void findDeliverer(int orderID) {
         if(currentUser instanceof Restaurant){
             //Find the order instance by the name
+            System.out.println("\nFinding a deliverer for Order with ID " + orderID);
             Order newOrder = null;
             for (Order order: orders
                  ) {
@@ -1681,15 +1683,12 @@ public class MyFoodoraSystem {
             }
             //Deal with the order
             if (newOrder != null){
-                if (!newOrder.getDeliveryState()){
-                    try {
-                        delegateOrder2Courier(newOrder);
-                    } catch (UserNotFoundException e) {
-                        System.out.println("There is no available courier in the system");
+                for (User user: users.getUsers()){
+                    if (user instanceof Courier){
+                        if (((Courier) user).getNewOrder() != null && ((Courier) user).getNewOrder().getId() == orderID){
+                            System.out.println("The courier in charge is " + (Courier) user);
+                        }
                     }
-                }
-                else {
-                    System.out.println("This order has been delegated");
                 }
             }
             else {
@@ -2644,6 +2643,8 @@ public class MyFoodoraSystem {
     public void onDuty(){
         if (currentUser instanceof Courier){
             ((Courier) currentUser).setState_OnDuty();
+            System.out.println((Courier) currentUser + " is on duty.");
+
         }
         else {
             System.out.println("You must log in first");
@@ -2656,6 +2657,7 @@ public class MyFoodoraSystem {
     public void offDuty(){
         if (currentUser instanceof Courier){
             ((Courier) currentUser).setState_OffDuty();
+            System.out.println((Courier) currentUser + " is off duty.");
         }
         else {
             System.out.println("You must log in first");

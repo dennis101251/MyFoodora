@@ -13,7 +13,7 @@ registerManager "Alexandre" "Carlier" "alex" "010795"
 showAllCustomers
 showAllRestaurants
 showAllCouriers
-disconnect
+logout
 login "mcdonalds" "123456"
 createItem "French Fries Small" "1.5" "Starter" "Standard"
 createItem "French Fries Medium" "2" "Starter" "Standard"
@@ -31,34 +31,49 @@ createMeal "Vegan Meal" "HalfMeal" "Vegetarian"
 addDish2Meal "Salad" "Vegan Meal"
 addDish2Meal "Vegan Burger" "Vegan Meal"
 saveMenu
-disconnect
+setSpecialOffer "Best Of"
+logout
 login "pizzeria" "123456"
 createItem "Mozzarella" "1.5" "Starter" "Standard"
 createItem "Margarita" "6" "MainDish" "Standard"
 createItem "Regina" "9" "MainDish" "Standard"
 createItem "Quattro Stagione" "9.5" "MainDish" "Standard"
 createItem "Tiramisu" "2" "Dessert" "Standard"
-disconnect
+logout
 login "sushi" "123456
 createItem "Soya Soup" "1.5" "Starter" "Standard"
 createItem "Sushis" "4" "MainDish" "Standard"
 createItem "Yakitori" "4" "MainDish" "Standard"
 createItem "Mochi Ice Cream" "2" "Dessert" "Standard"
-disconnect
+logout
 login "marco" "123456"
-showRestaurant
+showRestaurants
 chooseRestaurant "McDonalds"
 showMenu
 addMeal2Order "Best Of" "2"
 addItem2Order "French Fries Maxi" "1"
 showOrder
 endOrder
-disconnect
+logout
 login "mcdonalds" "123456"
+findDeliverer "12"
+removeFromSpecialOffer "Best Of"
 setSpecialOffer "Vegan Meal"
 sendMessage "Vegan Meal" "Vegan Meal is the Meal of the week!"
-disconnect
+logout
 login "ly" "873433"
 deleteMessage "1"
 checkInfoBoard
-disconnect
+logout
+login "ceo" "123456789"
+
+login "jz" "123456"
+refuse
+offDuty
+logout
+login "mcdonalds" "123456"
+findDeliverer "12"
+logout
+login "steve" "123456"
+accept
+logout
