@@ -11,6 +11,7 @@ import fr.ecp.IS1220.group5.project.menu.*;
 import fr.ecp.IS1220.group5.project.user.*;
 import fr.ecp.IS1220.group5.project.util.*;
 
+import javax.swing.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -88,6 +89,7 @@ public class MyFoodoraSystem {
 
     //Current financial
     protected BigDecimal total_income = new BigDecimal("0");
+    protected BigDecimal total_profit_gross = new BigDecimal(0);
     protected BigDecimal total_delivery_cost = new BigDecimal("0");
     protected BigDecimal total_profit = new BigDecimal("0");
     protected BigDecimal target_profit = new BigDecimal("0");
@@ -709,6 +711,14 @@ public class MyFoodoraSystem {
             money = money.add(order.getProfit());
         }
         this.total_profit = money;
+
+        //Total profit gross
+        money = BigDecimal.valueOf(0);
+        for (Order order: orders
+                ) {
+            money = money.add(order.getProfit_gross());
+        }
+        this.total_profit_gross = money;
     }
 
     /**
@@ -1106,15 +1116,16 @@ public class MyFoodoraSystem {
                 profitPolicy = policy;
                 switch (policy){
                     case 0:
-                        determineService_fee();
+//                        determineService_fee();
                         break;
                     case 1:
-                        determineMarkup_Percentage();
+//                        determineMarkup_Percentage();
                         break;
                     case 2:
-                        determineDelivery_Cost();
+//                        determineDelivery_Cost();
                         break;
                 }
+                getProfitPolicy();
             }
             else {
                 System.out.println("invalid input");
@@ -1303,8 +1314,9 @@ public class MyFoodoraSystem {
         if (currentUser instanceof Manager){
             if (!orders.isEmpty()){
                 if (target_profit != BigDecimal.valueOf(0)){
-                    if (total_income.doubleValue() < target_profit.doubleValue()){
-                        System.out.println("Total income is less than target profit");
+                    if (total_profit_gross.doubleValue() < target_profit.doubleValue()){
+                        JOptionPane.showMessageDialog(new JFrame(),"Total gross profut is less than target profit\nCan't apply TargetProfit_DeliveryCost","Delivery",JOptionPane.ERROR_MESSAGE,null);
+                        System.out.println("Total gross profut is less than target profit");
                         System.out.println("Can't apply TargetProfit_DeliveryCost");
                     }
                     else {
@@ -1325,10 +1337,11 @@ public class MyFoodoraSystem {
                         tmpMarkup_percentage = markup_percentage;
 
                         BigDecimal tmp = new BigDecimal("0");
-                        tmp = target_profit.subtract(tmpService_fee.multiply(BigDecimal.valueOf(orders.size())));
-                        tmp = tmp.subtract(sumOrderPrice.multiply(tmpMarkup_percentage));
+                        tmp = tmpService_fee.multiply(BigDecimal.valueOf(orders.size()));
+                        tmp = tmp.add(sumOrderPrice.multiply(tmpMarkup_percentage));
+                        tmp = tmp.subtract(target_profit);
                         tmp = tmp.divide(sumDeliveryDistance, 6, RoundingMode.HALF_UP);
-                        tmpDelivery_cost_price = tmp.abs();
+                        tmpDelivery_cost_price = tmp;
 
                         NumberFormat percent = NumberFormat.getPercentInstance();
                         percent.setMaximumFractionDigits(3);
@@ -2860,6 +2873,8 @@ public class MyFoodoraSystem {
         return averageIncomePerCustomer;
     }
 
-
+    public BigDecimal getTotal_profit_gross() {
+        return total_profit_gross;
+    }
 }
 

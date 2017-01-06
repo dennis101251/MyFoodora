@@ -23,6 +23,7 @@ public class FinancialTabPanel extends JPanel {
         JLabel totalDeliveryCostLabel;
         JLabel totalProfitLabel;
         JLabel averageIncomeLabel;
+        JLabel grossProfit;
     JPanel financialPanel;
         JPanel targetProfitPanel;
             JLabel targetProfitLabel;
@@ -71,13 +72,16 @@ public class FinancialTabPanel extends JPanel {
         totalIncomeLabel.setBorder(border1);
         totalDeliveryCostLabel = new JLabel("Total delivery cost: " + Money.display(myFoodoraSystem.getTotal_delivery_cost()));
         totalDeliveryCostLabel.setBorder(border1);
+        grossProfit = new JLabel("Total gross profit: " + Money.display(myFoodoraSystem.getTotal_profit_gross()));
+        grossProfit.setBorder(border1);
         totalProfitLabel = new JLabel("Total profit: " + Money.display(myFoodoraSystem.getTotal_profit()));
         totalProfitLabel.setBorder(border1);
         averageIncomeLabel = new JLabel("Average income: " + Money.display(myFoodoraSystem.getAverageIncomePerCustomer() )+ "/person");
         averageIncomeLabel.setBorder(border1);
         infoPanel.add(totalIncomeLabel,new GBC(0,0).setIpad(100,20));
         infoPanel.add(totalDeliveryCostLabel,new GBC(1,0).setIpad(100,20));
-        infoPanel.add(totalProfitLabel,new GBC(0,1).setIpad(100,20));
+        infoPanel.add(totalProfitLabel,new GBC(0,2).setIpad(100,20));
+        infoPanel.add(grossProfit, new GBC(0,1).setIpad(100,20));
         infoPanel.add(averageIncomeLabel,new GBC(1,1).setIpad(100,20));
 
         c.gridx = 0;

@@ -52,6 +52,8 @@ public class Order extends Observable implements Serializable{
 	 */
 	private int id;
 
+	private GregorianCalendar calendar = new GregorianCalendar();
+
 	/**
 	 *	this price is the sum of the items' and meals' prices, without any fee, markup percentage or discount.
 	 */
@@ -88,6 +90,8 @@ public class Order extends Observable implements Serializable{
 	 */
 	private BigDecimal profit = new BigDecimal(0);
 
+	private BigDecimal profit_gross = new BigDecimal(0);
+
 	/**
 	 * True if this order has been delegated
 	 * False if this order is still waiting to be delegated
@@ -109,6 +113,7 @@ public class Order extends Observable implements Serializable{
 		this.customer = customer;
 		this.delivery_cost_per_km = delivery_cost_per_km;
 		this.markup_percentage = markup_percentage;
+		this.calendar = new GregorianCalendar();
 		this.service_fee = service_fee;
 		IDGenerator idGenerator = IDGenerator.getInstance();
 		this.id = idGenerator.getNextID();
@@ -168,6 +173,10 @@ public class Order extends Observable implements Serializable{
 	 */
 	public BigDecimal getDelivery_distance(){return delivery_distance;}
 
+	public BigDecimal getProfit_gross() {
+		return profit_gross;
+	}
+
 	/**
 	 * Returns the delivery state of this order.
 	 * @return the delivery state of this order.
@@ -193,6 +202,7 @@ public class Order extends Observable implements Serializable{
 		total_price = total_price.add(service_fee);
 		System.out.println("Total (with fees): " + total_price);
 		this.profit = order_price.multiply(markup_percentage).add(service_fee).subtract(delivery_cost);
+		this.profit_gross = order_price.multiply(markup_percentage).add(service_fee);
 		//Whenever something is changed in the order, it calls the updateTotalPrice method, so we can call the setChanged method and notify the observers.
 		setChanged();
 		notifyObservers();
