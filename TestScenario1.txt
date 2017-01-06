@@ -1,13 +1,13 @@
 login "ceo" "123456789"
-registerRestaurant "McDonalds" "mcdonalds" "0,0" "123456"
+registerRestaurant "McDonalds" "mcdonalds" "3,6" "123456"
 registerRestaurant "Pizzeria" "pizzeria" "4,5" "123456"
 registerRestaurant "SushiShop" "sushi" "8,9" "123456"
-registerCustomer "Marco" "Merlotti" "marco" "123456" "30,30" "marco.merlotti@student.ecp.fr" "0611041568"
-registerCustomer "Danyi" "Wu" "WDY" "501" "30,20" "danyi.wu@student.ecp.fr" "0650102722"
+registerCustomer "Marco" "Merlotti" "marco" "123456" "7,2" "marco.merlotti@student.ecp.fr" "0611041568"
+registerCustomer "Danyi" "Wu" "WDY" "501" "6,14" "danyi.wu@student.ecp.fr" "0650102722"
 registerCustomer "Lin" "Yu" "ly" "873433" "10,10" "yu.lin@student.ecp.fr" "0611041568"
 registerCourier "Steve" "Jobs" "steve" "123456" "10,10" "87654562"
-registerCourier "Bill" "Gates" "bill" "123456" "20,28" "87654562"
-registerCourier "Zemin" "Jiang" "jz" "123456" "8,9" "87654562"
+registerCourier "Bill" "Gates" "bill" "123456" "13,3" "87654562"
+registerCourier "Zemin" "Jiang" "jz" "123456" "6,6" "87654562"
 registerManager "Zexi" "DENG" "dennis" "101251"
 registerManager "Alexandre" "Carlier" "alex" "010795"
 showAllCustomers
@@ -57,29 +57,43 @@ endOrder
 showFidelityCard
 logout
 login "mcdonalds" "123456"
-findDeliverer "12"
+findDeliverer "13"
 removeFromSpecialOffer "Best Of"
 setSpecialOffer "Vegan Meal"
 sendMessage "Vegan Meal" "Vegan Meal is the Meal of the week!"
 logout
-login "ly" "873433"
-deleteMessage "1"
-checkInfoBoard
-disconnect
-login "dennis" "101251"
-showTotalProfit
-showTotalProfit2 "2012,1,1" "2018,1,1"
-disconnect
-logout
-login "ceo" "123456789"
-logout
 login "jz" "123456"
 refuse
-offDuty
 logout
 login "mcdonalds" "123456"
-findDeliverer "12"
+findDeliverer "13"
 logout
 login "steve" "123456"
 accept
+logout
+login "ceo" "123456789"
+showTotalProfit
+setProfitPolicy "markupPercentage"
+setTarget_profit "2.5"
+determineMarkup_Percentage
+setMarkupPercentage "0.18661"
+mostActiveCourier
+logout
+login "ly" "873433"
+deleteMessage "1"
+checkInfoBoard
+showRestaurants
+chooseRestaurant "Pizzeria"
+showMenu
+addItem2Order "Mozzarella" "1"
+addItem2Order "Regina" "1"
+addItem2Order "Tiramisu" "1"
+showOrder
+endOrder
+logout
+login "jz" "123456"
+accept
+logout
+login "ceo" "123456789"
+showTotalProfit
 logout

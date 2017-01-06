@@ -272,13 +272,25 @@ public class CommandLine {
                 }
                 break;
             case "setServiceFee":
+                if (commands.length == 2) {
                 myFoodoraSystem.setService_fee(new BigDecimal(commands[1]));
+                } else {
+                    System.out.println("not enough input");
+                }
                 break;
             case "setMarkupPercentage":
+                if (commands.length == 2) {
                 myFoodoraSystem.setMarkup_percentage(new BigDecimal(commands[1]));
+                } else {
+                    System.out.println("not enough input");
+                }
                 break;
             case "setDeliveryCost":
+                if (commands.length == 2) {
                 myFoodoraSystem.setDelivery_cost(new BigDecimal(commands[1]));
+                } else {
+                    System.out.println("not enough input");
+                }
                 break;
             case "totalIncome":
                 myFoodoraSystem.totalIncome();
@@ -301,7 +313,11 @@ public class CommandLine {
                 myFoodoraSystem.averageIncomePerCustomer();
                 break;
             case "setTarget_profit":
+                if (commands.length == 2) {
                 myFoodoraSystem.setTarget_profit(Double.parseDouble(commands[1]));
+                } else {
+                    System.out.println("not enough input");
+                }
                 break;
             case "determineService_fee":
                 myFoodoraSystem.determineService_fee();
@@ -313,10 +329,18 @@ public class CommandLine {
                 myFoodoraSystem.determineDelivery_Cost();
                 break;
             case "setDeliveryPolicy":
+                if (commands.length == 2) {
                 myFoodoraSystem.setDeliveryPolicy(commands[1]);
+                } else {
+                    System.out.println("not enough input");
+                }
                 break;
             case "setProfitPolicy":
-                myFoodoraSystem.setProfitPolicy(Integer.parseInt(commands[1]));
+                if (commands.length == 2) {
+                myFoodoraSystem.setProfitPolicy(commands[1]);
+                } else {
+                    System.out.println("not enough input");
+                }
                 break;
             case "mostSellingRestaurant":
                 myFoodoraSystem.mostSellingRestaurant();
@@ -359,10 +383,18 @@ public class CommandLine {
                 myFoodoraSystem.accept();
                 break;
             case "changePosition":
+                if (commands.length == 2) {
                 myFoodoraSystem.changePosition(String2Coordinate(commands[1]));
+                } else {
+                    System.out.println("not enough input");
+                }
                 break;
             case "findDeliverer":
+                if (commands.length == 2) {
                 myFoodoraSystem.findDeliverer(Integer.parseInt(commands[1]));
+                } else {
+                    System.out.println("not enough input");
+                }
                 break;
             case "runtest":
                 runtest(commands[1]);
@@ -423,9 +455,9 @@ public class CommandLine {
                 System.out.println("totalDeliveryCost : (Manager) to show the total delivery cost.");
                 System.out.println("averageIncomePerCustomer : (Manager) to show the average income per customer.");
                 System.out.println("setTarget_profit <targe_profit> : (Manager) to set the target profit to a given value.");
-                System.out.println("determineService_fee : (Manager) to show the service fee.");
-                System.out.println("determineMarkup_Percentage : (Manager) to show the markup percentage.");
-                System.out.println("determineDelivery_Cost : (Manager) to show the delivery cost.");
+                System.out.println("determineService_fee : (Manager) determines the service fee to meet the target.");
+                System.out.println("determineMarkup_Percentage : (Manager) determines the  markup percentage to meet the target.");
+                System.out.println("determineDelivery_Cost : (Manager) determines the delivery cost to meet the target.");
                 System.out.println("mostSellingRestaurant : (Manager) to show the most selling restaurant.");
                 System.out.println("leastSellingRestaurant : (Manager) to show the least selling restaurant.");
                 System.out.println("mostActiveCourier : (Manager) to show the most active courier.");

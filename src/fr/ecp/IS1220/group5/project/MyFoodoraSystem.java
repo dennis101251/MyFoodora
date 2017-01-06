@@ -69,7 +69,7 @@ public class MyFoodoraSystem {
      * @see Manager#changeDelivery_cost(BigDecimal)
      * @see Financial
      */
-    public BigDecimal delivery_cost_price = new BigDecimal("1.0");
+    public BigDecimal delivery_cost_price = new BigDecimal("0.3");
 
     //User
     /**
