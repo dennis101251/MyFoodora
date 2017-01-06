@@ -11,8 +11,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.math.BigDecimal;
-
-import static org.junit.Assert.*;
+import java.util.GregorianCalendar;
 
 /**
  * Created by dennis101251 on 2016/12/11.
@@ -72,4 +71,23 @@ public class OrderTest {
 
     }
 
+    @Test
+    public void dateTest(){
+        Userlist.delateUserFile();
+        Order.delateOrders();
+        MyFoodoraSystem myFoodoraSystem = new MyFoodoraSystem();
+
+        Restaurant restaurant = new Restaurant("KFC","kfc","123456",new Coordinate(0,0));
+        Customer customer = new Customer("Zexi","DENG","dennis",new Coordinate(40,0), "123456");
+        Order order = new Order(restaurant,customer, BigDecimal.valueOf(1),BigDecimal.valueOf(1),BigDecimal.valueOf(1));
+        System.out.println(order.getDate().getTime());
+        System.out.println(new GregorianCalendar(2017,0,1).getTime());
+        if (order.getDate().getTime().before(new GregorianCalendar(2020,1,1).getTime()) && order.getDate().getTime().after(new GregorianCalendar(2017,1,1).getTime())){
+            System.out.println("OK");
+        }
+        else {
+            System.out.println("False");
+        }
+
+    }
 }

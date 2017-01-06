@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Observable;
 
 /**
@@ -50,6 +51,8 @@ public class Order extends Observable implements Serializable{
 	 * the unique ID of this order.
 	 */
 	private int id;
+
+	private GregorianCalendar calendar = new GregorianCalendar();
 
 	/**
 	 *	this price is the sum of the items' and meals' prices, without any fee, markup percentage or discount.
@@ -109,6 +112,7 @@ public class Order extends Observable implements Serializable{
 		this.delivery_cost_per_km = delivery_cost_per_km;
 		this.markup_percentage = markup_percentage;
 		this.service_fee = service_fee;
+		this.calendar = new GregorianCalendar();
 		IDGenerator idGenerator = IDGenerator.getInstance();
 		this.id = idGenerator.getNextID();
 		computeDeliveryCost();
@@ -119,7 +123,7 @@ public class Order extends Observable implements Serializable{
 	 * delete the file of order when we do the test
 	 */
 	public static void delateOrders(){
-		File file = new File("tmp/orders.ser");
+		File file = new File("src/tmp/orders.ser");
 
 		if (file.exists()) {
 			file.delete();
@@ -201,6 +205,7 @@ public class Order extends Observable implements Serializable{
 	 * Displays a user friendly representation of this order.
 	 */
 	public void showOrder(){
+		System.out.println("Date: " + calendar.toString());
 		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
 		if (deliveryStateIsFinished){
 			System.out.println("Courier: " + courier.getName());
@@ -371,7 +376,8 @@ public class Order extends Observable implements Serializable{
 	@Override
 	public String toString() {
 		String string;
-		string = "Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName() + "\n";
+		string = "Date: " + calendar.getTime().toString();
+		string += "Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName() + "\n";
 //		System.out.println("Customer: " + customer.getName() + "||Restaurant: " + restaurant.getName());
 		if (deliveryStateIsFinished){
 			string += "Courier: " + courier.getName() + "\n";
@@ -434,4 +440,12 @@ public class Order extends Observable implements Serializable{
 
 	public BigDecimal getProfit(){
 		return this.profit;}
+
+	public String getDateString(){
+		return calendar.getTime().toString();
+	}
+
+	public GregorianCalendar getDate() {
+		return calendar;
+	}
 }

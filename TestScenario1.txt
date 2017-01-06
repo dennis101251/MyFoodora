@@ -63,3 +63,7 @@ login "ly" "873433"
 deleteMessage "1"
 checkInfoBoard
 disconnect
+login "dennis" "101251"
+showTotalProfit
+showTotalProfit2 "2012,1,1" "2018,1,1"
+disconnect
