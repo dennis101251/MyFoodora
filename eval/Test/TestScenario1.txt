@@ -1,0 +1,99 @@
+login "ceo" "123456789"
+registerRestaurant "McDonalds" "mcdonalds" "3,6" "123456"
+registerRestaurant "Pizzeria" "pizzeria" "4,5" "123456"
+registerRestaurant "SushiShop" "sushi" "8,9" "123456"
+registerCustomer "Marco" "Merlotti" "marco" "123456" "7,2" "marco.merlotti@student.ecp.fr" "0611041568"
+registerCustomer "Danyi" "Wu" "WDY" "501" "6,14" "danyi.wu@student.ecp.fr" "0650102722"
+registerCustomer "Lin" "Yu" "ly" "873433" "10,10" "yu.lin@student.ecp.fr" "0611041568"
+registerCourier "Steve" "Jobs" "steve" "123456" "10,10" "87654562"
+registerCourier "Bill" "Gates" "bill" "123456" "13,3" "87654562"
+registerCourier "Zemin" "Jiang" "jz" "123456" "6,6" "87654562"
+registerManager "Zexi" "DENG" "dennis" "101251"
+registerManager "Alexandre" "Carlier" "alex" "010795"
+showAllCustomers
+showAllRestaurants
+showAllCouriers
+logout
+login "mcdonalds" "123456"
+createItem "French Fries Small" "1.5" "Starter" "Standard"
+createItem "French Fries Medium" "2" "Starter" "Standard"
+createItem "French Fries Maxi" "3" "Starter" "Standard"
+createItem "Big Mac" "4" "MainDish" "Standard"
+createItem "Muffin" "2" "Dessert" "Standard"
+createItem "Salad" "1.5" "Starter" "Vegetarian"
+createItem "Vegan Burger" "4" "MainDish" "Vegetarian"
+createMeal "Best Of" "FullMeal" "Standard"
+addDish2Meal "French Fries Medium" "Best Of"
+addDish2Meal "Big Mac" "Best Of"
+addDish2Meal "Muffin" "Best Of"
+saveMenu
+createMeal "Vegan Meal" "HalfMeal" "Vegetarian"
+addDish2Meal "Salad" "Vegan Meal"
+addDish2Meal "Vegan Burger" "Vegan Meal"
+saveMenu
+setSpecialOffer "Best Of"
+logout
+login "pizzeria" "123456"
+createItem "Mozzarella" "1.5" "Starter" "Standard"
+createItem "Margarita" "6" "MainDish" "Standard"
+createItem "Regina" "9" "MainDish" "Standard"
+createItem "Quattro Stagione" "9.5" "MainDish" "Standard"
+createItem "Tiramisu" "2" "Dessert" "Standard"
+logout
+login "sushi" "123456
+createItem "Soya Soup" "1.5" "Starter" "Standard"
+createItem "Sushis" "4" "MainDish" "Standard"
+createItem "Yakitori" "4" "MainDish" "Standard"
+createItem "Mochi Ice Cream" "2" "Dessert" "Standard"
+logout
+login "marco" "123456"
+showRestaurants
+chooseRestaurant "McDonalds"
+showMenu
+addMeal2Order "Best Of" "2"
+addItem2Order "French Fries Maxi" "1"
+showOrder
+endOrder
+showFidelityCard
+logout
+login "mcdonalds" "123456"
+findDeliverer "13"
+removeFromSpecialOffer "Best Of"
+setSpecialOffer "Vegan Meal"
+sendMessage "Vegan Meal" "Vegan Meal is the Meal of the week!"
+logout
+login "jz" "123456"
+refuse
+logout
+login "mcdonalds" "123456"
+findDeliverer "13"
+logout
+login "steve" "123456"
+accept
+logout
+login "ceo" "123456789"
+showTotalProfit
+setProfitPolicy "markupPercentage"
+setTarget_profit "2.5"
+determineMarkup_Percentage
+setMarkupPercentage "0.18661"
+mostActiveCourier
+logout
+login "ly" "873433"
+deleteMessage "1"
+checkInfoBoard
+showRestaurants
+chooseRestaurant "Pizzeria"
+showMenu
+addItem2Order "Mozzarella" "1"
+addItem2Order "Regina" "1"
+addItem2Order "Tiramisu" "1"
+showOrder
+endOrder
+logout
+login "jz" "123456"
+accept
+logout
+login "ceo" "123456789"
+showTotalProfit
+logout

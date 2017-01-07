@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>fr.ecp.IS1220.group5.project.menu</OriginalElement>
+  <nodes>
+    <node x="684.0" y="1529.0">fr.ecp.IS1220.group5.project.menu.Item</node>
+    <node x="0.0" y="0.0">fr.ecp.IS1220.group5.project.menu.Order</node>
+    <node x="1173.0" y="1285.0">fr.ecp.IS1220.group5.project.menu.FoodType</node>
+    <node x="530.0" y="1285.0">fr.ecp.IS1220.group5.project.menu.Food</node>
+    <node x="1352.0" y="1285.0">fr.ecp.IS1220.group5.project.menu.ItemCategory</node>
+    <node x="1517.0" y="1285.0">fr.ecp.IS1220.group5.project.menu.MealCategory</node>
+    <node x="0.0" y="1408.0">fr.ecp.IS1220.group5.project.menu.Meal</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="fr.ecp.IS1220.group5.project.menu.Meal" target="fr.ecp.IS1220.group5.project.menu.Food">
+      <point x="0.0" y="-290.0" />
+      <point x="332.0" y="1383.0" />
+      <point x="574.5" y="1383.0" />
+      <point x="-44.5" y="36.5" />
+    </edge>
+    <edge source="fr.ecp.IS1220.group5.project.menu.Item" target="fr.ecp.IS1220.group5.project.menu.Food">
+      <point x="0.0" y="-169.0" />
+      <point x="906.0" y="1383.0" />
+      <point x="663.5" y="1383.0" />
+      <point x="44.5" y="36.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="153.0" y="168.5" />
+  <SelectedNodes>
+    <node>fr.ecp.IS1220.group5.project.menu.Meal</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

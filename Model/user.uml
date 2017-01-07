@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>fr.ecp.IS1220.group5.project.user</OriginalElement>
+  <nodes>
+    <node x="0.0" y="1167.0">fr.ecp.IS1220.group5.project.user.InfoBoard</node>
+    <node x="917.0" y="0.0">fr.ecp.IS1220.group5.project.user.User</node>
+    <node x="1645.0" y="410.0">fr.ecp.IS1220.group5.project.user.Courier</node>
+    <node x="713.0" y="597.0">fr.ecp.IS1220.group5.project.user.Manager</node>
+    <node x="707.0" y="1167.0">fr.ecp.IS1220.group5.project.user.Userlist</node>
+    <node x="1139.0" y="553.0">fr.ecp.IS1220.group5.project.user.Customer</node>
+    <node x="0.0" y="454.0">fr.ecp.IS1220.group5.project.user.Restaurant</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="fr.ecp.IS1220.group5.project.user.Customer" target="fr.ecp.IS1220.group5.project.user.User">
+      <point x="0.0" y="-213.0" />
+      <point x="1382.0" y="390.0" />
+      <point x="1207.0" y="390.0" />
+      <point x="58.0" y="180.0" />
+    </edge>
+    <edge source="fr.ecp.IS1220.group5.project.user.Courier" target="fr.ecp.IS1220.group5.project.user.User">
+      <point x="0.0" y="-356.0" />
+      <point x="2018.0" y="380.0" />
+      <point x="1323.0" y="380.0" />
+      <point x="174.0" y="180.0" />
+    </edge>
+    <edge source="fr.ecp.IS1220.group5.project.user.Manager" target="fr.ecp.IS1220.group5.project.user.User">
+      <point x="0.0" y="-169.0" />
+      <point x="916.0" y="390.0" />
+      <point x="1091.0" y="390.0" />
+      <point x="-58.0" y="180.0" />
+    </edge>
+    <edge source="fr.ecp.IS1220.group5.project.user.Restaurant" target="fr.ecp.IS1220.group5.project.user.User">
+      <point x="0.0" y="-312.0" />
+      <point x="346.5" y="380.0" />
+      <point x="975.0" y="380.0" />
+      <point x="-174.0" y="180.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="207.0" y="671.5" />
+  <SelectedNodes>
+    <node>fr.ecp.IS1220.group5.project.user.InfoBoard</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

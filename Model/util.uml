@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>fr.ecp.IS1220.group5.project.util</OriginalElement>
+  <nodes>
+    <node x="701.0" y="146.0">fr.ecp.IS1220.group5.project.util.SortItem</node>
+    <node x="480.0" y="1055.0">fr.ecp.IS1220.group5.project.util.SavingPath</node>
+    <node x="855.0" y="0.0">fr.ecp.IS1220.group5.project.util.Coordinate</node>
+    <node x="613.0" y="656.0">fr.ecp.IS1220.group5.project.util.SortByIncomeUp</node>
+    <node x="846.0" y="959.0">fr.ecp.IS1220.group5.project.util.Percentage</node>
+    <node x="322.0" y="863.0">fr.ecp.IS1220.group5.project.util.SortByExpenseDown</node>
+    <node x="586.5" y="0.0">fr.ecp.IS1220.group5.project.util.Sort</node>
+    <node x="0.0" y="0.0">fr.ecp.IS1220.group5.project.util.PasswordHash</node>
+    <node x="290.0" y="959.0">fr.ecp.IS1220.group5.project.util.SortByOrderUp</node>
+    <node x="678.0" y="427.0">fr.ecp.IS1220.group5.project.util.GBC</node>
+    <node x="0.0" y="1055.0">fr.ecp.IS1220.group5.project.util.SortByQuantityUp</node>
+    <node x="0.0" y="656.0">fr.ecp.IS1220.group5.project.util.Message</node>
+    <node x="335.0" y="656.0">fr.ecp.IS1220.group5.project.util.Money</node>
+    <node x="0.0" y="863.0">fr.ecp.IS1220.group5.project.util.SortByIncomeDown</node>
+    <node x="630.0" y="863.0">fr.ecp.IS1220.group5.project.util.SortByExpenseUp</node>
+    <node x="568.0" y="959.0">fr.ecp.IS1220.group5.project.util.SortByOrderDown</node>
+    <node x="0.0" y="959.0">fr.ecp.IS1220.group5.project.util.Date</node>
+    <node x="0.0" y="427.0">fr.ecp.IS1220.group5.project.util.Financial</node>
+    <node x="240.0" y="1055.0">fr.ecp.IS1220.group5.project.util.SortByQuantityDown</node>
+    <node x="349.0" y="427.0">fr.ecp.IS1220.group5.project.util.IDGenerator</node>
+    <node x="570.0" y="146.0">fr.ecp.IS1220.group5.project.util.SortMeal</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="fr.ecp.IS1220.group5.project.util.SortItem" target="fr.ecp.IS1220.group5.project.util.Sort">
+      <point x="0.0" y="-25.5" />
+      <point x="755.5" y="121.0" />
+      <point x="742.5" y="121.0" />
+      <point x="52.0" y="48.0" />
+    </edge>
+    <edge source="fr.ecp.IS1220.group5.project.util.SortMeal" target="fr.ecp.IS1220.group5.project.util.Sort">
+      <point x="0.0" y="-25.5" />
+      <point x="625.5" y="121.0" />
+      <point x="638.5" y="121.0" />
+      <point x="-52.0" y="48.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="248.5" y="276.0" />
+  <SelectedNodes>
+    <node>fr.ecp.IS1220.group5.project.util.SortMeal</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

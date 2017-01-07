@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>fr.ecp.IS1220.group5.project.fidelity</OriginalElement>
+  <nodes>
+    <node x="405.0" y="212.0">fr.ecp.IS1220.group5.project.fidelity.PointFidelityCard</node>
+    <node x="810.0" y="212.0">fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard</node>
+    <node x="455.5" y="0.0">fr.ecp.IS1220.group5.project.fidelity.FidelityCard</node>
+    <node x="0.0" y="212.0">fr.ecp.IS1220.group5.project.fidelity.BasicFidelityCard</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="fr.ecp.IS1220.group5.project.fidelity.PointFidelityCard" target="fr.ecp.IS1220.group5.project.fidelity.FidelityCard">
+      <point x="0.0" y="-36.5" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="fr.ecp.IS1220.group5.project.fidelity.BasicFidelityCard" target="fr.ecp.IS1220.group5.project.fidelity.FidelityCard">
+      <point x="0.0" y="-36.5" />
+      <point x="192.5" y="187.0" />
+      <point x="502.8333333333333" y="187.0" />
+      <point x="-94.66666666666669" y="81.0" />
+    </edge>
+    <edge source="fr.ecp.IS1220.group5.project.fidelity.LotteryFidelityCard" target="fr.ecp.IS1220.group5.project.fidelity.FidelityCard">
+      <point x="0.0" y="-36.5" />
+      <point x="1002.5" y="187.0" />
+      <point x="692.1666666666667" y="187.0" />
+      <point x="94.66666666666674" y="81.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="246.0" y="74.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

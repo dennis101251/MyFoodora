@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>fr.ecp.IS1220.group5.project.exception</OriginalElement>
+  <nodes>
+    <node x="0.0" y="296.0">fr.ecp.IS1220.group5.project.exception.EmptyNameException</node>
+    <node x="0.0" y="148.0">fr.ecp.IS1220.group5.project.exception.UserNotFoundException</node>
+    <node x="0.0" y="0.0">fr.ecp.IS1220.group5.project.exception.IncompatibleFoodTypeException</node>
+    <node x="0.0" y="222.0">fr.ecp.IS1220.group5.project.exception.TooManyItemsException</node>
+    <node x="0.0" y="74.0">fr.ecp.IS1220.group5.project.exception.DuplicateNameException</node>
+    <node x="212.0" y="296.0">fr.ecp.IS1220.group5.project.exception.BadFileException</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="174.5" y="162.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

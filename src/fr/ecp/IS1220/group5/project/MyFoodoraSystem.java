@@ -1325,7 +1325,7 @@ public class MyFoodoraSystem {
             if (!orders.isEmpty()){
                 if (target_profit != BigDecimal.valueOf(0)){
                     if (total_profit_gross.doubleValue() < target_profit.doubleValue()){
-                        JOptionPane.showMessageDialog(new JFrame(),"Total gross profut is less than target profit\nCan't apply TargetProfit_DeliveryCost","Delivery",JOptionPane.ERROR_MESSAGE,null);
+                        JOptionPane.showMessageDialog(new JFrame(),"Total gross profit is less than target profit\nCan't apply TargetProfit_DeliveryCost","Delivery",JOptionPane.ERROR_MESSAGE,null);
                         System.out.println("Total gross profut is less than target profit");
                         System.out.println("Can't apply TargetProfit_DeliveryCost");
                     }
