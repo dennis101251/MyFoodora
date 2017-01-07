@@ -826,7 +826,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     *showMenuItem <restaurant-name> for the currently logged on myFoodora manager to display the menu of a given restaurant
+     *showMenuItem restaurant-name for the currently logged on myFoodora manager to display the menu of a given restaurant
      */
     public void showMenuItem(String restaurant){
         if (currentUser instanceof Manager){
@@ -1014,7 +1014,7 @@ public class MyFoodoraSystem {
     }
 
     /**
-     * showTotalProfit <startDate> <endDate> for the currently logged on myFoodora manager
+     * showTotalProfit startDate endDate for the currently logged on myFoodora manager
      * to show the total profit of the system within a time interval
      */
     public void showTotalProfit(GregorianCalendar calendar1, GregorianCalendar calendar2){
