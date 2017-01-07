@@ -337,7 +337,7 @@ public class CommandLine {
                 break;
             case "setProfitPolicy":
                 if (commands.length == 2) {
-                    myFoodoraSystem.setProfitPolicy(Integer.parseInt(commands[1]));
+                    myFoodoraSystem.setProfitPolicy(commands[1]);
                 } else {
                     System.out.println("not enough input");
                 }

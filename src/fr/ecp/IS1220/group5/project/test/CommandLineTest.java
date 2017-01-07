@@ -3,6 +3,7 @@ package fr.ecp.IS1220.group5.project.test;
 import fr.ecp.IS1220.group5.project.CommandLine;
 import fr.ecp.IS1220.group5.project.menu.Order;
 import fr.ecp.IS1220.group5.project.user.Userlist;
+import fr.ecp.IS1220.group5.project.util.Financial;
 import org.junit.Test;
 
 /**
@@ -13,6 +14,7 @@ public class CommandLineTest {
     public void runtest() throws Exception {
         Order.delateOrders();
         Userlist.delateUserFile();
+        Financial.deleteFinancial();
 
         CommandLine commandLine = new CommandLine();
         commandLine.runtest("TestScenario1.txt");

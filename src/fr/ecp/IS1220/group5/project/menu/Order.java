@@ -125,7 +125,7 @@ public class Order extends Observable implements Serializable{
 	 * delete the file of order when we do the test
 	 */
 	public static void delateOrders(){
-		File file = new File("tmp/orders.ser");
+		File file = new File("src/tmp/orders.ser");
 
 		if (file.exists()) {
 			file.delete();

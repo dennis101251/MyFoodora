@@ -426,6 +426,7 @@ public class MyFoodoraSystem {
             markup_percentage = financial.markup_percentage;
             delivery_cost_price = financial.delivery_cost;
             profitPolicy = financial.profitPolicy;
+            target_profit = financial.target_profit;
         } else {
             System.out.println(">> There is no Financial in system");
         }
@@ -444,6 +445,7 @@ public class MyFoodoraSystem {
             financial.delivery_cost = this.delivery_cost_price;
             financial.markup_percentage = this.markup_percentage;
             financial.profitPolicy = this.profitPolicy;
+            financial.target_profit = this.target_profit;
 
             out.writeObject(financial);
 
@@ -906,9 +908,10 @@ public class MyFoodoraSystem {
      */
     public void setService_fee(BigDecimal service_fee){
         if (currentUser instanceof Manager){
-            if  (!service_fee.equals(new BigDecimal("0"))){
+            if  (service_fee.compareTo(new BigDecimal("0")) == 1 ){
                 this.service_fee = service_fee;
                 System.out.println(">> Current service fee: " + service_fee);
+                saveFinancial();
             }
             else {
                 System.out.println("service fee should be positive");
@@ -929,13 +932,14 @@ public class MyFoodoraSystem {
      */
     public void setMarkup_percentage(BigDecimal markup_percentage){
         if (currentUser instanceof Manager){
-            if (markup_percentage.compareTo(new BigDecimal("1")) == -1){ //if markup_percentage > 1
+            if (markup_percentage.compareTo(new BigDecimal("0")) == 1){ //if markup_percentage > 0
 
                 this.markup_percentage = markup_percentage;
                 System.out.println(">> Current markup percentage: " + markup_percentage);
+                saveFinancial();
             }
             else {
-                System.out.println("markup percentage should be larger than 1");
+                System.out.println("markup percentage should be positive");
             }
         }
         else {
@@ -953,9 +957,10 @@ public class MyFoodoraSystem {
      */
     public void setDelivery_cost(BigDecimal delivery_cost){
         if (currentUser instanceof Manager){
-            if (!delivery_cost.equals(new BigDecimal("0"))){
+            if ( delivery_cost.compareTo(new BigDecimal("0")) == 1){
                 this.delivery_cost_price = delivery_cost;
                 System.out.println(">> Current delivery price per km: " + delivery_cost);
+                saveFinancial();
             }
             else {
                 System.out.println("delivery cost should be positive");
@@ -1098,6 +1103,7 @@ public class MyFoodoraSystem {
             this.target_profit = BigDecimal.valueOf(target_profit);
             System.out.println(">> Current profit: " + Money.display(total_profit));
             System.out.println(">> Target profit: " + Money.display(BigDecimal.valueOf(target_profit)));
+            saveFinancial();
         }
         else {
             System.out.println("You must log in first");
@@ -1129,6 +1135,7 @@ public class MyFoodoraSystem {
                         break;
                 }
                 getProfitPolicy();
+                saveFinancial();
             }
             else {
                 System.out.println("invalid input");
