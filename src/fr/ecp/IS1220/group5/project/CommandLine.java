@@ -442,12 +442,13 @@ public class CommandLine {
                 System.out.println("showAllCustomers : (Manager) to show all customers.");
                 System.out.println("showAllRestaurants : (Manager) to show all restaurants.");
                 System.out.println("showAllCouriers : (Manager) to show all couriers.");
-                System.out.println("showTotalProfit : (Manager) to show the total profit.");
+                System.out.println("showTotalProfit : (Manager) to show the total profit since creation.");
+                System.out.println("showTotalProfit2 <startDate> <endDate>: (Manager) to show the total profit within a time interval, date format:yyyy,mm,dd.");
                 System.out.println("showHistoryOfOrderOfSystem : (Manager) to show the history or orders of MyFoodora.");
                 System.out.println("removeUser <username> : (Manager) to remove a user with given username.");
                 System.out.println("findUser <username> : (Manager) prints whether the user with given username exists or not in the database.");
                 System.out.println("disactivateUser <username> : (Manager) to disactivate a user with given username.");
-                System.out.println("activateUser : (Manager) to activate a user with given username.");
+                System.out.println("activateUser <username>: (Manager) to activate a user with given username.");
                 System.out.println("setServiceFee <service_fee> : (Manager) to set the service fee to a given value.");
                 System.out.println("setMarkupPercentage <markupPercentage>: (Manager) to set the markup percentage to a given value.");
                 System.out.println("setDeliveryCost <deliverycost>: (Manager) to set the delivery cost to a given value.");
